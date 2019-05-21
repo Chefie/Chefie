@@ -13,6 +13,7 @@
 		420251C12293F531004AEBF9 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420251C02293F531004AEBF9 /* CommentCell.swift */; };
 		4289F893229356320001E03A /* ICellDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4289F892229356320001E03A /* ICellDataProtocol.swift */; };
 		4289F895229367F00001E03A /* ICellDataInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4289F894229367F00001E03A /* ICellDataInfo.swift */; };
+		42FD5E4222949F3200785BE7 /* MultilineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FD5E4122949F3200785BE7 /* MultilineLabel.swift */; };
 		B0150DAB227579E0006F48FA /* PlateCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0150DAA227579E0006F48FA /* PlateCellView.swift */; };
 		B0150DAD22757B4C006F48FA /* PlateDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0150DAC22757B4C006F48FA /* PlateDetailsViewController.swift */; };
 		B01E051C22758DC700BEAAE8 /* ImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01E051B22758DC700BEAAE8 /* ImageViewExtension.swift */; };
@@ -119,9 +120,7 @@
 		420251C02293F531004AEBF9 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		4289F892229356320001E03A /* ICellDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICellDataProtocol.swift; sourceTree = "<group>"; };
 		4289F894229367F00001E03A /* ICellDataInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICellDataInfo.swift; sourceTree = "<group>"; };
-		6DEAAE22D494F34583177A4E /* Pods-Chefie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.release.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.release.xcconfig"; sourceTree = "<group>"; };
-		7CA9259C4DE513000BDCB3D2 /* Pods-Chefie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.debug.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.debug.xcconfig"; sourceTree = "<group>"; };
-		8D18F0EA8215670119990CB5 /* Pods_Chefie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chefie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		42FD5E4122949F3200785BE7 /* MultilineLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineLabel.swift; sourceTree = "<group>"; };
 		B0150DAA227579E0006F48FA /* PlateCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateCellView.swift; sourceTree = "<group>"; };
 		B0150DAC22757B4C006F48FA /* PlateDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateDetailsViewController.swift; sourceTree = "<group>"; };
 		B01E051B22758DC700BEAAE8 /* ImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewExtension.swift; sourceTree = "<group>"; };
@@ -506,6 +505,7 @@
 			isa = PBXGroup;
 			children = (
 				BC9CCD8C227DE621008CDCDB /* TouchableImageView.swift */,
+				42FD5E4122949F3200785BE7 /* MultilineLabel.swift */,
 			);
 			path = Extensible;
 			sourceTree = "<group>";
@@ -752,6 +752,7 @@
 				BCA18E0422638F2300F498B4 /* Media.swift in Sources */,
 				BC7F2F892257A51A00D3F301 /* Misc.swift in Sources */,
 				420251BD2293E18A004AEBF9 /* MediaCellView.swift in Sources */,
+				42FD5E4222949F3200785BE7 /* MultilineLabel.swift in Sources */,
 				BC7F2F8F2257A51A00D3F301 /* SoundPlayer.swift in Sources */,
 				BC9CCD93227E0368008CDCDB /* DynamicViewControllerProto.swift in Sources */,
 				B0150DAD22757B4C006F48FA /* PlateDetailsViewController.swift in Sources */,

@@ -8,9 +8,17 @@
 
 import Foundation
 import UIKit
+import SkeletonView
 
 let g_ViewRadius = CGFloat(4.0)
 extension UIView{
+    
+    convenience init(maskConstraints : Bool) {
+      
+        self.init()
+        self.translatesAutoresizingMaskIntoConstraints = maskConstraints
+        isSkeletonable = true
+    }
     
     func setSkeleton(value : Bool){
         

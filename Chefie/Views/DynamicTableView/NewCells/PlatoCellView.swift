@@ -34,7 +34,7 @@ class PlatoCellView : BaseCell, ICellDataProtocol {
     
     let frontImageView : UIImageView = {
         
-        let img = UIImageView()
+        let img = UIImageView(maskConstraints: false)
         img.contentMode = ContentMode.scaleToFill
         img.isSkeletonable = true
         img.setRounded()
@@ -42,7 +42,7 @@ class PlatoCellView : BaseCell, ICellDataProtocol {
     }()
     
     let label : UILabel = {
-        let lbl = UILabel()
+        let lbl = UILabel(maskConstraints: false)
         lbl.font = UIFont.boldSystemFont(ofSize: 16)
         lbl.textAlignment = .center
         lbl.textColor = .black
@@ -50,6 +50,7 @@ class PlatoCellView : BaseCell, ICellDataProtocol {
         lbl.isSkeletonable = true
         lbl.frame = CGRect(x: 10, y: 10, width: 100, height: 10)
         lbl.linesCornerRadius = 10
+        lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
     
