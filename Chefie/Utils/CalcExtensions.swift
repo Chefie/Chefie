@@ -52,6 +52,11 @@ extension CGFloat {
         let _left = self.percentageOf(amount: amount)
         return self - _left
     }
+    
+    func margin(amount : CGFloat) -> CGFloat {
+        let newSize = self.minus(amount: self.percentageOf(amount: amount))
+        return newSize
+    }
 }
 
 extension Int{
