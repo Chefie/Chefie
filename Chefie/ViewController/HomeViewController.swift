@@ -62,7 +62,7 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
        //mainTable.register(PlatoCellView.self, forCellReuseIdentifier: PlatoCellItemInfo().identifier())
   
        tableCellRegistrator.add(identifier: PlatoCellItemInfo().identifier(), cellClass: PlatoCellView.self)
-      // tableCellRegistrator.add(identifier: CommentCellInfo().identifier(), cellClass: CommentCell.self)
+       tableCellRegistrator.add(identifier: CommentCellInfo().identifier(), cellClass: CommentCell.self)
 //        registeredCells.append( PlatoCellItemInfo().identifier(), MediaCellView.self)
 
         tableCellRegistrator.registerAll(tableView: mainTable)
@@ -102,7 +102,7 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
                     
                     let commentInfo = CommentCellInfo()
                     commentInfo.model = comment
-                 //   items.append(commentInfo)
+                    items.append(commentInfo)
                 })
             
                 data.forEach({ (plate) in
@@ -112,7 +112,7 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
                     items.append(cellInfo)
                 })
 
-               // items.shuffle()
+                 items.shuffle()
                 self.tableItems = items
                 self.mainTable.reloadData()
                 break
