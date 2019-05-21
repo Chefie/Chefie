@@ -22,10 +22,9 @@ class TabBarViewController: UITabBarController {
         
         //Ajustar cada elemento de los items del tab bar
         //print(self.tabBar.items?.count)
-        
         tabBarItem = self.tabBar.items![0]
-        tabBarItem.image = UIImage(named: "dishes1")?.withRenderingMode(.alwaysOriginal)
-        tabBarItem.selectedImage = UIImage(named: "dishes2")?.withRenderingMode(.alwaysOriginal)
+        tabBarItem.image = UIImage(named: "recipes1")?.withRenderingMode(.alwaysOriginal)
+        tabBarItem.selectedImage = UIImage(named: "recipes2")?.withRenderingMode(.alwaysOriginal)
         tabBar.items?[0].title = "Recipes"
       
         
@@ -37,18 +36,23 @@ class TabBarViewController: UITabBarController {
         
         tabBarItem = self.tabBar.items![2]
         tabBarItem.image = UIImage(named: "addFood")?.withRenderingMode(.alwaysOriginal)
-        tabBarItem.selectedImage = UIImage(named: "addFood")?.withRenderingMode(.alwaysOriginal)
+        tabBarItem.selectedImage = UIImage(named: "addFood2")?.withRenderingMode(.alwaysOriginal)
         tabBar.items?[2].title = "Add recipe"
         
         tabBarItem = self.tabBar.items![3]
-        tabBarItem.image = UIImage(named: "route1")?.withRenderingMode(.alwaysOriginal)
-        tabBarItem.selectedImage = UIImage(named: "route2")?.withRenderingMode(.alwaysOriginal)
+        tabBarItem.image = UIImage(named: "finish1")?.withRenderingMode(.alwaysOriginal)
+        tabBarItem.selectedImage = UIImage(named: "finish2")?.withRenderingMode(.alwaysOriginal)
         tabBar.items?[3].title = "Routes"
         
         tabBarItem = self.tabBar.items![4]
-        tabBarItem.image = UIImage(named: "profile1")?.withRenderingMode(.alwaysOriginal)
-        tabBarItem.selectedImage = UIImage(named: "profile2")?.withRenderingMode(.alwaysOriginal)
+        tabBarItem.image = UIImage(named: "chef1")?.withRenderingMode(.alwaysOriginal)
+        tabBarItem.selectedImage = UIImage(named: "chef2")?.withRenderingMode(.alwaysOriginal)
         tabBar.items?[3].title = "Profile"
+        
+        tabBar.items?.forEach({ (item) in
+            item.imageInsets = UIEdgeInsets.init(top: 8, left: 0, bottom: -8, right: 0)
+            item.title = ""
+        })
         
     }
 }

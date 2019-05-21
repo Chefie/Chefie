@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -109,18 +109,19 @@
 		BCEBD7A6225A5A1800CF339B /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEBD7A5225A5A1800CF339B /* AppContainer.swift */; };
 		BCEBD7A9225A5A7800CF339B /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEBD7A8225A5A7800CF339B /* DataManager.swift */; };
 		BCEBD7AD225A5AB300CF339B /* LocalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEBD7AC225A5AB300CF339B /* LocalData.swift */; };
-		EFB2C1CF7971A68DA193A898 /* Pods_Chefie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CF09AC8667D06CD21801471 /* Pods_Chefie.framework */; };
+		D39AFBC21AF7C40C6165C2FF /* Pods_Chefie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D18F0EA8215670119990CB5 /* Pods_Chefie.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0CF09AC8667D06CD21801471 /* Pods_Chefie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chefie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1390FAE87F5CE61373C59DDB /* Pods-Chefie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.release.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.release.xcconfig"; sourceTree = "<group>"; };
 		337B33DD2294C3EF008B662D /* TableCellRegistrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCellRegistrator.swift; sourceTree = "<group>"; };
 		420251BC2293E18A004AEBF9 /* MediaCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCellView.swift; sourceTree = "<group>"; };
 		420251BE2293F348004AEBF9 /* BaseCellItemInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCellItemInfo.swift; sourceTree = "<group>"; };
 		420251C02293F531004AEBF9 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		4289F892229356320001E03A /* ICellDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICellDataProtocol.swift; sourceTree = "<group>"; };
 		4289F894229367F00001E03A /* ICellDataInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICellDataInfo.swift; sourceTree = "<group>"; };
+		6DEAAE22D494F34583177A4E /* Pods-Chefie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.release.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.release.xcconfig"; sourceTree = "<group>"; };
+		7CA9259C4DE513000BDCB3D2 /* Pods-Chefie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.debug.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.debug.xcconfig"; sourceTree = "<group>"; };
+		8D18F0EA8215670119990CB5 /* Pods_Chefie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chefie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0150DAA227579E0006F48FA /* PlateCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateCellView.swift; sourceTree = "<group>"; };
 		B0150DAC22757B4C006F48FA /* PlateDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateDetailsViewController.swift; sourceTree = "<group>"; };
 		B01E051B22758DC700BEAAE8 /* ImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewExtension.swift; sourceTree = "<group>"; };
@@ -219,7 +220,6 @@
 		BCEBD7A5225A5A1800CF339B /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
 		BCEBD7A8225A5A7800CF339B /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		BCEBD7AC225A5AB300CF339B /* LocalData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalData.swift; sourceTree = "<group>"; };
-		C4EE5AE259A65A87A53F31A0 /* Pods-Chefie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.debug.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,7 +227,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFB2C1CF7971A68DA193A898 /* Pods_Chefie.framework in Frameworks */,
+				D39AFBC21AF7C40C6165C2FF /* Pods_Chefie.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,10 +271,10 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
-		9A377D54606BBFCE0F396536 /* Frameworks */ = {
+		6F5165C228D548411AAC246A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0CF09AC8667D06CD21801471 /* Pods_Chefie.framework */,
+				8D18F0EA8215670119990CB5 /* Pods_Chefie.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -282,8 +282,8 @@
 		9BF735D886B81CEAAA42E7E1 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				C4EE5AE259A65A87A53F31A0 /* Pods-Chefie.debug.xcconfig */,
-				1390FAE87F5CE61373C59DDB /* Pods-Chefie.release.xcconfig */,
+				7CA9259C4DE513000BDCB3D2 /* Pods-Chefie.debug.xcconfig */,
+				6DEAAE22D494F34583177A4E /* Pods-Chefie.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -343,7 +343,7 @@
 				BC7F2F3B2257993100D3F301 /* Chefie */,
 				BC7F2F3A2257993100D3F301 /* Products */,
 				9BF735D886B81CEAAA42E7E1 /* Pods */,
-				9A377D54606BBFCE0F396536 /* Frameworks */,
+				6F5165C228D548411AAC246A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -604,12 +604,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BC7F2F4B2257993200D3F301 /* Build configuration list for PBXNativeTarget "Chefie" */;
 			buildPhases = (
-				7A053AC311321D0943DD3487 /* [CP] Check Pods Manifest.lock */,
+				FB40CD82E41D7B8509057238 /* [CP] Check Pods Manifest.lock */,
 				BC7F2F352257993100D3F301 /* Sources */,
 				BC7F2F362257993100D3F301 /* Frameworks */,
 				BC7F2F372257993100D3F301 /* Resources */,
-				84767BEEAB23F2DC40627B28 /* [CP] Embed Pods Frameworks */,
-				309059CB864AEB705573050B /* [CP] Copy Pods Resources */,
+				5271BD8FE9AF8CF7462FF6D6 /* [CP] Embed Pods Frameworks */,
+				EAA395E75BA26D60BC405202 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -679,29 +679,41 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		309059CB864AEB705573050B /* [CP] Copy Pods Resources */ = {
+		5271BD8FE9AF8CF7462FF6D6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources.sh",
-				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EAA395E75BA26D60BC405202 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7A053AC311321D0943DD3487 /* [CP] Check Pods Manifest.lock */ = {
+		FB40CD82E41D7B8509057238 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -721,62 +733,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		84767BEEAB23F2DC40627B28 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/CodableFirebase/CodableFirebase.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/SkeletonView/SkeletonView.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/VersaPlayer/VersaPlayer.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CodableFirebase.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkeletonView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VersaPlayer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1008,7 +964,7 @@
 		};
 		BC7F2F4C2257993200D3F301 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C4EE5AE259A65A87A53F31A0 /* Pods-Chefie.debug.xcconfig */;
+			baseConfigurationReference = 7CA9259C4DE513000BDCB3D2 /* Pods-Chefie.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1027,7 +983,7 @@
 		};
 		BC7F2F4D2257993200D3F301 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1390FAE87F5CE61373C59DDB /* Pods-Chefie.release.xcconfig */;
+			baseConfigurationReference = 6DEAAE22D494F34583177A4E /* Pods-Chefie.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
