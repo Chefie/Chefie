@@ -1,3 +1,5 @@
 Pods/
 GoogleService-Info.plist
 Chefie.xcworkspace
+Podfile.lock
+.DS_Store
