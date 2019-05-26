@@ -11,7 +11,7 @@ import UIKit
 
 class MediaCellItemInfo : BaseItemInfo {
     
-    override func identifier() -> String {
+    override func reuseIdentifier() -> String {
         return "MediaCellView"
     }
 }

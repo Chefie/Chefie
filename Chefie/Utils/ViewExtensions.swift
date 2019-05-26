@@ -11,6 +11,34 @@ import UIKit
 import SkeletonView
 
 let g_ViewRadius = CGFloat(4.0)
+let g_ShadowRadius = CGFloat(2.0)
+
+extension UILabel {
+    
+    func calculateTextWidth() -> CGFloat {
+        
+        return self.text?.width(withConstrainedHeight: self.frame.size.width, font: self.font) ?? DefaultDimensions.DefaultTextSize
+    }
+    
+    func calculateTextHeight() -> CGFloat {
+     
+        return self.text?.height(withConstrainedWidth: self.frame.size.width, font: self.font) ?? DefaultDimensions.DefaultTextSize
+    }
+}
+
+extension UILabel {
+    
+    convenience init(maskConstraints : Bool, font: UIFont = DefaultFonts.DefaultTextFont) {
+        
+        self.init()
+        self.translatesAutoresizingMaskIntoConstraints = maskConstraints
+        isSkeletonable = true
+        
+        self.font = font
+        paletteDefaultTextColor()
+    }
+}
+
 extension UIView{
     
     convenience init(maskConstraints : Bool) {
@@ -20,7 +48,38 @@ extension UIView{
         isSkeletonable = true
     }
     
-    func setSkeleton(value : Bool){
+    func setAutoMaskTranslateToFalse() {
+    
+        self.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    func fitHeightToSubViews(width: CGFloat) {
+        
+        let height = self.subviews.map({$0.frame.size.height}).reduce(0, +)
+        self.snp.makeConstraints { (maker) in
+            
+            maker.width.equalTo(width)
+            maker.height.equalTo(height)
+        }
+    }
+    
+    func invalidate() {
+
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
+    }
+    
+    func hide() {
+        
+        self.isHidden = true
+    }
+    
+    func show() {
+        
+        self.isHidden = false
+    }
+    
+    func setSkeleton(value : Bool = true){
         
         self.isSkeletonable = value
     }
@@ -34,13 +93,24 @@ extension UIView{
         self.addGestureRecognizer(singleTap)
     }
 
-    func addShadow() {
+    func addShadow(radius : CGFloat = g_ShadowRadius) {
         
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOpacity = 1
-        self.layer.shadowOffset = .zero
-        self.layer.shadowRadius = 10
+        self.layer.shadowOffset = CGSize(width: 2, height: 2)
+        self.layer.shadowRadius = radius
         self.layer.shouldRasterize = true
+    }
+    
+    func forceAddShadow(radius : CGFloat, offsetX :  CGFloat = 3.0, offsetY : CGFloat = 2.0){
+        
+        self.layer.masksToBounds = false
+        self.layer.cornerRadius = self.frame.height / 2
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: radius).cgPath
+        self.layer.shadowOffset = CGSize(width: offsetX, height: offsetY)
+        self.layer.shadowOpacity = 0.5
+        self.layer.shadowRadius = 1.0
     }
     
     func getWidth() -> CGFloat{
@@ -51,6 +121,16 @@ extension UIView{
     func getHeight() -> CGFloat{
         
         return self.frame.height
+    }
+    
+    func setCircularImageView() {
+        self.clipsToBounds = true
+        self.layer.masksToBounds = false
+        
+        let mask = CAShapeLayer()
+        let path = CGPath(ellipseIn: self.bounds, transform: nil)
+        mask.path = path
+        self.layer.mask = mask
     }
     
     func setCornerRadius() {

@@ -9,5 +9,6 @@
 import Foundation
 
 protocol ICellDataInfo {
-    func identifier() -> String
+    func reuseIdentifier() -> String
+    func uniqueIdentifier() -> String
 }

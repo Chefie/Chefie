@@ -8,8 +8,14 @@
 
 import Foundation
 class BaseItemInfo : ICellDataInfo {
-    func identifier() -> String {
+    
+    func reuseIdentifier() -> String {
         return ""
+    }
+   
+    func uniqueIdentifier() -> String {
+        
+        return UUID.init().uuidString
     }
     
     var model : AnyObject?

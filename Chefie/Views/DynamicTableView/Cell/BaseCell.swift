@@ -13,6 +13,26 @@
 //
 import UIKit
 class BaseCell : UITableViewCell, IDynamicCellProtocol{
+    
+    var baseItemInfo : BaseItemInfo?
+    
+    func setBaseItemInfo(info : BaseItemInfo){
+        
+        self.baseItemInfo = info
+    }
+    
+    open func getBaseItemInfo() -> BaseItemInfo {
+        
+        return self.baseItemInfo ?? BaseItemInfo()
+    }
+    
+    func cellReuseIdentifier() -> String {
+        return ""
+    }
+    
+    func cellUUID() -> String {
+        return ""
+    }
   
     var viewController : UIViewController?
     
@@ -29,20 +49,19 @@ class BaseCell : UITableViewCell, IDynamicCellProtocol{
         }
     }
     
-    func doFadeIn() {
+    func doCellFadeIn() {
         
-        self.contentView.alpha = 0
-        UIView.animate(withDuration: 1, animations: {
-            self.contentView.alpha = 1
-        })
-    }
+        self.contentView.doFadeIn()
+    }  
     
     func onLayout(size: CGSize!) {
         
     }
     
     func onCreateViews() {
-        
+     
+        self.preservesSuperviewLayoutMargins = true
+        self.contentView.preservesSuperviewLayoutMargins = true
     }
     
     func onLoadData() {
@@ -58,7 +77,7 @@ class BaseCell : UITableViewCell, IDynamicCellProtocol{
     
     func setModel(model: AnyObject?) {
         
-        onLoadData()
+     //   onLoadData()
     }
     
     func getModel() -> AnyObject? {
@@ -74,5 +93,7 @@ class BaseCell : UITableViewCell, IDynamicCellProtocol{
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        
+        onCreateViews()
     }
 }

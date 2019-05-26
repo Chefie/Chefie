@@ -12,28 +12,56 @@ import Foundation
 class MultilineLabel : UILabel {
     
     private var heightConstraint: Constraint? = nil
-
+    private var widthConstraint: Constraint? = nil
+    
+    private var cachedNumLines = 0
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
+    }
+    
+    override var numberOfLines: Int {
+        
+        didSet (value){
+            cachedNumLines = value
+        }
     }
     
     convenience init() {
         self.init(frame: CGRect.zero)
     }
     
-    func displayLines(height : CGFloat){
+    func displayLines(width: CGFloat = 100, height : CGFloat = 400){
         
         self.snp.makeConstraints { (maker) in
             
-            heightConstraint =      maker.height.greaterThanOrEqualTo(height).constraint
+            //  widthConstraint = maker.width.equalTo(width).constraint
+            heightConstraint = maker.height.equalTo(height).constraint
         }
     }
     
-    func deactivate() {
+    func displayLines(height : CGFloat = 333){
+        
+        self.snp.makeConstraints { (maker) in
+            
+          //  widthConstraint = maker.width.equalTo(width).constraint
+            heightConstraint = maker.height.equalTo(height).constraint
+        }
+    }
+    
+    func hideLines() {
         
         self.numberOfLines = 0
         heightConstraint?.deactivate()
+        widthConstraint?.deactivate()
+    }
+    
+    func restore() {
+        
+        numberOfLines = cachedNumLines
+        heightConstraint?.deactivate()
+        widthConstraint?.deactivate()
     }
     
     private func setup(){

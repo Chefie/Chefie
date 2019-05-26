@@ -17,16 +17,27 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
         didSet {
             
             mainTable.setCellsToAutomaticDimension()
+            mainTable.separatorStyle = UITableViewCell.SeparatorStyle.none
+      
+            mainTable.alwaysBounceVertical = false
+
+            mainTable.delaysContentTouches = true
+            mainTable.allowsSelection = false
+            mainTable.bounces  = false
+            mainTable.alwaysBounceVertical = false
+            mainTable.allowsMultipleSelection = false
         }
     }
     
     override func updateViewConstraints() {
-        super.updateViewConstraints()
+   
         mainTable.snp.makeConstraints { (make) in
             
             make.width.equalTo(self.view)
             make.height.equalTo(self.view)
         }
+        
+        super.updateViewConstraints()
     }
     
     func onSetup() {
@@ -53,16 +64,20 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+           tableCellRegistrator.add(identifier: CommentsHorizontalCellInfo().reuseIdentifier(), cellClass: CommentsHorizontalCell.self)
+        tableCellRegistrator.add(identifier: PlatosVerticalCellBaseItemInfo().reuseIdentifier(), cellClass: PlatosVerticalCell.self)
+        
+        
+    
+        
         onSetup()
         onSetupViews()
 
-       //mainTable.register(CommentCell.self, forCellReuseIdentifier: CommentCellInfo().identifier())
+     //tableCellRegistrator.add(identifier: PlatoCellItemInfo().reuseIdentifier(), cellClass: PlatoCellView.self)
+       // tableCellRegistrator.add(identifier: CommentCellInfo().reuseIdentifier(), cellClass: CommentCell.self)
         
-       //mainTable.register(PlatoCellView.self, forCellReuseIdentifier: PlatoCellItemInfo().identifier())
-  
-       tableCellRegistrator.add(identifier: PlatoCellItemInfo().identifier(), cellClass: PlatoCellView.self)
-       tableCellRegistrator.add(identifier: CommentCellInfo().identifier(), cellClass: CommentCell.self)
+        
+        
 //        registeredCells.append( PlatoCellItemInfo().identifier(), MediaCellView.self)
 
         tableCellRegistrator.registerAll(tableView: mainTable)
@@ -71,6 +86,9 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
         var comments = [String]()
         comments.append("Este es un comentario corto")
         comments.append("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.")
+         comments.append("Five hours? Aw, man! Couldn't you just get me the death penalty?")
+         comments.append("Five hours? Aw, man! Couldn't you just get me the death penalty?")
+         comments.append("Five hours? Aw, man! Couldn't you just get me the death penalty?")
          comments.append("Five hours? Aw, man! Couldn't you just get me the death penalty?")
          comments.append("Vastness is bearable only through love take root and flourish radio telescope not a sunrise but a galaxyrise rings of Uranus a very small stage in a vast cosmic arena. Descended from astronomers Tunguska event the only home we've ever known two ghostly white figures in coveralls and helmets are soflty dancing realm of the galaxies across the centuries. Emerged into consciousness gathered by gravity two ghostly white figures in coveralls and helmets are soflty dancing concept of the number one the only home we've ever known dispassionate extraterrestrial observer and billions upon billions upon billions upon billions upon billions upon billions upon billions.")
 
@@ -84,6 +102,9 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
         self.mainTable.dataSource = self
         self.mainTable.isSkeletonable = true
         self.mainTable.delegate = self
+
+        self.mainTable.alwaysBounceVertical = false
+        self.mainTable.alwaysBounceHorizontal = false
         
         appContainer.plateRepository.getPlatos(idUser: "2WT9s7km17QdtIwpYlEZ") { (
             result: ChefieResult<[Plate]>) in
@@ -93,27 +114,43 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
             case .success(let data):
             
                 var items = [BaseItemInfo]()
+          
+                let verticalItemPlateInfo = PlatosVerticalCellBaseItemInfo()
+                verticalItemPlateInfo.setTitle(value: "Plates")
+                verticalItemPlateInfo.model = data as AnyObject
+    
+    
                 
+
+                var commentItems = [Comment]()
                 comments.forEach({ (commentStr) in
                     
                     let comment = Comment()
                     comment.idUser = "Steven"
                     comment.content = commentStr
-                    
+                    commentItems.append(comment)
                     let commentInfo = CommentCellInfo()
                     commentInfo.model = comment
-                    items.append(commentInfo)
+        // items.append(commentInfo)
                 })
-            
+                
+                let commentsHorizontal = CommentsHorizontalCellInfo()
+                commentsHorizontal.setTitle(value: "Comments")
+                commentsHorizontal.model = commentItems as AnyObject
+         self.tableItems.append(commentsHorizontal)
+                
+             self.tableItems.append(verticalItemPlateInfo)
+              
                 data.forEach({ (plate) in
  
                     let cellInfo = PlatoCellItemInfo()
                     cellInfo.model = plate
-                    items.append(cellInfo)
+                
+             //      items.append(cellInfo)
                 })
 
-                 items.shuffle()
-                self.tableItems = items
+            //    items.shuffle()
+           // self.tableItems = items
                 self.mainTable.reloadData()
                 break
             case .failure(_):
@@ -122,6 +159,17 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
         }
     }
 
+    @IBAction func onTouchsss(_ sender: UIButton) {
+    }
+    @IBAction func btnTap(_ sender: Any) {
+        
+       let item = self.tableItems[1].model as? Comment
+      item?.content = "La celda se debe adaptar al texto"
+        
+      mainTable.reloadRows(at: [IndexPath(item:1 , section: 0)], with: .none)
+        print("")
+    }
+    
     @IBAction func testClick(_ sender: UIButton) {
         view.startSkeletonAnimation()
         view.showAnimatedGradientSkeleton()
@@ -155,7 +203,7 @@ extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDele
     }
     
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        return tableItems [indexPath.row].identifier()
+        return tableItems [indexPath.row].reuseIdentifier()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -169,9 +217,10 @@ extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDele
         
         let cellInfo = self.tableItems[indexPath.row]
    
-        let ce : BaseCell = mainTable.dequeueReusableCell(withIdentifier: cellInfo.identifier(), for: indexPath) as! BaseCell
+        let ce : BaseCell = mainTable.dequeueReusableCell(withIdentifier: cellInfo.reuseIdentifier(), for: indexPath) as! BaseCell
         ce.viewController = self
         ce.parentView = tableView
+        ce.setBaseItemInfo(info: cellInfo)
         ce.setModel(model: cellInfo.model)
         ce.onLoadData()
         return ce

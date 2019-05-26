@@ -8,6 +8,20 @@
 
 import Foundation
 import SnapKit
+
+extension CGRect {
+    
+    mutating func addY(value : CGFloat){
+    
+        self.origin.y += value
+    }
+    
+    mutating func setY(value : CGFloat){
+        self.origin.y = value
+    }
+    
+}
+
 extension UIView {
     
     func widthPercentageOf(amount: CGFloat) -> CGFloat {
@@ -45,6 +59,11 @@ extension CGFloat {
     func percentageOf(amount: CGFloat) -> CGFloat {
         
         return self * (amount / 100)
+    }
+    
+    func minusWithoutPercentage(amount: CGFloat) -> CGFloat {
+        
+        return self - amount
     }
     
     func minus(amount: CGFloat) -> CGFloat {

@@ -123,29 +123,12 @@ class PlateDetailsViewController : UIViewController, DynamicViewControllerProto 
         
         let barTopMargin = navigationController?.navigationBar.getHeight() ?? view.heightPercentageOf(amount: 10)
   
-        mainScrollContainer.snp.makeConstraints { (maker) in
-            
-            maker.top.greaterThanOrEqualTo(barTopMargin)
-            maker.left.equalTo(0)
-            maker.width.equalTo(view.getWidth())
-            maker.height.equalTo(view.getHeight())
-        }
-
-        stackView.snp.makeConstraints { (maker) in
-            
-            maker.width.equalTo(view.getWidth())
-        }
+     
    
         stackView.translatesAutoresizingMaskIntoConstraints = false;
         stackView.spacing = 10
 //frontPlateV.image = UIImage(named: "AppIcon")
-        frontPlateV.snp.makeConstraints { (maker) in
-            
-            maker.left.equalTo(0)
-            maker.width.equalTo(view.getWidth())
-            maker.height.equalTo(view.heightPercentageOf(amount: 35 ))
-            maker.rightMargin.equalTo(10)
-        }
+       
 
         mainScrollContainer.addSubview(stackView)
     

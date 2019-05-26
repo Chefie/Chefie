@@ -11,7 +11,7 @@ import UIKit
 
 class TableCellRegistrator {
     
-    private var items = [TableCellRegistrationInfo]()
+    private var items = Array<TableCellRegistrationInfo>()
     
     init() {
         
@@ -55,11 +55,11 @@ class TableCellRegistrator {
     
     func register(info : BaseItemInfo, tableView : UITableView) -> Bool {
         
-        if isRegistered(identifier: info.identifier()) {
+        if isRegistered(identifier: info.reuseIdentifier()) {
             return false
         }
         
-        if let item = items.first(where: { $0.identifier == info.identifier()}) {
+        if let item = items.first(where: { $0.identifier == info.reuseIdentifier()}) {
             
             tableView.register(item.cellClass, forCellReuseIdentifier: item.identifier)
             item.isRegistered = true
@@ -88,9 +88,18 @@ class TableCellRegistrator {
         return false
     }
     
+    var index : Int = 0
+    
     func getRandomIdentifier() -> String {
         
-        return items.randomElement()!.identifier
+     let item = items[index]
+        
+        index += 1
+        if (index >= items.count){
+            index = 0
+        }
+        
+        return item.identifier
     }
 }
 

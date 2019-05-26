@@ -12,7 +12,7 @@ import SnapKit
 
 class CommentCellInfo : BaseItemInfo{
     
-    override func identifier() -> String {
+    override func reuseIdentifier() -> String {
         return "CommentCell"
     }
 }
@@ -71,7 +71,7 @@ class CommentCell : BaseCell, ICellDataProtocol{
         
         userLabel.text = model?.idUser
         contentLabel.text = model?.content
-        contentLabel.deactivate()
+        contentLabel.hideLines()
         
         self.hideSkeleton()
     }

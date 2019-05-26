@@ -7,7 +7,7 @@ import SDWebImage
 
 class PlatoCellItemInfo : BaseItemInfo {
 
-    override func identifier() -> String {
+    override func reuseIdentifier() -> String {
         return "PlatoCellView"
     }
 }
@@ -41,16 +41,9 @@ class PlatoCellView : BaseCell, ICellDataProtocol {
         return img
     }()
     
-    let label : UILabel = {
-        let lbl = UILabel(maskConstraints: false)
-        lbl.font = UIFont.boldSystemFont(ofSize: 16)
-        lbl.textAlignment = .center
-        lbl.textColor = .black
+    let label : MultilineLabel = {
+        let lbl = MultilineLabel(maskConstraints: false)
         lbl.text = ""
-        lbl.isSkeletonable = true
-        lbl.frame = CGRect(x: 10, y: 10, width: 100, height: 10)
-        lbl.linesCornerRadius = 10
-        lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
     
@@ -61,19 +54,12 @@ class PlatoCellView : BaseCell, ICellDataProtocol {
     
     override func onLayout(size : CGSize!) {
         
-        let cellSize = CGSize(width: size.width, height: size.heightPercentageOf(amount: 30))
+        var cellSize = CGSize(width: size.width, height: size.heightPercentageOf(amount: 30))
         
         let imageHeight = cellSize.height.percentageOf(amount: 91)
         let titleFontHeight = max(label.font.lineHeight, cellSize.height.percentageOf(amount: 9))
-        
-        label.setCornerRadius()
-        label.snp.makeConstraints { (maker) in
-            
-            maker.left.equalTo(cellSize.widthPercentageOf(amount: 2))
-            maker.top.equalTo(cellSize.height.percentageOf(amount: 2))
-            maker.width.equalTo(cellSize.width.minus(amount: 4))
-            maker.height.equalTo(titleFontHeight)
-        }
+    
+     //   label.displayLines(height: titleFontHeight)
         
         frontImageView.setCornerRadius()
         frontImageView.addShadow()
@@ -86,27 +72,36 @@ class PlatoCellView : BaseCell, ICellDataProtocol {
             maker.bottomMargin.equalToSuperview()
         }
         
+        self.contentView.snp.makeConstraints { (maker) in
+            
+            cellSize.height += 10
+            maker.size.equalTo(cellSize)
+        }
+    //    frontImageView.setCircularImageView()
+        
+   //     self.contentView.fitHeightToSubViews()
+        
         // frontImageView.roundedImage()
-        // self.contentView.backgroundColor = UIColor.red
+    
         
         self.showAnimatedGradientSkeleton()
     }
     
     override func onLoadData() {
-        
+            self.contentView.backgroundColor = UIColor.red
         doFadeIn()
         self.frontImageView.sd_setImage(with: URL(string: model?.multimedia?[0].url ?? "")){ (image : UIImage?,
             error : Error?, cacheType : SDImageCacheType, url : URL?) in
             
-            self.label.text = self.model?.title
-            
+           // self.label.hideLines()
+         //   self.label.text = self.model?.title
             self.hideSkeleton()
         }
     }
     
     override func onCreateViews() {
         
-        self.contentView.addSubview(label)
+      //  self.contentView.addSubview(label)
         self.contentView.addSubview(frontImageView)
         frontImageView.setTouch(target: self, selector: #selector(onTouch))
     }

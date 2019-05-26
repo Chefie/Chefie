@@ -8,8 +8,13 @@
 
 import UIKit
 protocol IDynamicCellProtocol {
-
-    func identifier() -> String
+    
+    var viewController : UIViewController? { get set }
+    
+    func cellReuseIdentifier() -> String
+    
+    func cellUUID() -> String
+    
     var parentView : UIView! { get set }
     func onLayout(size: CGSize!)
     func onCreateViews()
