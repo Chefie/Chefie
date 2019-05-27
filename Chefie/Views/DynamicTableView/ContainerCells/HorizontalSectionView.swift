@@ -39,19 +39,19 @@ class HorizontalSectionCellBaseInfo : BaseItemInfo {
 }
 
 class HorizontalSectionView<T> : BaseCell, SkeletonCollectionViewDelegate, SkeletonCollectionViewDataSource, UICollectionViewDelegateFlowLayout{
-   
+    
     var modelSet = Array<T>()
-
+    
     let collectionView : UICollectionView = {
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
-       // layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        // layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         layout.minimumInteritemSpacing = 0.0
         let view = UICollectionView(frame: CGRect(x: 0, y: 0, width: 500, height: 200), collectionViewLayout: layout)
         view.backgroundColor = .clear
-        view.showsHorizontalScrollIndicator = true
+        view.showsHorizontalScrollIndicator = false
         view.showsVerticalScrollIndicator = false
         view.isDirectionalLockEnabled = false
         view.isPagingEnabled = true
@@ -65,10 +65,12 @@ class HorizontalSectionView<T> : BaseCell, SkeletonCollectionViewDelegate, Skele
         return view
     }()
     
-    let seeAllBtn : UIImageView = {
-    
+    let sectionActionButton : UIImageView = {
+        
         let view = UIImageView(maskConstraints: false)
         view.image = UIImage(named: "arrow_right")
+        view.frame = CGRect(x: 0, y: 0, width: 18, height: 18)
+        view.contentMode = ContentMode.scaleToFill
         return view
     }()
     
@@ -79,8 +81,8 @@ class HorizontalSectionView<T> : BaseCell, SkeletonCollectionViewDelegate, Skele
         lbl.text = ""
         lbl.textAlignment = .left
         lbl.numberOfLines = 1
-        lbl.leftInset = 16
-//        lbl.backgroundColor = UIColor.red
+        lbl.leftInset = AppSettings.HeaderLeftMargin
+        //        lbl.backgroundColor = UIColor.red
         return lbl
     }()
     
@@ -97,6 +99,20 @@ class HorizontalSectionView<T> : BaseCell, SkeletonCollectionViewDelegate, Skele
     
     open func registerCell() {
         
+    }
+    
+    func setActionButtonImage(image : UIImage){
+        self.sectionActionButton.image = image
+    }
+    
+    func setActionButtonSize(size : CGSize = CGSize(width: 20, height: 20)){
+        
+        self.sectionActionButton.frame.size = size
+        self.sectionActionButton.snp.updateConstraints { (maker) in
+            
+            maker.width.height.equalTo(size)
+            maker.left.equalTo(parentView.getWidth().minusWithoutPercentage(amount: size.width + (size.width / 2)))
+        }
     }
     
     func getCellIdentifier() -> String {
@@ -130,7 +146,7 @@ class HorizontalSectionView<T> : BaseCell, SkeletonCollectionViewDelegate, Skele
             setSectionTitle(newTitle: horizontalSectionlInfo.title())
         }
     }
-
+    
     func setSectionTitle(newTitle : String){
         
         sectionTitleStr = newTitle
@@ -139,9 +155,9 @@ class HorizontalSectionView<T> : BaseCell, SkeletonCollectionViewDelegate, Skele
     
     override func onLayout(size: CGSize!) {
         super.onLayout(size: size)
-     
+        
         let cellSize = CGSize(width: onRequestItemSize().width, height: onRequestItemSize().height)
-
+        
         let titleHeight = cellSize.heightPercentageOf(amount: 10)
         let collectionHeight = cellSize.heightPercentageOf(amount: 40)
         
@@ -152,42 +168,63 @@ class HorizontalSectionView<T> : BaseCell, SkeletonCollectionViewDelegate, Skele
         }
         
         titleLabel.snp.makeConstraints { (maker) in
-   
-            maker.width.equalTo(size.width)
+            
+            maker.width.equalTo(size.width.minus(amount: 20))
             maker.height.equalTo(titleHeight)
         }
         
         titleLabel.paletteDefaultTextColor()
         
         collectionView.snp.makeConstraints { (maker) in
-
+            
             maker.width.equalTo(size.width)
             maker.height.equalTo(collectionHeight)
         }
-    
+        
+        sectionActionButton.snp.makeConstraints { (maker) in
+            
+            maker.top.equalTo(0)
+            maker.topMargin.equalTo(0)
+            maker.width.height.equalTo(sectionActionButton.frame.size)
+            maker.left.equalTo(size.width.minusWithoutPercentage(amount: sectionActionButton.getWidth() + (sectionActionButton.getWidth() / 2)))
+        }
+        
         self.contentView.snp.makeConstraints { (maker) in
             
             maker.width.equalTo(size.width)
             maker.height.equalTo(cellSize.height)
         }
-        
-        stackView.backgroundColor = UIColor.orange
- 
- //       self.backgroundColor = UIColor.purple
+
+        self.showAnimatedGradientSkeleton()
     }
     
-    override func onLoadData() {
-        super.onLoadData()
-  
-        collectionView.contentSize = CGSize(width: onRequestItemSize().width * CGFloat(modelSet.count), height: onRequestItemSize().height)
-  
+    func onLayoutSection() {
+        
+        collectionView.contentOffset = .zero
+        collectionView.contentSize = CGSize(width: onRequestItemSize().width * CGFloat(modelSet.count), height: onRequestItemSize().height - 10)
+        
         let content = CGSize(width: onRequestItemSize().width * CGFloat(modelSet.count), height: onRequestItemSize().height)
+        
+        stackView.frame.size.width = parentView.getWidth()
+        stackView.frame.size.height = content.height
         
         self.stackView.snp.makeConstraints { (maker) in
             
             maker.width.equalTo(parentView.getWidth())
-            maker.height.equalTo(onRequestItemSize().height)
+            maker.height.equalTo(content.height)
         }
+        
+        //  collectionView.frame.size.width = content.width
+        // collectionView.frame.size.height = content.height
+    }
+    
+    override func onLoadData() {
+        super.onLoadData()
+        
+        hideSkeleton()
+        onLayoutSection()
+        
+        titleLabel.doFadeIn()
     }
     
     override func onCreateViews() {
@@ -195,15 +232,15 @@ class HorizontalSectionView<T> : BaseCell, SkeletonCollectionViewDelegate, Skele
         
         registerCell()
         
-     //   seeAllBtn.setTouch(target: self, selector: #selector(onSeeAllTouch))
+        sectionActionButton.setTouch(target: self, selector: #selector(onSectionActionTouch))
         
         self.contentView.addSubview(stackView)
         self.stackView.addArrangedSubview(titleLabel)
         self.stackView.addArrangedSubview(collectionView)
-    //    self.contentView.addSubview(seeAllBtn)
+        self.contentView.addSubview(sectionActionButton)
     }
-
-    @objc func onSeeAllTouch() {
+    
+    @objc func onSectionActionTouch() {
         
         print("See all")
     }

@@ -9,8 +9,7 @@
 import UIKit
 
 class Slide: UIView {
-    
-    
+     
     @IBOutlet weak var doggyimage: UIImageView!
     
     @IBOutlet weak var doggyDescription: UILabel!

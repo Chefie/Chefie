@@ -62,6 +62,10 @@ class BaseCell : UITableViewCell, IDynamicCellProtocol{
      
         self.preservesSuperviewLayoutMargins = true
         self.contentView.preservesSuperviewLayoutMargins = true
+        
+     //   self.contentView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        
+       //      cell.preservesSuperviewLayoutMargins = false
     }
     
     func onLoadData() {

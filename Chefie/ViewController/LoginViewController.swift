@@ -74,8 +74,15 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
         logoChefie.animate()
         
         if Auth.auth().currentUser != nil{
-          //  self.performSegue(withIdentifier: "mainScreen", sender: self)
+            launchMainScreen()
         }
+    }
+    
+    func launchMainScreen() {
+        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen" )
+        
+        self.present(exampleVC, animated: true)
     }
     
     //Metodo que hace el Login a traves del email y pass de Firebase.
@@ -101,12 +108,7 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
                 if error == nil && user != nil{
                     self.dismiss(animated: false, completion: nil)
                     if Auth.auth().currentUser != nil{
-                        
-                        
-                        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                        let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen" )
-                        
-                        self.present(exampleVC, animated: true)
+                            self.launchMainScreen()
                       
                     //    self.performSegue(withIdentifier: "mainScreen", sender: self)
                     }

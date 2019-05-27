@@ -25,10 +25,8 @@ class ViewControllerSlider: UIViewController, UIScrollViewDelegate {
         pageController.numberOfPages = slides.count
         pageController.currentPage = 0
         view.bringSubviewToFront(pageController)
-        
     }
-    
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -88,9 +86,7 @@ class ViewControllerSlider: UIViewController, UIScrollViewDelegate {
         let slide5:Slide = Bundle.main.loadNibNamed("Slide", owner: self, options: nil)?.first as! Slide
         slide5.doggyimage.image = UIImage(named: "slide5")
         slide5.doggyDescription.text = "Crea chats con otros cocineros"
-       
-        
-        
+
         //Showing the button in the last slide
         slide5.backgroundColor = UIColor(red: 0.8863, green: 0.6784, blue: 0.6039, alpha: 1.0)
         slide5.btnClick.isHidden = false

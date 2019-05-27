@@ -18,40 +18,44 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
             
             mainTable.setCellsToAutomaticDimension()
             mainTable.separatorStyle = UITableViewCell.SeparatorStyle.none
-      
-            mainTable.alwaysBounceVertical = false
-
-            mainTable.delaysContentTouches = true
             mainTable.allowsSelection = false
-            mainTable.bounces  = false
-            mainTable.alwaysBounceVertical = false
             mainTable.allowsMultipleSelection = false
+            mainTable.showsHorizontalScrollIndicator = false
+            mainTable.alwaysBounceHorizontal = false
+            mainTable.alwaysBounceVertical = false
+            mainTable.bounces = false
+ 
+            mainTable.showsVerticalScrollIndicator = false
+            mainTable.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         }
     }
     
     override func updateViewConstraints() {
    
-        mainTable.snp.makeConstraints { (make) in
-            
-            make.width.equalTo(self.view)
-            make.height.equalTo(self.view)
-        }
+        onSetupViews()
         
         super.updateViewConstraints()
     }
     
     func onSetup() {
-        let cache = ImageCache.default
-        cache.clearMemoryCache()
-        cache.clearDiskCache()
-        
-        SDImageCache.shared.clearMemory()
-        SDImageCache.shared.clearDisk()
+//        let cache = ImageCache.default
+//        cache.clearMemoryCache()
+//        cache.clearDiskCache()
+//        
+     //   SDImageCache.shared.clearMemory()
+       // SDImageCache.shared.clearDisk()
     }
     
     func onSetupViews(){
         
         mainTable.backgroundColor = UIColor.white
+        
+        mainTable.snp.makeConstraints { (make) in
+            
+        //    make.topMargin.equalTo(50)
+            make.width.equalTo(self.view.getWidth())
+            make.height.equalTo(self.view.getHeight())
+        }
     }
     
     func onLoadData() {
@@ -119,9 +123,6 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
                 verticalItemPlateInfo.setTitle(value: "Plates")
                 verticalItemPlateInfo.model = data as AnyObject
     
-    
-                
-
                 var commentItems = [Comment]()
                 comments.forEach({ (commentStr) in
                     
@@ -137,7 +138,8 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
                 let commentsHorizontal = CommentsHorizontalCellInfo()
                 commentsHorizontal.setTitle(value: "Comments")
                 commentsHorizontal.model = commentItems as AnyObject
-         self.tableItems.append(commentsHorizontal)
+                
+                self.tableItems.append(commentsHorizontal)
                 
              self.tableItems.append(verticalItemPlateInfo)
               
@@ -199,7 +201,7 @@ extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDele
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableItems.count == 0 ? 4 : tableItems.count
+        return tableItems.count == 0 ? AppSettings.DefaultSkeletonCellCount : tableItems.count
     }
     
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {

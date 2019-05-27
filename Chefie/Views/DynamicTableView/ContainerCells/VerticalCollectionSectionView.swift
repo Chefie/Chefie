@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SkeletonView
 
-class VerticalSectionCellBaseInfo : BaseItemInfo {
+class VerticalCollectionSectionCellBaseInfo : BaseItemInfo {
     
     var onTitleChanged: ((_ newValue : String) -> Void)!
     
@@ -45,11 +45,11 @@ struct VerticalSectionConfig {
     var contentMargin : CFMargin = CFMargin(left: 4, top: 4, right: 4, bottom: 4)
 }
 
-class VerticalSectionView<T> : BaseCell,  SkeletonCollectionViewDelegate, SkeletonCollectionViewDataSource, UICollectionViewDelegateFlowLayout
+class VerticalCollectionSectionView<T> : BaseCell,  SkeletonCollectionViewDelegate, SkeletonCollectionViewDataSource, UICollectionViewDelegateFlowLayout
 {
     var modelSet = Array<T>()
 
-    var sectionTitleStr : String = "Vertical Section"
+    var sectionTitleStr : String = "Vertical Collection Section"
     
     let sectionTitleLabel : PaddingLabel = {
         let lbl = PaddingLabel(maskConstraints: false, font: DefaultFonts.DefaultHeaderTextBoldFont)
@@ -77,6 +77,7 @@ class VerticalSectionView<T> : BaseCell,  SkeletonCollectionViewDelegate, Skelet
         layout.minimumInteritemSpacing = 0.0
 
         let view = UICollectionView(frame: CGRect(x: 0, y: 0, width: 500, height: 200), collectionViewLayout: layout)
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
         view.showsHorizontalScrollIndicator = false
         view.showsVerticalScrollIndicator = false
@@ -110,7 +111,7 @@ class VerticalSectionView<T> : BaseCell,  SkeletonCollectionViewDelegate, Skelet
     override func setBaseItemInfo(info: BaseItemInfo) {
         super.setBaseItemInfo(info: info)
 
-        guard let verticalSectionInfo = info as? VerticalSectionCellBaseInfo else {
+        guard let verticalSectionInfo = info as? VerticalCollectionSectionCellBaseInfo else {
             return
         }
         
