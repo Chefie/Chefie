@@ -15,8 +15,8 @@ import SkeletonView
 import SDWebImage
 
 class ProfileInfoItemInfo : BaseItemInfo {
-    
-    override func identifier() -> String {
+
+    override func reuseIdentifier() -> String {
         return "ProfileInfoCellView"
     }
 }

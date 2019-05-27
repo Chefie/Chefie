@@ -15,7 +15,7 @@ import SDWebImage
 
 class UploadRecipeCellItemInfo : BaseItemInfo {
     
-    override func identifier() -> String {
+    override func reuseIdentifier() -> String {
         return "UploadRecipeInfoCellView"
     }
 }

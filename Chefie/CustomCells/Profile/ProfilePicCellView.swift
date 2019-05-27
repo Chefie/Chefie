@@ -15,7 +15,7 @@ import SDWebImage
 
 class ProfilePicCellItemInfo : BaseItemInfo {
     
-    override func identifier() -> String {
+    override func reuseIdentifier() -> String {
         return "ProfilePicCellView"
     }
 }

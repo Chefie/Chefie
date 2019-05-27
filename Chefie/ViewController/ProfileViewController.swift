@@ -98,9 +98,9 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
         onSetupViews()
         
         //////////////////////////////////////////////////////
-        tableCellRegistrator.add(identifier: ProfilePicCellItemInfo().identifier(), cellClass: ProfilePicCellView.self)
+        tableCellRegistrator.add(identifier: ProfilePicCellItemInfo().reuseIdentifier(), cellClass: ProfilePicCellView.self)
         //////////////////////////////////////////////////////
-        tableCellRegistrator.add(identifier: ProfileInfoItemInfo().identifier(), cellClass: ProfileInfoCellView.self)
+        tableCellRegistrator.add(identifier: ProfileInfoItemInfo().reuseIdentifier(), cellClass: ProfileInfoCellView.self)
         
         tableCellRegistrator.registerAll(tableView: mainTable)
         
@@ -123,7 +123,7 @@ extension ProfileViewController: SkeletonTableViewDataSource, SkeletonTableViewD
     }
     
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        return tableItems [indexPath.row].identifier()
+        return tableItems [indexPath.row].reuseIdentifier()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -137,7 +137,7 @@ extension ProfileViewController: SkeletonTableViewDataSource, SkeletonTableViewD
         
         let cellInfo = self.tableItems[indexPath.row]
         
-        let ce : BaseCell = mainTable.dequeueReusableCell(withIdentifier: cellInfo.identifier(), for: indexPath) as! BaseCell
+        let ce : BaseCell = mainTable.dequeueReusableCell(withIdentifier: cellInfo.reuseIdentifier(), for: indexPath) as! BaseCell
         ce.viewController = self
         ce.parentView = tableView
         ce.setModel(model: cellInfo.model)
