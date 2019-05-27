@@ -103,7 +103,6 @@
 		BC8641C7227EC21300008F04 /* MutlimediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8641C6227EC21300008F04 /* MutlimediaCell.swift */; };
 		BC8641C9227ED78200008F04 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8641C8227ED78200008F04 /* DateExtensions.swift */; };
 		BC8641CB227ED82700008F04 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8641CA227ED82700008F04 /* StringExtensions.swift */; };
-		BC9CCD8A227DCB87008CDCDB /* PlatoCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9CCD89227DCB87008CDCDB /* PlatoCellView.swift */; };
 		BC9CCD8D227DE621008CDCDB /* TouchableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9CCD8C227DE621008CDCDB /* TouchableImageView.swift */; };
 		BC9CCD90227DE901008CDCDB /* PlateDetailStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC9CCD8F227DE901008CDCDB /* PlateDetailStoryboard.storyboard */; };
 		BC9CCD93227E0368008CDCDB /* DynamicViewControllerProto.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9CCD92227E0368008CDCDB /* DynamicViewControllerProto.swift */; };
@@ -243,7 +242,6 @@
 		BC8641C6227EC21300008F04 /* MutlimediaCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutlimediaCell.swift; sourceTree = "<group>"; };
 		BC8641C8227ED78200008F04 /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		BC8641CA227ED82700008F04 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
-		BC9CCD89227DCB87008CDCDB /* PlatoCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatoCellView.swift; sourceTree = "<group>"; };
 		BC9CCD8C227DE621008CDCDB /* TouchableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchableImageView.swift; sourceTree = "<group>"; };
 		BC9CCD8F227DE901008CDCDB /* PlateDetailStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PlateDetailStoryboard.storyboard; sourceTree = "<group>"; };
 		BC9CCD92227E0368008CDCDB /* DynamicViewControllerProto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicViewControllerProto.swift; sourceTree = "<group>"; };
@@ -712,7 +710,6 @@
 		BCB97EF022958D8A00E58922 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				BC9CCD89227DCB87008CDCDB /* PlatoCellView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1053,7 +1050,6 @@
 				BCBFAABF2292EEB700B4ECD4 /* IDynamicCellProtocol.swift in Sources */,
 				420251BF2293F348004AEBF9 /* BaseCellItemInfo.swift in Sources */,
 				BCB97EF42295A87200E58922 /* ProfileInfoCellView.swift in Sources */,
-				BC9CCD8A227DCB87008CDCDB /* PlatoCellView.swift in Sources */,
 				BC7F2F902257A51A00D3F301 /* TransitionZoom.swift in Sources */,
 				BC7F2F922257A51A00D3F301 /* DesignableTabBarController.swift in Sources */,
 				428FC3B922998CE50086ABE4 /* INestedCell.swift in Sources */,
