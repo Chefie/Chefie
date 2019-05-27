@@ -13,4 +13,5 @@ class UserMin{
     var id : String?
     var userName : String?
     var profilePic: String?
+    var profileBackground : String?
 }
