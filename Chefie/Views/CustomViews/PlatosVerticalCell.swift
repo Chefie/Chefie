@@ -11,7 +11,7 @@ import UIKit
 import SkeletonView
 import SDWebImage
 
-class PlatosVerticalCellBaseItemInfo : VerticalSectionCellBaseInfo {
+class PlatosVerticalCellBaseItemInfo : VerticalTableSectionCellBaseInfo {
     
     override func reuseIdentifier() -> String {
        return String(describing: PlatosVerticalCell.self)
@@ -22,7 +22,7 @@ class PlatosVerticalCellBaseItemInfo : VerticalSectionCellBaseInfo {
     }
 }
 
-class PlatosVerticalCell : VerticalSectionView<Plate> {
+class PlatosVerticalCell : VerticalTableSectionView<Plate> {
 
     override var modelSet: [Plate]{
         
@@ -43,34 +43,26 @@ class PlatosVerticalCell : VerticalSectionView<Plate> {
         return modelSet as AnyObject
     }
     
-    override func onRequestNumberOfSections() -> Int {
-        return 1
-    }
-    
-    override func onRequestNumberOfItemsInSection() -> Int {
-        return self.modelSet.count == 0 ? AppSettings.DefaultSkeletonCellCount : modelSet.count
-    }
-    
     override func onRequestItemSize() -> CGSize {
-        return CGSize(width: self.parentView.getWidth().minus(amount: 10), height: self.parentView.getHeight().percentageOf(amount: 36))
+        return CGSize(width: self.parentView.getWidth(), height: self.parentView.getHeight().percentageOf(amount: 36))
     }
     
-    override func onRequestCell(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    override func onRequestCell(_ tableView: UITableView, cellForItemAt indexPath: IndexPath) -> UITableViewCell {
         if (modelSet.count == 0) {
             
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: getCellIdentifier(), for: indexPath) as! ImageViewCollectionCell
-            cell.collectionItemSize = onRequestItemSize()
+            let cell = tableView.dequeueReusableCell(withIdentifier: getCellIdentifier(), for: indexPath) as! ImageViewCollectionCell
             cell.viewController = viewController
-            cell.parentView = collectionView
+            cell.collectionItemSize = onRequestItemSize()
+            cell.parentView = tableView
             return cell
         }
         
         let cellInfo = self.modelSet[indexPath.row]
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: getCellIdentifier(), for: indexPath) as! ImageViewCollectionCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: getCellIdentifier(), for: indexPath) as! ImageViewCollectionCell
         cell.viewController = viewController
         cell.collectionItemSize = onRequestItemSize()
-        cell.parentView = collectionView
+        cell.parentView = tableView
         cell.setModel(model: cellInfo)
         cell.onLoadData()
         
@@ -79,15 +71,14 @@ class PlatosVerticalCell : VerticalSectionView<Plate> {
     
     override func onRegisterCells() {
         
-        collectionView.register(ImageViewCollectionCell.self, forCellWithReuseIdentifier: getCellIdentifier())
+        tableView.register(ImageViewCollectionCell.self, forCellReuseIdentifier: getCellIdentifier())
     }
 
     override func onLoadData() {
         super.onLoadData()
         
-        collectionView.reloadData()
-        
-        hideSkeleton()
+        tableView.reloadData()
+       hideSkeleton()
     }
     
     override func onLayout(size: CGSize!) {
@@ -95,11 +86,7 @@ class PlatosVerticalCell : VerticalSectionView<Plate> {
         
         onLayoutSection()
         
-        contentView.showAnimatedGradientSkeleton()
-    }
-    
-    override func verticalSpacing() -> CGFloat {
-        return 20
+        //contentView.showAnimatedGradientSkeleton()
     }
     
     override func getCellIdentifier() -> String {
@@ -110,14 +97,12 @@ class PlatosVerticalCell : VerticalSectionView<Plate> {
     override func onCreateViews() {
         super.onCreateViews()
 
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        
-        print("Create views called")
+        tableView.delegate = self
+        tableView.dataSource = self
     }
 }
 
-class ImageViewCollectionCell : BaseCollectionCell, ICellDataProtocol, INestedCell {
+class ImageViewCollectionCell : BaseCell, ICellDataProtocol, INestedCell {
 
     override var isSelected: Bool{
         didSet{
@@ -144,6 +129,8 @@ class ImageViewCollectionCell : BaseCollectionCell, ICellDataProtocol, INestedCe
         let lbl = MultilineLabel(maskConstraints: false, font: DefaultFonts.DefaultTextFont)
         lbl.text = ""
         lbl.numberOfLines = 1
+        //lbl.textColor = UIColor.white
+        //lbl.backgroundColor = UIColor.blue
         return lbl
     }()
     
@@ -158,34 +145,38 @@ class ImageViewCollectionCell : BaseCollectionCell, ICellDataProtocol, INestedCe
     override func onLayout(size: CGSize!) {
         super.onLayout(size: size)
     
-        frontImageView.snp.makeConstraints { (maker) in
-
-            maker.width.equalTo(collectionItemSize.width)
-            maker.height.equalTo(collectionItemSize.heightPercentageOf(amount: 88))
-            maker.topMargin.equalTo(0)
-            maker.bottomMargin.equalTo(6)
-        }
-        
-        self.plateTitle.snp.makeConstraints { (maker) in
-            
-            maker.bottom.equalTo(0)
-            maker.width.equalTo(collectionItemSize.width)
-        }
-        
-        self.frontImageView.setCornerRadius(radius: 8)
-    //    self.frontImageView.addShadow(radius: 5)
-        
         self.contentView.snp.makeConstraints { (maker) in
-            maker.margins.equalToSuperview()
+            maker.edges.equalToSuperview()
+            maker.left.top.right.bottom.equalTo(0)
             maker.width.equalTo(size.width)
             maker.height.equalTo(collectionItemSize.height)
         }
         
-        plateTitle.displayLines(height: collectionItemSize.heightPercentageOf(amount: 10))
+        frontImageView.snp.makeConstraints { (maker) in
+
+            maker.width.equalTo(collectionItemSize.width.minus(amount: 10))
+            maker.height.equalTo(collectionItemSize.heightPercentageOf(amount: 88))
+            maker.topMargin.equalTo(0)
+            maker.bottomMargin.equalTo(10)
+            maker.left.equalTo(collectionItemSize.widthPercentageOf(amount: 5))
+      //      maker.centerX.equalTo(contentView)
+        }
         
-        //self.frontImageView.backgroundColor = UIColor.purple
+        self.plateTitle.snp.makeConstraints { (maker) in
+ 
+            maker.width.equalTo(collectionItemSize.width.minus(amount: 20))
+            maker.height.equalTo(collectionItemSize.heightPercentageOf(amount: 10))
+            maker.bottomMargin.equalToSuperview().offset(4)
+            maker.centerX.equalToSuperview()
+        }
+        
+        self.frontImageView.setCornerRadius(radius: 8)
+   
+       plateTitle.displayLines(height: collectionItemSize.heightPercentageOf(amount: 10))
+        
+       // self.backgroundColor = UIColor.purple
        //self.backgroundColor = UIColor.red
-        self.showAnimatedGradientSkeleton()
+       contentView.showAnimatedGradientSkeleton()
     }
     
     override func onLoadData() {
@@ -193,10 +184,10 @@ class ImageViewCollectionCell : BaseCollectionCell, ICellDataProtocol, INestedCe
         self.frontImageView.sd_setImage(with: URL(string: model?.multimedia?[0].url ?? "")){ (image : UIImage?,
             error : Error?, cacheType : SDImageCacheType, url : URL?) in
 
-            self.hideSkeleton()
-            self.doFadeIn()
+           self.hideSkeleton()
+        //    self.doFadeIn()
             
-            self.plateTitle.text = self.model?.title
+           self.plateTitle.text = self.model?.title
             self.plateTitle.hideLines()
             // self.frontImageView.forceAddShadow(radius: 8)
         }

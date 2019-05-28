@@ -35,9 +35,17 @@ class CommentsHorizontalCell : HorizontalSectionView<Comment> {
     }
 
     override func onLoadData() {
+      
+        collectionView.reloadData()
+        
         super.onLoadData()
         
-        collectionView.reloadData()
+    }
+    
+    override func onLayout(size: CGSize!) {
+        super.onLayout(size: size)
+        
+        setActionButtonSize(size: CGSize(width: 20, height: 18))
     }
     
     override func onCreateViews() {
@@ -94,8 +102,8 @@ class CommentCollectionCell : BaseCollectionCell, ICellDataProtocol, INestedCell
         super.onLayout(size: size)
         
         self.contentView.snp.makeConstraints { (maker) in
-            
-            maker.top.left.right.bottom.equalTo(0)
+            // this makes collectionview not responsible??
+         //   maker.top.left.right.bottom.equalToSuperview()
             maker.width.equalTo(collectionItemSize.width)
             maker.height.equalTo(collectionItemSize.height)
         }
@@ -103,9 +111,12 @@ class CommentCollectionCell : BaseCollectionCell, ICellDataProtocol, INestedCell
         label.snp.makeConstraints { (maker) in
 
             maker.top.equalTo(0)
-            maker.topMargin.equalTo(10)
+            maker.bottomMargin.equalTo(0)
+          //  maker.topMargin.equalTo(10)
             maker.leftMargin.rightMargin.equalTo(10)
             maker.width.equalTo(size.widthPercentageOf(amount: 20))
+            
+            maker.height.equalTo(collectionItemSize.height - 10)
         }
 
 
@@ -114,12 +125,16 @@ class CommentCollectionCell : BaseCollectionCell, ICellDataProtocol, INestedCell
   
         //    label.displayLines(height: 500)
         
-       // self.backgroundColor = UIColor.red
+        //self.backgroundColor = UIColor.red
         //    self.showAnimatedGradientSkeleton()
     }
     
     override func setModel(model: AnyObject?) {
         self.model = (model as! Comment)
+    }
+    
+    override func getModel() -> AnyObject? {
+        return model
     }
     
     override func onLoadData() {
@@ -137,6 +152,7 @@ class CommentCollectionCell : BaseCollectionCell, ICellDataProtocol, INestedCell
     //    self.contentView.addShadow()
        // self.contentView.addSubview(cardView)
         self.contentView.addSubview(label)
+        
         
      //   self.contentView.setTouch(target: self, selector: #selector(onTouch))
     }

@@ -10,11 +10,13 @@
 		337B33DE2294C3EF008B662D /* TableCellRegistrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337B33DD2294C3EF008B662D /* TableCellRegistrator.swift */; };
 		33CED56822984087009B6868 /* PalleteExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CED56722984087009B6868 /* PalleteExtensions.swift */; };
 		33CED56A229843F7009B6868 /* DimensionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CED569229843F7009B6868 /* DimensionExtensions.swift */; };
-		33EF169C2296D97C0002CFA1 /* VerticalSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EF169B2296D97C0002CFA1 /* VerticalSectionView.swift */; };
 		33EF169E2296DF5E0002CFA1 /* PlatosVerticalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EF169D2296DF5E0002CFA1 /* PlatosVerticalCell.swift */; };
 		420251BD2293E18A004AEBF9 /* MediaCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420251BC2293E18A004AEBF9 /* MediaCellView.swift */; };
 		420251BF2293F348004AEBF9 /* BaseCellItemInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420251BE2293F348004AEBF9 /* BaseCellItemInfo.swift */; };
 		420251C12293F531004AEBF9 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420251C02293F531004AEBF9 /* CommentCell.swift */; };
+		421B77C2229B40A40087DF5E /* VerticalTableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421B77C1229B40A40087DF5E /* VerticalTableSection.swift */; };
+		421B77C4229B5A490087DF5E /* VerticalCollectionSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421B77C3229B5A480087DF5E /* VerticalCollectionSectionView.swift */; };
+		421B77C6229B68D70087DF5E /* RoutesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421B77C5229B68D70087DF5E /* RoutesViewController.swift */; };
 		4251793222977BEA00D673A7 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4251793122977BEA00D673A7 /* ArrayExtensions.swift */; };
 		4289F893229356320001E03A /* ICellDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4289F892229356320001E03A /* ICellDataProtocol.swift */; };
 		4289F895229367F00001E03A /* ICellDataInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4289F894229367F00001E03A /* ICellDataInfo.swift */; };
@@ -53,7 +55,6 @@
 		BC7F2F3D2257993100D3F301 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F2F3C2257993100D3F301 /* AppDelegate.swift */; };
 		BC7F2F442257993200D3F301 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC7F2F432257993200D3F301 /* Assets.xcassets */; };
 		BC7F2F472257993200D3F301 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC7F2F452257993200D3F301 /* LaunchScreen.storyboard */; };
-		BC7F2F592257A4B400D3F301 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F2F582257A4B400D3F301 /* CardView.swift */; };
 		BC7F2F7B2257A51A00D3F301 /* DesignableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F2F5E2257A50200D3F301 /* DesignableTextField.swift */; };
 		BC7F2F7C2257A51A00D3F301 /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC7F2F5F2257A50300D3F301 /* LoadingView.xib */; };
 		BC7F2F7D2257A51A00D3F301 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F2F602257A50400D3F301 /* LoadingView.swift */; };
@@ -136,11 +137,13 @@
 		337B33DD2294C3EF008B662D /* TableCellRegistrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCellRegistrator.swift; sourceTree = "<group>"; };
 		33CED56722984087009B6868 /* PalleteExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PalleteExtensions.swift; sourceTree = "<group>"; };
 		33CED569229843F7009B6868 /* DimensionExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimensionExtensions.swift; sourceTree = "<group>"; };
-		33EF169B2296D97C0002CFA1 /* VerticalSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalSectionView.swift; sourceTree = "<group>"; };
 		33EF169D2296DF5E0002CFA1 /* PlatosVerticalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatosVerticalCell.swift; sourceTree = "<group>"; };
 		420251BC2293E18A004AEBF9 /* MediaCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCellView.swift; sourceTree = "<group>"; };
 		420251BE2293F348004AEBF9 /* BaseCellItemInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCellItemInfo.swift; sourceTree = "<group>"; };
 		420251C02293F531004AEBF9 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		421B77C1229B40A40087DF5E /* VerticalTableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalTableSection.swift; sourceTree = "<group>"; };
+		421B77C3229B5A480087DF5E /* VerticalCollectionSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerticalCollectionSectionView.swift; sourceTree = "<group>"; };
+		421B77C5229B68D70087DF5E /* RoutesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesViewController.swift; sourceTree = "<group>"; };
 		4251793122977BEA00D673A7 /* ArrayExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
 		4289F892229356320001E03A /* ICellDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICellDataProtocol.swift; sourceTree = "<group>"; };
 		4289F894229367F00001E03A /* ICellDataInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICellDataInfo.swift; sourceTree = "<group>"; };
@@ -183,7 +186,6 @@
 		BC7F2F432257993200D3F301 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BC7F2F462257993200D3F301 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BC7F2F482257993200D3F301 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BC7F2F582257A4B400D3F301 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		BC7F2F5E2257A50200D3F301 /* DesignableTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignableTextField.swift; sourceTree = "<group>"; };
 		BC7F2F5F2257A50300D3F301 /* LoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
 		BC7F2F602257A50400D3F301 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
@@ -315,8 +317,9 @@
 		33EF169A2296D8BA0002CFA1 /* ContainerCells */ = {
 			isa = PBXGroup;
 			children = (
+				421B77C3229B5A480087DF5E /* VerticalCollectionSectionView.swift */,
 				42FD5E452294BFC200785BE7 /* HorizontalSectionView.swift */,
-				33EF169B2296D97C0002CFA1 /* VerticalSectionView.swift */,
+				421B77C1229B40A40087DF5E /* VerticalTableSection.swift */,
 			);
 			path = ContainerCells;
 			sourceTree = "<group>";
@@ -478,6 +481,7 @@
 				BC7F2FA62257A70900D3F301 /* TabBarViewController.swift */,
 				B0747568226E450700B97B21 /* TestViewController.swift */,
 				B0150DAC22757B4C006F48FA /* PlateDetailsViewController.swift */,
+				421B77C5229B68D70087DF5E /* RoutesViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -519,7 +523,6 @@
 				B0767ECC2275717D0071AE7C /* SnapshotParser */,
 				BC7F2FAE2257AA1E00D3F301 /* SliderChefie */,
 				BC7F2F5D2257A4E500D3F301 /* Spring */,
-				BC7F2F582257A4B400D3F301 /* CardView.swift */,
 				42A7D56A229AAB8B00617725 /* PaddingLabel.swift */,
 			);
 			path = Libs;
@@ -817,6 +820,7 @@
 				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
 				"${BUILT_PRODUCTS_DIR}/CodableFirebase/CodableFirebase.framework",
+				"${BUILT_PRODUCTS_DIR}/ElongationPreview/ElongationPreview.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
@@ -828,6 +832,7 @@
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SkeletonView/SkeletonView.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/UIFloatLabelTextField/UIFloatLabelTextField.framework",
 				"${BUILT_PRODUCTS_DIR}/VersaPlayer/VersaPlayer.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
@@ -840,6 +845,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CodableFirebase.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ElongationPreview.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
@@ -851,6 +857,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkeletonView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIFloatLabelTextField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VersaPlayer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
@@ -915,7 +922,6 @@
 				BC7F2F912257A51A00D3F301 /* KeyboardLayoutConstraint.swift in Sources */,
 				BCBFAAC62292FBEB00B4ECD4 /* BaseModel.swift in Sources */,
 				BCA18E0E2263930000F498B4 /* Premium.swift in Sources */,
-				BC7F2F592257A4B400D3F301 /* CardView.swift in Sources */,
 				B097E2B82275B28B00C2A177 /* CalcExtensions.swift in Sources */,
 				BC7F2F3D2257993100D3F301 /* AppDelegate.swift in Sources */,
 				BCA18E082263906F00F498B4 /* Tag.swift in Sources */,
@@ -930,6 +936,7 @@
 				BC7F2F8C2257A51A00D3F301 /* UnwindSegue.swift in Sources */,
 				BC7F2F872257A51A00D3F301 /* Spring.swift in Sources */,
 				B0E499AF227776B3002E21C9 /* ShowMoreHolderView.swift in Sources */,
+				421B77C2229B40A40087DF5E /* VerticalTableSection.swift in Sources */,
 				BCA18E062263901100F498B4 /* Community.swift in Sources */,
 				BC7F2F9B2257A63500D3F301 /* LoginViewController.swift in Sources */,
 				BC7F2F972257A51A00D3F301 /* SpringTextField.swift in Sources */,
@@ -945,6 +952,7 @@
 				42FD5E462294BFC200785BE7 /* HorizontalSectionView.swift in Sources */,
 				BC7F2F852257A51A00D3F301 /* DesignableTextView.swift in Sources */,
 				BC7F2FA52257A6E300D3F301 /* HomeViewController.swift in Sources */,
+				421B77C4229B5A490087DF5E /* VerticalCollectionSectionView.swift in Sources */,
 				BC7F2F9E2257A67400D3F301 /* AlertService.swift in Sources */,
 				BC9CCD99227E2F57008CDCDB /* InfoView.swift in Sources */,
 				BC7F2F992257A54A00D3F301 /* RegisterViewController.swift in Sources */,
@@ -966,7 +974,6 @@
 				428FC3B922998CE50086ABE4 /* INestedCell.swift in Sources */,
 				BC8641CB227ED82700008F04 /* StringExtensions.swift in Sources */,
 				BCA18E182263947A00F498B4 /* PremiumRepository.swift in Sources */,
-				33EF169C2296D97C0002CFA1 /* VerticalSectionView.swift in Sources */,
 				B01E051E227592DA00BEAAE8 /* LocalFileImageDataProvider.swift in Sources */,
 				BCEBD7AD225A5AB300CF339B /* LocalData.swift in Sources */,
 				33CED56A229843F7009B6868 /* DimensionExtensions.swift in Sources */,
@@ -991,6 +998,7 @@
 				BCEBD7A6225A5A1800CF339B /* AppContainer.swift in Sources */,
 				428FC3BB22998E0F0086ABE4 /* AppSettings.swift in Sources */,
 				BCA18E162263946800F498B4 /* TagRepository.swift in Sources */,
+				421B77C6229B68D70087DF5E /* RoutesViewController.swift in Sources */,
 				BCA18E10226393C300F498B4 /* RouteRepository.swift in Sources */,
 				B0150DAB227579E0006F48FA /* PlateCellView.swift in Sources */,
 			);

@@ -18,6 +18,8 @@ target 'Chefie' do
   pod 'RxCocoa', '~> 5'
   pod 'SDWebImage', '~> 5.0'
   pod 'VersaPlayer'
+  pod 'ElongationPreview'
+  pod 'UIFloatLabelTextField'
 end
 
 

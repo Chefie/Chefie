@@ -22,11 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         let isLogin = UserDefaults.standard.string(forKey: "runed")
         //    self.NextViewController(storybordid: "loginView")
          //  self.NextViewController(storybordid: "loginView")
-//        if isLogin == "vamos"{
-//         
-//        }else{
-//            self.NextViewController(storybordid: "sliderView")
-//        }
+        if isLogin == "vamos"{
+          self.NextViewController(storybordid: "loginView")
+        }else{
+            self.NextViewController(storybordid: "sliderView")
+        }
         return true
     }
     //METODO QUE RECIBE EL ID DE LA VISTA Y NOS SACA UNA U OTRA VISTA
