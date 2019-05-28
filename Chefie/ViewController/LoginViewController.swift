@@ -74,7 +74,7 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
         logoChefie.animate()
         
         if Auth.auth().currentUser != nil{
-            launchMainScreen()
+         //   launchMainScreen()
         }
     }
     

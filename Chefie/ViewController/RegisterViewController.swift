@@ -57,8 +57,20 @@ class RegisterViewController : UIViewController, UITextFieldDelegate {
         super.viewDidAppear(animated)
         
         if Auth.auth().currentUser != nil{
-            self.performSegue(withIdentifier: "toHomeScreen", sender: self)
+      //      self.performSegue(withIdentifier: "registerScreen", sender: self)
         }
+    }
+    
+    func register() {
+        
+     //  self.performSegue(withIdentifier: "registerScreen", sender: self)
+    }
+    
+    func launchMainScreen() {
+        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen" )
+        
+        self.present(exampleVC, animated: true)
     }
     
     @IBAction func buttonRegister(_ sender: Any) {
@@ -78,7 +90,9 @@ class RegisterViewController : UIViewController, UITextFieldDelegate {
                     self.textFieldPassword.text = ""
                     self.textFieldPassword2.text = ""
                     if Auth.auth().currentUser != nil{
-                        self.performSegue(withIdentifier: "toHomeScreen", sender: self)
+                   
+                        self.launchMainScreen()
+                        //  self.performSegue(withIdentifier: "toHomeScreen", sender: self)
                     }
                 }else{
                     self.labelMessage.text = "\(error!.localizedDescription)"

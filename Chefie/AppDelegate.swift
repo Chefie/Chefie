@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
-        
+
         //AQUI SE COMBRUEBA SI HAY ALGO GUARDADO EN EL USER DEFAULTS
         //EN LA KEY "runed"
         let isLogin = UserDefaults.standard.string(forKey: "runed")
