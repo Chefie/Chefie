@@ -394,6 +394,14 @@
 			path = CustomViews;
 			sourceTree = "<group>";
 		};
+		4FE5875B229D8742003E780F /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				4FE58753229D76FC003E780F /* SettingsCellView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		8B5254ED82F1BFA112070E3C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -622,7 +630,6 @@
 			children = (
 				BCEBD79B225A3F3C00CF339B /* Model */,
 				BC7F2F9D2257A67400D3F301 /* AlertService.swift */,
-				4FE58753229D76FC003E780F /* SettingsCellView.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -701,6 +708,7 @@
 		BCB97EEE22958D3100E58922 /* CustomCells */ = {
 			isa = PBXGroup;
 			children = (
+				4FE5875B229D8742003E780F /* Settings */,
 				BC2FDA5E2296F89D00B1CB40 /* UploadRecipe */,
 				BCB97EF022958D8A00E58922 /* Home */,
 				BCB97EEF22958D5800E58922 /* Profile */,
