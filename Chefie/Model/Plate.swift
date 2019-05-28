@@ -26,4 +26,5 @@ class Plate : Codable
     var comments : Array<Comment>?
     var community : Community?
     var tags : Array<Tag>?
+    var ingredients : Array<String>?
 }

@@ -26,6 +26,7 @@ class ChefieUser : Codable {
     var deleted: Bool?
     var gender : String?
     var location: String?
+    var community: String?
     
     init(email: String, password: String) {
         

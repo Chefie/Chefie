@@ -38,12 +38,12 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
     }
     
     func onSetup() {
-        let cache = ImageCache.default
-        cache.clearMemoryCache()
-        cache.clearDiskCache()
-        
-        SDImageCache.shared.clearMemory()
-        SDImageCache.shared.clearDisk()
+//        let cache = ImageCache.default
+//        cache.clearMemoryCache()
+//        cache.clearDiskCache()
+//        
+     //   SDImageCache.shared.clearMemory()
+       // SDImageCache.shared.clearDisk()
     }
     
     func onSetupViews(){

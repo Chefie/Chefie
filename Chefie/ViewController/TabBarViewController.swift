@@ -49,6 +49,10 @@ class TabBarViewController: UITabBarController {
         tabBarItem.selectedImage = UIImage(named: "chef2")?.withRenderingMode(.alwaysOriginal)
         tabBar.items?[3].title = "Profile"
         
+        tabBar.tintColor = UIColor.white
+        //tabBar.barTintColor = UIColor.black
+        //tabBar.unselectedItemTintColor = UIColor.yellow
+        
         tabBar.items?.forEach({ (item) in
             item.imageInsets = UIEdgeInsets.init(top: 8, left: 0, bottom: -8, right: 0)
             item.title = ""
