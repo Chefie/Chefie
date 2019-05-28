@@ -59,4 +59,17 @@ class TabBarViewController: UITabBarController {
         })
         
     }
+    
+    func uploadRecipe () {
+        
+    }
+    
+    @objc func buttonAction() {
+        
+        print("*********VAMOS")
+        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
+        let vc  : SettingsViewController = storyboard.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
+        
+        self.viewController?.navigationController?.pushViewController(vc, animated: true)
+    }
 }

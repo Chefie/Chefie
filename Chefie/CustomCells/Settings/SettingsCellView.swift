@@ -80,6 +80,8 @@ class FieldCellView: BaseCell, ICellDataProtocol {
         self.contentView.addSubview(label)
           self.contentView.addSubview(textField)
     }
+    
+    
 }
 
 class FieldValueInfo {
