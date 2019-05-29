@@ -57,16 +57,20 @@ class PlatosVerticalCell : VerticalTableSectionView<Plate> {
             return cell
         }
         
-        let cellInfo = self.modelSet[indexPath.row]
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: getCellIdentifier(), for: indexPath) as! PlatoCellView
-        cell.viewController = viewController
-        cell.collectionItemSize = onRequestItemSize()
-        cell.parentView = tableView
-        cell.setModel(model: cellInfo)
-        cell.onLoadData()
-        
-        return cell
+        if indexPath.row < modelSet.count {
+            let cellInfo = self.modelSet[indexPath.row]
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: getCellIdentifier(), for: indexPath) as! PlatoCellView
+            cell.viewController = viewController
+            cell.collectionItemSize = onRequestItemSize()
+            cell.parentView = tableView
+            cell.setModel(model: cellInfo)
+            cell.onLoadData()
+            
+            return cell
+        }
+     
+        return super.onRequestCell(tableView, cellForItemAt: indexPath)
     }
     
     override func onRegisterCells() {
@@ -78,7 +82,7 @@ class PlatosVerticalCell : VerticalTableSectionView<Plate> {
         super.onLoadData()
         
         tableView.reloadData()
-       hideSkeleton()
+        hideSkeleton()
     }
     
     override func onLayout(size: CGSize!) {

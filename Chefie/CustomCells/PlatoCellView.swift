@@ -13,13 +13,12 @@ class PlatoCellItemInfo : BaseItemInfo {
 }
 
 class PlatoCellView : BaseCell, ICellDataProtocol, INestedCell, AACarouselDelegate {
-    
+    var collectionItemSize: CGSize!
+
     typealias T = Plate
     
     var model: Plate?
-    
-    var collectionItemSize: CGSize!
-    
+   
     let frontImageView : UIImageView = {
         
         let img = UIImageView(maskConstraints: false)
@@ -52,6 +51,11 @@ class PlatoCellView : BaseCell, ICellDataProtocol, INestedCell, AACarouselDelega
     
     override func onLayout(size: CGSize!) {
         super.onLayout(size: size)
+        
+        if let size = self.cellSize {
+            
+            collectionItemSize = size
+        }
         
         self.contentView.snp.makeConstraints { (maker) in
             maker.edges.equalToSuperview()
@@ -160,6 +164,8 @@ class PlatoCellView : BaseCell, ICellDataProtocol, INestedCell, AACarouselDelega
     
     override func onCreateViews() {
         super.onCreateViews()
+        
+        collectionItemSize = CGSize(width: 0, height: 0)
         self.contentView.addSubview(carousel)
         //self.contentView.addSubview(frontImageView)
         self.contentView.addSubview(plateTitle)

@@ -13,6 +13,23 @@ import SkeletonView
 let g_ViewRadius = CGFloat(4.0)
 let g_ShadowRadius = CGFloat(2.0)
 
+extension UITableView {
+    
+    func setDefaultSettings() {
+        
+        self.setCellsToAutomaticDimension()
+        self.separatorStyle = UITableViewCell.SeparatorStyle.none
+        self.allowsSelection = false
+        self.allowsMultipleSelection = false
+        self.showsHorizontalScrollIndicator = false
+        self.alwaysBounceHorizontal = false
+        self.alwaysBounceVertical = false
+        self.bounces = false
+        self.showsVerticalScrollIndicator = false
+        self.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+    }
+}
+
 extension UILabel {
     
     func calculateTextWidth() -> CGFloat {

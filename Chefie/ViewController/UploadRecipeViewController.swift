@@ -14,7 +14,10 @@ import Kingfisher
 import SkeletonView
 import SDWebImage
 
-class UploadRecipeViewController: UIViewController, DynamicViewControllerProto,UIPickerViewDataSource,UIPickerViewDelegate {
+class UploadRecipeViewController: UIViewController, DynamicViewControllerProto, UIPickerViewDataSource, UIPickerViewDelegate {
+    
+    var tableItems: Array<BaseItemInfo> = []
+    var tableCellRegistrator = TableCellRegistrator()
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1

@@ -3,21 +3,29 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		33066843229D9BA9007BB2E8 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33066842229D9BA9007BB2E8 /* SearchViewController.swift */; };
+		33066845229D9D4D007BB2E8 /* SearchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33066844229D9D4D007BB2E8 /* SearchScreen.storyboard */; };
+		33066847229D9D83007BB2E8 /* NewRecipeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33066846229D9D83007BB2E8 /* NewRecipeScreen.storyboard */; };
+		33066849229D9D9A007BB2E8 /* RouteScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33066848229D9D9A007BB2E8 /* RouteScreen.storyboard */; };
+		3306684B229D9DB1007BB2E8 /* ProfileScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3306684A229D9DB1007BB2E8 /* ProfileScreen.storyboard */; };
+		3306684D229D9DCC007BB2E8 /* HomeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3306684C229D9DCC007BB2E8 /* HomeScreen.storyboard */; };
 		337B33DE2294C3EF008B662D /* TableCellRegistrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337B33DD2294C3EF008B662D /* TableCellRegistrator.swift */; };
 		33CED56822984087009B6868 /* PalleteExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CED56722984087009B6868 /* PalleteExtensions.swift */; };
 		33CED56A229843F7009B6868 /* DimensionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CED569229843F7009B6868 /* DimensionExtensions.swift */; };
 		33EF169E2296DF5E0002CFA1 /* PlatosVerticalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EF169D2296DF5E0002CFA1 /* PlatosVerticalCell.swift */; };
 		420251BD2293E18A004AEBF9 /* MediaCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420251BC2293E18A004AEBF9 /* MediaCellView.swift */; };
 		420251BF2293F348004AEBF9 /* BaseCellItemInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420251BE2293F348004AEBF9 /* BaseCellItemInfo.swift */; };
-		420251C12293F531004AEBF9 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420251C02293F531004AEBF9 /* CommentCell.swift */; };
 		421B77C2229B40A40087DF5E /* VerticalTableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421B77C1229B40A40087DF5E /* VerticalTableSection.swift */; };
 		421B77C4229B5A490087DF5E /* VerticalCollectionSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421B77C3229B5A480087DF5E /* VerticalCollectionSectionView.swift */; };
 		421B77C6229B68D70087DF5E /* RoutesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421B77C5229B68D70087DF5E /* RoutesViewController.swift */; };
+		4249C101229D04F1001F3F7B /* PlatoCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4249C0FF229D04F0001F3F7B /* PlatoCellView.swift */; };
+		4249C102229D04F1001F3F7B /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4249C100229D04F0001F3F7B /* CommentCell.swift */; };
 		4251793222977BEA00D673A7 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4251793122977BEA00D673A7 /* ArrayExtensions.swift */; };
+		427CEFAC229D26A600113A1A /* TablePaginatorEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427CEFAB229D26A600113A1A /* TablePaginatorEx.swift */; };
 		4289F893229356320001E03A /* ICellDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4289F892229356320001E03A /* ICellDataProtocol.swift */; };
 		4289F895229367F00001E03A /* ICellDataInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4289F894229367F00001E03A /* ICellDataInfo.swift */; };
 		428FC3B7229986140086ABE4 /* CFMargin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428FC3B6229986140086ABE4 /* CFMargin.swift */; };
@@ -51,8 +59,6 @@
 		B097E2B82275B28B00C2A177 /* CalcExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B097E2B72275B28B00C2A177 /* CalcExtensions.swift */; };
 		B0E499AF227776B3002E21C9 /* ShowMoreHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E499AE227776B3002E21C9 /* ShowMoreHolderView.swift */; };
 		BC122C90227F363C002E9F22 /* VideoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC122C8F227F363C002E9F22 /* VideoViewCell.swift */; };
-		BC2AB806229C5EF400F51BCC /* PlatoCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2AB804229C5EF400F51BCC /* PlatoCellView.swift */; };
-		BC2AB807229C5EF400F51BCC /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2AB805229C5EF400F51BCC /* CommentCell.swift */; };
 		BC2FDA5B2296DDDA00B1CB40 /* UploadRecipe.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC2FDA5A2296DDDA00B1CB40 /* UploadRecipe.storyboard */; };
 		BC2FDA5D2296DE3100B1CB40 /* UploadRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2FDA5C2296DE3100B1CB40 /* UploadRecipeViewController.swift */; };
 		BC2FDA602296F8CB00B1CB40 /* UploadRecipeInfoCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2FDA5F2296F8CB00B1CB40 /* UploadRecipeInfoCellView.swift */; };
@@ -140,21 +146,30 @@
 		BCEBD7A6225A5A1800CF339B /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEBD7A5225A5A1800CF339B /* AppContainer.swift */; };
 		BCEBD7A9225A5A7800CF339B /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEBD7A8225A5A7800CF339B /* DataManager.swift */; };
 		BCEBD7AD225A5AB300CF339B /* LocalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEBD7AC225A5AB300CF339B /* LocalData.swift */; };
-		CCFCA381AA87A62B1742D9F6 /* Pods_Chefie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9551B91544A4AB5847C57C1B /* Pods_Chefie.framework */; };
+		FD1C79FF734006CECCF6DAF9 /* Pods_Chefie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FCEBE9A240B4AB6B1DE5B2C /* Pods_Chefie.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		33066842229D9BA9007BB2E8 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		33066844229D9D4D007BB2E8 /* SearchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SearchScreen.storyboard; sourceTree = "<group>"; };
+		33066846229D9D83007BB2E8 /* NewRecipeScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NewRecipeScreen.storyboard; sourceTree = "<group>"; };
+		33066848229D9D9A007BB2E8 /* RouteScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = RouteScreen.storyboard; sourceTree = "<group>"; };
+		3306684A229D9DB1007BB2E8 /* ProfileScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProfileScreen.storyboard; sourceTree = "<group>"; };
+		3306684C229D9DCC007BB2E8 /* HomeScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HomeScreen.storyboard; sourceTree = "<group>"; };
 		337B33DD2294C3EF008B662D /* TableCellRegistrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCellRegistrator.swift; sourceTree = "<group>"; };
 		33CED56722984087009B6868 /* PalleteExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PalleteExtensions.swift; sourceTree = "<group>"; };
 		33CED569229843F7009B6868 /* DimensionExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimensionExtensions.swift; sourceTree = "<group>"; };
 		33EF169D2296DF5E0002CFA1 /* PlatosVerticalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatosVerticalCell.swift; sourceTree = "<group>"; };
+		3888CDD4B17E03C7B721B417 /* Pods-Chefie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.debug.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.debug.xcconfig"; sourceTree = "<group>"; };
 		420251BC2293E18A004AEBF9 /* MediaCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCellView.swift; sourceTree = "<group>"; };
 		420251BE2293F348004AEBF9 /* BaseCellItemInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCellItemInfo.swift; sourceTree = "<group>"; };
-		420251C02293F531004AEBF9 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		421B77C1229B40A40087DF5E /* VerticalTableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalTableSection.swift; sourceTree = "<group>"; };
 		421B77C3229B5A480087DF5E /* VerticalCollectionSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerticalCollectionSectionView.swift; sourceTree = "<group>"; };
 		421B77C5229B68D70087DF5E /* RoutesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesViewController.swift; sourceTree = "<group>"; };
+		4249C0FF229D04F0001F3F7B /* PlatoCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlatoCellView.swift; sourceTree = "<group>"; };
+		4249C100229D04F0001F3F7B /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		4251793122977BEA00D673A7 /* ArrayExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
+		427CEFAB229D26A600113A1A /* TablePaginatorEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TablePaginatorEx.swift; sourceTree = "<group>"; };
 		4289F892229356320001E03A /* ICellDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICellDataProtocol.swift; sourceTree = "<group>"; };
 		4289F894229367F00001E03A /* ICellDataInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICellDataInfo.swift; sourceTree = "<group>"; };
 		428FC3B6229986140086ABE4 /* CFMargin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFMargin.swift; sourceTree = "<group>"; };
@@ -172,8 +187,7 @@
 		42FD5E452294BFC200785BE7 /* HorizontalSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalSectionView.swift; sourceTree = "<group>"; };
 		42FD5E472294C21600785BE7 /* CommentsHorizontalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsHorizontalCell.swift; sourceTree = "<group>"; };
 		42FD5E492294CACD00785BE7 /* BaseCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionCell.swift; sourceTree = "<group>"; };
-		58016F3706909FD54F5C3D0F /* Pods-Chefie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.debug.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.debug.xcconfig"; sourceTree = "<group>"; };
-		9551B91544A4AB5847C57C1B /* Pods_Chefie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chefie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5FCEBE9A240B4AB6B1DE5B2C /* Pods_Chefie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chefie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0150DAA227579E0006F48FA /* PlateCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateCellView.swift; sourceTree = "<group>"; };
 		B0150DAC22757B4C006F48FA /* PlateDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateDetailsViewController.swift; sourceTree = "<group>"; };
 		B01E051B22758DC700BEAAE8 /* ImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewExtension.swift; sourceTree = "<group>"; };
@@ -190,8 +204,6 @@
 		B097E2B72275B28B00C2A177 /* CalcExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalcExtensions.swift; sourceTree = "<group>"; };
 		B0E499AE227776B3002E21C9 /* ShowMoreHolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMoreHolderView.swift; sourceTree = "<group>"; };
 		BC122C8F227F363C002E9F22 /* VideoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewCell.swift; sourceTree = "<group>"; };
-		BC2AB804229C5EF400F51BCC /* PlatoCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlatoCellView.swift; path = "../../../../Downloads/Chefie-master/Chefie/CustomCells/PlatoCellView.swift"; sourceTree = "<group>"; };
-		BC2AB805229C5EF400F51BCC /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentCell.swift; path = "../../../../Downloads/Chefie-master/Chefie/CustomCells/CommentCell.swift"; sourceTree = "<group>"; };
 		BC2FDA5A2296DDDA00B1CB40 /* UploadRecipe.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = UploadRecipe.storyboard; sourceTree = "<group>"; };
 		BC2FDA5C2296DE3100B1CB40 /* UploadRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRecipeViewController.swift; sourceTree = "<group>"; };
 		BC2FDA5F2296F8CB00B1CB40 /* UploadRecipeInfoCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRecipeInfoCellView.swift; sourceTree = "<group>"; };
@@ -281,7 +293,7 @@
 		BCEBD7A5225A5A1800CF339B /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
 		BCEBD7A8225A5A7800CF339B /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		BCEBD7AC225A5AB300CF339B /* LocalData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalData.swift; sourceTree = "<group>"; };
-		D61D8641029786EC8F749FD9 /* Pods-Chefie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.release.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.release.xcconfig"; sourceTree = "<group>"; };
+		C3AF57BE75076AF57BD5C02F /* Pods-Chefie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.release.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -289,7 +301,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCFCA381AA87A62B1742D9F6 /* Pods_Chefie.framework in Frameworks */,
+				FD1C79FF734006CECCF6DAF9 /* Pods_Chefie.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,8 +311,8 @@
 		33029694229C1FE6002DC82C /* CustomCells */ = {
 			isa = PBXGroup;
 			children = (
-				BC2AB805229C5EF400F51BCC /* CommentCell.swift */,
-				BC2AB804229C5EF400F51BCC /* PlatoCellView.swift */,
+				4249C100229D04F0001F3F7B /* CommentCell.swift */,
+				4249C0FF229D04F0001F3F7B /* PlatoCellView.swift */,
 				33EF169D2296DF5E0002CFA1 /* PlatosVerticalCell.swift */,
 				42FD5E472294C21600785BE7 /* CommentsHorizontalCell.swift */,
 			);
@@ -312,6 +324,13 @@
 			children = (
 			);
 			path = FloatLabel;
+			sourceTree = "<group>";
+		};
+		3306683F229D84BD007BB2E8 /* PlateDetails */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = PlateDetails;
 			sourceTree = "<group>";
 		};
 		337B33D82294C00D008B662D /* ViewController */ = {
@@ -390,10 +409,10 @@
 			path = CustomViews;
 			sourceTree = "<group>";
 		};
-		8B5254ED82F1BFA112070E3C /* Frameworks */ = {
+		643ACF27CD22CB42FF968783 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9551B91544A4AB5847C57C1B /* Pods_Chefie.framework */,
+				5FCEBE9A240B4AB6B1DE5B2C /* Pods_Chefie.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -401,8 +420,8 @@
 		9BF735D886B81CEAAA42E7E1 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				58016F3706909FD54F5C3D0F /* Pods-Chefie.debug.xcconfig */,
-				D61D8641029786EC8F749FD9 /* Pods-Chefie.release.xcconfig */,
+				3888CDD4B17E03C7B721B417 /* Pods-Chefie.debug.xcconfig */,
+				C3AF57BE75076AF57BD5C02F /* Pods-Chefie.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -478,7 +497,7 @@
 				BC7F2F3B2257993100D3F301 /* Chefie */,
 				BC7F2F3A2257993100D3F301 /* Products */,
 				9BF735D886B81CEAAA42E7E1 /* Pods */,
-				8B5254ED82F1BFA112070E3C /* Frameworks */,
+				643ACF27CD22CB42FF968783 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -529,6 +548,7 @@
 				421B77C5229B68D70087DF5E /* RoutesViewController.swift */,
 				BCB97EEA229582E800E58922 /* ProfileViewController.swift */,
 				BC2FDA5C2296DE3100B1CB40 /* UploadRecipeViewController.swift */,
+				33066842229D9BA9007BB2E8 /* SearchViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -573,6 +593,7 @@
 				BC7F2FAE2257AA1E00D3F301 /* SliderChefie */,
 				BC7F2F5D2257A4E500D3F301 /* Spring */,
 				42A7D56A229AAB8B00617725 /* PaddingLabel.swift */,
+				427CEFAB229D26A600113A1A /* TablePaginatorEx.swift */,
 			);
 			path = Libs;
 			sourceTree = "<group>";
@@ -624,7 +645,6 @@
 		BC7F2FA12257A6BA00D3F301 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				428FC3BC22998F980086ABE4 /* UserInterface */,
 				BC7F2FA22257A6C600D3F301 /* CustomButtons.swift */,
 				B01E051B22758DC700BEAAE8 /* ImageViewExtension.swift */,
 				B01E051D227592DA00BEAAE8 /* LocalFileImageDataProvider.swift */,
@@ -662,9 +682,14 @@
 		BC9CCD8E227DE8BE008CDCDB /* Storyboard */ = {
 			isa = PBXGroup;
 			children = (
+				3306684C229D9DCC007BB2E8 /* HomeScreen.storyboard */,
+				3306684A229D9DB1007BB2E8 /* ProfileScreen.storyboard */,
+				33066848229D9D9A007BB2E8 /* RouteScreen.storyboard */,
+				33066846229D9D83007BB2E8 /* NewRecipeScreen.storyboard */,
 				BC9CCD8F227DE901008CDCDB /* PlateDetailStoryboard.storyboard */,
 				BCB97EEC2295871E00E58922 /* ProfileStoryboard.storyboard */,
 				BC2FDA5A2296DDDA00B1CB40 /* UploadRecipe.storyboard */,
+				33066844229D9D4D007BB2E8 /* SearchScreen.storyboard */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -694,6 +719,7 @@
 		BCB97EEE22958D3100E58922 /* CustomCells */ = {
 			isa = PBXGroup;
 			children = (
+				3306683F229D84BD007BB2E8 /* PlateDetails */,
 				BC2FDA5E2296F89D00B1CB40 /* UploadRecipe */,
 				BCB97EF022958D8A00E58922 /* Home */,
 				BCB97EEF22958D5800E58922 /* Profile */,
@@ -760,6 +786,7 @@
 		BCEBD7A4225A5A0800CF339B /* App */ = {
 			isa = PBXGroup;
 			children = (
+				428FC3BC22998F980086ABE4 /* UserInterface */,
 				428FC3C122999CA50086ABE4 /* Fonts */,
 				428FC3BA22998E0F0086ABE4 /* AppSettings.swift */,
 				BCEBD7A7225A5A6900CF339B /* Data */,
@@ -784,12 +811,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BC7F2F4B2257993200D3F301 /* Build configuration list for PBXNativeTarget "Chefie" */;
 			buildPhases = (
-				201C3AB9B11A0F0F5AC97E50 /* [CP] Check Pods Manifest.lock */,
+				9E20EAB7AB7CE58EEC35D5D4 /* [CP] Check Pods Manifest.lock */,
 				BC7F2F352257993100D3F301 /* Sources */,
 				BC7F2F362257993100D3F301 /* Frameworks */,
 				BC7F2F372257993100D3F301 /* Resources */,
-				A1568AFC2A2008BA05959189 /* [CP] Embed Pods Frameworks */,
-				D799A92EDEE7F73F63D3E2DB /* [CP] Copy Pods Resources */,
+				A74797A36D0F05B21DF82FDB /* [CP] Embed Pods Frameworks */,
+				70FA35365D5F3E3713E3C284 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -842,11 +869,15 @@
 				428FC3D222999FFB0086ABE4 /* SamsungSans-Light.ttf in Resources */,
 				428FC3D122999FFB0086ABE4 /* SamsungSans-Bold.ttf in Resources */,
 				B0824EAF226E3E6D00882168 /* Main.storyboard in Resources */,
+				3306684B229D9DB1007BB2E8 /* ProfileScreen.storyboard in Resources */,
 				BC9CCD90227DE901008CDCDB /* PlateDetailStoryboard.storyboard in Resources */,
+				3306684D229D9DCC007BB2E8 /* HomeScreen.storyboard in Resources */,
+				33066847229D9D83007BB2E8 /* NewRecipeScreen.storyboard in Resources */,
 				BC7F2F472257993200D3F301 /* LaunchScreen.storyboard in Resources */,
 				BC7F2F7C2257A51A00D3F301 /* LoadingView.xib in Resources */,
 				428FC3D522999FFB0086ABE4 /* SamsungSans-Thin.ttf in Resources */,
 				BC7F2F442257993200D3F301 /* Assets.xcassets in Resources */,
+				33066849229D9D9A007BB2E8 /* RouteScreen.storyboard in Resources */,
 				B0767ED22275717D0071AE7C /* LICENSE in Resources */,
 				B0767ED32275717D0071AE7C /* README.md in Resources */,
 				BC7F2FAB2257A96700D3F301 /* GoogleService-Info.plist in Resources */,
@@ -859,6 +890,7 @@
 				428FC3D322999FFB0086ABE4 /* SamsungSans-Medium.ttf in Resources */,
 				BCB97EED2295871E00E58922 /* ProfileStoryboard.storyboard in Resources */,
 				B0824EB1226E3EA000882168 /* Showcase.storyboard in Resources */,
+				33066845229D9D4D007BB2E8 /* SearchScreen.storyboard in Resources */,
 				B0514F8C22755F9C0029DA9A /* Login.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -866,7 +898,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		201C3AB9B11A0F0F5AC97E50 /* [CP] Check Pods Manifest.lock */ = {
+		70FA35365D5F3E3713E3C284 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9E20EAB7AB7CE58EEC35D5D4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -888,7 +942,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A1568AFC2A2008BA05959189 /* [CP] Embed Pods Frameworks */ = {
+		A74797A36D0F05B21DF82FDB /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -897,6 +951,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AACarousel/AACarousel.framework",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
 				"${BUILT_PRODUCTS_DIR}/CodableFirebase/CodableFirebase.framework",
 				"${BUILT_PRODUCTS_DIR}/ElongationPreview/ElongationPreview.framework",
@@ -905,13 +960,14 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/RYFloatingInput/RYFloatingInput.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SkeletonView/SkeletonView.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/UIFloatLabelTextField/UIFloatLabelTextField.framework",
+				"${BUILT_PRODUCTS_DIR}/TableviewPaginator/TableviewPaginator.framework",
+				"${BUILT_PRODUCTS_DIR}/TagListView/TagListView.framework",
 				"${BUILT_PRODUCTS_DIR}/VersaPlayer/VersaPlayer.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
@@ -922,6 +978,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AACarousel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CodableFirebase.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ElongationPreview.framework",
@@ -930,44 +987,23 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RYFloatingInput.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkeletonView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIFloatLabelTextField.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TableviewPaginator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TagListView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VersaPlayer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
-				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D799A92EDEE7F73F63D3E2DB /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -985,7 +1021,6 @@
 				BCA18E122263942F00F498B4 /* CommentRepository.swift in Sources */,
 				BC7F2F7F2257A51A00D3F301 /* ImageLoader.swift in Sources */,
 				BCB97EEB229582E800E58922 /* ProfileViewController.swift in Sources */,
-				BC2AB807229C5EF400F51BCC /* CommentCell.swift in Sources */,
 				BC7F2F962257A51A00D3F301 /* AutoTextView.swift in Sources */,
 				BCA18E0422638F2300F498B4 /* Media.swift in Sources */,
 				BC7F2F892257A51A00D3F301 /* Misc.swift in Sources */,
@@ -1029,10 +1064,10 @@
 				BC2FDA5D2296DE3100B1CB40 /* UploadRecipeViewController.swift in Sources */,
 				BC7F2F832257A51A00D3F301 /* SpringAnimation.swift in Sources */,
 				BC7F2F822257A51A00D3F301 /* SpringImageView.swift in Sources */,
-				BC2AB806229C5EF400F51BCC /* PlatoCellView.swift in Sources */,
 				BC7F2F8B2257A51A00D3F301 /* SpringTextView.swift in Sources */,
 				428FC3B7229986140086ABE4 /* CFMargin.swift in Sources */,
 				BC7F2F8E2257A51A00D3F301 /* SpringButton.swift in Sources */,
+				427CEFAC229D26A600113A1A /* TablePaginatorEx.swift in Sources */,
 				42FD5E462294BFC200785BE7 /* HorizontalSectionView.swift in Sources */,
 				BC7F2F852257A51A00D3F301 /* DesignableTextView.swift in Sources */,
 				BC7F2FA52257A6E300D3F301 /* HomeViewController.swift in Sources */,
@@ -1053,6 +1088,7 @@
 				BCBFAABF2292EEB700B4ECD4 /* IDynamicCellProtocol.swift in Sources */,
 				420251BF2293F348004AEBF9 /* BaseCellItemInfo.swift in Sources */,
 				BCB97EF42295A87200E58922 /* ProfileInfoCellView.swift in Sources */,
+				4249C101229D04F1001F3F7B /* PlatoCellView.swift in Sources */,
 				BC7F2F902257A51A00D3F301 /* TransitionZoom.swift in Sources */,
 				BC7F2F922257A51A00D3F301 /* DesignableTabBarController.swift in Sources */,
 				428FC3B922998CE50086ABE4 /* INestedCell.swift in Sources */,
@@ -1083,10 +1119,12 @@
 				42A7D56B229AAB8B00617725 /* PaddingLabel.swift in Sources */,
 				BCEBD7A6225A5A1800CF339B /* AppContainer.swift in Sources */,
 				428FC3BB22998E0F0086ABE4 /* AppSettings.swift in Sources */,
+				33066843229D9BA9007BB2E8 /* SearchViewController.swift in Sources */,
 				BCA18E162263946800F498B4 /* TagRepository.swift in Sources */,
 				421B77C6229B68D70087DF5E /* RoutesViewController.swift in Sources */,
 				BCA18E10226393C300F498B4 /* RouteRepository.swift in Sources */,
 				B0150DAB227579E0006F48FA /* PlateCellView.swift in Sources */,
+				4249C102229D04F1001F3F7B /* CommentCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1222,7 +1260,7 @@
 		};
 		BC7F2F4C2257993200D3F301 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 58016F3706909FD54F5C3D0F /* Pods-Chefie.debug.xcconfig */;
+			baseConfigurationReference = 3888CDD4B17E03C7B721B417 /* Pods-Chefie.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1241,7 +1279,7 @@
 		};
 		BC7F2F4D2257993200D3F301 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D61D8641029786EC8F749FD9 /* Pods-Chefie.release.xcconfig */;
+			baseConfigurationReference = C3AF57BE75076AF57BD5C02F /* Pods-Chefie.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

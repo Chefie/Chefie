@@ -5,28 +5,31 @@ import GoogleSignIn
 import Kingfisher
 import SkeletonView
 import SDWebImage
+import TableviewPaginator
 
 let PlateCellIdentifier = "PlateCellView"
 
 class HomeViewController: UIViewController, DynamicViewControllerProto {
   
+    private var tableviewPaginator: TableviewPaginatorEx?
     var tableItems = Array<BaseItemInfo>()
     var tableCellRegistrator = TableCellRegistrator()
     
     @IBOutlet weak var mainTable: UITableView!{
         didSet {
             
-            mainTable.setCellsToAutomaticDimension()
-            mainTable.separatorStyle = UITableViewCell.SeparatorStyle.none
-            mainTable.allowsSelection = false
-            mainTable.allowsMultipleSelection = false
-            mainTable.showsHorizontalScrollIndicator = false
-            mainTable.alwaysBounceHorizontal = false
-            mainTable.alwaysBounceVertical = false
-            mainTable.bounces = false
- 
-            mainTable.showsVerticalScrollIndicator = false
-            mainTable.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+            //mainTable.setCellsToAutomaticDimension()
+//            mainTable.separatorStyle = UITableViewCell.SeparatorStyle.none
+//            mainTable.allowsSelection = false
+//            mainTable.allowsMultipleSelection = false
+//            mainTable.showsHorizontalScrollIndicator = false
+//            mainTable.alwaysBounceHorizontal = false
+//            mainTable.alwaysBounceVertical = false
+//            mainTable.bounces = false
+//
+//            mainTable.showsVerticalScrollIndicator = false
+//            mainTable.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+            mainTable.setDefaultSettings()
         }
     }
     
@@ -49,13 +52,31 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
     func onSetupViews(){
         
         mainTable.backgroundColor = UIColor.white
-        
         mainTable.snp.makeConstraints { (make) in
             
         //    make.topMargin.equalTo(50)
             make.width.equalTo(self.view.getWidth())
             make.height.equalTo(self.view.getHeight())
         }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let  height = scrollView.frame.size.height
+        let contentYoffset = scrollView.contentOffset.y
+        let distanceFromBottom = scrollView.contentSize.height - contentYoffset - 150
+        // scrollView.contentSize.height = distanceFromBottom
+     //   scrollView.frame.size.height += 200
+    
+        tableviewPaginator?.scrollViewDidScroll(scrollView)
+        
+       // scrollView.frame.size.height -= 200
+        if distanceFromBottom < height {
+            
+      
+          
+        
+        }     
     }
     
     func onLoadData() {
@@ -68,33 +89,24 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-           tableCellRegistrator.add(identifier: CommentsHorizontalCellInfo().reuseIdentifier(), cellClass: CommentsHorizontalCell.self)
+        
+        tableCellRegistrator.add(identifier: CommentsHorizontalCellInfo().reuseIdentifier(), cellClass: CommentsHorizontalCell.self)
         tableCellRegistrator.add(identifier: PlatosVerticalCellBaseItemInfo().reuseIdentifier(), cellClass: PlatosVerticalCell.self)
         
-        
-    
+
+        mainTable.register(LoadingCell.self, forCellReuseIdentifier: "LoadingCell")
         
         onSetup()
         onSetupViews()
 
      //tableCellRegistrator.add(identifier: PlatoCellItemInfo().reuseIdentifier(), cellClass: PlatoCellView.self)
        // tableCellRegistrator.add(identifier: CommentCellInfo().reuseIdentifier(), cellClass: CommentCell.self)
-        
-        
-        
+        tableviewPaginator = TableviewPaginatorEx.init(paginatorUI: self, delegate: self)
+        tableviewPaginator?.initialSetup()
+
 //        registeredCells.append( PlatoCellItemInfo().identifier(), MediaCellView.self)
 
         tableCellRegistrator.registerAll(tableView: mainTable)
-        
-        
-        var comments = [String]()
-        comments.append("Este es un comentario corto")
-        comments.append("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.")
-         comments.append("Five hours? Aw, man! Couldn't you just get me the death penalty?")
-         comments.append("Five hours? Aw, man! Couldn't you just get me the death penalty?")
-         comments.append("Five hours? Aw, man! Couldn't you just get me the death penalty?")
-         comments.append("Five hours? Aw, man! Couldn't you just get me the death penalty?")
-         comments.append("Vastness is bearable only through love take root and flourish radio telescope not a sunrise but a galaxyrise rings of Uranus a very small stage in a vast cosmic arena. Descended from astronomers Tunguska event the only home we've ever known two ghostly white figures in coveralls and helmets are soflty dancing realm of the galaxies across the centuries. Emerged into consciousness gathered by gravity two ghostly white figures in coveralls and helmets are soflty dancing concept of the number one the only home we've ever known dispassionate extraterrestrial observer and billions upon billions upon billions upon billions upon billions upon billions upon billions.")
 
         navigationItem.title = "Chefie"
         //Custom navigationItem (Title) font Zapfino
@@ -110,55 +122,7 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
         self.mainTable.alwaysBounceVertical = false
         self.mainTable.alwaysBounceHorizontal = false
         
-        appContainer.plateRepository.getPlatos(idUser: "2WT9s7km17QdtIwpYlEZ") { (
-            result: ChefieResult<[Plate]>) in
-            
-            switch result {
-                
-            case .success(let data):
-            
-                var items = [BaseItemInfo]()
-          
-                let verticalItemPlateInfo = PlatosVerticalCellBaseItemInfo()
-                verticalItemPlateInfo.setTitle(value: "Plates")
-                verticalItemPlateInfo.model = data as AnyObject
-    
-                var commentItems = [Comment]()
-                comments.forEach({ (commentStr) in
-                    
-                    let comment = Comment()
-                    comment.idUser = "Steven"
-                    comment.content = commentStr
-                    commentItems.append(comment)
-                    let commentInfo = CommentCellInfo()
-                    commentInfo.model = comment
-        // items.append(commentInfo)
-                })
-                
-                let commentsHorizontal = CommentsHorizontalCellInfo()
-                commentsHorizontal.setTitle(value: "Comments")
-                commentsHorizontal.model = commentItems as AnyObject
-                
-                self.tableItems.append(commentsHorizontal)
-                
-             self.tableItems.append(verticalItemPlateInfo)
-              
-                data.forEach({ (plate) in
- 
-                    let cellInfo = PlatoCellItemInfo()
-                    cellInfo.model = plate
-                
-             //      items.append(cellInfo)
-                })
-
-            //    items.shuffle()
-           // self.tableItems = items
-                self.mainTable.reloadData()
-                break
-            case .failure(_):
-                break
-            }
-        }
+        loadPlates()
     }
 
     @IBAction func onTouchsss(_ sender: UIButton) {
@@ -188,11 +152,136 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
 //        self.dismiss(animated: false, completion: nil)
 //        self.performSegue(withIdentifier: "backToLogin", sender: self)
     }
+    
+    var section = 0
+    
+    var isFirst = false
+    
+    func loadPlates(){
+        
+        var comments = [String]()
+        comments.append("Este es un comentario corto")
+        comments.append("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.")
+        comments.append("Five hours? Aw, man! Couldn't you just get me the death penalty?")
+        comments.append("Five hours? Aw, man! Couldn't you just get me the death penalty?")
+        comments.append("Five hours? Aw, man! Couldn't you just get me the death penalty?")
+        comments.append("Five hours? Aw, man! Couldn't you just get me the death penalty?")
+        comments.append("Vastness is bearable only through love take root and flourish radio telescope not a sunrise but a galaxyrise rings of Uranus a very small stage in a vast cosmic arena. Descended from astronomers Tunguska event the only home we've ever known two ghostly white figures in coveralls and helmets are soflty dancing realm of the galaxies across the centuries. Emerged into consciousness gathered by gravity two ghostly white figures in coveralls and helmets are soflty dancing concept of the number one the only home we've ever known dispassionate extraterrestrial observer and billions upon billions upon billions upon billions upon billions upon billions upon billions.")
+
+        appContainer.plateRepository.getPlatos(idUser: "2WT9s7km17QdtIwpYlEZ") { (
+            result: ChefieResult<[Plate]>) in
+            
+            switch result {
+                
+            case .success(let data):
+                
+                var items = [BaseItemInfo]()
+                
+                let verticalItemPlateInfo = PlatosVerticalCellBaseItemInfo()
+                verticalItemPlateInfo.setTitle(value: "Recipes")
+                verticalItemPlateInfo.model = data as AnyObject
+                
+                var commentItems = [Comment]()
+                comments.forEach({ (commentStr) in
+                    
+                    let comment = Comment()
+                    comment.idUser = "Steven"
+                    comment.content = commentStr
+                    commentItems.append(comment)
+                    let commentInfo = CommentCellInfo()
+                    commentInfo.model = comment
+                    // items.append(commentInfo)
+                })
+                
+                let commentsHorizontal = CommentsHorizontalCellInfo()
+                commentsHorizontal.setTitle(value: "Top Recipes")
+                commentsHorizontal.model = commentItems as AnyObject
+                //x
+                
+                items.append(verticalItemPlateInfo)
+                items.append( commentsHorizontal)
+                
+                //      let selectedIndexPath = IndexPath(row: items.count - 1, section: 0)
+                
+                //          self.tableItems.append(verticalItemPlateInfo)
+                //        self.tableItems.append(commentsHorizontal)
+                let indexPath:IndexPath = IndexPath(row:(self.tableItems.count), section:self.section)
+                
+                let numbers = [1, 2, 3, 4]
+                
+                let mapped = numbers.map { Array(repeating: $0, count: $0) }
+                // [[1], [2, 2], [3, 3, 3], [4, 4, 4, 4]]
+                
+                let flatMapped = Array(0...3).compactMap({ (num) -> IndexPath in
+                    return IndexPath(row: num, section: 0)
+                })
+                
+  
+      
+                self.mainTable.beginUpdates()
+                
+                if (!self.isFirst) {
+                    
+                    //                    let indexes = Array(0...3).flatMap({ (num) -> IndexPath in
+                    //
+                    //                        return IndexPath(row:(num), section:0)
+                    //                    }).jo
+                    //
+                    //
+                    self.mainTable.deleteRows(at: flatMapped, with: .none)
+                    
+                    self.mainTable.reloadData()
+                    self.isFirst = true
+                    
+                }
+                
+                self.section += 1
+                
+                items.forEach({ (item) in
+                    
+                    self.tableItems.append(item)
+                    let indexPath:IndexPath = IndexPath(row:(self.tableItems.count - 1), section:0)
+                    self.mainTable.insertRows(at: [indexPath], with: .fade)
+                })
+                
+                //    self.mainTable.deleteRows(at: [indexPath], with: .none)
+                
+                
+                //    self.mainTable.insertRows(at: [indexPath], with: .none)
+                //   self.mainTable.insertRows(at: [indexPath2], with: .none)
+                // lets try to reload just the cell with comments
+                //      self.mainTable.reloadRows(at: [indexPath], with: .none)
+                self.mainTable.endUpdates()
+                
+                //        self.mainTable.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                
+                data.forEach({ (plate) in
+                    
+                    let cellInfo = PlatoCellItemInfo()
+                    cellInfo.model = plate
+                    
+                    //      items.append(cellInfo)
+                })
+                
+                //    items.shuffle()
+                // self.tableItems = items
+                //  self.mainTable.insertro
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
 }
 
 extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        if let height = tableviewPaginator?.heightForLoadMore(cell: indexPath) {
+            return height
+        }
+        
         return UITableView.automaticDimension
     }
     
@@ -201,7 +290,10 @@ extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDele
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableItems.count == 0 ? AppSettings.DefaultSkeletonCellCount : tableItems.count
+        let itemsCount = tableItems.count == 0 ? AppSettings.DefaultSkeletonCellCount : tableItems.count
+        
+        let tableviewPagiantorLoadeMoreCells = (tableviewPaginator?.rowsIn(section: section) ?? 0)
+        return itemsCount
     }
     
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
@@ -209,7 +301,10 @@ extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDele
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+        if let cell = tableviewPaginator?.cellForLoadMore(at: indexPath) {
+            return cell
+        }
+
         if (self.tableItems.count == 0){
             let ce : BaseCell = mainTable.dequeueReusableCell(withIdentifier: tableCellRegistrator.getRandomIdentifier(), for: indexPath) as! BaseCell
             ce.viewController = self
@@ -226,5 +321,72 @@ extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDele
         ce.setModel(model: cellInfo.model)
         ce.onLoadData()
         return ce
+    }
+}
+
+class LoadingCell : UITableViewCell {
+    
+    let loading : MultilineLabel = {
+        let lbl = MultilineLabel(maskConstraints: false, font: DefaultFonts.DefaultTextFont)
+        lbl.text = "Loading...."
+        lbl.numberOfLines = 1
+        //lbl.textColor = UIColor.white
+        //lbl.backgroundColor = UIColor.blue
+        return lbl
+    }()
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        self.contentView.addSubview(loading)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+extension HomeViewController: TableviewPaginatorUIProtocol {
+    func getTableview(paginator: TableviewPaginatorEx) -> UITableView {
+        return mainTable
+    }
+    
+    func shouldAddRefreshControl(paginator: TableviewPaginatorEx) -> Bool {
+        return true
+    }
+    
+    func getPaginatedLoadMoreCellHeight(paginator: TableviewPaginatorEx) -> CGFloat {
+        return 44
+    }
+    
+    func getPaginatedLoadMoreCell(paginator: TableviewPaginatorEx) -> UITableViewCell {
+        
+        if let cell = mainTable.dequeueReusableCell(withIdentifier: "LoadingCell") as? LoadingCell {
+            // customize your load more cell
+            // i.e start animating the UIActivityIndicator inside of the cell
+            return cell
+        } else {
+            return UITableViewCell.init()
+        }
+    }
+    
+    func getRefreshControlTintColor(paginator: TableviewPaginatorEx) -> UIColor {
+          return UIColor.orange
+    }
+}
+
+extension HomeViewController: TableviewPaginatorProtocol {
+    func loadPaginatedData(offset: Int, shouldAppend: Bool, paginator: TableviewPaginatorEx) {
+           print("LOAD")
+     
+        if (offset > 0){
+         
+         
+        }
+        
+        loadPlates()
+        
+        tableviewPaginator?.incrementOffsetBy(delta: 2)
+              tableviewPaginator?.partialDataFetchingDone()
     }
 }

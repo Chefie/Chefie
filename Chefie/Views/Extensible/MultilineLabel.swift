@@ -70,8 +70,8 @@ class MultilineLabel : UILabel {
         self.linesCornerRadius = 10
         self.translatesAutoresizingMaskIntoConstraints = false
         self.textAlignment = .center
-        self.font = UIFont.systemFont(ofSize: 16)
-        self.textColor = .black
+        self.font = DefaultFonts.DefaultTextFont
+        self.textColor = Palette.TextDefaultColor
         
         self.lastLineFillPercent = 100
     }
