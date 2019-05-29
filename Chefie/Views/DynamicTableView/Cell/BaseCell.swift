@@ -84,6 +84,8 @@ class BaseCell : UITableViewCell, IDynamicCellProtocol{
      //   onLoadData()
     }
     
+    var cellSize : CGSize?
+    
     func getModel() -> AnyObject? {
      
         return NSObject()

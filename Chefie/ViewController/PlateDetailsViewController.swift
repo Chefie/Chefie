@@ -13,6 +13,9 @@ import SDWebImage
 
 class PlateDetailsViewController : UIViewController, DynamicViewControllerProto {
     
+    var tableItems = Array<BaseItemInfo>()
+    var tableCellRegistrator = TableCellRegistrator()
+    
     var model : Plate?{
         
         didSet{

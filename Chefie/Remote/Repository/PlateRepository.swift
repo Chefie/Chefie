@@ -34,8 +34,20 @@ class PlateRepository {
                         print("Invalid Selection.")
                     }
                 })
-                
-                completionHandler(.success(plates))
+
+              let filteredPlates =  plates.map({ (plate) -> Plate in
+                    
+                    let multiMedia = plate.multimedia?.filter({ (media) -> Bool in
+                             return media.type != "video"
+                    })
+                    
+                    plate.multimedia = multiMedia
+                    
+                    return plate
+                })
+
+
+                completionHandler(.success( filteredPlates))
             } else {
                 completionHandler(.failure(err as! String))
             }

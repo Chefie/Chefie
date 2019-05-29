@@ -15,4 +15,6 @@ protocol DynamicViewControllerProto {
     func onSetup()
     func onSetupViews()
     func onLayout()
+    var tableItems: Array<BaseItemInfo> { get set }
+    var tableCellRegistrator: TableCellRegistrator { get set }
 }
