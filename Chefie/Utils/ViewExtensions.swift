@@ -149,6 +149,12 @@ extension UIView{
         mask.path = path
         self.layer.mask = mask
     }
+ 
+    func removeCornerRadius() {
+        self.layer.masksToBounds = false
+        self.layer.cornerRadius = 0
+        self.clipsToBounds = false
+    }
     
     func setCornerRadius() {
         self.layer.masksToBounds = true

@@ -10,6 +10,17 @@ import Foundation
 import UIKit
 import Kingfisher
 
+extension UIImage {
+    
+    func rawData() -> Data {
+        
+        let image = self
+        let data = image.jpegData(compressionQuality: 1)
+       
+        return data ?? Data()
+    }
+}
+
 extension UIImageView {
         
     func setRounded() {
