@@ -13,10 +13,16 @@ class AppContainer {
     var userRepository : UserRepository
     var dataManager : DataManager
     var plateRepository : PlateRepository
+    var s3Repository : S3Repository
+    var mediaRepository : MultiMediaRepository
+    var communityRepository : CommunityRepository
     
     init() {
         self.plateRepository = PlateRepository()
         self.userRepository = UserRepository()
         self.dataManager = DataManager()
+        self.s3Repository = S3Repository()
+        self.mediaRepository = MultiMediaRepository()
+        self.communityRepository = CommunityRepository()
     }
 }

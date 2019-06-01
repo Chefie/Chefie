@@ -19,11 +19,10 @@ target 'Chefie' do
   pod 'SDWebImage', '~> 5.0'
   pod 'VersaPlayer'
   pod 'RYFloatingInput'
-  pod 'TagListView', '~> 1.0'
-  pod 'ElongationPreview'
   pod 'AACarousel'
   pod 'TableviewPaginator'
   pod 'TagListView', '~> 1.0'
+  pod 'AWSS3'
 end
 
 

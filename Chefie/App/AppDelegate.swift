@@ -2,6 +2,8 @@
 import UIKit
 import Firebase
 import GoogleSignIn
+import AWSS3
+import AWSCore
 
 let appContainer = AppContainer()
 let gLabelRadius = 4
@@ -13,6 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
+        
+        configureS3()
         
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
@@ -42,6 +46,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 //        self.window?.makeKeyAndVisible()
 //    }
 //
+    
+    func configureS3() {
+        
+    
+    }
     
     func NextViewController(storybordid:String)
     {
