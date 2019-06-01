@@ -13,6 +13,7 @@ class Community : Codable{
     var id : String?
     var name : String?
     var picture : String?
+    var city : String?
     
     required init() {
         

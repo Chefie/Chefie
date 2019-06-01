@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TabBarViewController: UITabBarController {
+class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     
     @IBInspectable var height: CGFloat = 0.0
     override func viewDidLoad() {
@@ -17,8 +17,6 @@ class TabBarViewController: UITabBarController {
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
         
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
-        
-
         
         //Ajustar cada elemento de los items del tab bar
         //print(self.tabBar.items?.count)
@@ -57,6 +55,24 @@ class TabBarViewController: UITabBarController {
             item.imageInsets = UIEdgeInsets.init(top: 8, left: 0, bottom: -8, right: 0)
             item.title = ""
         })
+  
+    }
+    
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+     
+            print("Selected view controller")
+    }
+    
+   
+    
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         
+      tabBarController?.selectedIndex = 0
+//        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//        let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen" )
+//        self.present(exampleVC, animated: true)
+//
+    
+      print("Selected view controller")
     }
 }

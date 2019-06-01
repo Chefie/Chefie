@@ -22,6 +22,7 @@ class SearchViewController : UIViewController, DynamicViewControllerProto {
     @IBOutlet weak var tagListView: TagListView!
     
     func onSetup() {
+        
          tableCellRegistrator.add(identifier: PlatoCellItemInfo().reuseIdentifier(), cellClass: PlatoCellView.self)
         tableCellRegistrator.add(identifier: CommentCellInfo().reuseIdentifier(), cellClass: CommentCell.self)
         

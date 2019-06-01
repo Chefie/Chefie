@@ -2,10 +2,11 @@ import Foundation
 import UIKit
 import Firebase
 import GoogleSignIn
-import Kingfisher
 import SkeletonView
 import SDWebImage
 import TableviewPaginator
+import AWSS3
+import AWSCore
 
 let PlateCellIdentifier = "PlateCellView"
 
@@ -31,6 +32,41 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
 //            mainTable.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
             mainTable.setDefaultSettings()
         }
+    }
+    
+    func test() {
+        
+//        let remoteName = "test.jpg"
+//        let S3BucketName = "stephendevit-qulqa"
+//
+//        let fileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(remoteName)
+//        let image = UIImage(named: "logo1")
+//        let data = image!.jpegData(compressionQuality: 0.9)
+//        do {
+//            try data?.write(to: fileURL)
+//        }
+//        catch {}
+//
+//
+//        let uploadRequest = AWSS3TransferManagerUploadRequest()!
+//        uploadRequest.body = fileURL
+//        uploadRequest.key = remoteName
+//        uploadRequest.bucket = S3BucketName
+//        uploadRequest.contentType = "image/jpeg"
+//        uploadRequest.acl = .publicRead
+//
+//
+        
+        let fileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("test")
+        let image = UIImage(named: "logo1")
+        let data = image!.jpegData(compressionQuality: 0.9)
+        do {
+            try data?.write(to: fileURL)
+        }
+        catch {}
+
+        
+      //  appContainer.mediaRepository.uploadImage(data: data!)
     }
     
     override func updateViewConstraints() {
@@ -81,6 +117,7 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
     
     func onLoadData() {
         
+        test()
     }
     
     func onLayout() {
@@ -122,7 +159,9 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
         self.mainTable.alwaysBounceVertical = false
         self.mainTable.alwaysBounceHorizontal = false
         
-        loadPlates()
+     // loadPlates()
+        
+        onLoadData()
     }
 
     @IBAction func onTouchsss(_ sender: UIButton) {
@@ -198,38 +237,21 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
                 commentsHorizontal.model = commentItems as AnyObject
                 //x
                 
-                items.append(verticalItemPlateInfo)
+          
                 items.append( commentsHorizontal)
-                
-                //      let selectedIndexPath = IndexPath(row: items.count - 1, section: 0)
-                
-                //          self.tableItems.append(verticalItemPlateInfo)
-                //        self.tableItems.append(commentsHorizontal)
-                let indexPath:IndexPath = IndexPath(row:(self.tableItems.count), section:self.section)
-                
-                let numbers = [1, 2, 3, 4]
-                
-                let mapped = numbers.map { Array(repeating: $0, count: $0) }
-                // [[1], [2, 2], [3, 3, 3], [4, 4, 4, 4]]
+                items.append(verticalItemPlateInfo)
+                items.append(verticalItemPlateInfo)
+              
                 
                 let flatMapped = Array(0...3).compactMap({ (num) -> IndexPath in
                     return IndexPath(row: num, section: 0)
                 })
-                
   
-      
                 self.mainTable.beginUpdates()
                 
                 if (!self.isFirst) {
-                    
-                    //                    let indexes = Array(0...3).flatMap({ (num) -> IndexPath in
-                    //
-                    //                        return IndexPath(row:(num), section:0)
-                    //                    }).jo
-                    //
-                    //
+
                     self.mainTable.deleteRows(at: flatMapped, with: .none)
-                    
                     self.mainTable.reloadData()
                     self.isFirst = true
                     
@@ -240,27 +262,18 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
                 items.forEach({ (item) in
                     
                     self.tableItems.append(item)
-                    let indexPath:IndexPath = IndexPath(row:(self.tableItems.count - 1), section:0)
+                    let indexPath:IndexPath = IndexPath(row:(self.tableItems.count - 1 < 0 ? 0 :self.tableItems.count - 1), section:0)
+                    
+                    let row = self.tableItems.count - 1 < 0 ? 0 : self.tableItems.count - 1
                     self.mainTable.insertRows(at: [indexPath], with: .fade)
                 })
-                
-                //    self.mainTable.deleteRows(at: [indexPath], with: .none)
-                
-                
-                //    self.mainTable.insertRows(at: [indexPath], with: .none)
-                //   self.mainTable.insertRows(at: [indexPath2], with: .none)
-                // lets try to reload just the cell with comments
-                //      self.mainTable.reloadRows(at: [indexPath], with: .none)
+
                 self.mainTable.endUpdates()
-                
-                //        self.mainTable.scrollToRow(at: indexPath, at: .bottom, animated: true)
-                
+
                 data.forEach({ (plate) in
                     
                     let cellInfo = PlatoCellItemInfo()
                     cellInfo.model = plate
-                    
-                    //      items.append(cellInfo)
                 })
                 
                 //    items.shuffle()
@@ -292,7 +305,7 @@ extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDele
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let itemsCount = tableItems.count == 0 ? AppSettings.DefaultSkeletonCellCount : tableItems.count
         
-        let tableviewPagiantorLoadeMoreCells = (tableviewPaginator?.rowsIn(section: section) ?? 0)
+   //     let tableviewPagiantorLoadeMoreCells = (tableviewPaginator?.rowsIn(section: section) ?? 0)
         return itemsCount
     }
     
@@ -360,14 +373,14 @@ extension HomeViewController: TableviewPaginatorUIProtocol {
     }
     
     func getPaginatedLoadMoreCell(paginator: TableviewPaginatorEx) -> UITableViewCell {
-        
-        if let cell = mainTable.dequeueReusableCell(withIdentifier: "LoadingCell") as? LoadingCell {
-            // customize your load more cell
-            // i.e start animating the UIActivityIndicator inside of the cell
-            return cell
-        } else {
-            return UITableViewCell.init()
-        }
+        return UITableViewCell.init()
+//        if let cell = mainTable.dequeueReusableCell(withIdentifier: "LoadingCell") as? LoadingCell {
+//            // customize your load more cell
+//            // i.e start animating the UIActivityIndicator inside of the cell
+//            return cell
+//        } else {
+//            return UITableViewCell.init()
+//        }
     }
     
     func getRefreshControlTintColor(paginator: TableviewPaginatorEx) -> UIColor {
