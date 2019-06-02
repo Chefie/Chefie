@@ -27,7 +27,7 @@ public struct MediaUploadResult {
 
 public struct MediaUploadBatchResult {
     
-    var result :  [MediaUploadResult]?
+    var result : [MediaUploadResult]?
     var errors : [Error]?
 }
 

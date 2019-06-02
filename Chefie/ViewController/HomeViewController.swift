@@ -108,16 +108,26 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
         
        // scrollView.frame.size.height -= 200
         if distanceFromBottom < height {
-            
-      
-          
-        
+  
         }     
     }
     
     func onLoadData() {
         
         test()
+        
+ 
+        if let urlData = Bundle.main.url(forResource: "small", withExtension: "mp4") {
+            do {
+                let data = try Data(contentsOf: urlData, options: .alwaysMapped)
+
+                appContainer.s3Repository.uploadVideo(data: data, completionHandler: { (result) -> Void in
+                    
+                })
+            } catch {
+                print("The file could not be loaded")
+            }
+      }
     }
     
     func onLayout() {

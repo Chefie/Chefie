@@ -32,6 +32,7 @@
 		4249C101229D04F1001F3F7B /* PlatoCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4249C0FF229D04F0001F3F7B /* PlatoCellView.swift */; };
 		4249C102229D04F1001F3F7B /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4249C100229D04F0001F3F7B /* CommentCell.swift */; };
 		4251793222977BEA00D673A7 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4251793122977BEA00D673A7 /* ArrayExtensions.swift */; };
+		425A411622A35EE60003C3F8 /* small.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 425A411522A35EBE0003C3F8 /* small.mp4 */; };
 		427CEFAC229D26A600113A1A /* TablePaginatorEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427CEFAB229D26A600113A1A /* TablePaginatorEx.swift */; };
 		4289F893229356320001E03A /* ICellDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4289F892229356320001E03A /* ICellDataProtocol.swift */; };
 		4289F895229367F00001E03A /* ICellDataInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4289F894229367F00001E03A /* ICellDataInfo.swift */; };
@@ -45,6 +46,8 @@
 		428FC3D322999FFB0086ABE4 /* SamsungSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 428FC3CB22999D230086ABE4 /* SamsungSans-Medium.ttf */; };
 		428FC3D422999FFB0086ABE4 /* SamsungSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 428FC3C922999D230086ABE4 /* SamsungSans-Regular.ttf */; };
 		428FC3D522999FFB0086ABE4 /* SamsungSans-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 428FC3CA22999D230086ABE4 /* SamsungSans-Thin.ttf */; };
+		42954B1F22A33C1C00C82FC1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42954B1E22A33C1C00C82FC1 /* Constants.swift */; };
+		42954B2122A348C600C82FC1 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 42954B2022A348C600C82FC1 /* awsconfiguration.json */; };
 		42A7D56B229AAB8B00617725 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A7D56A229AAB8B00617725 /* PaddingLabel.swift */; };
 		42FD5E4222949F3200785BE7 /* MultilineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FD5E4122949F3200785BE7 /* MultilineLabel.swift */; };
 		42FD5E462294BFC200785BE7 /* HorizontalSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FD5E452294BFC200785BE7 /* HorizontalSectionView.swift */; };
@@ -195,6 +198,7 @@
 		4249C0FF229D04F0001F3F7B /* PlatoCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlatoCellView.swift; sourceTree = "<group>"; };
 		4249C100229D04F0001F3F7B /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		4251793122977BEA00D673A7 /* ArrayExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
+		425A411522A35EBE0003C3F8 /* small.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = small.mp4; sourceTree = "<group>"; };
 		427CEFAB229D26A600113A1A /* TablePaginatorEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TablePaginatorEx.swift; sourceTree = "<group>"; };
 		4289F892229356320001E03A /* ICellDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICellDataProtocol.swift; sourceTree = "<group>"; };
 		4289F894229367F00001E03A /* ICellDataInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICellDataInfo.swift; sourceTree = "<group>"; };
@@ -208,6 +212,8 @@
 		428FC3C922999D230086ABE4 /* SamsungSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SamsungSans-Regular.ttf"; sourceTree = "<group>"; };
 		428FC3CA22999D230086ABE4 /* SamsungSans-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SamsungSans-Thin.ttf"; sourceTree = "<group>"; };
 		428FC3CB22999D230086ABE4 /* SamsungSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SamsungSans-Medium.ttf"; sourceTree = "<group>"; };
+		42954B1E22A33C1C00C82FC1 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		42954B2022A348C600C82FC1 /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
 		42A7D56A229AAB8B00617725 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		42FD5E4122949F3200785BE7 /* MultilineLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineLabel.swift; sourceTree = "<group>"; };
 		42FD5E452294BFC200785BE7 /* HorizontalSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalSectionView.swift; sourceTree = "<group>"; };
@@ -218,8 +224,6 @@
 		4FE58753229D76FC003E780F /* SettingsCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCellView.swift; sourceTree = "<group>"; };
 		4FE58755229D770E003E780F /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		4FE58757229D772E003E780F /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		58016F3706909FD54F5C3D0F /* Pods-Chefie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.debug.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.debug.xcconfig"; sourceTree = "<group>"; };
-		9551B91544A4AB5847C57C1B /* Pods_Chefie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chefie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FCEBE9A240B4AB6B1DE5B2C /* Pods_Chefie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chefie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0150DAA227579E0006F48FA /* PlateCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateCellView.swift; sourceTree = "<group>"; };
 		B0150DAC22757B4C006F48FA /* PlateDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateDetailsViewController.swift; sourceTree = "<group>"; };
@@ -603,6 +607,7 @@
 		BC7F2F3B2257993100D3F301 /* Chefie */ = {
 			isa = PBXGroup;
 			children = (
+				42954B2022A348C600C82FC1 /* awsconfiguration.json */,
 				33029694229C1FE6002DC82C /* CustomCells */,
 				BCB97EEE22958D3100E58922 /* CustomCells */,
 				BC9CCD8E227DE8BE008CDCDB /* Storyboard */,
@@ -621,6 +626,7 @@
 				B0824EB0226E3EA000882168 /* Showcase.storyboard */,
 				BC7F2F452257993200D3F301 /* LaunchScreen.storyboard */,
 				BC7F2F482257993200D3F301 /* Info.plist */,
+				425A411522A35EBE0003C3F8 /* small.mp4 */,
 			);
 			path = Chefie;
 			sourceTree = "<group>";
@@ -754,6 +760,7 @@
 				428FC3B6229986140086ABE4 /* CFMargin.swift */,
 				428FC3BD229997550086ABE4 /* AnimationExtensions.swift */,
 				42373E1522A261C400244A9F /* UIColorExtensions.swift */,
+				42954B1E22A33C1C00C82FC1 /* Constants.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -970,6 +977,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				425A411622A35EE60003C3F8 /* small.mp4 in Resources */,
 				B0767ED12275717D0071AE7C /* .gitignore in Resources */,
 				428FC3D222999FFB0086ABE4 /* SamsungSans-Light.ttf in Resources */,
 				4FE58756229D770E003E780F /* Settings.storyboard in Resources */,
@@ -991,6 +999,7 @@
 				BC7F2FB32257AA1F00D3F301 /* Slide.xib in Resources */,
 				BC2FDA5B2296DDDA00B1CB40 /* UploadRecipe.storyboard in Resources */,
 				BC7F2FB62257B0FB00D3F301 /* AlertStoryboard.storyboard in Resources */,
+				42954B2122A348C600C82FC1 /* awsconfiguration.json in Resources */,
 				335CEB4422A17F9C00CF1203 /* RouteDetailStoryboard.storyboard in Resources */,
 				428FC3D422999FFB0086ABE4 /* SamsungSans-Regular.ttf in Resources */,
 				B08682F622776FD10037A403 /* ShowMoreHolderView.xib in Resources */,
@@ -1012,16 +1021,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources.sh",
-				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1056,62 +1060,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AACarousel/AACarousel.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSS3/AWSS3.framework",
-				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/CodableFirebase/CodableFirebase.framework",
-				"${BUILT_PRODUCTS_DIR}/ElongationPreview/ElongationPreview.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/RYFloatingInput/RYFloatingInput.framework",
-				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/SkeletonView/SkeletonView.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/TableviewPaginator/TableviewPaginator.framework",
-				"${BUILT_PRODUCTS_DIR}/TagListView/TagListView.framework",
-				"${BUILT_PRODUCTS_DIR}/VersaPlayer/VersaPlayer.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AACarousel.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSS3.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CodableFirebase.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ElongationPreview.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RYFloatingInput.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkeletonView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TableviewPaginator.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TagListView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VersaPlayer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1146,9 +1099,8 @@
 				BC2FDA622296FB1400B1CB40 /* Ingredient.swift in Sources */,
 				BC8641C9227ED78200008F04 /* DateExtensions.swift in Sources */,
 				BC7F2F802257A51A00D3F301 /* BlurView.swift in Sources */,
-				BCA18E142263944500F498B4 /* MediaRepository.swift in Sources */,
 				BCA18E142263944500F498B4 /* MultiMediaRepository.swift in Sources */,
-				42FD5E482294C21600785BE7 /* CommentsHorizontalCell.swift in Sources */,
+				BCA18E142263944500F498B4 /* MultiMediaRepository.swift in Sources */,
 				BCBFAAC42292F4F000B4ECD4 /* DynamicCellExtensions.swift in Sources */,
 				B0747569226E450700B97B21 /* TestViewController.swift in Sources */,
 				4FE58758229D772E003E780F /* SettingsViewController.swift in Sources */,
@@ -1200,6 +1152,7 @@
 				BC7F2FA02257A69700D3F301 /* AlertViewController.swift in Sources */,
 				BCA18DFC22638DA600F498B4 /* PlateRepository.swift in Sources */,
 				428FC3C022999A5B0086ABE4 /* FontExtensions.swift in Sources */,
+				42954B1F22A33C1C00C82FC1 /* Constants.swift in Sources */,
 				BC9CCD8D227DE621008CDCDB /* TouchableImageView.swift in Sources */,
 				B0767ED42275717D0071AE7C /* SnapshotParser.swift in Sources */,
 				4FE58754229D76FC003E780F /* SettingsCellView.swift in Sources */,

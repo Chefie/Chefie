@@ -22,13 +22,15 @@ target 'Chefie' do
   pod 'AACarousel'
   pod 'TableviewPaginator'
   pod 'TagListView', '~> 1.0'
+  pod 'FSPagerView'
+  pod 'AWSMobileClient', '~> 2.9.0'
+  pod 'AWSS3', '~> 2.9.0' 
   pod 'AACarousel'
-  pod 'JVFloatLabeledTextField'
-  pod 'UITextView+Placeholder'
   pod 'Gallery'
   pod 'FaveButton'
   pod 'DLRadioButton', '~> 1.4'
   pod 'AWSS3'
+  pod 'UITextView+Placeholder'
 end
 
 

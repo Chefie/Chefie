@@ -61,7 +61,7 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
         super .viewWillAppear(animated)
         textFieldPass.text = ""
         
-        
+       
     }
     
     //Antes de que salga la Vista se combrueba si hay un usuario logueado.
@@ -74,7 +74,7 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
         logoChefie.animate()
         
         if Auth.auth().currentUser != nil{
-         //   launchMainScreen()
+            launchMainScreen()
         }
     }
     

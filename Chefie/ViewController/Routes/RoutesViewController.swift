@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import ElongationPreview
 import SDWebImage
 import SkeletonView
 

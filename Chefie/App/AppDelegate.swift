@@ -1,9 +1,10 @@
-
 import UIKit
 import Firebase
 import GoogleSignIn
 import AWSS3
 import AWSCore
+import AWSMobileClient
+
 
 let appContainer = AppContainer()
 let gLabelRadius = 4
@@ -12,26 +13,93 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     var window: UIWindow?
 
+    func application(_ application: UIApplication,
+                     handleEventsForBackgroundURLSession identifier: String,
+                     completionHandler: @escaping () -> Void) {
+        
+        AWSMobileClient.sharedInstance().initialize { (userState, error) in
+            guard error == nil else {
+                print("Error initializing AWSMobileClient. Error: \(error!.localizedDescription)")
+                return
+            }
+            print("AWSMobileClient initialized.")
+        }
+        
+        setup()
+        
+        //provide the completionHandler to the TransferUtility to support background transfers.
+        AWSS3TransferUtility.interceptApplication(application,
+                                                  handleEventsForBackgroundURLSession: identifier,
+                                                  completionHandler: completionHandler)
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+      
+        self.application(application, handleEventsForBackgroundURLSession: AppSettings.TransferUtilityIdentifier) {
+            
+        }
+        
+        return true
+    }
+    
+    func setup() {
+        
         // Override point for customization after application launch.
         FirebaseApp.configure()
-        
         configureS3()
         
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
-
+        
         //AQUI SE COMBRUEBA SI HAY ALGO GUARDADO EN EL USER DEFAULTS
         //EN LA KEY "runed"
         let isLogin = UserDefaults.standard.string(forKey: "runed")
         //    self.NextViewController(storybordid: "loginView")
-         //  self.NextViewController(storybordid: "loginView")
+        //  self.NextViewController(storybordid: "loginView")
         if isLogin == "vamos"{
-          self.NextViewController(storybordid: "loginView")
+            self.NextViewController(storybordid: "loginView")
         }else{
             self.NextViewController(storybordid: "sliderView")
         }
-        return true
+    }
+    
+    func configureS3() {
+        
+        AWSMobileClient.sharedInstance().initialize { (userState, error) in
+            guard error == nil else {
+                print("Error initializing AWSMobileClient. Error: \(error!.localizedDescription)")
+                return
+            }
+            print("AWSMobileClient initialized.")
+        }
+        
+        
+        //Setup credentials, see your awsconfiguration.json for the "YOUR-IDENTITY-POOL-ID"
+        let credentialProvider = AWSCognitoCredentialsProvider(regionType: AWSRegionType.USEast1, identityPoolId: "")
+        
+        //Setup the service configuration
+        let configuration = AWSServiceConfiguration(region: .USEast1, credentialsProvider: credentialProvider)
+        
+        //Setup the transfer utility configuration
+        let tuConf = AWSS3TransferUtilityConfiguration()
+        tuConf.isAccelerateModeEnabled = true
+        tuConf.bucket = "chefiebucket"
+        //tuConf.multiPartConcurrencyLimit = 5
+
+        AWSServiceManager.default().defaultServiceConfiguration = configuration
+        
+      //  Register a transfer utility object asynchronously
+//        AWSS3TransferUtility.register(
+//            with: configuration!,
+//            transferUtilityConfiguration: tuConf,
+//            forKey: AppSettings.TransferUtilityIdentifier
+//        ) { (error) in
+//            if error != nil {
+//                print("Error when registering TransferUtility")
+//            }
+//
+//            print("Loaded")
+//        }
     }
     //METODO QUE RECIBE EL ID DE LA VISTA Y NOS SACA UNA U OTRA VISTA
     //DEPENDIENDO DE LO QUE HAY GUARDADO EN EL USERDEFAULTS
@@ -46,11 +114,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 //        self.window?.makeKeyAndVisible()
 //    }
 //
-    
-    func configureS3() {
-        
-    
-    }
     
     func NextViewController(storybordid:String)
     {
