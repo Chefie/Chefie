@@ -70,12 +70,19 @@
 		B08682F622776FD10037A403 /* ShowMoreHolderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B08682F522776FD10037A403 /* ShowMoreHolderView.xib */; };
 		B097E2B82275B28B00C2A177 /* CalcExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B097E2B72275B28B00C2A177 /* CalcExtensions.swift */; };
 		B0E499AF227776B3002E21C9 /* ShowMoreHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E499AE227776B3002E21C9 /* ShowMoreHolderView.swift */; };
+		BC0B132922A2C792002E3BBD /* AlertServiceDelete.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0B132822A2C792002E3BBD /* AlertServiceDelete.swift */; };
+		BC0B132B22A2C832002E3BBD /* AlertDeleteProfile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC0B132A22A2C832002E3BBD /* AlertDeleteProfile.storyboard */; };
+		BC0B132D22A2C8EF002E3BBD /* AlertDeleteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0B132C22A2C8EF002E3BBD /* AlertDeleteController.swift */; };
 		BC122C90227F363C002E9F22 /* VideoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC122C8F227F363C002E9F22 /* VideoViewCell.swift */; };
+		BC1A8DCA22A3C02E003E9411 /* PlatoCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1A8DC822A3C02E003E9411 /* PlatoCellView.swift */; };
+		BC1A8DCB22A3C02E003E9411 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1A8DC922A3C02E003E9411 /* CommentCell.swift */; };
 		BC2FDA5B2296DDDA00B1CB40 /* UploadRecipe.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC2FDA5A2296DDDA00B1CB40 /* UploadRecipe.storyboard */; };
 		BC2FDA5D2296DE3100B1CB40 /* UploadRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2FDA5C2296DE3100B1CB40 /* UploadRecipeViewController.swift */; };
 		BC2FDA602296F8CB00B1CB40 /* UploadRecipeInfoCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2FDA5F2296F8CB00B1CB40 /* UploadRecipeInfoCellView.swift */; };
 		BC2FDA622296FB1400B1CB40 /* Ingredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2FDA612296FB1400B1CB40 /* Ingredient.swift */; };
 		BC2FDA6422983BBB00B1CB40 /* UploadDescriptionCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2FDA6322983BBB00B1CB40 /* UploadDescriptionCellView.swift */; };
+		BC37C54722A15FE9004E0B2F /* UpdateProfile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC37C54622A15FE9004E0B2F /* UpdateProfile.storyboard */; };
+		BC37C54B22A163E6004E0B2F /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC37C54A22A163E6004E0B2F /* UpdateProfileViewController.swift */; };
 		BC7722B9227DAD06008DF159 /* ChefieCellViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7722B8227DAD06008DF159 /* ChefieCellViewProtocol.swift */; };
 		BC7F2F3D2257993100D3F301 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F2F3C2257993100D3F301 /* AppDelegate.swift */; };
 		BC7F2F442257993200D3F301 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC7F2F432257993200D3F301 /* Assets.xcassets */; };
@@ -120,6 +127,7 @@
 		BC7F2FB32257AA1F00D3F301 /* Slide.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC7F2FB02257AA1E00D3F301 /* Slide.xib */; };
 		BC7F2FB42257AA1F00D3F301 /* ViewControllerSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7F2FB12257AA1E00D3F301 /* ViewControllerSlider.swift */; };
 		BC7F2FB62257B0FB00D3F301 /* AlertStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC7F2FB52257B0FA00D3F301 /* AlertStoryboard.storyboard */; };
+		BC805EB9229EDC1B004D81F3 /* PlateMediaHorizontalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC805EB8229EDC1B004D81F3 /* PlateMediaHorizontalCell.swift */; };
 		BC8641C7227EC21300008F04 /* MutlimediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8641C6227EC21300008F04 /* MutlimediaCell.swift */; };
 		BC8641C9227ED78200008F04 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8641C8227ED78200008F04 /* DateExtensions.swift */; };
 		BC8641CB227ED82700008F04 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8641CA227ED82700008F04 /* StringExtensions.swift */; };
@@ -146,7 +154,6 @@
 		BCA18E162263946800F498B4 /* TagRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA18E152263946800F498B4 /* TagRepository.swift */; };
 		BCA18E182263947A00F498B4 /* PremiumRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA18E172263947A00F498B4 /* PremiumRepository.swift */; };
 		BCB97EEB229582E800E58922 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB97EEA229582E800E58922 /* ProfileViewController.swift */; };
-		BCB97EED2295871E00E58922 /* ProfileStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCB97EEC2295871E00E58922 /* ProfileStoryboard.storyboard */; };
 		BCB97EF222958F2800E58922 /* ProfilePicCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB97EF122958F2800E58922 /* ProfilePicCellView.swift */; };
 		BCB97EF42295A87200E58922 /* ProfileInfoCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB97EF32295A87200E58922 /* ProfileInfoCellView.swift */; };
 		BCBFAABF2292EEB700B4ECD4 /* IDynamicCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBFAABE2292EEB700B4ECD4 /* IDynamicCellProtocol.swift */; };
@@ -229,12 +236,21 @@
 		B08682F522776FD10037A403 /* ShowMoreHolderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowMoreHolderView.xib; sourceTree = "<group>"; };
 		B097E2B72275B28B00C2A177 /* CalcExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalcExtensions.swift; sourceTree = "<group>"; };
 		B0E499AE227776B3002E21C9 /* ShowMoreHolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMoreHolderView.swift; sourceTree = "<group>"; };
+		BC0B132822A2C792002E3BBD /* AlertServiceDelete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlertServiceDelete.swift; path = ../../../Model/AlertServiceDelete.swift; sourceTree = "<group>"; };
+		BC0B132A22A2C832002E3BBD /* AlertDeleteProfile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AlertDeleteProfile.storyboard; sourceTree = "<group>"; };
+		BC0B132C22A2C8EF002E3BBD /* AlertDeleteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDeleteController.swift; sourceTree = "<group>"; };
 		BC122C8F227F363C002E9F22 /* VideoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewCell.swift; sourceTree = "<group>"; };
+		BC1A8DC822A3C02E003E9411 /* PlatoCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlatoCellView.swift; sourceTree = "<group>"; };
+		BC1A8DC922A3C02E003E9411 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		BC2FDA5A2296DDDA00B1CB40 /* UploadRecipe.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = UploadRecipe.storyboard; sourceTree = "<group>"; };
 		BC2FDA5C2296DE3100B1CB40 /* UploadRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRecipeViewController.swift; sourceTree = "<group>"; };
 		BC2FDA5F2296F8CB00B1CB40 /* UploadRecipeInfoCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRecipeInfoCellView.swift; sourceTree = "<group>"; };
 		BC2FDA612296FB1400B1CB40 /* Ingredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ingredient.swift; sourceTree = "<group>"; };
 		BC2FDA6322983BBB00B1CB40 /* UploadDescriptionCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadDescriptionCellView.swift; sourceTree = "<group>"; };
+		BC303D26229D617D00A0A5B6 /* JVFloatLabeledTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JVFloatLabeledTextView.h; path = Chefie/JVFloatLabeledTextView.h; sourceTree = SOURCE_ROOT; };
+		BC303D27229D617E00A0A5B6 /* JVFloatLabeledTextField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JVFloatLabeledTextField.h; path = Chefie/JVFloatLabeledTextField.h; sourceTree = SOURCE_ROOT; };
+		BC37C54622A15FE9004E0B2F /* UpdateProfile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = UpdateProfile.storyboard; sourceTree = "<group>"; };
+		BC37C54A22A163E6004E0B2F /* UpdateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewController.swift; sourceTree = "<group>"; };
 		BC7722B8227DAD06008DF159 /* ChefieCellViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChefieCellViewProtocol.swift; sourceTree = "<group>"; };
 		BC7F2F392257993100D3F301 /* Chefie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chefie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC7F2F3C2257993100D3F301 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -281,6 +297,7 @@
 		BC7F2FB02257AA1E00D3F301 /* Slide.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Slide.xib; sourceTree = "<group>"; };
 		BC7F2FB12257AA1E00D3F301 /* ViewControllerSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerSlider.swift; sourceTree = "<group>"; };
 		BC7F2FB52257B0FA00D3F301 /* AlertStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AlertStoryboard.storyboard; sourceTree = "<group>"; };
+		BC805EB8229EDC1B004D81F3 /* PlateMediaHorizontalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateMediaHorizontalCell.swift; sourceTree = "<group>"; };
 		BC8641C6227EC21300008F04 /* MutlimediaCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutlimediaCell.swift; sourceTree = "<group>"; };
 		BC8641C8227ED78200008F04 /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		BC8641CA227ED82700008F04 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
@@ -307,7 +324,6 @@
 		BCA18E152263946800F498B4 /* TagRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagRepository.swift; sourceTree = "<group>"; };
 		BCA18E172263947A00F498B4 /* PremiumRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumRepository.swift; sourceTree = "<group>"; };
 		BCB97EEA229582E800E58922 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		BCB97EEC2295871E00E58922 /* ProfileStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProfileStoryboard.storyboard; sourceTree = "<group>"; };
 		BCB97EF122958F2800E58922 /* ProfilePicCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePicCellView.swift; sourceTree = "<group>"; };
 		BCB97EF32295A87200E58922 /* ProfileInfoCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoCellView.swift; sourceTree = "<group>"; };
 		BCBFAABE2292EEB700B4ECD4 /* IDynamicCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDynamicCellProtocol.swift; sourceTree = "<group>"; };
@@ -343,6 +359,11 @@
 				4249C100229D04F0001F3F7B /* CommentCell.swift */,
 				4249C0FF229D04F0001F3F7B /* PlatoCellView.swift */,
 				33EF169D2296DF5E0002CFA1 /* PlatosVerticalCell.swift */,
+				33EF169D2296DF5E0002CFA1 /* PlatosVerticalCell.swift */,
+				BC1A8DC922A3C02E003E9411 /* CommentCell.swift */,
+				BC1A8DC822A3C02E003E9411 /* PlatoCellView.swift */,
+				42FD5E472294C21600785BE7 /* CommentsHorizontalCell.swift */,
+				BC805EB8229EDC1B004D81F3 /* PlateMediaHorizontalCell.swift */,
 			);
 			path = CustomCells;
 			sourceTree = "<group>";
@@ -619,6 +640,8 @@
 				BC2FDA5C2296DE3100B1CB40 /* UploadRecipeViewController.swift */,
 				4FE58757229D772E003E780F /* SettingsViewController.swift */,
 				33066842229D9BA9007BB2E8 /* SearchViewController.swift */,
+				BC37C54A22A163E6004E0B2F /* UpdateProfileViewController.swift */,
+				BC0B132C22A2C8EF002E3BBD /* AlertDeleteController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -709,6 +732,7 @@
 				BCEBD79B225A3F3C00CF339B /* Model */,
 				BC7F2F9D2257A67400D3F301 /* AlertService.swift */,
 				4FE58753229D76FC003E780F /* SettingsCellView.swift */,
+				BC0B132822A2C792002E3BBD /* AlertServiceDelete.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -721,6 +745,8 @@
 				B01E051D227592DA00BEAAE8 /* LocalFileImageDataProvider.swift */,
 				B097E2B72275B28B00C2A177 /* CalcExtensions.swift */,
 				BC9CCD94227E0B54008CDCDB /* ViewExtensions.swift */,
+				BC303D27229D617E00A0A5B6 /* JVFloatLabeledTextField.h */,
+				BC303D26229D617D00A0A5B6 /* JVFloatLabeledTextView.h */,
 				BC8641C8227ED78200008F04 /* DateExtensions.swift */,
 				BC8641CA227ED82700008F04 /* StringExtensions.swift */,
 				BCBFAAC32292F4F000B4ECD4 /* DynamicCellExtensions.swift */,
@@ -759,11 +785,12 @@
 				33066848229D9D9A007BB2E8 /* RouteScreen.storyboard */,
 				33066846229D9D83007BB2E8 /* NewRecipeScreen.storyboard */,
 				BC9CCD8F227DE901008CDCDB /* PlateDetailStoryboard.storyboard */,
-				BCB97EEC2295871E00E58922 /* ProfileStoryboard.storyboard */,
 				BC2FDA5A2296DDDA00B1CB40 /* UploadRecipe.storyboard */,
 				4FE58755229D770E003E780F /* Settings.storyboard */,
 				33066844229D9D4D007BB2E8 /* SearchScreen.storyboard */,
 				335CEB4322A17F9C00CF1203 /* RouteDetailStoryboard.storyboard */,
+				BC37C54622A15FE9004E0B2F /* UpdateProfile.storyboard */,
+				BC0B132A22A2C832002E3BBD /* AlertDeleteProfile.storyboard */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -947,6 +974,7 @@
 				428FC3D222999FFB0086ABE4 /* SamsungSans-Light.ttf in Resources */,
 				4FE58756229D770E003E780F /* Settings.storyboard in Resources */,
 				428FC3D122999FFB0086ABE4 /* SamsungSans-Bold.ttf in Resources */,
+				BC37C54722A15FE9004E0B2F /* UpdateProfile.storyboard in Resources */,
 				B0824EAF226E3E6D00882168 /* Main.storyboard in Resources */,
 				3306684B229D9DB1007BB2E8 /* ProfileScreen.storyboard in Resources */,
 				BC9CCD90227DE901008CDCDB /* PlateDetailStoryboard.storyboard in Resources */,
@@ -968,7 +996,7 @@
 				B08682F622776FD10037A403 /* ShowMoreHolderView.xib in Resources */,
 				BC9CCD97227E2B01008CDCDB /* InfoView.xib in Resources */,
 				428FC3D322999FFB0086ABE4 /* SamsungSans-Medium.ttf in Resources */,
-				BCB97EED2295871E00E58922 /* ProfileStoryboard.storyboard in Resources */,
+				BC0B132B22A2C832002E3BBD /* AlertDeleteProfile.storyboard in Resources */,
 				B0824EB1226E3EA000882168 /* Showcase.storyboard in Resources */,
 				33066845229D9D4D007BB2E8 /* SearchScreen.storyboard in Resources */,
 				B0514F8C22755F9C0029DA9A /* Login.storyboard in Resources */,
@@ -1102,6 +1130,7 @@
 				BCEBD7A1225A432C00CF339B /* ChefieUser.swift in Sources */,
 				BC122C90227F363C002E9F22 /* VideoViewCell.swift in Sources */,
 				BCA18E0222638E7900F498B4 /* Like.swift in Sources */,
+				BC0B132922A2C792002E3BBD /* AlertServiceDelete.swift in Sources */,
 				BCA18E122263942F00F498B4 /* CommentRepository.swift in Sources */,
 				BC7F2F7F2257A51A00D3F301 /* ImageLoader.swift in Sources */,
 				BCB97EEB229582E800E58922 /* ProfileViewController.swift in Sources */,
@@ -1135,6 +1164,7 @@
 				BC7F2FA72257A70900D3F301 /* TabBarViewController.swift in Sources */,
 				BCA18E0A2263912B00F498B4 /* UserMin.swift in Sources */,
 				428FC3BE229997550086ABE4 /* AnimationExtensions.swift in Sources */,
+				BC1A8DCA22A3C02E003E9411 /* PlatoCellView.swift in Sources */,
 				BC7F2F7D2257A51A00D3F301 /* LoadingView.swift in Sources */,
 				335CEB4222A16E9D00CF1203 /* S3Repository.swift in Sources */,
 				BC7722B9227DAD06008DF159 /* ChefieCellViewProtocol.swift in Sources */,
@@ -1159,6 +1189,7 @@
 				BC7F2F8E2257A51A00D3F301 /* SpringButton.swift in Sources */,
 				427CEFAC229D26A600113A1A /* TablePaginatorEx.swift in Sources */,
 				42FD5E462294BFC200785BE7 /* HorizontalSectionView.swift in Sources */,
+				BC805EB9229EDC1B004D81F3 /* PlateMediaHorizontalCell.swift in Sources */,
 				BC7F2F852257A51A00D3F301 /* DesignableTextView.swift in Sources */,
 				BC7F2FA52257A6E300D3F301 /* HomeViewController.swift in Sources */,
 				421B77C4229B5A490087DF5E /* VerticalCollectionSectionView.swift in Sources */,
@@ -1200,6 +1231,7 @@
 				BC2FDA602296F8CB00B1CB40 /* UploadRecipeInfoCellView.swift in Sources */,
 				BC7F2F942257A51A00D3F301 /* TransitionManager.swift in Sources */,
 				4251793222977BEA00D673A7 /* ArrayExtensions.swift in Sources */,
+				BC1A8DCB22A3C02E003E9411 /* CommentCell.swift in Sources */,
 				BC7F2FB22257AA1F00D3F301 /* Slide.swift in Sources */,
 				BC7F2F812257A51A00D3F301 /* DesignableView.swift in Sources */,
 				BCB97EF222958F2800E58922 /* ProfilePicCellView.swift in Sources */,
@@ -1209,6 +1241,7 @@
 				337B33DE2294C3EF008B662D /* TableCellRegistrator.swift in Sources */,
 				BCA18E0022638E4700F498B4 /* Comment.swift in Sources */,
 				BCA18DFE22638DCB00F498B4 /* Plate.swift in Sources */,
+				BC0B132D22A2C8EF002E3BBD /* AlertDeleteController.swift in Sources */,
 				BCEBD7A9225A5A7800CF339B /* DataManager.swift in Sources */,
 				BC7F2F862257A51A00D3F301 /* AsyncButton.swift in Sources */,
 				42A7D56B229AAB8B00617725 /* PaddingLabel.swift in Sources */,
@@ -1218,6 +1251,7 @@
 				33066843229D9BA9007BB2E8 /* SearchViewController.swift in Sources */,
 				BCA18E162263946800F498B4 /* TagRepository.swift in Sources */,
 				421B77C6229B68D70087DF5E /* RoutesViewController.swift in Sources */,
+				BC37C54B22A163E6004E0B2F /* UpdateProfileViewController.swift in Sources */,
 				BCA18E10226393C300F498B4 /* RouteRepository.swift in Sources */,
 				B0150DAB227579E0006F48FA /* PlateCellView.swift in Sources */,
 				4249C102229D04F1001F3F7B /* CommentCell.swift in Sources */,

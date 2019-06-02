@@ -120,7 +120,10 @@ class HorizontalSectionView<T> : BaseCell, SkeletonCollectionViewDelegate, Skele
     }
     
     override func setModel(model: AnyObject?) {
-        self.modelSet = (model as? Array<T>)!
+        
+        if model != nil {
+            self.modelSet = (model as? Array<T>)!
+        }
     }
     
     open func getSeeAllButtonSize() -> CGSize {

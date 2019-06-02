@@ -85,7 +85,7 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
     }
     
     func onLayout() {
-        
+
     }
     
     override func viewDidLoad() {

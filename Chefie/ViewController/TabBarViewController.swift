@@ -36,6 +36,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         tabBarItem.image = UIImage(named: "addFood")?.withRenderingMode(.alwaysOriginal)
         tabBarItem.selectedImage = UIImage(named: "addFood2")?.withRenderingMode(.alwaysOriginal)
         tabBar.items?[2].title = "Add recipe"
+        tabBar.items?[2].tag = 2
         
         tabBarItem = self.tabBar.items![3]
         tabBarItem.image = UIImage(named: "finish1")?.withRenderingMode(.alwaysOriginal)
@@ -74,5 +75,20 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
 //
     
       print("Selected view controller")
+    }
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        
+        if item.tag == 2 {
+         
+
+            let vc = UIStoryboard(name: "UploadRecipe", bundle: nil).instantiateViewController(withIdentifier: "UploadRecipeViewController")
+            
+            let navigationController = UINavigationController(rootViewController: vc)
+            
+            navigationItem.leftItemsSupplementBackButton = true
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: nil)
+
+            self.present(navigationController, animated: true, completion: nil)
+        }
     }
 }

@@ -17,6 +17,7 @@ class ChefieUser : Codable {
     var userName : String?
     var email : String?
     var password: String?
+    var fullName: String?
     var following : Int?
     var followers: Int?
     var profilePic: String?

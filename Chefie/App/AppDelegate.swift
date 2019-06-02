@@ -76,11 +76,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                     print(result?.user.email)
                     print(result?.user.displayName)
                     
+                   
+                    let userID : String = (Auth.auth().currentUser?.uid)!
+                    appContainer.dataManager.localData?.chefieUser?.id = userID
+                    
                     //Perform Segue to main screen
                     let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                     let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: "mainScreen") as UIViewController
+                    
+                     let navigationController = UINavigationController(rootViewController: initialViewControlleripad)
+                    
                     self.window = UIWindow(frame: UIScreen.main.bounds)
-                    self.window?.rootViewController = initialViewControlleripad
+                    self.window?.rootViewController = navigationController
                     self.window?.makeKeyAndVisible()
                     
                 }else{

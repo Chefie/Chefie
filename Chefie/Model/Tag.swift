@@ -13,6 +13,11 @@ class Tag : Codable{
     var id : String?
     var label : String?
     
+    init(label : String) {
+        
+        self.label = label
+    }
+    
     required init() {
         
     }

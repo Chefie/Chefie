@@ -138,9 +138,9 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol{
 //
     @objc func buttonAction() {
 
-        print("*********VAMOS")
-        let storyboard = UIStoryboard(name: "UploadRecipe", bundle: nil)
-        let vc  : UploadRecipeViewController = storyboard.instantiateViewController(withIdentifier: "UploadRecipeViewController") as! UploadRecipeViewController
+        print("*********VAMOS AL SETTINGS")
+        let storyboard = UIStoryboard(name: "UpdateProfile", bundle: nil)
+        let vc  : UpdateProfileViewController = storyboard.instantiateViewController(withIdentifier: "UpdateProfileStory") as! UpdateProfileViewController
 
         self.viewController?.navigationController?.pushViewController(vc, animated: true)
     }
