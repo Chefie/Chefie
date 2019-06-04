@@ -29,7 +29,6 @@ target 'Chefie' do
   pod 'Gallery'
   pod 'FaveButton'
   pod 'DLRadioButton', '~> 1.4'
-  pod 'AWSS3'
   pod 'UITextView+Placeholder'
 end
 

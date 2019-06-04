@@ -117,7 +117,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     func NextViewController(storybordid:String)
     {
-        
         let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let exampleVC = storyBoard.instantiateViewController(withIdentifier:storybordid )
         // self.present(exampleVC, animated: true)
@@ -138,7 +137,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 if(error == nil){
                     print(result?.user.email)
                     print(result?.user.displayName)
-                    
                    
                     let userID : String = (Auth.auth().currentUser?.uid)!
                     appContainer.dataManager.localData?.chefieUser?.id = userID

@@ -16,7 +16,7 @@ class ChefieUser : Codable {
     var id : String?
     var userName : String?
     var email : String?
-    var password: String?
+//    var password: String?
     var fullName: String?
     var following : Int?
     var followers: Int?
@@ -29,9 +29,9 @@ class ChefieUser : Codable {
     var location: String?
     var community: String?
     
-    init(email: String, password: String) {
-        
-        self.email = email
-        self.password = password
-    }
+//    init(email: String, password: String) {
+//        
+//        self.email = email
+//        self.password = password
+//    }
 }

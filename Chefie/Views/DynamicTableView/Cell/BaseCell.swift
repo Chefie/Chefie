@@ -55,7 +55,7 @@ class BaseCell : UITableViewCell, IDynamicCellProtocol{
     }  
     
     func onLayout(size: CGSize!) {
-        
+      //   self.contentView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func onCreateViews() {

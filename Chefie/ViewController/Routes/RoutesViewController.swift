@@ -33,6 +33,8 @@ class RoutesViewController: UIViewController, DynamicViewControllerProto{
                 
             case .success(let data):
                 
+                self.tableItems.removeAll()
+                
                 data.forEach({ (com) in
                     
                     let item = CommunityCellItemInfo()

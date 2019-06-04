@@ -34,7 +34,7 @@ class PlatoCellView : BaseCell, ICellDataProtocol, INestedCell {
     
     let plateTitle : MultilineLabel = {
         let lbl = MultilineLabel(maskConstraints: false, font: DefaultFonts.DefaultTextFont)
-        lbl.text = ""
+        lbl.text = "AAAAAAAAAAA"
         lbl.numberOfLines = 1
         return lbl
     }()

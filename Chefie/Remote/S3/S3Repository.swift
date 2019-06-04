@@ -10,14 +10,21 @@ import Foundation
 import AWSS3
 import AWSCore
 
+public struct S3MediaUploadBatchResult {
+    
+    var result : [S3MediaUploadResult]
+    var errors : [Error]?
+}
+
 public struct S3MediaUploadResult {
     
     var url : String
+    var id : String
     var contentType : String
-    
     var errors: [Error]?
     
-    init(url : String, contentType : String) {
+    init(id: String, url : String, contentType : String) {
+        self.id = id
         self.url = url
         self.contentType = contentType
     }
@@ -52,10 +59,54 @@ class S3Repository {
     func getCurrentMillis()->Int64 {
         return Int64(Date().timeIntervalSince1970 * 1000)
     }
+    
+    func uploadImageBatch(dataArray : Array<Data>, completionHandler: @escaping (Result<S3MediaUploadBatchResult, Error>) -> Void ) {
+        
+        let dispatchQueue = DispatchQueue(label: "UploadImageS3Batch", qos: .background)
+        dispatchQueue.async{
+            
+            var batchCount = dataArray.count - 1
+            var resultArray = [S3MediaUploadResult]()
+            var errors  : [Error]?
+            var running = false, finished = false
+            while(!finished){
+                
+                if (!running) {
+                    
+                    running = true
+                    self.uploadImage(data: dataArray [batchCount], completionHandler: { (result : Result<S3MediaUploadResult, Error>) in
+                        
+                        switch result {
+                        case .success(let data):
+                            
+                            resultArray.append(data)
+                            break
+                        case .failure(let error):
+                            
+                            errors?.append(error)
+                            break
+                        }
+                        
+                        batchCount -= 1
+                     
+                        if (batchCount < 0){
+                            
+                            finished = true
+                        }
+                        
+                        running = false
+                    })
+                }
+            }
+            
+            let result = S3MediaUploadBatchResult(result: resultArray, errors: errors)
+            completionHandler(.success(result))
+        }
+    }
 
     func uploadImage(data : Data, completionHandler: @escaping (Result<S3MediaUploadResult, Error>) -> Void ) -> Void {
         
-        let path = "Images/" + UniqueIdentifierObject().getUniqueId()
+        let path = "Images/" + UniqueIdentifierObject().getUniqueId() + ".jpg"
         var completionCallback: AWSS3TransferUtilityUploadCompletionHandlerBlock?
         completionCallback = { (task, error) -> Void in
             DispatchQueue.main.async(execute: {
@@ -66,7 +117,7 @@ class S3Repository {
                     return
                 }
                 
-                let result = S3MediaUploadResult(url: self.S3_URL + path, contentType: ContentType.Jpeg.rawValue)
+                let result = S3MediaUploadResult(id: path,url: self.S3_URL + path, contentType: ContentType.Jpeg.rawValue)
                 completionHandler(.success(result))
             })
         }
@@ -89,7 +140,50 @@ class S3Repository {
         }
     }
     
-    func uploadVideo(data: Data, completionHandler: @escaping (Result<MediaUploadResult, Error>) -> Void ) -> Void{
+    func uploadVideoBatch(dataArray : Array<Data>, completionHandler: @escaping (Result<S3MediaUploadBatchResult, Error>) -> Void ) -> Void{
+        let dispatchQueue = DispatchQueue(label: "UploadVideoS3Batch", qos: .background)
+        dispatchQueue.async{
+            
+            var batchCount = max(dataArray.count - 1, 0)
+            var resultArray = [S3MediaUploadResult]()
+            var errors  : [Error]?
+            var running = false, finished = false
+            while(!finished){
+                
+                if (!running) {
+                    
+                    running = true
+                    self.uploadVideo(data: dataArray [batchCount], completionHandler: { (result : Result<S3MediaUploadResult, Error>) in
+                        
+                        switch result {
+                        case .success(let data):
+                            
+                            resultArray.append(data)
+                            break
+                        case .failure(let error):
+                            
+                            errors?.append(error)
+                            break
+                        }
+  
+                        batchCount -= 1
+                        
+                        if (batchCount < 0){
+                            
+                            finished = true
+                        }
+                        
+                        running = false
+                    })
+                }
+            }
+            
+            let result = S3MediaUploadBatchResult(result: resultArray, errors: errors)
+            completionHandler(.success(result))
+        }
+    }
+    
+    func uploadVideo(data: Data, completionHandler: @escaping (Result<S3MediaUploadResult, Error>) -> Void ) -> Void{
         
         let path = "Multimedia/" + UniqueIdentifierObject().getUniqueId() + ".mp4"
         var completionCallback: AWSS3TransferUtilityMultiPartUploadCompletionHandlerBlock?
@@ -98,8 +192,13 @@ class S3Repository {
                 
                 if error != nil {
                     
-                    print("Error")
+                    completionHandler(.failure(error!))
+                    return
                 }
+                
+                let result = S3MediaUploadResult(id: path,url: self.S3_URL + path, contentType: ContentType.VideoMP4.rawValue)
+                completionHandler(.success(result))
+         
             })
         }
         

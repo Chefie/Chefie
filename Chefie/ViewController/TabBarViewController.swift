@@ -61,21 +61,9 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
      
-            print("Selected view controller")
+        print("Selected view controller")
     }
     
-   
-    
-    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        
-      tabBarController?.selectedIndex = 0
-//        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen" )
-//        self.present(exampleVC, animated: true)
-//
-    
-      print("Selected view controller")
-    }
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         
         if item.tag == 2 {

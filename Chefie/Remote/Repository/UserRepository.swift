@@ -10,6 +10,7 @@ import Foundation
 import FirebaseFirestore
 import GoogleSignIn
 import Firebase
+import CodableFirebase
 
 class UserRepository{
     
@@ -30,9 +31,9 @@ class UserRepository{
                             let _email = doc?.data()["email"] as! String
                             let _pass = doc?.data()["password"] as! String
                             
-                            let chefieUser = ChefieUser(email: _email, password: _pass)
-                            
-                            completionHandler(.success(chefieUser))
+//                            let chefieUser = ChefieUser(email: _email, password: _pass)
+//
+//                            completionHandler(.success(chefieUser))
                         }
                         else{
                             completionHandler(.failure(err as! String))
@@ -41,6 +42,36 @@ class UserRepository{
                 }
             }
         }
+    }
+    
+    func getAllUsers(offset : Int, completionHandler: @escaping (Result<[ChefieUser], Error>) -> Void){
+      
+        let usersRef = Firestore.firestore().collection("Users").limit(to: offset)
+
+        usersRef.getDocuments(completion: { (querySnapshot, err) in
+        
+            var users = [ChefieUser]()
+   
+            if (querySnapshot?.documents) != nil {
+                
+                querySnapshot?.documents.forEach({ (document) in
+                    do {
+                        
+                        let model = try FirestoreDecoder().decode(ChefieUser.self, from: document.data())
+                        model.id = document.documentID
+                        users.append(model)
+                        
+                        print("Model: \(model)")
+                    } catch  {
+                        print("Invalid Selection.")
+                    }
+                })
+          
+                completionHandler(.success(users))
+            } else {
+              //  completionHandler(.failure(err ?? Error))
+            }
+        })
     }
     
     func getUsersFollowing(id: String){

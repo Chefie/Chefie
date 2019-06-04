@@ -105,7 +105,6 @@ class UploadRecipeInfoCellView : BaseCell, ICellDataProtocol{
         labelTitle.text = model?.label
         labelValue.text = model?.value
         self.hideSkeleton()
-       
     }
     
     override func onCreateViews() {

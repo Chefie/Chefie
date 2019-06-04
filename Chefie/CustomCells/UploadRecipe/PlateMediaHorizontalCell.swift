@@ -10,6 +10,14 @@ import Foundation
 import UIKit
 import SkeletonView
 import Gallery
+
+struct MultimediaData {
+    
+    var video : Video?
+    var image : Image?
+    var contentType : String?
+}
+
 struct MediaData {
     
     var image : Image?
@@ -26,9 +34,9 @@ class PlateMediaHorizontalBaseInfo : HorizontalSectionCellBaseInfo {
     }
 }
 
-class PlateMediaHorizontalCell : HorizontalSectionView<MediaData> {
+class PlateMediaHorizontalCell : HorizontalSectionView<MultimediaData> {
     
-    override var modelSet: [MediaData]{
+    override var modelSet: [MultimediaData]{
         
         didSet(value){
         }
@@ -41,6 +49,8 @@ class PlateMediaHorizontalCell : HorizontalSectionView<MediaData> {
     override func registerCell() {
         
         collectionView.register(PlateMediaCell.self, forCellWithReuseIdentifier: getCellIdentifier())
+        
+        // collectionView.register(VideoCell.self, forCellWithReuseIdentifier: "VideoCell")
     }
     
     override func onLoadData() {
@@ -78,10 +88,10 @@ class PlateMediaHorizontalCell : HorizontalSectionView<MediaData> {
         }
         
         let cellInfo = self.modelSet[indexPath.row]
-        
+
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: getCellIdentifier(), for: indexPath) as! PlateMediaCell
         cell.viewController = viewController
-       cell.collectionItemSize = onRequestItemSize()
+        cell.collectionItemSize = onRequestItemSize()
         cell.parentView = collectionView
         cell.setModel(model: cellInfo as AnyObject)
         cell.onLoadData()
@@ -91,11 +101,11 @@ class PlateMediaHorizontalCell : HorizontalSectionView<MediaData> {
 }
 
 class PlateMediaCell : BaseCollectionCell, ICellDataProtocol, INestedCell {
-    var model: MediaData?
+    var model: MultimediaData?
 
     var collectionItemSize: CGSize!
     
-    typealias T = MediaData
+    typealias T = MultimediaData
     
     let frontImageView : UIImageView = {
         
@@ -107,7 +117,7 @@ class PlateMediaCell : BaseCollectionCell, ICellDataProtocol, INestedCell {
     
     override func onLayout(size: CGSize!) {
         super.onLayout(size: size)
-        
+
         self.contentView.snp.makeConstraints { (maker) in
             // this makes collectionview not responsible??
             //   maker.top.left.right.bottom.equalToSuperview()
@@ -121,10 +131,12 @@ class PlateMediaCell : BaseCollectionCell, ICellDataProtocol, INestedCell {
             maker.width.equalTo(collectionItemSize.width)
             maker.height.equalTo(collectionItemSize.height)
         }
+        
+        self.frontImageView.setCornerRadius(radius: 2)
     }
     
     override func setModel(model: AnyObject?) {
-        self.model = (model as! MediaData)
+        self.model = (model as! MultimediaData)
     }
     
     override func getModel() -> AnyObject? {
@@ -134,15 +146,22 @@ class PlateMediaCell : BaseCollectionCell, ICellDataProtocol, INestedCell {
     override func onLoadData() {
         super.onLoadData()
         
-        Image.resolve(images: [(model?.image!)!], completion: { [weak self] resolvedImages in
-           
-            let imageResolved = resolvedImages.first!
-        
-            self?.frontImageView.image = imageResolved
-        })
-        
-        self.backgroundColor = UIColor.red
-      
+        if (model?.contentType == "image"){
+            
+            Image.resolve(images: [(model?.image!)!], completion: { [weak self] resolvedImages in
+                
+                let imageResolved = resolvedImages.first!
+                self?.frontImageView.image = imageResolved
+                self?.doFadeIn()
+            })
+        }
+        else {
+            model?.video?.fetchThumbnail(size: collectionItemSize, completion: { (image : UIImage?) in
+             
+                self.frontImageView.image = image
+                self.doFadeIn()
+            })
+        }
     }
     
     override func onCreateViews() {

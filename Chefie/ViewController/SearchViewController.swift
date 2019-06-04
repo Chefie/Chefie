@@ -12,44 +12,81 @@ import TagListView
 import TableviewPaginator
 import SkeletonView
 
-class SearchViewController : UIViewController, DynamicViewControllerProto {
+enum SearchQueryInfo: String {
+    case Users = "Users"
+    case Plates = "Plates"
+    case Routes = "Routes"
+}
+
+class SearchViewController : UIViewController, DynamicViewControllerProto, TagListViewDelegate, UITextFieldDelegate {
     
-    private var tableviewPaginator: TableviewPaginatorEx?
+    private var tableviewPaginator: TableviewPaginatorEx!
     var tableItems: Array<BaseItemInfo> = []
     var tableCellRegistrator = TableCellRegistrator()
+    var filterLabels = Array<String>()
+    var endlessTableHelper : EndlessTableHelper!
     
     @IBOutlet weak var mainTable: UITableView!
     @IBOutlet weak var tagListView: TagListView!
+    @IBOutlet weak var searchTextField: SpringTextField!
     
     func onSetup() {
         
-         tableCellRegistrator.add(identifier: PlatoCellItemInfo().reuseIdentifier(), cellClass: PlatoCellView.self)
-        tableCellRegistrator.add(identifier: CommentCellInfo().reuseIdentifier(), cellClass: CommentCell.self)
+         tableCellRegistrator.add(identifier: NewPlateMediaCellItemInfo().reuseIdentifier(), cellClass: NewPlateMediaCell.self)
+
+        tableCellRegistrator.add(identifier: UserSearchCellItemInfo().reuseIdentifier(), cellClass: UserSearchCell.self)
         
         tableCellRegistrator.registerAll(tableView: mainTable)
-        
+
         tableviewPaginator = TableviewPaginatorEx.init(paginatorUI: self, delegate: self)
-        tableviewPaginator?.initialSetup()
+        tableviewPaginator.initialSetup()
+        
+        endlessTableHelper = EndlessTableHelper(table: mainTable, paginator: tableviewPaginator)
+        endlessTableHelper.firstItemsCount = 0
+    }
+    
+    func tagPressed(_ title: String, tagView: TagView, sender: TagListView) {
+        
+        tagListView.tagViews.forEach { (tagView) in
+            tagView.isSelected = false
+        }
+        
+        tagView.isSelected = true
+        self.clear()
+        self.doSearch()
     }
     
     func onSetupViews() {
         
         mainTable.setDefaultSettings()
-        tagListView.textFont = UIFont.systemFont(ofSize: 14)
+        tagListView.textFont = DefaultFonts.DefaultTextFont
         tagListView.alignment = .left // possible values are .Left, .Center, and .Right
         
-        tagListView.addTag("TagListView")
-        
-        for i in 0...20 {
-            tagListView.addTag("test: \(i)")
-        }
-    
-        
-      //  tagListView.insertTag("This should be the second tag", at: 1)
-
+        self.tagListView.delegate = self
         self.mainTable.dataSource = self
         self.mainTable.isSkeletonable = true
         self.mainTable.delegate = self
+        
+        filterLabels.append(contentsOf: [SearchQueryInfo.Plates.rawValue, SearchQueryInfo.Users.rawValue, SearchQueryInfo.Routes.rawValue])
+        tagListView.addTags(filterLabels)
+        tagListView.tagViews[1].isSelected = true
+        
+        searchTextField.delegate = self
+        
+        mainTable.snp.makeConstraints { (make) in
+            
+            make.left.equalTo(0)
+            make.top.equalTo(self.view.heightPercentageOf(amount: 20))
+            //    make.topMargin.equalTo(50)
+            make.width.equalTo(self.view.getWidth())
+            make.height.equalTo(self.view.heightPercentageOf(amount: 80))
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        self.view.endEditing(true)
+        return true
     }
     
     func onLayout() {
@@ -57,71 +94,105 @@ class SearchViewController : UIViewController, DynamicViewControllerProto {
        
     }
     
-    func doSearch(query : String) {
+    func clear() {
         
-        var comments = [String]()
-        comments.append("Este es un comentario corto")
-        comments.append("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.")
-      
-        comments.append("Vastness is bearable only through love take root and flourish radio telescope not a sunrise but a galaxyrise rings of Uranus a very small stage in a vast cosmic arena. Descended from astronomers Tunguska event the only home we've ever known two ghostly white figures in coveralls and helmets are soflty dancing realm of the galaxies across the centuries. Emerged into consciousness gathered by gravity two ghostly white figures in coveralls and helmets are soflty dancing concept of the number one the only home we've ever known dispassionate extraterrestrial observer and billions upon billions upon billions upon billions upon billions upon billions upon billions.")
+        let count = tableItems.count
+        self.tableItems.removeAll()
+        self.mainTable.reloadData()
+      //  self.endlessTableHelper.removeRows(count: count)
+      //  self.mainTable.reloadData()
+    }
+    
+    func doSearch() {
         
-        appContainer.plateRepository.getPlatos(idUser: "2WT9s7km17QdtIwpYlEZ") { (
-            result: ChefieResult<[Plate]>) in
+        let query = self.searchTextField.text ?? ""
+        let tagView = tagListView.selectedTags().first
+        let tagValue = tagView?.titleLabel?.text
+        switch tagValue {
+
+            case SearchQueryInfo.Users.rawValue:
+                doSearchUsers(query: query)
+                break
+            case SearchQueryInfo.Plates.rawValue: doSearchPlates(query: query)
+                break
+            case SearchQueryInfo.Routes.rawValue: doSearchRoutes(query: query)
+                break
+        default:
+            doSearchPlates(query: query)
+        }
+    }
+    
+    func doSearchUsers(query : String){
+        appContainer.userRepository.getAllUsers(offset: 10) { (result: Result<[ChefieUser], Error>) in
             
             switch result {
                 
             case .success(let data):
                 
-                var items = [BaseItemInfo]()
-                
-                data.forEach({ (plate) in
+                self.endlessTableHelper.loadMoreItems(itemsCount: data.count, callback: {
                     
-                    let platoInfo = PlatoCellItemInfo()
-                    platoInfo.model = plate as AnyObject
+                    let users = data.compactMap({ (user) -> UserSearchCellItemInfo? in
+                        
+                        let item = UserSearchCellItemInfo()
+                        item.model = user
+                        return item
+                    })
                     
-                    items.append(platoInfo)
+                    users.forEach({ (item) in
+                        
+                        self.tableItems.append(item)
+                        self.endlessTableHelper.insertRow(itemsCount: self.tableItems.count - 1, item: item)
+                    })
                 })
                 
-
-                var commentItems = [Comment]()
-                comments.forEach({ (commentStr) in
-                    
-                    let comment = Comment()
-                    comment.idUser = "Steven"
-                    comment.content = commentStr
-                    commentItems.append(comment)
-                    let commentInfo = CommentCellInfo()
-                    commentInfo.model = comment
-                    items.append(commentInfo)
-                })
-                
-//
-//                self.mainTable.beginUpdates()
-//
-//
-//
-//                items.forEach({ (item) in
-//
-//                    self.tableItems.append(item)
-//                    let indexPath:IndexPath = IndexPath(row:(self.tableItems.count - 1), section:0)
-//                    self.mainTable.insertRows(at: [indexPath], with: .fade)
-//                })
-//
-//
-//                self.mainTable.endUpdates()
-
-                self.tableItems = items
-                self.mainTable.reloadData()
                 break
             case .failure(_):
+                
+                break
+            }
+        }
+    }
+
+    func doSearchPlates(query: String){
+        
+        appContainer.plateRepository.getPlatos { (result : ChefieResult<[Plate]>) in
+            
+            switch result {
+                
+            case .success(let data):
+                
+                self.endlessTableHelper.loadMoreItems(itemsCount: data.count, callback: {
+                    
+                    let plates = data.compactMap({ (user) -> NewPlateMediaCellItemInfo? in
+                        
+                        let item = NewPlateMediaCellItemInfo()
+                        item.model = user
+                        return item
+                    })
+                    
+                    plates.forEach({ (item) in
+                        
+                        self.tableItems.append(item)
+                        self.endlessTableHelper.insertRow(itemsCount: self.tableItems.count - 1, item: item)
+                    })
+                    
+                })
+                
+                break
+            case .failure(_):
+                
                 break
             }
         }
     }
     
+    func doSearchRoutes(query : String){
+    
+    }
+    
     func onLoadData() {
         
-        doSearch(query: "")
+
     }
 
     override func viewDidLoad() {
@@ -129,7 +200,6 @@ class SearchViewController : UIViewController, DynamicViewControllerProto {
         
         onSetup()
         onSetupViews()
-        
         onLoadData()
     }
 }
@@ -150,11 +220,11 @@ extension SearchViewController: SkeletonTableViewDataSource, SkeletonTableViewDe
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let itemsCount = tableItems.count == 0 ? AppSettings.DefaultSkeletonCellCount : tableItems.count
+    ///    let itemsCount = tableItems.count == 0 ? AppSettings.DefaultSkeletonCellCount : tableItems.count
         
-        let tableviewPagiantorLoadeMoreCells = (tableviewPaginator?.rowsIn(section: section) ?? 0)
-      //  return itemsCount + tableviewPagiantorLoadeMoreCells
-        
+//        let tableviewPagiantorLoadeMoreCells = (tableviewPaginator?.rowsIn(section: section) ?? 0)
+//      //  return itemsCount + tableviewPagiantorLoadeMoreCells
+//
          return tableItems.count
     }
     
@@ -170,7 +240,7 @@ extension SearchViewController: SkeletonTableViewDataSource, SkeletonTableViewDe
         if (self.tableItems.count == 0){
             let ce : BaseCell = mainTable.dequeueReusableCell(withIdentifier: tableCellRegistrator.getRandomIdentifier(), for: indexPath) as! BaseCell
             ce.viewController = self
-            ce.cellSize = CGSize(width: -1, height: mainTable.heightPercentageOf(amount: 30))
+          //  ce.cellSize =
             ce.parentView = tableView
             return ce
         }
@@ -179,7 +249,7 @@ extension SearchViewController: SkeletonTableViewDataSource, SkeletonTableViewDe
         
         let ce : BaseCell = mainTable.dequeueReusableCell(withIdentifier: cellInfo.reuseIdentifier(), for: indexPath) as! BaseCell
         ce.viewController = self
-        ce.cellSize = CGSize(width: -1, height: mainTable.heightPercentageOf(amount: 30))
+      //  ce.cellSize = CGSize(width: -1, height: mainTable.heightPercentageOf(amount: 30))
         ce.parentView = tableView
         ce.setBaseItemInfo(info: cellInfo)
         ce.setModel(model: cellInfo.model)
@@ -194,22 +264,16 @@ extension SearchViewController: TableviewPaginatorUIProtocol {
     }
     
     func shouldAddRefreshControl(paginator: TableviewPaginatorEx) -> Bool {
-        return true
+        return false
     }
     
     func getPaginatedLoadMoreCellHeight(paginator: TableviewPaginatorEx) -> CGFloat {
-        return 44
+        return mainTable.heightPercentageOf(amount: 20)
     }
     
     func getPaginatedLoadMoreCell(paginator: TableviewPaginatorEx) -> UITableViewCell {
         
-        if let cell = mainTable.dequeueReusableCell(withIdentifier: "LoadingCell") as? LoadingCell {
-            // customize your load more cell
-            // i.e start animating the UIActivityIndicator inside of the cell
-            return cell
-        } else {
-            return UITableViewCell.init()
-        }
+        return UITableViewCell.init()
     }
     
     func getRefreshControlTintColor(paginator: TableviewPaginatorEx) -> UIColor {
@@ -219,16 +283,7 @@ extension SearchViewController: TableviewPaginatorUIProtocol {
 
 extension SearchViewController: TableviewPaginatorProtocol {
     func loadPaginatedData(offset: Int, shouldAppend: Bool, paginator: TableviewPaginatorEx) {
-//        print("LOAD")
-//
-//        if (offset > 0){
-//
-//
-//        }
-//
-//        doSearch(query: "")
-//
-//        tableviewPaginator?.incrementOffsetBy(delta: 2)
-//        tableviewPaginator?.partialDataFetchingDone()
+
+        
     }
 }

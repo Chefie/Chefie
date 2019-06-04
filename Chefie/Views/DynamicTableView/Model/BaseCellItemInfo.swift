@@ -9,13 +9,17 @@
 import Foundation
 class BaseItemInfo : ICellDataInfo {
     
+    var UID : String?
+    
     func reuseIdentifier() -> String {
         return ""
     }
    
     func uniqueIdentifier() -> String {
         
-        return UUID.init().uuidString
+        UID = String(describing: self)
+        
+        return UID ?? UUID.init().uuidString
     }
     
     var model : AnyObject?
