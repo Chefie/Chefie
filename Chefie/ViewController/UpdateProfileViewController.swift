@@ -17,6 +17,8 @@ import FaveButton
 
 class UpdateProfileViewController: UIViewController, UIPickerViewDataSource,UIPickerViewDelegate {
     
+    let db = Firestore.firestore()
+    
     //Array comunidades de España
     let comunidades = ["Andalucía", "Aragón", "Canarias", "Cantabria", "Castilla y León", "Castilla-La Mancha", "Cataluña", "Ceuta", "Comunidad Valenciana", "Comunidad de Madrid", "Extremadura", "Galicia", "Islas Baleares", "La Rioja", "Melilla", "Navarra", "País Vasco", "Principado de Asturias", "Región de Murcia"]
     
@@ -45,6 +47,7 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource,UIPi
     let alertService = AlertServiceDelete()
     var secondColumnData = [[String]]()
     var timer = Timer()
+    var timerUpdate = Timer()
     
     
     @IBOutlet weak var textFieldFullname: SpringTextField!
@@ -68,73 +71,84 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource,UIPi
             genre = "Male"
         }
         
-       
+        
     }
     
     @IBAction func insertUserInfo(_ sender: Any) {
-//        let userID = Auth.auth().currentUser!.uid
         
         timer.invalidate()
         //Creando el usuario y sus atributos.
-        let user = ChefieUser()
+//        let user = ChefieUser()
+//
+//        let idUser = Auth.auth().currentUser!.uid
+//
+//
         
-        let idUser = Auth.auth().currentUser!.uid
-        let username = textFieldUsername.text
-        let email = Auth.auth().currentUser!.email
-        let fullName = textFieldFullname.text
-        let bio = textViewBiography.text
-        
-        user.id = idUser
-        user.userName = username
-        user.email = email
-        user.fullName = fullName
-        user.biography = bio
-        user.isPremium = false
-        user.deleted = false
-        user.followers = 0
-        user.following = 0
-        user.gender = genre
-        user.community = comunidadUser
-        user.location = provinciaUser
-        
-    
         if(textFieldFullname.text != "" && textFieldUsername.text != ""){
-             insertUser(user: user)
+            modificarUsuario()
         }
        
-       
+        
     }
     
-    //Metodo que hace el insert de un Usuario en la BBDD.
-    func insertUser(user: ChefieUser) {
-        let usersRef = Firestore.firestore().collection("Users")
+    //Metodo que hace un apdate del usuario logueado.
+    func modificarUsuario(){
         
-        do {
-            
-            let model = try FirestoreEncoder().encode(user)
-            usersRef.addDocument(data: model) { (err) in
-                if err != nil {
-                    print("---> Algo ha ido mal.")
+        var id =  Auth.auth().currentUser!.uid
+        self.db.collection("Users")
+            .whereField("id", isEqualTo: id)
+            .getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    // Some error occured
+                } else if querySnapshot!.documents.count != 1 {
+                    // Perhaps this is an error for you?
                 } else {
-                    print("---> Usuario insertado con exito.")
-                    //print("Model: \(model)")
+                    let document = querySnapshot!.documents.first
+                    document!.reference.updateData([
+                        "fullName": self.textFieldFullname.text,
+                        "userName": self.textFieldUsername.text,
+                        "biography": self.textViewBiography.text,
+                        "gender" : self.genre,
+                        "community": self.comunidadUser,
+                        "location" : self.provinciaUser
+                        ])
+                    
+                    
+                    let alert = UIAlertController(title: "Profile updated succesfully", message: "", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                        switch action.style{
+                        case .default:
+                            print("default")
+                            
+                            let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                            let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen" )
+                            
+                            self.present(exampleVC, animated: true)
+                            
+                        case .cancel:
+                            print("cancel")
+                            
+                        case .destructive:
+                            print("destructive")
+                            
+                            
+                        }}))
+                    self.present(alert, animated: true, completion: nil)
                 }
-            }
-            
-        } catch  {
-            print("Invalid Selection.")
         }
         
-        
+        //timerUpdate = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(goToMainAfterUpdate), userInfo: nil, repeats: true)
+
     }
-   
     
+  
     override func viewDidLoad() {
         super.viewDidLoad()
+         pickerView.reloadComponent(0)
+         pickerView.reloadComponent(1)
         
         //Checking every second if texfields are not empty.
         timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(checkIfDone), userInfo: nil, repeats: true)
-
         btnDone.isHidden = true
         
         
@@ -153,14 +167,14 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource,UIPi
         self.navigationItem.title = "Settings"
         self.navigationController!.navigationBar.isTranslucent = true
         self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Zapfino", size: 13)!]
-        let button = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.trash, target: self, action: #selector(borrarUsuario))
+        let button = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.trash, target: self, action: #selector(showDeleteAlert))
         navigationItem.rightBarButtonItem = button
         
         navigationItem.leftBarButtonItem?.title = "<"
-//        navigationItem.leftItemsSupplementBackButton = true
-   //    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(close))
-//
-
+        //        navigationItem.leftItemsSupplementBackButton = true
+        //    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(close))
+        //
+        
         //Biography border and radius.
         textViewBiography.layer.borderWidth = 0.1;
         textViewBiography.layer.cornerRadius = 5.0;
@@ -183,7 +197,8 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource,UIPi
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
         if component == 0 {
-             comunidadUser = comunidades[row]
+            let selected = pickerView.selectedRow(inComponent: 0)
+            comunidadUser = comunidades[selected]
             return comunidades[row]
         } else {
             let selected = pickerView.selectedRow(inComponent: 0)
@@ -199,28 +214,54 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource,UIPi
             let selected = pickerView.selectedRow(inComponent: 0)
             
             provinciaUser = secondColumnData[selected][row]
-           
+            
         }
     }
     
     //Metodo para borrar el usuario con alerta.
-    @objc func borrarUsuario(){
-        print("----->   Borrando usuario UNDER CONSTRUCTION")
+    @objc func showDeleteAlert(){
         
+       /////////////////////////////////////////Dar nombre personalizado a la tabla de la bbdd Users.
+//        Firestore.firestore().collection("Users").document("averQueloQue").setData(["item": "test"])
+        
+//        let db = Firestore.firestore()
+//        db.collection("Users").document(Auth.auth().currentUser!.uid).setData(["Test": "Ok"])
+        
+        print("----->   Borrando usuario UNDER CONSTRUCTION")
         
         let alertVC = alertService.alert(title: "Delete Account", body: "You're sure you want to delete your Chefie account?", buttonTitle: "Yes, I'm sure!")
         
         present(alertVC,animated: true,completion: nil)
        
+        
+    }
+    //Metodo que borra un usuario de la bbdd. Cambia atributo 'deleted'
+   
+    
+    @IBAction func logOut(_ sender: Any) {
+        
+        
+        // LOG OUT
+        try! Auth.auth().signOut()
+        try! GIDSignIn.sharedInstance()?.signOut()
+        
+        
+        
+        let storyboard = UIStoryboard(name: "Login", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "loginView")
+        self.present(controller, animated: true, completion: nil)
+        
+        //self.navigationController?.popToRootViewController(animated: true)
     }
     
     //Ocultar el keybord haciendo click en la pantalla.
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
         
-      
+        
     }
     
+    //Va comprobando si el usuario ha llenado los campos y muestra boton.
     @objc func checkIfDone(){
         
         if(textFieldFullname.text != "" && textFieldUsername.text != "" && textViewBiography.text != ""){
@@ -228,5 +269,17 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource,UIPi
         }else{
             btnDone.isHidden = true
         }
+    }
+    
+    //Va al Home despues de hacer el update.
+    @objc func goToMainAfterUpdate(){
+        
+        //timerUpdate.invalidate()
+        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen" )
+        
+        self.present(exampleVC, animated: true)
+        
+        
     }
 }

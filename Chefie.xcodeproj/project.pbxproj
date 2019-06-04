@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -370,6 +370,7 @@
 				BC1A8DC922A3C02E003E9411 /* CommentCell.swift */,
 				BC1A8DC822A3C02E003E9411 /* PlatoCellView.swift */,
 				4277FE3B22A612160067DEE7 /* NewPlateCell.swift */,
+				BC805EB8229EDC1B004D81F3 /* PlateMediaHorizontalCell.swift */,
 			);
 			path = CustomCells;
 			sourceTree = "<group>";

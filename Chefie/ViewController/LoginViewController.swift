@@ -3,6 +3,7 @@ import UIKit
 import Firebase
 import GoogleSignIn
 import FirebaseFirestore
+import CodableFirebase
 
 class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldDelegate, GIDSignInUIDelegate{
     
@@ -19,6 +20,9 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
     //Button Action para el login con Google
     @IBAction func loginGoogle(_ sender: Any) {
         GIDSignIn.sharedInstance().signIn()
+        
+        
+
     }
     
     var db: Firestore!
@@ -40,6 +44,8 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.viewControllers.removeAll()
         
         pinkSquare.layer.cornerRadius = pinkSquare.frame.height/25
         pinkSquare.layer.shadowOpacity = 5
@@ -79,6 +85,7 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
     }
     
     func launchMainScreen() {
+  
         let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen" )
         
@@ -88,6 +95,9 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
     //Metodo que hace el Login a traves del email y pass de Firebase.
     //Tambien muestra al usuario todos los errores posibles.
     @IBAction func buttonLoginAction(_ sender: Any) {
+        
+        
+        
         let email = textFieldEmail.text
         let pass = textFieldPass.text
         
@@ -110,7 +120,16 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
                     if Auth.auth().currentUser != nil{
                             self.launchMainScreen()
                       
-                    //    self.performSegue(withIdentifier: "mainScreen", sender: self)
+//                        self.performSegue(withIdentifier: "mainScreen", sender: self)
+                        
+                        
+                        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                        let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen" )
+                        
+                        self.present(exampleVC, animated: true)
+                        
+                     
+
                     }
 
                 }else{
@@ -126,7 +145,7 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
             self.textFieldPass.text = ""
         }
         
-        
+      
     }
     
     //Metodo que hace el RESET PASSWORD a traves de un Alert.
@@ -143,6 +162,29 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
     //Ocultar el keybord haciendo click en la pantalla.
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    //Metodo que hace el insert de un Usuario en la BBDD.
+    func insertUser(user: ChefieUser) {
+        let usersRef = Firestore.firestore().collection("Users")
+        
+        do {
+            
+            let model = try FirestoreEncoder().encode(user)
+            usersRef.addDocument(data: model) { (err) in
+                if err != nil {
+                    print("---> Algo ha ido mal.")
+                } else {
+                    print("---> Usuario insertado con exito.")
+                    //print("Model: \(model)")
+                }
+            }
+            
+        } catch  {
+            print("Invalid Selection.")
+        }
+        
+        
     }
     
     

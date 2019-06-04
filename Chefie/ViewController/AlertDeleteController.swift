@@ -8,11 +8,17 @@
 
 import Foundation
 import UIKit
+import DLRadioButton
+import Firebase
+import GoogleSignIn
+import FirebaseFirestore
+import CodableFirebase
 
 
 class AlertDeleteController: UIViewController {
-
-     let alertService = AlertServiceDelete()
+    
+    let alertService = AlertServiceDelete()
+    let db = Firestore.firestore()
     
     @IBOutlet weak var vistaAlerta: UIView!
     @IBOutlet weak var alertAction: CustomButtons!
@@ -39,6 +45,39 @@ class AlertDeleteController: UIViewController {
     }
     
     @IBAction func didTapAction(_ sender: Any) {
+        
+        print("----->   ha entrado")
+        
+        self.db.collection("Users")
+            .whereField("id", isEqualTo: Auth.auth().currentUser!.uid)
+            .getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    // Some error occured
+                } else if querySnapshot!.documents.count != 1 {
+                    // Perhaps this is an error for you?
+                } else {
+                    let document = querySnapshot!.documents.first
+                    document!.reference.updateData([
+                        "deleted" : true
+                        ])
+                }
+                
+                
+
+        }
+      
+        
+        
+        
+        // LOG OUT
+        try! Auth.auth().signOut()
+        try! GIDSignIn.sharedInstance()?.signOut()
+        
+       
+        
+        let storyboard = UIStoryboard(name: "Login", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "loginView")
+        self.present(controller, animated: true, completion: nil)
     }
     
     

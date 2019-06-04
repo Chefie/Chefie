@@ -11,6 +11,7 @@ import UIKit
 import Firebase
 import GoogleSignIn
 import FirebaseFirestore
+import CodableFirebase
 
 class RegisterViewController : UIViewController, UITextFieldDelegate {
     
@@ -57,13 +58,13 @@ class RegisterViewController : UIViewController, UITextFieldDelegate {
         super.viewDidAppear(animated)
         
         if Auth.auth().currentUser != nil{
-      //      self.performSegue(withIdentifier: "registerScreen", sender: self)
+            //      self.performSegue(withIdentifier: "registerScreen", sender: self)
         }
     }
     
     func register() {
         
-     //  self.performSegue(withIdentifier: "registerScreen", sender: self)
+        //  self.performSegue(withIdentifier: "registerScreen", sender: self)
     }
     
     func launchMainScreen() {
@@ -84,13 +85,60 @@ class RegisterViewController : UIViewController, UITextFieldDelegate {
                 if error == nil && user != nil{
                     self.labelMessage.text = "You are succesfully registered"
                     
-                    self.registerUser(email: self.textFieldEmail.text!, password: self.textFieldPassword.text!)
+                    //                    self.registerUser(email: self.textFieldEmail.text!, password: self.textFieldPassword.text!)
+                    
+                    let db = Firestore.firestore()
+                    
+                    //Comprobando que no hay ya un usuario con el mismo UID para no volver a insertar.
+                    //Si no hay se inserta el user en la BBDD.(Tabla Users FireStore)
+                    db.collection("Users").whereField("id", isEqualTo: Auth.auth().currentUser!.uid)
+                        .getDocuments() { (querySnapshot, err) in
+                            
+                            let co = querySnapshot?.count
+                            
+                            if  querySnapshot?.count == 0 {
+                                
+                                let usuarioChefie = ChefieUser()
+                                usuarioChefie.id = Auth.auth().currentUser!.uid
+                                usuarioChefie.userName = ""
+                                usuarioChefie.email = Auth.auth().currentUser!.email
+                                usuarioChefie.fullName = ""
+                                usuarioChefie.biography = ""
+                                usuarioChefie.isPremium = false
+                                usuarioChefie.deleted = false
+                                usuarioChefie.followers = 0
+                                usuarioChefie.following = 0
+                                usuarioChefie.profilePic = ""
+                                usuarioChefie.profileBackgroundPic = ""
+                                usuarioChefie.gender = ""
+                                usuarioChefie.community = ""
+                                usuarioChefie.location = ""
+                                
+                                self.insertUser(user: usuarioChefie)
+                                
+                            }
+                            
+                            
+                            if let err = err {
+                                print("Error getting documents: \(err)")
+                                
+                                
+                                
+                            } else {
+                                //                                    for document in querySnapshot!.documents {
+                                //                                        print("\(document.documentID) => \(document.data())")
+                                //                                    }
+                                
+                                
+                                
+                            }
+                    }
                     
                     self.textFieldEmail.text = ""
                     self.textFieldPassword.text = ""
                     self.textFieldPassword2.text = ""
                     if Auth.auth().currentUser != nil{
-                   
+                        
                         self.launchMainScreen()
                         //  self.performSegue(withIdentifier: "toHomeScreen", sender: self)
                     }
@@ -107,17 +155,41 @@ class RegisterViewController : UIViewController, UITextFieldDelegate {
         }
     }
     
-    func registerUser(email: String, password: String){
-        self.db.collection("Users").document().setData([
-            "email":self.textFieldEmail.text!,
-            "password":self.textFieldPassword.text!
-        ]) { err in
-            if let err = err {
-                print("Error writing document: \(err)")
-            } else {
-                print("Document successfully written!")
+    //    func registerUser(email: String, password: String){
+    //        self.db.collection("Users").document().setData([
+    //            "email":self.textFieldEmail.text!,
+    //            "password":self.textFieldPassword.text!
+    //        ]) { err in
+    //            if let err = err {
+    //                print("Error writing document: \(err)")
+    //            } else {
+    //                print("Document successfully written!")
+    //            }
+    //        }
+    //    }
+    
+    
+    //Metodo que hace el insert de un Usuario en la BBDD.
+    func insertUser(user: ChefieUser) {
+        let usersRef = Firestore.firestore().collection("Users")
+        
+        do {
+            
+            let model = try FirestoreEncoder().encode(user)
+            usersRef.addDocument(data: model) { (err) in
+                if err != nil {
+                    print("---> Algo ha ido mal.")
+                } else {
+                    print("---> Usuario insertado con exito.")
+                    //print("Model: \(model)")
+                }
             }
+            
+        } catch  {
+            print("Invalid Selection.")
         }
+        
+        
     }
 }
 
