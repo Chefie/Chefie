@@ -120,7 +120,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         self.window?.makeKeyAndVisible()
     }
 
-    
 //    func NextViewController(storybordid:String)
 //    {
 //
@@ -131,17 +130,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 //        self.window?.rootViewController = exampleVC
 //        self.window?.makeKeyAndVisible()
 //    }
-    
-    func NextViewController(storybordid:String)
-    {
-        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let exampleVC = storyBoard.instantiateViewController(withIdentifier:storybordid )
-        // self.present(exampleVC, animated: true)
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.rootViewController = exampleVC
-        self.window?.makeKeyAndVisible()
-    }
-    
+
     //Google SignIn
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error{

@@ -19,7 +19,6 @@ import CodableFirebase
 import Photos
 
 class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPickerViewDelegate, UITextFieldDelegate,GalleryControllerDelegate, SkeletonTableViewDataSource, SkeletonTableViewDelegate,FaveButtonDelegate {
-class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPickerViewDelegate, UITextFieldDelegate,GalleryControllerDelegate, SkeletonTableViewDataSource, SkeletonTableViewDelegate,FaveButtonDelegate {
 
     var tableItems = Array<BaseItemInfo>()
     var tableCellRegistrator = TableCellRegistrator()
@@ -494,4 +493,5 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         }
     }
 }
+
 
