@@ -18,31 +18,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="o2b-eG-pTk">
-                                <rect key="frame" x="-2" y="72" width="418" height="752"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bem-cQ-pqM">
+                                <rect key="frame" x="0.0" y="88" width="414" height="764"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.87676340340000003" green="0.6831118464" blue="0.60782057050000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
-                                </userDefinedRuntimeAttributes>
-                            </stackView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Wl-G7-pti">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
-                                </userDefinedRuntimeAttributes>
-                            </scrollView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="U3P-vV-Bx8"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Plate Detail" id="FGw-1r-gN9"/>
+                    <navigationItem key="navigationItem" title="Plate Detail" id="FGw-1r-gN9">
+                        <barButtonItem key="backBarButtonItem" title="&lt;" id="ker-gW-gw4"/>
+                    </navigationItem>
                     <connections>
-                        <outlet property="container" destination="Y2q-ZD-u1T" id="xSP-yf-XZe"/>
-                        <outlet property="mainScrollContainer" destination="4Wl-G7-pti" id="YAH-rd-Nyn"/>
-                        <outlet property="stackView" destination="o2b-eG-pTk" id="CRC-45-r65"/>
-                        <outlet property="view" destination="Y2q-ZD-u1T" id="bRQ-jz-KTr"/>
+                        <outlet property="mainTable" destination="bem-cQ-pqM" id="wJU-WT-ioX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NsT-JA-TNe" userLabel="First Responder" sceneMemberID="firstResponder"/>

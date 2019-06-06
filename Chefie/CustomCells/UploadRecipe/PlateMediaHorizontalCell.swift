@@ -119,15 +119,11 @@ class PlateMediaCell : BaseCollectionCell, ICellDataProtocol, INestedCell {
         super.onLayout(size: size)
 
         self.contentView.snp.makeConstraints { (maker) in
-            // this makes collectionview not responsible??
-            //   maker.top.left.right.bottom.equalToSuperview()
             maker.width.equalTo(collectionItemSize.width)
             maker.height.equalTo(collectionItemSize.height)
         }
         
         self.frontImageView.snp.makeConstraints { (maker) in
-            // this makes collectionview not responsible??
-            //   maker.top.left.right.bottom.equalToSuperview()
             maker.width.equalTo(collectionItemSize.width)
             maker.height.equalTo(collectionItemSize.height)
         }

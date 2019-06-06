@@ -14,6 +14,42 @@ import CodableFirebase
 
 class UserRepository{
     
+    func getUserById(id : String,completionHandler: @escaping (ChefieResult<ChefieUser>) -> Void) -> Void{
+    
+      let db = Firestore.firestore()
+      let query = db.collection("Users").whereField("id", isEqualTo: id)
+        
+        query.getDocuments { (querySnapshot, err)  in
+            
+            if let snapshot = querySnapshot {
+                
+                if !snapshot.isEmpty {
+
+                        do {
+                            
+                            let document = snapshot.documents.first!
+                            let model = try FirestoreDecoder().decode(ChefieUser.self, from: document.data())
+                            model.id = document.documentID
+                            
+                            completionHandler(.success(model))
+                            print("GetUserById: \(model)")
+                        } catch  {
+                    
+                            print("GetUserById: Error when decoding user")
+                            completionHandler(.failure("GetUserById: Error when decoding user"))
+                        }
+                }
+                else{
+                    completionHandler(.failure("GetUserById: Snapshot is empty"))
+                }
+            }
+            else {
+
+                completionHandler(.failure("GetUserById: User with id \(id) not found"))
+            }
+        }
+    }
+    
     func login(email: String, password: String, completionHandler: @escaping (ChefieResult<ChefieUser>) -> Void) -> Void{
         
         Auth.auth().signIn(withEmail: email, password: password) {user, error in

@@ -17,4 +17,6 @@ struct AppSettings {
     static let HeaderLeftMargin : CGFloat = 14
 
     public static let TransferUtilityIdentifier = "transferUID"
+    
+    public static let LightColor = UIColor.lightGray
 }

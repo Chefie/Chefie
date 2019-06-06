@@ -32,12 +32,9 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
     
     func onSetup() {
         
-         tableCellRegistrator.add(identifier: NewPlateMediaCellItemInfo().reuseIdentifier(), cellClass: NewPlateMediaCell.self)
-
+        tableCellRegistrator.add(identifier: NewPlateMediaCellItemInfo().reuseIdentifier(), cellClass: NewPlateMediaCell.self)
         tableCellRegistrator.add(identifier: UserSearchCellItemInfo().reuseIdentifier(), cellClass: UserSearchCell.self)
-        
         tableCellRegistrator.registerAll(tableView: mainTable)
-
         tableviewPaginator = TableviewPaginatorEx.init(paginatorUI: self, delegate: self)
         tableviewPaginator.initialSetup()
         
@@ -61,7 +58,7 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
         mainTable.setDefaultSettings()
         tagListView.textFont = DefaultFonts.DefaultTextFont
         tagListView.alignment = .left // possible values are .Left, .Center, and .Right
-        
+
         self.tagListView.delegate = self
         self.mainTable.dataSource = self
         self.mainTable.isSkeletonable = true
@@ -76,10 +73,10 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
         mainTable.snp.makeConstraints { (make) in
             
             make.left.equalTo(0)
-            make.top.equalTo(self.view.heightPercentageOf(amount: 20))
+            make.top.equalTo(self.view.heightPercentageOf(amount: 18))
             //    make.topMargin.equalTo(50)
             make.width.equalTo(self.view.getWidth())
-            make.height.equalTo(self.view.heightPercentageOf(amount: 80))
+            make.height.equalTo(self.view.heightPercentageOf(amount: 72))
         }
     }
     

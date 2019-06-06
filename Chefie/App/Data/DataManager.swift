@@ -10,5 +10,6 @@ import Foundation
 
 class DataManager{
     
-    var localData : LocalData?
+    var localData = LocalData()
+    var remoteData = RemoteData()
 }

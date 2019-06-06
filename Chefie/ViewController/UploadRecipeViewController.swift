@@ -63,17 +63,16 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         }
         
         let plato = Plate()
-        plato.idUser = appContainer.dataManager.localData?.chefieUser?.id
         plato.created_at = Date().convertDateToString()
         plato.community = comunidadNombre
-        plato.idUser = appContainer.dataManager.localData?.chefieUser?.id
+        plato.idUser = appContainer.dataManager.localData.chefieUser.id
         plato.title = titlePlate
         plato.tags = tags
         plato.multimedia = Array<Media>()
-        plato.numVisits = 23
+        plato.numVisits = 0
         plato.description = description
         
-           uploadRecipe(plate: plato)
+        uploadRecipe(plate: plato)
 //        if(titleTextField.text != "" && descriptionTextView.text != ""){
 //            uploadRecipe(plate: plato)
 //        }
@@ -126,8 +125,8 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         }
         
         if (!videos.isEmpty){
-         
-            getDataFromVideos(videos: self.videos) { (result : ChefieResult<[Data]>) in
+        
+            getDataFromVideos(videos: self.videos) { (result : ChefieResult<[GetVideoDataResult]>) in
                 
                 switch result {
                     
@@ -142,6 +141,7 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
                                 let media = Media()
                                 media.id = item.id
                                 media.url = item.url
+                                media.thumbnail = item.thumbnailUrl
                                 media.type = item.contentType
                                 return media
                             })
@@ -168,14 +168,9 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         }
     }
     
-//    func validateUpload() -> Bool {
-//
-//
-//    }
-
-    func getDataFromVideos(videos : [Video], completionHandler: @escaping (ChefieResult<[Data]>) -> Void ) {
+    func getDataFromVideos(videos : [Video], completionHandler: @escaping (ChefieResult<[GetVideoDataResult]>) -> Void ) {
         
-        var outputData = [Data]()
+        var outputData = [GetVideoDataResult]()
         let dispatchQueue = DispatchQueue(label: "GetDataFromVideos", qos: .background)
         dispatchQueue.async{
             
@@ -183,34 +178,42 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
             var running = false, finished = false
             while(!finished) {
  
-                if (!running){
-                    
-                    running = true
+                if (!running && !finished){
                     
                     if (batchCount < 0){
-                        
+                        finished = true
                         continue
                     }
+                    
+                    running = true
+        
                     let asset = videos [batchCount].asset
    
                     PHImageManager.default().requestAVAsset(forVideo: asset, options: nil, resultHandler: { (asset, mix, nil) in
                         let myAsset = asset as? AVURLAsset
                         do {
                             let videoData = try Data(contentsOf: (myAsset?.url)!)
-                            outputData.append(videoData)
+                    
+                            if (batchCount >= 0){
+                                videos[batchCount].fetchThumbnail(size: CGSize(width: 300, height: 280), completion: { (image : UIImage?) in
+                                    
+                                    let data = image?.rawData() ?? Data()
+                                    
+                                    let result = GetVideoDataResult(thumbnailData: data, videoData: videoData)
+                                    
+                                    outputData.append(result)
+                                    
+                                    batchCount -= 1
+                                    
+                                    running = false
+                                })
+                            }
+                       
                             print("video data : \(videoData)")
                         } catch  {
                             print("exception when getting data from video")
                         }
-                        
-                        running = false
-                        
-                        batchCount -= 1
-                        
-                        if (batchCount < 0){
-                            
-                            finished = true
-                        }
+ 
                     })
                 }
             }
@@ -232,8 +235,13 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
                 if err != nil {
                     print("---> Algo ha ido mal.")
                 } else {
+                    appContainer.dataManager.remoteData.onNewPlate(plate: plate)
                     print("---> Plato subido con exito.")
                 }
+                
+                self.dismiss(animated: true, completion: {
+                    
+                })
             }
             
         } catch  {
@@ -244,6 +252,8 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.setTintColor()
+
         mainTable.setDefaultSettings()
         mainTable.alwaysBounceVertical = false
         mainTable.isScrollEnabled = false

@@ -54,7 +54,7 @@ class CommunityCell : BaseCell, ICellDataProtocol {
         super.onLayout(size: size)
         
         let cellSize = getSize()
-        let sizeN = CGSize(width: cellSize.width.minus(amount: 10), height: cellSize.height.minus(amount: 10))
+        let sizeN = CGSize(width: cellSize.width.minus(amount: 5), height: cellSize.height.minus(amount: 5))
         
         self.contentView.snp.makeConstraints { (maker) in
             maker.edges.equalToSuperview()
@@ -67,7 +67,7 @@ class CommunityCell : BaseCell, ICellDataProtocol {
             maker.size.equalTo(sizeN)
             maker.topMargin.equalTo(10)
             maker.bottomMargin.equalTo(10)
-            maker.left.equalTo(sizeN.widthPercentageOf(amount: 5))
+            maker.left.equalTo(sizeN.widthPercentageOf(amount: 2.5))
         }
         
         self.overlayView.snp.makeConstraints { (maker) in
@@ -75,7 +75,7 @@ class CommunityCell : BaseCell, ICellDataProtocol {
             maker.topMargin.equalTo(10)
             maker.bottomMargin.equalTo(1)
             maker.size.equalTo(sizeN)
-            maker.left.equalTo(sizeN.widthPercentageOf(amount: 5))
+            maker.left.equalTo(sizeN.widthPercentageOf(amount: 2.5))
         }
         
      //   self.frontImageView.setCornerRadius()

@@ -62,6 +62,13 @@ class EndlessTableHelper {
         self.tablePaginator.partialDataFetchingDone()
     }
     
+    
+    func insertRowAt(row : Int){
+        
+        let indexPath:IndexPath = IndexPath(row: row, section:0)
+        self.tableView.insertRows(at: [indexPath], with: .fade)
+    }
+    
     func insertRow(itemsCount : Int, item : BaseItemInfo){
 
         let indexPath:IndexPath = IndexPath(row:(itemsCount), section:0)

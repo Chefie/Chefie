@@ -26,7 +26,7 @@ extension UITableView {
         self.alwaysBounceVertical = false
         self.bounces = false
         self.showsVerticalScrollIndicator = false
-        self.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+        self.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 50, right: 0)
     }
 }
 

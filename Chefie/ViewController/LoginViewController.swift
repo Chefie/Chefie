@@ -22,7 +22,7 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
         GIDSignIn.sharedInstance().signIn()
         
         
-
+        
     }
     
     var db: Firestore!
@@ -66,8 +66,31 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillAppear(animated)
         textFieldPass.text = ""
+        if Auth.auth().currentUser != nil{
+            
+            let id = Auth.auth().currentUser!.uid
+            doAfterLogin(id: id)
+        }
+    }
+    
+    func doAfterLogin(id : String) {
         
-       
+        appContainer.userRepository.getUserById(id: id) { (result : ChefieResult<ChefieUser>) in
+            
+            switch result {
+                
+            case .success(let user) :
+                
+                appContainer.dataManager.localData.onLogin(user: user)
+                self.launchMainScreen()
+//                self.dismiss(animated: false) {
+//                    
+//                }
+//                
+                break
+            case .failure(_) : break
+            }
+        }
     }
     
     //Antes de que salga la Vista se combrueba si hay un usuario logueado.
@@ -78,14 +101,10 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
         logoChefie.animation = "squeezeDown"
         logoChefie.duration = 1.3
         logoChefie.animate()
-        
-        if Auth.auth().currentUser != nil{
-            launchMainScreen()
-        }
     }
     
     func launchMainScreen() {
-  
+        
         let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen" )
         
@@ -96,42 +115,28 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
     //Tambien muestra al usuario todos los errores posibles.
     @IBAction func buttonLoginAction(_ sender: Any) {
         
-        
-        
         let email = textFieldEmail.text
         let pass = textFieldPass.text
         
-//        appContainer.userRepository.login(email: email!, password: pass!) { (result: ChefieResult<ChefieUser>) in
-//
-//            switch result {
-//            case .success(let chefieUser):
-//
-//                let val = chefieUser
-//            case .failure(let error):
-//                // Ups, there is something wrong
-//                print(error)
-//            }
-//        }
+        //        appContainer.userRepository.login(email: email!, password: pass!) { (result: ChefieResult<ChefieUser>) in
+        //
+        //            switch result {
+        //            case .success(let chefieUser):
+        //
+        //                let val = chefieUser
+        //            case .failure(let error):
+        //                // Ups, there is something wrong
+        //                print(error)
+        //            }
+        //        }
         
         if(email != "" && pass != ""){
             Auth.auth().signIn(withEmail: email!, password: pass!) {user, error in
                 if error == nil && user != nil{
                     self.dismiss(animated: false, completion: nil)
-                    if Auth.auth().currentUser != nil{
-                            self.launchMainScreen()
-                      
-//                        self.performSegue(withIdentifier: "mainScreen", sender: self)
-                        
-                        
-                        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                        let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen" )
-                        
-                        self.present(exampleVC, animated: true)
-                        
-                     
-
-                    }
-
+                    
+                    let userID : String = (Auth.auth().currentUser?.uid)!
+                    self.doAfterLogin(id: userID)
                 }else{
                     print("Error loging in: \(error!.localizedDescription)")
                     self.labelFeedback.text = "Wrong Email or password"
@@ -145,7 +150,7 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
             self.textFieldPass.text = ""
         }
         
-      
+        
     }
     
     //Metodo que hace el RESET PASSWORD a traves de un Alert.
@@ -166,24 +171,24 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
     
     //Metodo que hace el insert de un Usuario en la BBDD.
     func insertUser(user: ChefieUser) {
-        let usersRef = Firestore.firestore().collection("Users")
-        
-        do {
-            
-            let model = try FirestoreEncoder().encode(user)
-            usersRef.addDocument(data: model) { (err) in
-                if err != nil {
-                    print("---> Algo ha ido mal.")
-                } else {
-                    print("---> Usuario insertado con exito.")
-                    //print("Model: \(model)")
-                }
-            }
-            
-        } catch  {
-            print("Invalid Selection.")
-        }
-        
+        //        let usersRef = Firestore.firestore().collection("Users")
+        //
+        //        do {
+        //
+        //            let model = try FirestoreEncoder().encode(user)
+        //            usersRef.addDocument(data: model) { (err) in
+        //                if err != nil {
+        //                    print("---> Algo ha ido mal.")
+        //                } else {
+        //                    print("---> Usuario insertado con exito.")
+        //                    //print("Model: \(model)")
+        //                }
+        //            }
+        //
+        //        } catch  {
+        //            print("Invalid Selection.")
+        //        }
+        //
         
     }
     

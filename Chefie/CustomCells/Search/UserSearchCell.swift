@@ -50,7 +50,7 @@ class UserSearchCell : BaseCell, ICellDataProtocol{
             maker.height.equalTo(cellSize.height)
         }
         
-        self.userIcon.frame = CGRect(x: 0, y: 0, width: cellSize.widthPercentageOf(amount: 32), height: cellSize.heightPercentageOf(amount: 80))
+        self.userIcon.frame = CGRect(x: 0, y: 0, width: cellSize.widthPercentageOf(amount: 24), height: cellSize.heightPercentageOf(amount: 80))
         
         self.userIcon.snp.makeConstraints { (maker) in
          //  maker.edges.equalToSuperview()

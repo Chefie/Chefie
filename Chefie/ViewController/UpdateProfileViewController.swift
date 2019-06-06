@@ -14,8 +14,7 @@ import FirebaseFirestore
 import CodableFirebase
 import FaveButton
 
-
-class UpdateProfileViewController: UIViewController, UIPickerViewDataSource,UIPickerViewDelegate {
+class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     let db = Firestore.firestore()
     
@@ -43,22 +42,17 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource,UIPi
     let principadoDeAsturias = ["Asturias"]
     let regionDeMurcia = ["Murcia"]
     
-    
     let alertService = AlertServiceDelete()
     var secondColumnData = [[String]]()
     var timer = Timer()
     var timerUpdate = Timer()
-    
-    
+
     @IBOutlet weak var textFieldFullname: SpringTextField!
     @IBOutlet weak var textFieldUsername: SpringTextField!
     @IBOutlet weak var textViewBiography: SpringTextView!
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var btnGenre: DLRadioButton!
     @IBOutlet weak var btnDone: FaveButton!
-    
-    
-    
     
     var genre = ""
     var provinciaUser = ""
@@ -70,8 +64,6 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource,UIPi
         }else{
             genre = "Male"
         }
-        
-        
     }
     
     @IBAction func insertUserInfo(_ sender: Any) {
@@ -87,14 +79,12 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource,UIPi
         if(textFieldFullname.text != "" && textFieldUsername.text != ""){
             modificarUsuario()
         }
-       
-        
     }
     
     //Metodo que hace un apdate del usuario logueado.
     func modificarUsuario(){
         
-        var id =  Auth.auth().currentUser!.uid
+        let id = Auth.auth().currentUser!.uid
         self.db.collection("Users")
             .whereField("id", isEqualTo: id)
             .getDocuments() { (querySnapshot, err) in
@@ -112,7 +102,6 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource,UIPi
                         "community": self.comunidadUser,
                         "location" : self.provinciaUser
                         ])
-                    
                     
                     let alert = UIAlertController(title: "Profile updated succesfully", message: "", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
@@ -136,12 +125,8 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource,UIPi
                     self.present(alert, animated: true, completion: nil)
                 }
         }
-        
-        //timerUpdate = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(goToMainAfterUpdate), userInfo: nil, repeats: true)
-
     }
-    
-  
+
     override func viewDidLoad() {
         super.viewDidLoad()
          pickerView.reloadComponent(0)
@@ -235,18 +220,15 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource,UIPi
        
         
     }
-    //Metodo que borra un usuario de la bbdd. Cambia atributo 'deleted'
-   
     
+    //Metodo que borra un usuario de la bbdd. Cambia atributo 'deleted'
+
     @IBAction func logOut(_ sender: Any) {
-        
         
         // LOG OUT
         try! Auth.auth().signOut()
         try! GIDSignIn.sharedInstance()?.signOut()
-        
-        
-        
+
         let storyboard = UIStoryboard(name: "Login", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "loginView")
         self.present(controller, animated: true, completion: nil)
@@ -257,8 +239,6 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource,UIPi
     //Ocultar el keybord haciendo click en la pantalla.
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
-        
-        
     }
     
     //Va comprobando si el usuario ha llenado los campos y muestra boton.
@@ -276,10 +256,7 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource,UIPi
         
         //timerUpdate.invalidate()
         let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen" )
-        
+        let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen")
         self.present(exampleVC, animated: true)
-        
-        
     }
 }

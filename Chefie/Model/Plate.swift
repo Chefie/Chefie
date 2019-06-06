@@ -27,4 +27,5 @@ class Plate : Codable
     var community : Community?
     var tags : Array<Tag>?
     var ingredients : Array<String>?
+    var user : UserMin?
 }

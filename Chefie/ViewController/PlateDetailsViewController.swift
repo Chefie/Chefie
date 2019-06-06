@@ -20,148 +20,124 @@ class PlateDetailsViewController : UIViewController, DynamicViewControllerProto 
         
         didSet{
          
+            
         }
     }
     
-    @IBOutlet weak var mainScrollContainer: UIScrollView!
-    @IBOutlet weak var container: UIView!
-    
-    let frontPlateV : UIImageView = {
-        
-        let img = UIImageView(frame: CGRect())
-        img.isSkeletonable = true
-        img.setRounded()
-      
-        return img
-    }()
+    @IBOutlet weak var mainTable: UITableView!
 
-    let titleLabel : UILabel = {
-        let lbl = UILabel(frame: CGRect())
-        lbl.font = UIFont.boldSystemFont(ofSize: 16)
-        lbl.textAlignment = .center
-        lbl.textColor = .black
-        lbl.text = "Plate Detail"
-        lbl.isSkeletonable = true
-        lbl.frame = CGRect(x: 0, y: 0, width: 500, height: 200)
-       
-        return lbl
-    }()
-    
-    let infoView : InfoView = {
-        let view = InfoView()
-        return view
-    }()
-    
-    let morePlatesView : ShowMoreHolderView = { () -> ShowMoreHolderView<Media> in
-        let view = ShowMoreHolderView<Media>(frame: CGRect(), cellIdentifier: "MultimediaCell")
-        return view
-    }()
-    
     func onLoadData() {
         
-        infoView.lblTitle.text = model?.title
-
-        morePlatesView.data = model?.multimedia
-        morePlatesView.reloadCells()
+        let plateMediaCarousel = PlateMediaCarousellItemInfo()
+        plateMediaCarousel.model = model
+        tableItems.append(plateMediaCarousel)
         
-        guard let date = model?.created_at?.parseToDate() else { return }
+        let infoHeader = HeaderTextCellItemInfo()
+        infoHeader.model = HeaderTextModel(title: "Info") as AnyObject
+        tableItems.append(infoHeader)
+        
+        let plateInfo = PlateInfoCellItemInfo()
+        plateInfo.model = model
+        tableItems.append(plateInfo)
+        
+        let headerDescription = HeaderTextCellItemInfo()
+        headerDescription.model = HeaderTextModel(title: "Description") as AnyObject
+        tableItems.append(headerDescription)
+        
+        let description = LargeTextCellItemInfo()
+        description.model = LargeTextModel(text: "Rich in mystery quasar intelligent beings encyclopaedia galactica billions upon billions across the centuries. Tendrils of gossamer clouds bits of moving fluff concept of the number one a very small stage in a vast cosmic arena with pretty stories for which there's little good evidence a still more glorious dawn awaits.Rich in mystery quasar intelligent beings encyclopaedia galactica billions upon billions across the centuries. Tendrils of gossamer clouds bits of moving fluff concept of the number one a very small stage in a vast cosmic arena with pretty stories for which there's little good evidence a still more glorious dawn awaits") as AnyObject
+        
+        tableItems.append(description)
+        
+        let comments = Array(0...3).compactMap { (num) -> Comment? in
+               let comment = Comment()
+               comment.likes = Array()
+               comment.id = String(describing: num)
+               return comment
+        }
 
-        infoView.lblDate.text  = model?.created_at?.extractInfoFromDate(date: date)
+        let commentVertical = PlateCommentsItemInfo()
+        commentVertical.setTitle(value: "Comments")
+        commentVertical.model = comments as AnyObject
+        tableItems.append(commentVertical)
+
+        mainTable.reloadData()
     }
     
     func onSetup() {
         
+        tableCellRegistrator.add(identifier: PlateInfoCellItemInfo().reuseIdentifier(), cellClass: PlateInfoCell.self)
+        tableCellRegistrator.add(identifier: LargeTextCellItemInfo().reuseIdentifier(), cellClass: LargeTextCellView.self)
+        tableCellRegistrator.add(identifier: HeaderTextCellItemInfo().reuseIdentifier(), cellClass: HeaderTextCellView.self)
+        tableCellRegistrator.add(identifier: PlateMediaCarousellItemInfo().reuseIdentifier(), cellClass: PlateMediaCarousellCellView.self)
+        
+          tableCellRegistrator.add(identifier: PlateCommentsItemInfo().reuseIdentifier(), cellClass: PlateCommentsVerticalCell.self)
+        
+        tableCellRegistrator.registerAll(tableView: mainTable)
     }
     
     func onSetupViews() {
-        
-        stackView.addArrangedSubview(frontPlateV)
-        stackView.addArrangedSubview(infoView)
-        stackView.addArrangedSubview(morePlatesView)
-        
-        morePlatesView.tableView.register(MultimediaCell.self, forCellReuseIdentifier: "MultimediaCell")
-        
-        morePlatesView.lblTitle.text = "Multimedia"
-        morePlatesView.onRequestCell = { (cellIdentifier, tableView, indexPath, data, dataLength) -> UITableViewCell in
-        
-            
-             guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? MultimediaCell
-                
-                else {
-                    
-                return UITableViewCell()
-                
-            }
 
-            if (dataLength == 0){
-                return cell
-            }
-            
-            let dataModel = data as? Media
-            
-            if dataModel != nil {
-                
-                if cell is MultimediaCell {
-                    cell.parentView = tableView
-                    
-                    cell.model = dataModel
-                    
-                 
-                }
-              
-            }
-            
-            print(dataModel)
-            
-               return cell
-        }
+        mainTable.setDefaultSettings()
+        
+        mainTable.delegate = self
+        mainTable.dataSource = self
     }
-    
-    @IBOutlet weak var stackView: UIStackView!
-    func onLayout() {
-        
-        //navigationController?.navigationBar.isHidden = true
-        
-        //frontPlateV.contentMode = ContentMode.scaleToFill
-        
-        let barTopMargin = navigationController?.navigationBar.getHeight() ?? view.heightPercentageOf(amount: 10)
-  
-     
-   
-        stackView.translatesAutoresizingMaskIntoConstraints = false;
-        stackView.spacing = 10
-//frontPlateV.image = UIImage(named: "AppIcon")
-       
 
-        mainScrollContainer.addSubview(stackView)
-    
-        stackView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
-        
-        infoView.frame = CGRect(x: 0, y: 0, width: view.getWidth(), height: view.heightPercentageOf(amount: 10))
-        
-        morePlatesView.frame = CGRect(x: 0, y: 0, width: view.getWidth(), height: view.heightPercentageOf(amount: 80))
-        
-        infoView.doLayout()
-        morePlatesView.doLayout()
-        
-        titleLabel.linesCornerRadius = gLabelRadius
-        
-        mainScrollContainer.contentSize = CGSize(width: 0, height: self.view.getHeight() + self.view.getHeight().percentageOf(amount: 50))
-        stackView.showAnimatedGradientSkeleton()
+    func onLayout() {
+ 
     }
     
     override func viewDidLoad() {
-         super.viewDidLoad()
+        super.viewDidLoad()
+        navigationController?.setTintColor()
+        
+        onSetup()
         onSetupViews()
         onLayout()
-       
         onLoadData()
-        
-        self.frontPlateV.sd_setImage(with: URL(string: model?.multimedia?[0].url ?? "")){ (image : UIImage?,
-            error : Error?, cacheType : SDImageCacheType, url : URL?) in
-            
-             self.stackView.hideSkeleton()
-        }
+    }
+}
+
+extension PlateDetailsViewController: SkeletonTableViewDataSource, SkeletonTableViewDelegate {
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let itemsCount = tableItems.count == 0 ? AppSettings.DefaultSkeletonCellCount : tableItems.count
+       
+        return itemsCount
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return tableItems [indexPath.row].reuseIdentifier()
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        if (self.tableItems.count == 0){
+            let ce : BaseCell = mainTable.dequeueReusableCell(withIdentifier: tableCellRegistrator.getRandomIdentifier(), for: indexPath) as! BaseCell
+            ce.viewController = self
+            ce.parentView = tableView
+            return ce
+        }
+        
+        let cellInfo = self.tableItems[indexPath.row]
+        
+        let ce : BaseCell = mainTable.dequeueReusableCell(withIdentifier: cellInfo.reuseIdentifier(), for: indexPath) as! BaseCell
+        ce.viewController = self
+        ce.parentView = tableView
+        ce.index = indexPath.row
+        ce.setBaseItemInfo(info: cellInfo)
+        ce.setModel(model: cellInfo.model)
+        ce.onLoadData()
+        return ce
     }
 }

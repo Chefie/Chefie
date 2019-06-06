@@ -3,25 +3,27 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		09CC9DB53FBE7BD1B6F0419D /* Pods_Chefie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A33AC4419B33A647D9B42B3 /* Pods_Chefie.framework */; };
 		33066843229D9BA9007BB2E8 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33066842229D9BA9007BB2E8 /* SearchViewController.swift */; };
 		33066845229D9D4D007BB2E8 /* SearchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33066844229D9D4D007BB2E8 /* SearchScreen.storyboard */; };
 		33066847229D9D83007BB2E8 /* NewRecipeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33066846229D9D83007BB2E8 /* NewRecipeScreen.storyboard */; };
 		33066849229D9D9A007BB2E8 /* RouteScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33066848229D9D9A007BB2E8 /* RouteScreen.storyboard */; };
 		3306684B229D9DB1007BB2E8 /* ProfileScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3306684A229D9DB1007BB2E8 /* ProfileScreen.storyboard */; };
 		3306684D229D9DCC007BB2E8 /* HomeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3306684C229D9DCC007BB2E8 /* HomeScreen.storyboard */; };
+		3343332222A6E0FE005CF276 /* RemoteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3343332122A6E0FE005CF276 /* RemoteData.swift */; };
 		335CEB3E22A166E000CF1203 /* RouteDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335CEB3D22A166E000CF1203 /* RouteDetailsViewController.swift */; };
 		335CEB4222A16E9D00CF1203 /* S3Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335CEB4122A16E9D00CF1203 /* S3Repository.swift */; };
 		335CEB4422A17F9C00CF1203 /* RouteDetailStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 335CEB4322A17F9C00CF1203 /* RouteDetailStoryboard.storyboard */; };
 		335CEB4722A180AB00CF1203 /* RouteHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335CEB4622A180AB00CF1203 /* RouteHomeCell.swift */; };
 		337B33DE2294C3EF008B662D /* TableCellRegistrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337B33DD2294C3EF008B662D /* TableCellRegistrator.swift */; };
-		3398F3C722A55AEA0047CF55 /* VideoThumbnailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3398F3C622A55AEA0047CF55 /* VideoThumbnailCell.swift */; };
 		33CED56822984087009B6868 /* PalleteExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CED56722984087009B6868 /* PalleteExtensions.swift */; };
 		33CED56A229843F7009B6868 /* DimensionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CED569229843F7009B6868 /* DimensionExtensions.swift */; };
-		33EF169E2296DF5E0002CFA1 /* PlatosVerticalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EF169D2296DF5E0002CFA1 /* PlatosVerticalCell.swift */; };
+		33EF169E2296DF5E0002CFA1 /* PlateCommentsVertical.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EF169D2296DF5E0002CFA1 /* PlateCommentsVertical.swift */; };
+		33F71AC822A947ED0093D614 /* HomePlatoCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F71AC722A947EC0093D614 /* HomePlatoCellView.swift */; };
 		420251BD2293E18A004AEBF9 /* MediaCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420251BC2293E18A004AEBF9 /* MediaCellView.swift */; };
 		420251BF2293F348004AEBF9 /* BaseCellItemInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420251BE2293F348004AEBF9 /* BaseCellItemInfo.swift */; };
 		421B77C2229B40A40087DF5E /* VerticalTableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421B77C1229B40A40087DF5E /* VerticalTableSection.swift */; };
@@ -60,7 +62,6 @@
 		4FE58754229D76FC003E780F /* SettingsCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE58753229D76FC003E780F /* SettingsCellView.swift */; };
 		4FE58756229D770E003E780F /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FE58755229D770E003E780F /* Settings.storyboard */; };
 		4FE58758229D772E003E780F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE58757229D772E003E780F /* SettingsViewController.swift */; };
-		528D0FF735939E586C54EA80 /* Pods_Chefie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A9BBDD78432CE70A760FB5 /* Pods_Chefie.framework */; };
 		B0150DAB227579E0006F48FA /* PlateCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0150DAA227579E0006F48FA /* PlateCellView.swift */; };
 		B0150DAD22757B4C006F48FA /* PlateDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0150DAC22757B4C006F48FA /* PlateDetailsViewController.swift */; };
 		B01E051C22758DC700BEAAE8 /* ImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01E051B22758DC700BEAAE8 /* ImageViewExtension.swift */; };
@@ -82,6 +83,12 @@
 		BC122C90227F363C002E9F22 /* VideoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC122C8F227F363C002E9F22 /* VideoViewCell.swift */; };
 		BC1A8DCA22A3C02E003E9411 /* PlatoCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1A8DC822A3C02E003E9411 /* PlatoCellView.swift */; };
 		BC1A8DCB22A3C02E003E9411 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1A8DC922A3C02E003E9411 /* CommentCell.swift */; };
+		BC1EE16F22A7154400513D56 /* NavigationControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1EE16E22A7154400513D56 /* NavigationControllerExtensions.swift */; };
+		BC1EE17222A71A8F00513D56 /* PlateInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1EE17122A71A8F00513D56 /* PlateInfoCell.swift */; };
+		BC1EE17522A729F100513D56 /* LargeTextCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1EE17422A729F100513D56 /* LargeTextCellView.swift */; };
+		BC1EE17722A7346200513D56 /* HeaderTextCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1EE17622A7346200513D56 /* HeaderTextCellView.swift */; };
+		BC1EE17A22A7381100513D56 /* PlateMediaCarouselCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1EE17922A7381100513D56 /* PlateMediaCarouselCellView.swift */; };
+		BC1EE17C22A743F400513D56 /* BlockingExecution.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1EE17B22A743F400513D56 /* BlockingExecution.swift */; };
 		BC2FDA5B2296DDDA00B1CB40 /* UploadRecipe.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC2FDA5A2296DDDA00B1CB40 /* UploadRecipe.storyboard */; };
 		BC2FDA5D2296DE3100B1CB40 /* UploadRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2FDA5C2296DE3100B1CB40 /* UploadRecipeViewController.swift */; };
 		BC2FDA602296F8CB00B1CB40 /* UploadRecipeInfoCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2FDA5F2296F8CB00B1CB40 /* UploadRecipeInfoCellView.swift */; };
@@ -174,23 +181,22 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		18A9BBDD78432CE70A760FB5 /* Pods_Chefie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chefie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1E8144EE0188E31846985358 /* Pods-Chefie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.release.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.release.xcconfig"; sourceTree = "<group>"; };
 		33066842229D9BA9007BB2E8 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		33066844229D9D4D007BB2E8 /* SearchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SearchScreen.storyboard; sourceTree = "<group>"; };
 		33066846229D9D83007BB2E8 /* NewRecipeScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NewRecipeScreen.storyboard; sourceTree = "<group>"; };
 		33066848229D9D9A007BB2E8 /* RouteScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = RouteScreen.storyboard; sourceTree = "<group>"; };
 		3306684A229D9DB1007BB2E8 /* ProfileScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProfileScreen.storyboard; sourceTree = "<group>"; };
 		3306684C229D9DCC007BB2E8 /* HomeScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HomeScreen.storyboard; sourceTree = "<group>"; };
+		3343332122A6E0FE005CF276 /* RemoteData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteData.swift; sourceTree = "<group>"; };
 		335CEB3D22A166E000CF1203 /* RouteDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDetailsViewController.swift; sourceTree = "<group>"; };
 		335CEB4122A16E9D00CF1203 /* S3Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3Repository.swift; sourceTree = "<group>"; };
 		335CEB4322A17F9C00CF1203 /* RouteDetailStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RouteDetailStoryboard.storyboard; sourceTree = "<group>"; };
 		335CEB4622A180AB00CF1203 /* RouteHomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteHomeCell.swift; sourceTree = "<group>"; };
 		337B33DD2294C3EF008B662D /* TableCellRegistrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCellRegistrator.swift; sourceTree = "<group>"; };
-		3398F3C622A55AEA0047CF55 /* VideoThumbnailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoThumbnailCell.swift; sourceTree = "<group>"; };
 		33CED56722984087009B6868 /* PalleteExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PalleteExtensions.swift; sourceTree = "<group>"; };
 		33CED569229843F7009B6868 /* DimensionExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimensionExtensions.swift; sourceTree = "<group>"; };
-		33EF169D2296DF5E0002CFA1 /* PlatosVerticalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatosVerticalCell.swift; sourceTree = "<group>"; };
+		33EF169D2296DF5E0002CFA1 /* PlateCommentsVertical.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateCommentsVertical.swift; sourceTree = "<group>"; };
+		33F71AC722A947EC0093D614 /* HomePlatoCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePlatoCellView.swift; sourceTree = "<group>"; };
 		420251BC2293E18A004AEBF9 /* MediaCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCellView.swift; sourceTree = "<group>"; };
 		420251BE2293F348004AEBF9 /* BaseCellItemInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCellItemInfo.swift; sourceTree = "<group>"; };
 		421B77C1229B40A40087DF5E /* VerticalTableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalTableSection.swift; sourceTree = "<group>"; };
@@ -229,7 +235,9 @@
 		4FE58753229D76FC003E780F /* SettingsCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCellView.swift; sourceTree = "<group>"; };
 		4FE58755229D770E003E780F /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		4FE58757229D772E003E780F /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		99218A24D2F1695832F164CE /* Pods-Chefie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.debug.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.debug.xcconfig"; sourceTree = "<group>"; };
+		6CAF666CF6E20DE190BF05DD /* Pods-Chefie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.release.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.release.xcconfig"; sourceTree = "<group>"; };
+		77E6664A1AAF5A26D2879DCF /* Pods-Chefie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.debug.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.debug.xcconfig"; sourceTree = "<group>"; };
+		9A33AC4419B33A647D9B42B3 /* Pods_Chefie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chefie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0150DAA227579E0006F48FA /* PlateCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateCellView.swift; sourceTree = "<group>"; };
 		B0150DAC22757B4C006F48FA /* PlateDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateDetailsViewController.swift; sourceTree = "<group>"; };
 		B01E051B22758DC700BEAAE8 /* ImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewExtension.swift; sourceTree = "<group>"; };
@@ -251,6 +259,12 @@
 		BC122C8F227F363C002E9F22 /* VideoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewCell.swift; sourceTree = "<group>"; };
 		BC1A8DC822A3C02E003E9411 /* PlatoCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlatoCellView.swift; sourceTree = "<group>"; };
 		BC1A8DC922A3C02E003E9411 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		BC1EE16E22A7154400513D56 /* NavigationControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerExtensions.swift; sourceTree = "<group>"; };
+		BC1EE17122A71A8F00513D56 /* PlateInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateInfoCell.swift; sourceTree = "<group>"; };
+		BC1EE17422A729F100513D56 /* LargeTextCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeTextCellView.swift; sourceTree = "<group>"; };
+		BC1EE17622A7346200513D56 /* HeaderTextCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTextCellView.swift; sourceTree = "<group>"; };
+		BC1EE17922A7381100513D56 /* PlateMediaCarouselCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateMediaCarouselCellView.swift; sourceTree = "<group>"; };
+		BC1EE17B22A743F400513D56 /* BlockingExecution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockingExecution.swift; sourceTree = "<group>"; };
 		BC2FDA5A2296DDDA00B1CB40 /* UploadRecipe.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = UploadRecipe.storyboard; sourceTree = "<group>"; };
 		BC2FDA5C2296DE3100B1CB40 /* UploadRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRecipeViewController.swift; sourceTree = "<group>"; };
 		BC2FDA5F2296F8CB00B1CB40 /* UploadRecipeInfoCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRecipeInfoCellView.swift; sourceTree = "<group>"; };
@@ -351,7 +365,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				528D0FF735939E586C54EA80 /* Pods_Chefie.framework in Frameworks */,
+				09CC9DB53FBE7BD1B6F0419D /* Pods_Chefie.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,11 +380,9 @@
 				4FE5874C229D7297003E780F /* PlatoCellView.swift */,
 				4249C100229D04F0001F3F7B /* CommentCell.swift */,
 				4249C0FF229D04F0001F3F7B /* PlatoCellView.swift */,
-				33EF169D2296DF5E0002CFA1 /* PlatosVerticalCell.swift */,
 				BC1A8DC922A3C02E003E9411 /* CommentCell.swift */,
 				BC1A8DC822A3C02E003E9411 /* PlatoCellView.swift */,
 				4277FE3B22A612160067DEE7 /* NewPlateCell.swift */,
-				BC805EB8229EDC1B004D81F3 /* PlateMediaHorizontalCell.swift */,
 			);
 			path = CustomCells;
 			sourceTree = "<group>";
@@ -385,6 +397,9 @@
 		3306683F229D84BD007BB2E8 /* PlateDetails */ = {
 			isa = PBXGroup;
 			children = (
+				33EF169D2296DF5E0002CFA1 /* PlateCommentsVertical.swift */,
+				BC1EE17122A71A8F00513D56 /* PlateInfoCell.swift */,
+				BC1EE17922A7381100513D56 /* PlateMediaCarouselCellView.swift */,
 			);
 			path = PlateDetails;
 			sourceTree = "<group>";
@@ -516,21 +531,21 @@
 			path = CustomViews;
 			sourceTree = "<group>";
 		};
+		8475B92084E6E21D9E2B3FB7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9A33AC4419B33A647D9B42B3 /* Pods_Chefie.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9BF735D886B81CEAAA42E7E1 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				99218A24D2F1695832F164CE /* Pods-Chefie.debug.xcconfig */,
-				1E8144EE0188E31846985358 /* Pods-Chefie.release.xcconfig */,
+				77E6664A1AAF5A26D2879DCF /* Pods-Chefie.debug.xcconfig */,
+				6CAF666CF6E20DE190BF05DD /* Pods-Chefie.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		9FB221BF14955009299E966B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				18A9BBDD78432CE70A760FB5 /* Pods_Chefie.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		B0767ECC2275717D0071AE7C /* SnapshotParser */ = {
@@ -571,6 +586,15 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		BC1EE17322A729DE00513D56 /* Generic */ = {
+			isa = PBXGroup;
+			children = (
+				BC1EE17422A729F100513D56 /* LargeTextCellView.swift */,
+				BC1EE17622A7346200513D56 /* HeaderTextCellView.swift */,
+			);
+			path = Generic;
+			sourceTree = "<group>";
+		};
 		BC2AB801229C5E0D00F51BCC /* NewCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -584,7 +608,6 @@
 				BC805EB8229EDC1B004D81F3 /* PlateMediaHorizontalCell.swift */,
 				BC2FDA5F2296F8CB00B1CB40 /* UploadRecipeInfoCellView.swift */,
 				BC2FDA6322983BBB00B1CB40 /* UploadDescriptionCellView.swift */,
-				3398F3C622A55AEA0047CF55 /* VideoThumbnailCell.swift */,
 			);
 			path = UploadRecipe;
 			sourceTree = "<group>";
@@ -606,7 +629,7 @@
 				BC7F2F3B2257993100D3F301 /* Chefie */,
 				BC7F2F3A2257993100D3F301 /* Products */,
 				9BF735D886B81CEAAA42E7E1 /* Pods */,
-				9FB221BF14955009299E966B /* Frameworks */,
+				8475B92084E6E21D9E2B3FB7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -773,6 +796,8 @@
 				428FC3BD229997550086ABE4 /* AnimationExtensions.swift */,
 				42373E1522A261C400244A9F /* UIColorExtensions.swift */,
 				42954B1E22A33C1C00C82FC1 /* Constants.swift */,
+				BC1EE16E22A7154400513D56 /* NavigationControllerExtensions.swift */,
+				BC1EE17B22A743F400513D56 /* BlockingExecution.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -840,6 +865,7 @@
 		BCB97EEE22958D3100E58922 /* CustomCells */ = {
 			isa = PBXGroup;
 			children = (
+				BC1EE17322A729DE00513D56 /* Generic */,
 				4247EF2722A5D7800012D5F0 /* Search */,
 				335CEB4522A1807E00CF1203 /* Route */,
 				3306683F229D84BD007BB2E8 /* PlateDetails */,
@@ -862,6 +888,7 @@
 		BCB97EF022958D8A00E58922 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				33F71AC722A947EC0093D614 /* HomePlatoCellView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -925,6 +952,7 @@
 			children = (
 				BCEBD7A8225A5A7800CF339B /* DataManager.swift */,
 				BCEBD7AC225A5AB300CF339B /* LocalData.swift */,
+				3343332122A6E0FE005CF276 /* RemoteData.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -936,12 +964,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BC7F2F4B2257993200D3F301 /* Build configuration list for PBXNativeTarget "Chefie" */;
 			buildPhases = (
-				44E0885899849660BBD6EEF2 /* [CP] Check Pods Manifest.lock */,
+				785E47A5EE027D8F1504227A /* [CP] Check Pods Manifest.lock */,
 				BC7F2F352257993100D3F301 /* Sources */,
 				BC7F2F362257993100D3F301 /* Frameworks */,
 				BC7F2F372257993100D3F301 /* Resources */,
-				4BBD9DA4B71651D4ACBC360F /* [CP] Embed Pods Frameworks */,
-				1D081A345579BAF4F6466F5F /* [CP] Copy Pods Resources */,
+				2C0E97EFC28B10F42E5AB95B /* [CP] Embed Pods Frameworks */,
+				6CBA88B74724ACBFD83E48F9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1026,51 +1054,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1D081A345579BAF4F6466F5F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources.sh",
-				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		44E0885899849660BBD6EEF2 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Chefie-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4BBD9DA4B71651D4ACBC360F /* [CP] Embed Pods Frameworks */ = {
+		2C0E97EFC28B10F42E5AB95B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1154,6 +1138,50 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		6CBA88B74724ACBFD83E48F9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		785E47A5EE027D8F1504227A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Chefie-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1162,14 +1190,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				B01E051C22758DC700BEAAE8 /* ImageViewExtension.swift in Sources */,
-				33EF169E2296DF5E0002CFA1 /* PlatosVerticalCell.swift in Sources */,
+				33EF169E2296DF5E0002CFA1 /* PlateCommentsVertical.swift in Sources */,
 				BCEBD7A1225A432C00CF339B /* ChefieUser.swift in Sources */,
+				BC1EE17222A71A8F00513D56 /* PlateInfoCell.swift in Sources */,
 				BC122C90227F363C002E9F22 /* VideoViewCell.swift in Sources */,
 				BCA18E0222638E7900F498B4 /* Like.swift in Sources */,
 				4247EF2B22A5F3E60012D5F0 /* UserSearchCell.swift in Sources */,
 				BC0B132922A2C792002E3BBD /* AlertServiceDelete.swift in Sources */,
 				BCA18E122263942F00F498B4 /* CommentRepository.swift in Sources */,
 				BC7F2F7F2257A51A00D3F301 /* ImageLoader.swift in Sources */,
+				33F71AC822A947ED0093D614 /* HomePlatoCellView.swift in Sources */,
 				BCB97EEB229582E800E58922 /* ProfileViewController.swift in Sources */,
 				4FE5874F229D7297003E780F /* CommentCell.swift in Sources */,
 				BC7F2F962257A51A00D3F301 /* AutoTextView.swift in Sources */,
@@ -1239,6 +1269,7 @@
 				42954B1F22A33C1C00C82FC1 /* Constants.swift in Sources */,
 				BC9CCD8D227DE621008CDCDB /* TouchableImageView.swift in Sources */,
 				B0767ED42275717D0071AE7C /* SnapshotParser.swift in Sources */,
+				BC1EE17C22A743F400513D56 /* BlockingExecution.swift in Sources */,
 				4FE58754229D76FC003E780F /* SettingsCellView.swift in Sources */,
 				BC7F2F952257A51A00D3F301 /* DesignableImageView.swift in Sources */,
 				4289F895229367F00001E03A /* ICellDataInfo.swift in Sources */,
@@ -1258,8 +1289,10 @@
 				BC8641CB227ED82700008F04 /* StringExtensions.swift in Sources */,
 				BCA18E182263947A00F498B4 /* PremiumRepository.swift in Sources */,
 				B01E051E227592DA00BEAAE8 /* LocalFileImageDataProvider.swift in Sources */,
+				BC1EE17722A7346200513D56 /* HeaderTextCellView.swift in Sources */,
 				BCEBD7AD225A5AB300CF339B /* LocalData.swift in Sources */,
 				33CED56A229843F7009B6868 /* DimensionExtensions.swift in Sources */,
+				BC1EE16F22A7154400513D56 /* NavigationControllerExtensions.swift in Sources */,
 				BC7F2F7E2257A51A00D3F301 /* SpringView.swift in Sources */,
 				33CED56822984087009B6868 /* PalleteExtensions.swift in Sources */,
 				BC9CCD95227E0B54008CDCDB /* ViewExtensions.swift in Sources */,
@@ -1278,8 +1311,9 @@
 				42373E1222A2560E00244A9F /* CommunityRepository.swift in Sources */,
 				42373E1422A25DAC00244A9F /* CommunityCell.swift in Sources */,
 				337B33DE2294C3EF008B662D /* TableCellRegistrator.swift in Sources */,
+				BC1EE17A22A7381100513D56 /* PlateMediaCarouselCellView.swift in Sources */,
 				BCA18E0022638E4700F498B4 /* Comment.swift in Sources */,
-				3398F3C722A55AEA0047CF55 /* VideoThumbnailCell.swift in Sources */,
+				BC1EE17522A729F100513D56 /* LargeTextCellView.swift in Sources */,
 				BCA18DFE22638DCB00F498B4 /* Plate.swift in Sources */,
 				BC0B132D22A2C8EF002E3BBD /* AlertDeleteController.swift in Sources */,
 				BCEBD7A9225A5A7800CF339B /* DataManager.swift in Sources */,
@@ -1294,6 +1328,7 @@
 				BC37C54B22A163E6004E0B2F /* UpdateProfileViewController.swift in Sources */,
 				BCA18E10226393C300F498B4 /* RouteRepository.swift in Sources */,
 				B0150DAB227579E0006F48FA /* PlateCellView.swift in Sources */,
+				3343332222A6E0FE005CF276 /* RemoteData.swift in Sources */,
 				4249C102229D04F1001F3F7B /* CommentCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1430,7 +1465,7 @@
 		};
 		BC7F2F4C2257993200D3F301 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 99218A24D2F1695832F164CE /* Pods-Chefie.debug.xcconfig */;
+			baseConfigurationReference = 77E6664A1AAF5A26D2879DCF /* Pods-Chefie.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1449,7 +1484,7 @@
 		};
 		BC7F2F4D2257993200D3F301 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1E8144EE0188E31846985358 /* Pods-Chefie.release.xcconfig */;
+			baseConfigurationReference = 6CAF666CF6E20DE190BF05DD /* Pods-Chefie.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

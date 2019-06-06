@@ -7,6 +7,7 @@ import SDWebImage
 import TableviewPaginator
 import AWSS3
 import AWSCore
+import RxSwift
 
 let PlateCellIdentifier = "PlateCellView"
 
@@ -41,6 +42,19 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
         tableviewPaginator = TableviewPaginatorEx.init(paginatorUI: self, delegate: self)
         tableviewPaginator.initialSetup()
         endlessTableHelper = EndlessTableHelper(table: mainTable, paginator: tableviewPaginator)
+        
+        appContainer.dataManager.remoteData.NewPlateSubject.subscribe { (
+            event : Event<Plate>) in
+            
+            self.endlessTableHelper.begin()
+            
+            let item = HomePlatoCellItemInfo()
+            item.model = event.element
+            
+            self.tableItems.insert(item, at: 0)
+            self.endlessTableHelper.insertRowAt(row: 0)
+            self.endlessTableHelper.end()
+        }
     }
     
     func onSetupViews(){
@@ -73,13 +87,12 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
         mainTable.register(LoadingCell.self, forCellReuseIdentifier: "LoadingCell")
         
         //tableCellRegistrator.add(identifier: CommentsHorizontalCellInfo().reuseIdentifier(), cellClass: CommentsHorizontalCell.self)
-        tableCellRegistrator.add(identifier: NewPlateMediaCellItemInfo().reuseIdentifier(), cellClass: NewPlateMediaCell.self)
+//        tableCellRegistrator.add(identifier: NewPlateMediaCellItemInfo().reuseIdentifier(), cellClass: NewPlateMediaCell.self)
+        
+        tableCellRegistrator.add(identifier: HomePlatoCellItemInfo().reuseIdentifier(), cellClass: HomePlatoCellView.self)
         onSetup()
         onSetupViews()
         
-     
-        
-
      //tableCellRegistrator.add(identifier: PlatoCellItemInfo().reuseIdentifier(), cellClass: PlatoCellView.self)
        // tableCellRegistrator.add(identifier: CommentCellInfo().reuseIdentifier(), cellClass: CommentCell.self)
     
@@ -137,8 +150,8 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
                 
             case .success(let data):
                 
-               let items = data.compactMap({ (plate) -> NewPlateMediaCellItemInfo? in
-                    let item = NewPlateMediaCellItemInfo()
+               let items = data.compactMap({ (plate) -> HomePlatoCellItemInfo? in
+                    let item = HomePlatoCellItemInfo()
                     item.model = plate
                     return item
                     
@@ -239,11 +252,11 @@ extension HomeViewController: TableviewPaginatorUIProtocol {
     }
     
     func shouldAddRefreshControl(paginator: TableviewPaginatorEx) -> Bool {
-        return true
+        return false
     }
     
     func getPaginatedLoadMoreCellHeight(paginator: TableviewPaginatorEx) -> CGFloat {
-        return 44
+        return 0
     }
     
     func getPaginatedLoadMoreCell(paginator: TableviewPaginatorEx) -> UITableViewCell {
@@ -251,7 +264,7 @@ extension HomeViewController: TableviewPaginatorUIProtocol {
     }
     
     func getRefreshControlTintColor(paginator: TableviewPaginatorEx) -> UIColor {
-          return UIColor.orange
+        return UIColor.orange
     }
 }
 
@@ -260,7 +273,5 @@ extension HomeViewController: TableviewPaginatorProtocol {
            print("LOAD")
     
         loadPlates()
-        
-     
     }
 }

@@ -22,7 +22,7 @@ class NewPlateMediaCell : BaseCell, ICellDataProtocol {
     }()
     
     override func getSize() -> CGSize {
-        return CGSize(width: parentView.getWidth(), height: parentView.heightPercentageOf(amount: 30))
+        return CGSize(width: parentView.getWidth(), height: parentView.heightPercentageOf(amount: 35))
     }
     
     override func onLayout(size: CGSize!) {
@@ -31,7 +31,8 @@ class NewPlateMediaCell : BaseCell, ICellDataProtocol {
         let cellSize = getSize()
         
         self.contentView.snp.makeConstraints { (maker) in
-           
+            maker.left.top.right.bottom.equalTo(0)
+            maker.edges.equalToSuperview()
             maker.size.equalTo(cellSize)
         }
         
@@ -56,10 +57,16 @@ class NewPlateMediaCell : BaseCell, ICellDataProtocol {
         
         self.frontImageView.setTouch(target: self, selector: #selector(onTouch))
         
-        self.frontImageView.sd_setImage(with: URL(string: self.model?.multimedia?[0].url ?? "")){ (image : UIImage?,
-            error : Error?, cacheType : SDImageCacheType, url : URL?) in
+        if let media = model?.multimedia {
             
-            self.hideSkeleton()
+            if !media.isEmpty{
+                
+                self.frontImageView.sd_setImage(with: URL(string: self.model?.multimedia?[0].url ?? "")){ (image : UIImage?,
+                    error : Error?, cacheType : SDImageCacheType, url : URL?) in
+                    
+                    self.hideSkeleton()
+                }
+            }
         }
     }
     

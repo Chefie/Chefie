@@ -6,18 +6,13 @@ import AWSCore
 import AWSMobileClient
 import CodableFirebase
 
-
-
 let appContainer = AppContainer()
 let gLabelRadius = 4
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     var window: UIWindow?
-  
     
-    
-
     func application(_ application: UIApplication,
                      handleEventsForBackgroundURLSession identifier: String,
                      completionHandler: @escaping () -> Void) {
@@ -39,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-      
+        
         self.application(application, handleEventsForBackgroundURLSession: AppSettings.TransferUtilityIdentifier) {
             
         }
@@ -65,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         if isLogin == "vamos"{
             self.NextViewController(storybordid: "loginView")
         }else{
-            self.NextViewController(storybordid: "sliderView")
+            self.onShowCase()
         }
     }
     
@@ -81,7 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         
         //Setup credentials, see your awsconfiguration.json for the "YOUR-IDENTITY-POOL-ID"
-        let credentialProvider = AWSCognitoCredentialsProvider(regionType: AWSRegionType.USEast1, identityPoolId: "us-east-1:4e242d29-6f72-4b3e-ad17-a3cf40d4195e")
+        let credentialProvider = AWSCognitoCredentialsProvider(regionType: AWSRegionType.USEast1, identityPoolId: "")
         
         //Setup the service configuration
         let configuration = AWSServiceConfiguration(region: .USEast1, credentialsProvider: credentialProvider)
@@ -91,46 +86,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         tuConf.isAccelerateModeEnabled = true
         tuConf.bucket = "chefiebucket"
         //tuConf.multiPartConcurrencyLimit = 5
-
+        
         AWSServiceManager.default().defaultServiceConfiguration = configuration
         
-      //  Register a transfer utility object asynchronously
-//        AWSS3TransferUtility.register(
-//            with: configuration!,
-//            transferUtilityConfiguration: tuConf,
-//            forKey: AppSettings.TransferUtilityIdentifier
-//        ) { (error) in
-//            if error != nil {
-//                print("Error when registering TransferUtility")
-//            }
-//
-//            print("Loaded")
-//        }
+        //  Register a transfer utility object asynchronously
+        //        AWSS3TransferUtility.register(
+        //            with: configuration!,
+        //            transferUtilityConfiguration: tuConf,
+        //            forKey: AppSettings.TransferUtilityIdentifier
+        //        ) { (error) in
+        //            if error != nil {
+        //                print("Error when registering TransferUtility")
+        //            }
+        //
+        //            print("Loaded")
+        //        }
     }
     //METODO QUE RECIBE EL ID DE LA VISTA Y NOS SACA UNA U OTRA VISTA
     //DEPENDIENDO DE LO QUE HAY GUARDADO EN EL USERDEFAULTS
-    func NextViewController(storybordid:String)
+    
+    func onShowCase()
     {
-
-        let storyBoard:UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
-        let exampleVC = storyBoard.instantiateViewController(withIdentifier:storybordid )
-        //self.present(exampleVC, animated: true)
+        let storyBoard:UIStoryboard = UIStoryboard(name: "Showcase", bundle: nil)
+        let exampleVC = storyBoard.instantiateViewController(withIdentifier: "sliderView" )
+        // self.present(exampleVC, animated: true)
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.rootViewController = exampleVC
         self.window?.makeKeyAndVisible()
     }
-
-//    func NextViewController(storybordid:String)
-//    {
-//
-//        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        let exampleVC = storyBoard.instantiateViewController(withIdentifier:storybordid )
-//        // self.present(exampleVC, animated: true)
-//        self.window = UIWindow(frame: UIScreen.main.bounds)
-//        self.window?.rootViewController = exampleVC
-//        self.window?.makeKeyAndVisible()
-//    }
-
+    
+    func NextViewController(storybordid:String)
+    {
+        
+        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let exampleVC = storyBoard.instantiateViewController(withIdentifier:storybordid )
+        // self.present(exampleVC, animated: true)
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.rootViewController = exampleVC
+        self.window?.makeKeyAndVisible()
+    }
+    
     //Google SignIn
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error{
@@ -143,69 +138,76 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 if(error == nil){
                     print(result?.user.email)
                     print(result?.user.displayName)
-                   
-                    let userID : String = (Auth.auth().currentUser?.uid)!
-                    appContainer.dataManager.localData?.chefieUser?.id = userID
                     
-                  let db = Firestore.firestore()
+                    let userID : String = (Auth.auth().currentUser?.uid)!
+                    
+                    appContainer.userRepository.getUserById(id: userID) { (result : ChefieResult<ChefieUser>) in
+                        
+                        switch result {
+                            
+                        case .success(let user) :
+                            
+                            appContainer.dataManager.localData.onLogin(user: user)
+                            
+                            //Perform Segue to main screen
+                            let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                            let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: "mainScreen") as UIViewController
+                            
+                            let navigationController = UINavigationController(rootViewController: initialViewControlleripad)
+                            
+                            self.window = UIWindow(frame: UIScreen.main.bounds)
+                            self.window?.rootViewController = navigationController
+                            self.window?.makeKeyAndVisible()
+                            break
+                        case .failure(_) : break
+                        }
+                    }
+                    
+                    //   appContainer.dataManager.localData.onLogin(id: userID)
+                    
+                    let db = Firestore.firestore()
                     
                     //Comprobando que no hay ya un usuario con el mismo UID para no volver a insertar.
                     //Si no hay se inserta el user en la BBDD.(Tabla Users FireStore)
-                        db.collection("Users").whereField("id", isEqualTo: Auth.auth().currentUser!.uid)
-                            .getDocuments() { (querySnapshot, err) in
+                    db.collection("Users").whereField("id", isEqualTo: Auth.auth().currentUser!.uid)
+                        .getDocuments() { (querySnapshot, err) in
+                            
+                            if  querySnapshot?.count == 0 {
                                 
-                                let co = querySnapshot?.count
+                                let usuarioChefie = ChefieUser()
+                                usuarioChefie.id = Auth.auth().currentUser!.uid
+                                usuarioChefie.userName = ""
+                                usuarioChefie.email = Auth.auth().currentUser!.email
+                                usuarioChefie.fullName = ""
+                                usuarioChefie.biography = ""
+                                usuarioChefie.isPremium = false
+                                usuarioChefie.deleted = false
+                                usuarioChefie.followers = 0
+                                usuarioChefie.following = 0
+                                usuarioChefie.profilePic = ""
+                                usuarioChefie.profileBackgroundPic = ""
+                                usuarioChefie.gender = ""
+                                usuarioChefie.community = ""
+                                usuarioChefie.location = ""
                                 
-                                if  querySnapshot?.count == 0 {
-
-                                    let usuarioChefie = ChefieUser()
-                                    usuarioChefie.id = Auth.auth().currentUser!.uid
-                                    usuarioChefie.userName = ""
-                                    usuarioChefie.email = Auth.auth().currentUser!.email
-                                    usuarioChefie.fullName = ""
-                                    usuarioChefie.biography = ""
-                                    usuarioChefie.isPremium = false
-                                    usuarioChefie.deleted = false
-                                    usuarioChefie.followers = 0
-                                    usuarioChefie.following = 0
-                                    usuarioChefie.profilePic = ""
-                                    usuarioChefie.profileBackgroundPic = ""
-                                    usuarioChefie.gender = ""
-                                    usuarioChefie.community = ""
-                                    usuarioChefie.location = ""
-                                    
-                                      self.insertUser(user: usuarioChefie)
-                                }
+                                self.insertUser(user: usuarioChefie)
+                            }
+                            
+                            
+                            if let err = err {
+                                print("Error getting documents: \(err)")
                                 
                                 
-                                if let err = err {
-                                    print("Error getting documents: \(err)")
-                                  
-                                    
-                                  
-                                } else {
-//                                    for document in querySnapshot!.documents {
-//                                        print("\(document.documentID) => \(document.data())")
-//                                    }
-                                    
-                               
-
-                                }
-                        }
-                        
-                    
-          
-                    
-                    
-                    //Perform Segue to main screen
-                    let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                    let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: "mainScreen") as UIViewController
-                    
-                     let navigationController = UINavigationController(rootViewController: initialViewControlleripad)
-                    
-                    self.window = UIWindow(frame: UIScreen.main.bounds)
-                    self.window?.rootViewController = navigationController
-                    self.window?.makeKeyAndVisible()
+                                
+                            } else {
+                                //                                    for document in querySnapshot!.documents {
+                                //                                        print("\(document.documentID) => \(document.data())")
+                                //                                    }
+                                
+                                
+                                
+                            }
+                    }
                     
                 }else{
                     print(error?.localizedDescription)
@@ -217,7 +219,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     //Metodo que hace el insert de un Usuario en la BBDD.
     func insertUser(user: ChefieUser) {
-       
+        
         let usersRef = Firestore.firestore().collection("Users")
         
         do {
@@ -240,7 +242,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
     }
     
-   
+    
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         return GIDSignIn.sharedInstance().handle(url,

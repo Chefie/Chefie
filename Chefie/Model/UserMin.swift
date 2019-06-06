@@ -8,7 +8,7 @@
 
 import Foundation
 
-class UserMin : Decodable {
+class UserMin : Codable {
     
     var id : String?
     var userName : String?

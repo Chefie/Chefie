@@ -12,6 +12,27 @@ import Kingfisher
 
 extension UIImage {
     
+    typealias RectCalculationClosure = (_ parentSize: CGSize, _ newImageSize: CGSize)->(CGRect)
+    
+    func with(image named: String, rectCalculation: RectCalculationClosure) -> UIImage {
+        return with(image: UIImage(named: named), rectCalculation: rectCalculation)
+    }
+    
+    func with(image: UIImage?, rectCalculation: RectCalculationClosure) -> UIImage {
+        
+        if let image = image {
+            UIGraphicsBeginImageContext(size)
+            
+            draw(in: CGRect(origin: .zero, size: size))
+            image.draw(in: rectCalculation(size, image.size))
+            
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return newImage!
+        }
+        return self
+    }
+    
     func rawData() -> Data {
         
         let image = self
@@ -19,10 +40,63 @@ extension UIImage {
        
         return data ?? Data()
     }
+    
+    func drawDarkRect() -> UIImage {
+        UIGraphicsBeginImageContext(self.size)
+        self.draw(at: CGPoint.zero)
+        let context = UIGraphicsGetCurrentContext()
+        
+        context!.setFillColor(gray: 0, alpha: 0.5)
+        context!.move(to: CGPoint(x: 0, y: 0))
+        context!.fill(CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
+        context!.strokePath()
+        let resultImage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        UIGraphicsEndImageContext()
+        
+        return resultImage!
+    }
+    
+    func drawImageOnTop(image : UIImage) -> UIImage {
+        UIGraphicsBeginImageContext(self.size)
+        self.draw(at: CGPoint.zero)
+    
+        let context = UIGraphicsGetCurrentContext()
+        context!.move(to: CGPoint(x: 0, y: 0))
+        image.draw(in: CGRect(x: 20, y: 20, width: 42, height: 42))
+     
+        
+        let result = UIGraphicsGetImageFromCurrentImageContext()
+        
+        UIGraphicsEndImageContext()
+        
+        return result!
+    }
 }
 
 extension UIImageView {
+    enum ImageAddingMode {
+        case changeOriginalImage
+        case addSubview
+    }
+    
+    func drawOnCurrentImage(anotherImage: UIImage?, mode: ImageAddingMode, rectCalculation: UIImage.RectCalculationClosure) {
         
+        guard let image = image else {
+            return
+        }
+        
+        switch mode {
+        case .changeOriginalImage:
+            self.image = image.with(image: anotherImage, rectCalculation: rectCalculation)
+            
+        case .addSubview:
+            let newImageView = UIImageView(frame: rectCalculation(frame.size, image.size))
+            newImageView.image = anotherImage
+            addSubview(newImageView)
+        }
+    }
+    
     func setRounded() {
         let radius = self.frame.width / 2
         self.layer.cornerRadius = radius

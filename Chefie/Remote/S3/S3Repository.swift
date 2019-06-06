@@ -20,6 +20,7 @@ public struct S3MediaUploadResult {
     
     var url : String
     var id : String
+    var thumbnailUrl : String?
     var contentType : String
     var errors: [Error]?
     
@@ -40,6 +41,12 @@ public struct UniqueIdentifierObject {
         
         return String(format: "%ld", getCurrentMillis())
     }
+}
+
+public struct GetVideoDataResult {
+    
+    var thumbnailData : Data?
+    var videoData : Data?
 }
 
 enum ContentType: String {
@@ -71,9 +78,15 @@ class S3Repository {
             var running = false, finished = false
             while(!finished){
                 
-                if (!running) {
+                if (!running && !finished) {
                     
                     running = true
+                    
+                    if (batchCount < 0) {
+                        finished = true
+                        continue
+                    }
+                    
                     self.uploadImage(data: dataArray [batchCount], completionHandler: { (result : Result<S3MediaUploadResult, Error>) in
                         
                         switch result {
@@ -140,7 +153,7 @@ class S3Repository {
         }
     }
     
-    func uploadVideoBatch(dataArray : Array<Data>, completionHandler: @escaping (Result<S3MediaUploadBatchResult, Error>) -> Void ) -> Void{
+    func uploadVideoBatch(dataArray : Array<GetVideoDataResult>, completionHandler: @escaping (Result<S3MediaUploadBatchResult, Error>) -> Void ) -> Void{
         let dispatchQueue = DispatchQueue(label: "UploadVideoS3Batch", qos: .background)
         dispatchQueue.async{
             
@@ -150,30 +163,53 @@ class S3Repository {
             var running = false, finished = false
             while(!finished){
                 
-                if (!running) {
+                if (!running && !finished) {
+                    
+                    if (batchCount < 0) {
+                        finished = true
+                        continue
+                    }
                     
                     running = true
-                    self.uploadVideo(data: dataArray [batchCount], completionHandler: { (result : Result<S3MediaUploadResult, Error>) in
+                    
+                    self.uploadVideo(data: dataArray [batchCount].videoData!, completionHandler: { (result : Result<S3MediaUploadResult, Error>) in
                         
                         switch result {
-                        case .success(let data):
+                        case .success(var data):
                             
-                            resultArray.append(data)
+                            self.uploadImage(data: dataArray[batchCount].thumbnailData!, completionHandler: { (result : Result<S3MediaUploadResult, Error>) in
+                                
+                                switch result {
+                                    
+                                case .success(let thumbnailImage):
+                                    
+                                    data.thumbnailUrl = thumbnailImage.url
+                                    break
+                                case .failure(_): break
+                                }
+                                
+                                resultArray.append(data)
+                                
+                                batchCount -= 1
+                                running = false
+
+                                if (batchCount < 0){
+                                    finished = true
+                                }
+                            })
+ 
                             break
                         case .failure(let error):
                             
                             errors?.append(error)
+                            batchCount -= 1
+                            running = false
+                            
+                            if (batchCount < 0){
+                                finished = true
+                            }
                             break
                         }
-  
-                        batchCount -= 1
-                        
-                        if (batchCount < 0){
-                            
-                            finished = true
-                        }
-                        
-                        running = false
                     })
                 }
             }

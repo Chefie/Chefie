@@ -16,6 +16,8 @@ class BaseCell : UITableViewCell, IDynamicCellProtocol{
     
     var baseItemInfo : BaseItemInfo?
     
+    var index : Int?
+    
     func setBaseItemInfo(info : BaseItemInfo){
         
         self.baseItemInfo = info
