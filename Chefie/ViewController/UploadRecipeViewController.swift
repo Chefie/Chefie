@@ -17,6 +17,7 @@ import FaveButton
 import FirebaseFirestore
 import CodableFirebase
 import Photos
+import SCLAlertView
 
 class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPickerViewDelegate, UITextFieldDelegate,GalleryControllerDelegate, SkeletonTableViewDataSource, SkeletonTableViewDelegate,FaveButtonDelegate {
 
@@ -51,7 +52,7 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
     
     //Metodo de subir plato al Firestore
     @IBAction func subirPlato(_ sender: Any) {
-     //   timer.invalidate()
+        timer.invalidate()
      
         let numeroComunidad = pickerView.selectedRow(inComponent: 0)
         let titlePlate = titleTextField.text!
@@ -72,10 +73,27 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         plato.numVisits = 0
         plato.description = description
         
-        uploadRecipe(plate: plato)
-//        if(titleTextField.text != "" && descriptionTextView.text != ""){
-//            uploadRecipe(plate: plato)
-//        }
+      
+      
+            uploadRecipe(plate: plato)
+            
+            let appearance = SCLAlertView.SCLAppearance(
+                showCloseButton: false
+            )
+            let alertView = SCLAlertView(appearance: appearance)
+            alertView.addButton("Great!") {
+                self.goToMainScreen()
+            }
+            alertView.showSuccess("Your recipe has been successfully published.", subTitle: "")
+        
+        
+     
+    }
+    func goToMainScreen(){
+        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen" )
+        
+        self.present(exampleVC, animated: true)
     }
     
     func saveToFireBase(plate : Plate) {
@@ -259,9 +277,9 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         mainTable.isScrollEnabled = false
         
         //Checking every second if texfields are not empty.
-      //  timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(checkIfDone), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(checkIfDone), userInfo: nil, repeats: true)
         
-        btnDone.isHidden = false
+        btnDone.isHidden = true
         
         navigationItem.title = "New recipe"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add Media", style: .plain, target: self, action: #selector(abrirGaleria))

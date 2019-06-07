@@ -24,7 +24,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         tabBarItem.image = UIImage(named: "recipes1")?.withRenderingMode(.alwaysOriginal)
         tabBarItem.selectedImage = UIImage(named: "recipes2")?.withRenderingMode(.alwaysOriginal)
         tabBar.items?[0].title = "Recipes"
-      
+       
         
         
         tabBarItem = self.tabBar.items![1]
@@ -57,6 +57,8 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
             item.title = ""
         })
   
+        
+          self.tabBarController?.tabBar.frame.height ?? 49.0
     }
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
@@ -65,6 +67,8 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        
+    
         
         if item.tag == 2 {
          

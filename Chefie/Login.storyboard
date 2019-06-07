@@ -28,7 +28,7 @@
                                 <color key="backgroundColor" red="0.81803864240000002" green="0.63996165989999998" blue="0.56468391419999997" alpha="0.27290239729999999" colorSpace="custom" customColorSpace="displayP3"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KiB-f7-mFX">
-                                <rect key="frame" x="17" y="277" width="379" height="386"/>
+                                <rect key="frame" x="17" y="277" width="379" height="455"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.81803864240000002" green="0.63996165989999998" blue="0.56468391419999997" alpha="0.44686429794520549" colorSpace="custom" customColorSpace="displayP3"/>
                             </imageView>
@@ -102,6 +102,13 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="autohide" value="NO"/>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="By registering, you accept our Conditions. Learn more about how we collect, use and share your information in the Data Policy." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EjK-QV-Rjd">
+                                <rect key="frame" x="44" y="627" width="327" height="86"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -119,7 +126,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2655" y="-1631"/>
+            <point key="canvasLocation" x="-3936.2318840579715" y="-1598.4375"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="IKO-Of-z5D">
@@ -139,7 +146,7 @@
                                 <color key="backgroundColor" red="0.81803864240646362" green="0.63996165990829468" blue="0.56468391418457031" alpha="0.27290239726027399" colorSpace="custom" customColorSpace="displayP3"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kt5-fK-5UM">
-                                <rect key="frame" x="17" y="271" width="379" height="432"/>
+                                <rect key="frame" x="17" y="271" width="379" height="500"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.81803864240646362" green="0.63996165990829468" blue="0.56468391418457031" alpha="0.45020869006849307" colorSpace="custom" customColorSpace="displayP3"/>
                             </imageView>
@@ -237,6 +244,13 @@
                                     <action selector="forgotPass:" destination="hmS-Nz-S5b" eventType="touchUpInside" id="WlS-ED-hhK"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="By registering, you accept our Conditions. Learn more about how we collect, use and share your information in the Data Policy." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LBA-Ht-1Th">
+                                <rect key="frame" x="42" y="662" width="327" height="86"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="wdK-4K-Km5"/>
@@ -253,7 +267,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="53f-jK-jS7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4767" y="-1598"/>
+            <point key="canvasLocation" x="-4768.115942028986" y="-1598.4375"/>
         </scene>
         <!--mainScreen-->
         <scene sceneID="92g-gA-Xx3">
@@ -270,7 +284,7 @@
         <image name="logoBlanco" width="384" height="487"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lec-dC-fre"/>
-        <segue reference="3OW-lZ-du4"/>
+        <segue reference="bRS-e7-Ous"/>
+        <segue reference="cFd-As-C22"/>
     </inferredMetricsTieBreakers>
 </document>

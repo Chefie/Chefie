@@ -13,6 +13,7 @@ import GoogleSignIn
 import FirebaseFirestore
 import CodableFirebase
 import FaveButton
+import SCLAlertView
 
 class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
@@ -57,7 +58,10 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
     var genre = ""
     var provinciaUser = ""
     var comunidadUser = ""
+    var valorComunidadUsuario = ""
     @IBAction func genreAction(_ sender: DLRadioButton) {
+        
+        
         
         if(sender.tag == 1){
             genre = "Female"
@@ -103,34 +107,84 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
                         "location" : self.provinciaUser
                         ])
                     
-                    let alert = UIAlertController(title: "Profile updated succesfully", message: "", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-                        switch action.style{
-                        case .default:
-                            print("default")
-                            
-                            let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                            let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen" )
-                            
-                            self.present(exampleVC, animated: true)
-                            
-                        case .cancel:
-                            print("cancel")
-                            
-                        case .destructive:
-                            print("destructive")
-                            
-                            
-                        }}))
-                    self.present(alert, animated: true, completion: nil)
+//                    let alert = UIAlertController(title: "Profile updated succesfully", message: "", preferredStyle: .alert)
+//                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+//                        switch action.style{
+//                        case .default:
+//                            print("default")
+//
+//                            let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//                            let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen" )
+//
+//                            self.present(exampleVC, animated: true)
+//
+//                        case .cancel:
+//                            print("cancel")
+//
+//                        case .destructive:
+//                            print("destructive")
+//
+//
+//                        }}))
+//                    self.present(alert, animated: true, completion: nil)
+                    let appearance = SCLAlertView.SCLAppearance(
+                        showCloseButton: false
+                    )
+                    let alertView = SCLAlertView(appearance: appearance)
+//                    alertView.addButton("First Button", target:self, selector:Selector("firstButton"))
+                    alertView.addButton("Great!") {
+                        self.goToMainAfterUpdate()
+                    }
+                    alertView.showSuccess("Your profile was successfully updated.", subTitle: "")
                 }
         }
     }
+    
+    
+    func goBackToLogin(){
+        let storyboard = UIStoryboard(name: "Login", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "loginView")
+        self.present(controller, animated: true, completion: nil)
+    }
 
+    //Metodo que trae los datos del usuario logueado.
+    func loadUserInfo() {
+        
+        appContainer.userRepository.getUserByID(idUser: Auth.auth().currentUser!.uid) { (result : ChefieResult<ChefieUser>) in
+            
+            switch result {
+                
+            case .success(let user) :
+                
+                self.textFieldFullname.text = user.fullName
+                self.textFieldUsername.text = user.userName
+                self.textViewBiography.text = user.biography
+                self.genre = user.gender!
+                self.valorComunidadUsuario = user.community!
+                
+                var gender = user.gender
+               
+                if (gender == "Male") {
+                    
+                    self.btnGenre.otherButtons.forEach({ (btn) in
+                        btn.isSelected = true
+                    })
+                }
+                else {
+                    self.btnGenre.isSelected = true
+                }
+                break
+            case .failure(_) : break
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
          pickerView.reloadComponent(0)
          pickerView.reloadComponent(1)
+        
+        loadUserInfo()
         
         //Checking every second if texfields are not empty.
         timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(checkIfDone), userInfo: nil, repeats: true)
@@ -203,21 +257,70 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
         }
     }
     
+    
+    
+    var txt = UITextField()
     //Metodo para borrar el usuario con alerta.
     @objc func showDeleteAlert(){
         
-       /////////////////////////////////////////Dar nombre personalizado a la tabla de la bbdd Users.
-//        Firestore.firestore().collection("Users").document("averQueloQue").setData(["item": "test"])
+//        print("----->   Borrando usuario UNDER CONSTRUCTION")
         
-//        let db = Firestore.firestore()
-//        db.collection("Users").document(Auth.auth().currentUser!.uid).setData(["Test": "Ok"])
+
+        let appearance = SCLAlertView.SCLAppearance(
+            showCloseButton: true
+        )
+        let alertView = SCLAlertView(appearance: appearance)
+        txt = alertView.addTextField("Confirm your email")
         
-        print("----->   Borrando usuario UNDER CONSTRUCTION")
+        alertView.addButton("Submit") {
+            if(self.txt.text == Auth.auth().currentUser!.email){
+                
+                self.db.collection("Users")
+                    .whereField("id", isEqualTo: Auth.auth().currentUser!.uid)
+                    .getDocuments() { (querySnapshot, err) in
+                        if let err = err {
+                            // Some error occured
+                        } else if querySnapshot!.documents.count != 1 {
+                            // Perhaps this is an error for you?
+                        } else {
+                            let document = querySnapshot!.documents.first
+                            document!.reference.updateData([
+                                "deleted" : true
+                                ])
+                        }
+                        
+                }
+                let appearance = SCLAlertView.SCLAppearance(
+                    showCloseButton: false
+                )
+                let alertView = SCLAlertView(appearance: appearance)
+                alertView.addButton("Ok") {
+                    
+                    //Borra el usuario del Auth de Firebase.
+                    Auth.auth().currentUser?.delete(completion: { (error : Error?) in
+                        try! Auth.auth().signOut()
+                        try! GIDSignIn.sharedInstance()?.signOut()
+                          self.goBackToLogin()
+                    })
+                    // LOG OUT
+            
+                  
+                }
+                alertView.showSuccess("Your Account has been deleted", subTitle: "")
+               
+              
+            }else{
+                let appearance = SCLAlertView.SCLAppearance(
+                    showCloseButton: true
+                )
+                let alertView = SCLAlertView(appearance: appearance)
+                alertView.showWarning("Ups..", subTitle: "Email addresses don't match.")
+            }
+        }
         
-        let alertVC = alertService.alert(title: "Delete Account", body: "You're sure you want to delete your Chefie account?", buttonTitle: "Yes, I'm sure!")
+        alertView.showEdit("Are you sure you want to delete your account?", subTitle: " Deleting your account is permanent and will remove all content including comments, avatars and profile settings.")
         
-        present(alertVC,animated: true,completion: nil)
-       
+        
         
     }
     
@@ -259,4 +362,6 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
         let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen")
         self.present(exampleVC, animated: true)
     }
+    
+    
 }

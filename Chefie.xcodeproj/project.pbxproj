@@ -62,6 +62,7 @@
 		4FE58754229D76FC003E780F /* SettingsCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE58753229D76FC003E780F /* SettingsCellView.swift */; };
 		4FE58756229D770E003E780F /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FE58755229D770E003E780F /* Settings.storyboard */; };
 		4FE58758229D772E003E780F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE58757229D772E003E780F /* SettingsViewController.swift */; };
+		5BA477C3AB7A371FD883D050 /* Pods_Chefie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5151682BBFF2F9A0FDC47736 /* Pods_Chefie.framework */; };
 		B0150DAB227579E0006F48FA /* PlateCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0150DAA227579E0006F48FA /* PlateCellView.swift */; };
 		B0150DAD22757B4C006F48FA /* PlateDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0150DAC22757B4C006F48FA /* PlateDetailsViewController.swift */; };
 		B01E051C22758DC700BEAAE8 /* ImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01E051B22758DC700BEAAE8 /* ImageViewExtension.swift */; };
@@ -173,6 +174,8 @@
 		BCBFAAC22292EF1300B4ECD4 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBFAAC12292EF1300B4ECD4 /* BaseCell.swift */; };
 		BCBFAAC42292F4F000B4ECD4 /* DynamicCellExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBFAAC32292F4F000B4ECD4 /* DynamicCellExtensions.swift */; };
 		BCBFAAC62292FBEB00B4ECD4 /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBFAAC52292FBEB00B4ECD4 /* BaseModel.swift */; };
+		BCE1618A22A9479B00CA6F2A /* CustomAlertXIB.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCE1618922A9479B00CA6F2A /* CustomAlertXIB.xib */; };
+		BCE1618E22A94A0A00CA6F2A /* CustomAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE1618D22A94A0A00CA6F2A /* CustomAlertController.swift */; };
 		BCEBD7A1225A432C00CF339B /* ChefieUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEBD7A0225A432C00CF339B /* ChefieUser.swift */; };
 		BCEBD7A3225A43FA00CF339B /* ChefieResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEBD7A2225A43FA00CF339B /* ChefieResult.swift */; };
 		BCEBD7A6225A5A1800CF339B /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEBD7A5225A5A1800CF339B /* AppContainer.swift */; };
@@ -197,6 +200,8 @@
 		33CED569229843F7009B6868 /* DimensionExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimensionExtensions.swift; sourceTree = "<group>"; };
 		33EF169D2296DF5E0002CFA1 /* PlateCommentsVertical.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateCommentsVertical.swift; sourceTree = "<group>"; };
 		33F71AC722A947EC0093D614 /* HomePlatoCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePlatoCellView.swift; sourceTree = "<group>"; };
+		33EF169D2296DF5E0002CFA1 /* PlatosVerticalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatosVerticalCell.swift; sourceTree = "<group>"; };
+		3D646D6D8F0954A4F6588BB4 /* Pods-Chefie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.debug.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.debug.xcconfig"; sourceTree = "<group>"; };
 		420251BC2293E18A004AEBF9 /* MediaCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCellView.swift; sourceTree = "<group>"; };
 		420251BE2293F348004AEBF9 /* BaseCellItemInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCellItemInfo.swift; sourceTree = "<group>"; };
 		421B77C1229B40A40087DF5E /* VerticalTableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalTableSection.swift; sourceTree = "<group>"; };
@@ -238,6 +243,7 @@
 		6CAF666CF6E20DE190BF05DD /* Pods-Chefie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.release.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.release.xcconfig"; sourceTree = "<group>"; };
 		77E6664A1AAF5A26D2879DCF /* Pods-Chefie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.debug.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.debug.xcconfig"; sourceTree = "<group>"; };
 		9A33AC4419B33A647D9B42B3 /* Pods_Chefie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chefie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5151682BBFF2F9A0FDC47736 /* Pods_Chefie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chefie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0150DAA227579E0006F48FA /* PlateCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateCellView.swift; sourceTree = "<group>"; };
 		B0150DAC22757B4C006F48FA /* PlateDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateDetailsViewController.swift; sourceTree = "<group>"; };
 		B01E051B22758DC700BEAAE8 /* ImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewExtension.swift; sourceTree = "<group>"; };
@@ -252,6 +258,7 @@
 		B0824EB0226E3EA000882168 /* Showcase.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Showcase.storyboard; sourceTree = "<group>"; };
 		B08682F522776FD10037A403 /* ShowMoreHolderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowMoreHolderView.xib; sourceTree = "<group>"; };
 		B097E2B72275B28B00C2A177 /* CalcExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalcExtensions.swift; sourceTree = "<group>"; };
+		B0D23FCA16ECF902873E980B /* Pods-Chefie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.release.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.release.xcconfig"; sourceTree = "<group>"; };
 		B0E499AE227776B3002E21C9 /* ShowMoreHolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMoreHolderView.swift; sourceTree = "<group>"; };
 		BC0B132822A2C792002E3BBD /* AlertServiceDelete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlertServiceDelete.swift; path = ../../../Model/AlertServiceDelete.swift; sourceTree = "<group>"; };
 		BC0B132A22A2C832002E3BBD /* AlertDeleteProfile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AlertDeleteProfile.storyboard; sourceTree = "<group>"; };
@@ -353,6 +360,8 @@
 		BCBFAAC12292EF1300B4ECD4 /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		BCBFAAC32292F4F000B4ECD4 /* DynamicCellExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicCellExtensions.swift; sourceTree = "<group>"; };
 		BCBFAAC52292FBEB00B4ECD4 /* BaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
+		BCE1618922A9479B00CA6F2A /* CustomAlertXIB.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomAlertXIB.xib; sourceTree = "<group>"; };
+		BCE1618D22A94A0A00CA6F2A /* CustomAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertController.swift; sourceTree = "<group>"; };
 		BCEBD7A0225A432C00CF339B /* ChefieUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChefieUser.swift; sourceTree = "<group>"; };
 		BCEBD7A2225A43FA00CF339B /* ChefieResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChefieResult.swift; sourceTree = "<group>"; };
 		BCEBD7A5225A5A1800CF339B /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
@@ -366,6 +375,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09CC9DB53FBE7BD1B6F0419D /* Pods_Chefie.framework in Frameworks */,
+				5BA477C3AB7A371FD883D050 /* Pods_Chefie.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,6 +537,7 @@
 		42FD5E442294BF6A00785BE7 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				BCE1618922A9479B00CA6F2A /* CustomAlertXIB.xib */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -535,6 +546,8 @@
 			isa = PBXGroup;
 			children = (
 				9A33AC4419B33A647D9B42B3 /* Pods_Chefie.framework */,
+				3D646D6D8F0954A4F6588BB4 /* Pods-Chefie.debug.xcconfig */,
+				B0D23FCA16ECF902873E980B /* Pods-Chefie.release.xcconfig */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -544,6 +557,10 @@
 			children = (
 				77E6664A1AAF5A26D2879DCF /* Pods-Chefie.debug.xcconfig */,
 				6CAF666CF6E20DE190BF05DD /* Pods-Chefie.release.xcconfig */,
+		A824E67AD9CAEC2030287549 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5151682BBFF2F9A0FDC47736 /* Pods_Chefie.framework */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -630,6 +647,7 @@
 				BC7F2F3A2257993100D3F301 /* Products */,
 				9BF735D886B81CEAAA42E7E1 /* Pods */,
 				8475B92084E6E21D9E2B3FB7 /* Frameworks */,
+				A824E67AD9CAEC2030287549 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -683,6 +701,7 @@
 				33066842229D9BA9007BB2E8 /* SearchViewController.swift */,
 				BC37C54A22A163E6004E0B2F /* UpdateProfileViewController.swift */,
 				BC0B132C22A2C8EF002E3BBD /* AlertDeleteController.swift */,
+				BCE1618D22A94A0A00CA6F2A /* CustomAlertController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -726,8 +745,8 @@
 				B0767ECC2275717D0071AE7C /* SnapshotParser */,
 				BC7F2FAE2257AA1E00D3F301 /* SliderChefie */,
 				BC7F2F5D2257A4E500D3F301 /* Spring */,
-				42A7D56A229AAB8B00617725 /* PaddingLabel.swift */,
 				427CEFAB229D26A600113A1A /* TablePaginatorEx.swift */,
+				42A7D56A229AAB8B00617725 /* PaddingLabel.swift */,
 			);
 			path = Libs;
 			sourceTree = "<group>";
@@ -970,6 +989,12 @@
 				BC7F2F372257993100D3F301 /* Resources */,
 				2C0E97EFC28B10F42E5AB95B /* [CP] Embed Pods Frameworks */,
 				6CBA88B74724ACBFD83E48F9 /* [CP] Copy Pods Resources */,
+				578157B850EDEF7FE03EA901 /* [CP] Check Pods Manifest.lock */,
+				BC7F2F352257993100D3F301 /* Sources */,
+				BC7F2F362257993100D3F301 /* Frameworks */,
+				BC7F2F372257993100D3F301 /* Resources */,
+				4EE7C1F38B9A84810847A6B7 /* [CP] Embed Pods Frameworks */,
+				F448385C9D4C47C086A42949 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1033,6 +1058,7 @@
 				428FC3D522999FFB0086ABE4 /* SamsungSans-Thin.ttf in Resources */,
 				BC7F2F442257993200D3F301 /* Assets.xcassets in Resources */,
 				33066849229D9D9A007BB2E8 /* RouteScreen.storyboard in Resources */,
+				BCE1618A22A9479B00CA6F2A /* CustomAlertXIB.xib in Resources */,
 				B0767ED22275717D0071AE7C /* LICENSE in Resources */,
 				B0767ED32275717D0071AE7C /* README.md in Resources */,
 				BC7F2FAB2257A96700D3F301 /* GoogleService-Info.plist in Resources */,
@@ -1055,6 +1081,24 @@
 
 /* Begin PBXShellScriptBuildPhase section */
 		2C0E97EFC28B10F42E5AB95B /* [CP] Embed Pods Frameworks */ = {
+		4EE7C1F38B9A84810847A6B7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		578157B850EDEF7FE03EA901 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1062,80 +1106,35 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AACarousel/AACarousel.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSAuthCore/AWSAuthCore.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProvider/AWSCognitoIdentityProvider.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProviderASF/AWSCognitoIdentityProviderASF.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSMobileClient/AWSMobileClient.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSS3/AWSS3.framework",
-				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/CodableFirebase/CodableFirebase.framework",
-				"${BUILT_PRODUCTS_DIR}/DLRadioButton/DLRadioButton.framework",
-				"${BUILT_PRODUCTS_DIR}/FSPagerView/FSPagerView.framework",
-				"${BUILT_PRODUCTS_DIR}/FaveButton/FaveButton.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/Gallery/Gallery.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/RYFloatingInput/RYFloatingInput.framework",
-				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/SkeletonView/SkeletonView.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/TableviewPaginator/TableviewPaginator.framework",
-				"${BUILT_PRODUCTS_DIR}/TagListView/TagListView.framework",
-				"${BUILT_PRODUCTS_DIR}/UITextView+Placeholder/UITextView_Placeholder.framework",
-				"${BUILT_PRODUCTS_DIR}/VersaPlayer/VersaPlayer.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AACarousel.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSAuthCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognitoIdentityProvider.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognitoIdentityProviderASF.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSMobileClient.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSS3.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CodableFirebase.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DLRadioButton.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSPagerView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FaveButton.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Gallery.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RYFloatingInput.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkeletonView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TableviewPaginator.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TagListView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UITextView_Placeholder.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VersaPlayer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+				"$(DERIVED_FILE_DIR)/Pods-Chefie-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F448385C9D4C47C086A42949 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6CBA88B74724ACBFD83E48F9 /* [CP] Copy Pods Resources */ = {
@@ -1223,6 +1222,7 @@
 				BCA18E0E2263930000F498B4 /* Premium.swift in Sources */,
 				BC2FDA6422983BBB00B1CB40 /* UploadDescriptionCellView.swift in Sources */,
 				B097E2B82275B28B00C2A177 /* CalcExtensions.swift in Sources */,
+				BCE1618E22A94A0A00CA6F2A /* CustomAlertController.swift in Sources */,
 				BC7F2F3D2257993100D3F301 /* AppDelegate.swift in Sources */,
 				BCA18E082263906F00F498B4 /* Tag.swift in Sources */,
 				BC7F2FA32257A6C600D3F301 /* CustomButtons.swift in Sources */,
@@ -1466,6 +1466,7 @@
 		BC7F2F4C2257993200D3F301 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 77E6664A1AAF5A26D2879DCF /* Pods-Chefie.debug.xcconfig */;
+			baseConfigurationReference = 3D646D6D8F0954A4F6588BB4 /* Pods-Chefie.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1485,6 +1486,7 @@
 		BC7F2F4D2257993200D3F301 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6CAF666CF6E20DE190BF05DD /* Pods-Chefie.release.xcconfig */;
+			baseConfigurationReference = B0D23FCA16ECF902873E980B /* Pods-Chefie.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

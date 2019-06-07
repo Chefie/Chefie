@@ -11,6 +11,7 @@ import UIKit
 import TagListView
 import TableviewPaginator
 import SkeletonView
+import SCLAlertView
 
 enum SearchQueryInfo: String {
     case Users = "Users"
@@ -29,6 +30,39 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
     @IBOutlet weak var mainTable: UITableView!
     @IBOutlet weak var tagListView: TagListView!
     @IBOutlet weak var searchTextField: SpringTextField!
+    
+    
+    
+    func instanceFromNib() -> UIView {
+        return UINib(nibName: "CustomAlertXIB", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! UIView
+    }
+    
+    //Metodo que abre el alert para el filtrado por comunidades.
+    @IBAction func openFilter(_ sender: Any) {
+        
+        let appearance = SCLAlertView.SCLAppearance(
+            kCircleIconHeight: 55.0, showCloseButton: false
+        )
+        let alertView = SCLAlertView(appearance: appearance)
+
+        
+       
+
+   
+        let view =  instanceFromNib() as! CustomAlertController
+        view.setup()
+       
+        alertView.addButton("Select") {
+            view.printComunidad()
+            
+        }
+        alertView.customSubview = view
+          alertView.showCustom("Select community", subTitle: "community", color: UIColor(red: 0.9176, green: 0.6314, blue: 0.6039, alpha: 1.0), icon: UIImage.init(named: "flagFilter")!)
+        
+        
+    }
+    
+    
     
     func onSetup() {
         
