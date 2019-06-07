@@ -144,9 +144,9 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
         //////////////////////////////////////////////////////
         tableCellRegistrator.add(identifier: ProfileBioItemInfo().reuseIdentifier(), cellClass: ProfileBioCellView.self)
         //////////////////////////////////////////////////////
-         tableCellRegistrator.add(identifier: PlatosVerticalCellBaseItemInfo().reuseIdentifier(), cellClass: PlatosVerticalCell.self)
+      //   tableCellRegistrator.add(identifier: PlatosVerticalCellBaseItemInfo().reuseIdentifier(), cellClass: PlatosVerticalCell.self)
         //////////////////////////////////////////////////////
-        tableCellRegistrator.add(identifier: RoutesVerticalCellBaseItemInfo().reuseIdentifier(), cellClass: RoutesVerticalCell.self)
+        //tableCellRegistrator.add(identifier: RoutesVerticalCellBaseItemInfo().reuseIdentifier(), cellClass: RoutesVerticalCell.self)
         //////////////////////////////////////////////////////
        // tableCellRegistrator.add(identifier: ProfileInfoItemInfo().reuseIdentifier(), cellClass: ProfileInfoCellView.self)
         //////////////////////////////////////////////////////
@@ -159,18 +159,18 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
                 
             case .success(let data):
 
-                let verticalItemPlateInfo = PlatosVerticalCellBaseItemInfo()
-                verticalItemPlateInfo.setTitle(value: "Plates")
-                verticalItemPlateInfo.model = data as AnyObject
-                
-                self.tableItems.append(verticalItemPlateInfo)
-                data.forEach({ (plate) in
-                    
-                    let cellInfo = PlatoCellItemInfo()
-                    cellInfo.model = plate
-                    
-                })
-                self.mainTable.reloadData()
+//                let verticalItemPlateInfo = PlatosVerticalCellBaseItemInfo()
+//                verticalItemPlateInfo.setTitle(value: "Plates")
+//                verticalItemPlateInfo.model = data as AnyObject
+//
+//                self.tableItems.append(verticalItemPlateInfo)
+//                data.forEach({ (plate) in
+//
+//                    let cellInfo = PlatoCellItemInfo()
+//                    cellInfo.model = plate
+//
+//                })
+//                self.mainTable.reloadData()
                 break
             case .failure(_):
                 break
