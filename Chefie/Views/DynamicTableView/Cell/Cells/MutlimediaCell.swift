@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import Kingfisher
 import RxSwift
 import SDWebImage
 import VersaPlayer

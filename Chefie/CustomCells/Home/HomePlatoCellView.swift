@@ -1,6 +1,5 @@
 import Foundation
 import UIKit
-import Kingfisher
 import SkeletonView
 import SDWebImage
 import FSPagerView
@@ -156,19 +155,21 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
             maker.height.equalTo(collectionItemSize.height)
         }
         
-        mediaSection = CGRect(x: 0, y: 0, width: size.width, height: collectionItemSize.heightPercentageOf(amount: 75))
+        mediaSection = CGRect(x: 0, y: 0, width: size.width.percentageOf(amount: 95), height: collectionItemSize.heightPercentageOf(amount: 75))
         bottomSection = CGRect(x: 0, y: mediaSection.height, width: size.width, height: collectionItemSize.heightPercentageOf(amount: 25))
         
-        carousel.frame = CGRect(x: 0, y: 0, width: collectionItemSize.width, height: mediaSection.height)
+        carousel.frame = CGRect(x: 0, y: 0, width: mediaSection.width, height: mediaSection.height)
         
         carousel.snp.makeConstraints { (maker) in
 
             maker.top.equalTo(0)
             maker.size.equalTo(mediaSection.size)
+            maker.width.equalTo(mediaSection.width)
             maker.bottomMargin.equalTo(10)
-            maker.left.equalTo(collectionItemSize.widthPercentageOf(amount: 1))
+            maker.left.equalTo(collectionItemSize.widthPercentageOf(amount: 2.5))
             maker.centerX.equalTo(contentView)
         }
+        carousel.setCornerRadius()
         
         let labelHeight = mediaSection.height.percentageOf(amount: 10)
         
@@ -186,7 +187,7 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
         
         self.labelPlateTitle.snp.makeConstraints { (maker) in
             maker.left.equalTo(marginLeft * 3)
-            maker.width.equalTo(mediaSection.width.percentageOf(amount: 90))
+            maker.width.equalTo(mediaSection.width.percentageOf(amount: 80))
             maker.height.equalTo(bottomSection.height.percentageOf(amount: 60))
             maker.top.equalTo(mediaSection.maxY + marginTop + 10)
         }
@@ -253,10 +254,23 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
 //        self.contentView.backgroundColor = UIColor.red
 //
 //        self.sectionView.backgroundColor = UIColor.orange
+        
+        self.carousel.showAnimatedGradientSkeleton()
+        
+        self.labelPlateTitle.showAnimatedGradientSkeleton()
+        self.labelUsername.showAnimatedGradientSkeleton()
+        
+        self.labelDay.showAnimatedGradientSkeleton()
+        self.labelMonth.showAnimatedGradientSkeleton()
+        
+        self.profilePicIcon.showAnimatedGradientSkeleton()
+        self.labelNumLikes.showAnimatedGradientSkeleton()
     }
 
     override func onLoadData() {
+        super.onLoadData()
         
+        self.hideSkeleton()
         if let mediaList = model?.multimedia {
             
             multimedia.removeAll()
@@ -327,16 +341,6 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
     
     override func onCreateViews() {
         super.onCreateViews()
-        //self.contentView.addSubview(frontImageView)
-       // self.contentView.addSubview(carousel)
-//        self.contentView.addSubview(plateTitle)
-//        self.contentView.addSubview(heartIcon)
-//        self.contentView.addSubview(shareIcon)
-//        self.contentView.addSubview(labelPlateTitle)
-//        self.contentView.addSubview(labelMonth)
-//        self.contentView.addSubview(labelUsername)
-//        self.contentView.addSubview(profilePicIcon)
-//        self.contentView.addSubview(labelNumLikes)
    
         self.contentView.addSubview(sectionView)
         self.contentView.addSubview(labelPlateTitle)
@@ -354,6 +358,7 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
         carousel.delegate = self
         carousel.dataSource = self
         
+        self.contentView.setTouch(target: self, selector: #selector(onTouch))
     }
 }
 

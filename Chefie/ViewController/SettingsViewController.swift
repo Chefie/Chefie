@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 import Firebase
 import GoogleSignIn
-import Kingfisher
 import SkeletonView
 import SDWebImage
 

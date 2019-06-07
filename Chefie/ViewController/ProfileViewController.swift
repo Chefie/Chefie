@@ -5,12 +5,10 @@
 //  Created by Nicolae Luchian on 22/05/2019.
 //  Copyright © 2019 chefie. All rights reserved.
 //
-
 import Foundation
 import UIKit
 import Firebase
 import GoogleSignIn
-import Kingfisher
 import SkeletonView
 import SDWebImage
 
@@ -46,12 +44,7 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
     
     func onSetup() {
         
-        let cache = ImageCache.default
-        cache.clearMemoryCache()
-        cache.clearDiskCache()
-        
-        SDImageCache.shared.clearMemory()
-        SDImageCache.shared.clearDisk()
+     
     }
     
     func onSetupViews() {

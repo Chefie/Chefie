@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import Kingfisher
 
 extension UIImage {
     
@@ -103,12 +102,12 @@ extension UIImageView {
         self.layer.masksToBounds = true
     }
     
-    func loadFromRemote(url : String){
-        let finalUrl = URL(string:url) ?? URL(string: "")
-        let provider = LocalFileImageDataProvider(fileURL: finalUrl!)
-        
-        self.kf.setImage(with: provider)
-    }
+//    func loadFromRemote(url : String){
+//        let finalUrl = URL(string:url) ?? URL(string: "")
+//        let provider = LocalFileImageDataProvider(fileURL: finalUrl!)
+//        
+//        self.kf.setImage(with: provider)
+//    }
     
     func roundedImage() {
         self.layer.borderWidth = 1.0
@@ -118,30 +117,30 @@ extension UIImageView {
         self.clipsToBounds = true
     }
     
-    func loadFromRemote(url : String, completionHandler: @escaping (Result<Image, Error>) -> Void) {
-        
-       // self.kf.indicatorType = .activity
-     //   let processor = DownsamplingImageProcessor(size: self.frame.size)
-     //       >> RoundCornerImageProcessor(cornerRadius: 0)
-        let finalUrl = URL(string:url) ?? URL(string: "")
-        let provider = LocalFileImageDataProvider(fileURL: finalUrl!)
-  
-        self.kf.setImage(with: provider) { (result : Result<RetrieveImageResult, KingfisherError>) in
-            
-            switch (result) {
-                
-            case .success(let data):
-                self.image = data.image
-                
-               completionHandler(.success(data.image))
-                break
-            case .failure(let _):
-                
-              //  completionHandler(.failure("Failure when loading remote image"))
-                  self.kf.indicatorType = .none
-                break
-            }
-        }
-    }
+//    func loadFromRemote(url : String, completionHandler: @escaping (Result<Image, Error>) -> Void) {
+//        
+//       // self.kf.indicatorType = .activity
+//     //   let processor = DownsamplingImageProcessor(size: self.frame.size)
+//     //       >> RoundCornerImageProcessor(cornerRadius: 0)
+//        let finalUrl = URL(string:url) ?? URL(string: "")
+//        let provider = LocalFileImageDataProvider(fileURL: finalUrl!)
+//  
+//        self.kf.setImage(with: provider) { (result : Result<RetrieveImageResult, KingfisherError>) in
+//            
+//            switch (result) {
+//                
+//            case .success(let data):
+//                self.image = data.image
+//                
+//               completionHandler(.success(data.image))
+//                break
+//            case .failure(let _):
+//                
+//              //  completionHandler(.failure("Failure when loading remote image"))
+//                  self.kf.indicatorType = .none
+//                break
+//            }
+//        }
+//    }
 }
 
