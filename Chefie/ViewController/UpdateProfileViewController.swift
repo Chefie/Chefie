@@ -150,7 +150,7 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
     //Metodo que trae los datos del usuario logueado.
     func loadUserInfo() {
         
-        appContainer.userRepository.getUserByID(idUser: Auth.auth().currentUser!.uid) { (result : ChefieResult<ChefieUser>) in
+        appContainer.userRepository.getUserById(id: Auth.auth().currentUser!.uid) { (result : ChefieResult<ChefieUser>) in
             
             switch result {
                 

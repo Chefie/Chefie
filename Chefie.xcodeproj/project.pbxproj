@@ -3,11 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		09CC9DB53FBE7BD1B6F0419D /* Pods_Chefie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A33AC4419B33A647D9B42B3 /* Pods_Chefie.framework */; };
+		147A10DD6A698AC9B8C0A669 /* Pods_Chefie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFAECB65116B473ECD56E850 /* Pods_Chefie.framework */; };
 		33066843229D9BA9007BB2E8 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33066842229D9BA9007BB2E8 /* SearchViewController.swift */; };
 		33066845229D9D4D007BB2E8 /* SearchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33066844229D9D4D007BB2E8 /* SearchScreen.storyboard */; };
 		33066847229D9D83007BB2E8 /* NewRecipeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33066846229D9D83007BB2E8 /* NewRecipeScreen.storyboard */; };
@@ -41,6 +41,8 @@
 		427CEFAC229D26A600113A1A /* TablePaginatorEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427CEFAB229D26A600113A1A /* TablePaginatorEx.swift */; };
 		4289F893229356320001E03A /* ICellDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4289F892229356320001E03A /* ICellDataProtocol.swift */; };
 		4289F895229367F00001E03A /* ICellDataInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4289F894229367F00001E03A /* ICellDataInfo.swift */; };
+		428E9C8722A9E751000191E7 /* CustomAlertXIB.xib in Resources */ = {isa = PBXBuildFile; fileRef = 428E9C8622A9E751000191E7 /* CustomAlertXIB.xib */; };
+		428E9C8922A9E761000191E7 /* CustomAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428E9C8822A9E761000191E7 /* CustomAlertController.swift */; };
 		428FC3B7229986140086ABE4 /* CFMargin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428FC3B6229986140086ABE4 /* CFMargin.swift */; };
 		428FC3B922998CE50086ABE4 /* INestedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428FC3B822998CE50086ABE4 /* INestedCell.swift */; };
 		428FC3BB22998E0F0086ABE4 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428FC3BA22998E0F0086ABE4 /* AppSettings.swift */; };
@@ -62,7 +64,6 @@
 		4FE58754229D76FC003E780F /* SettingsCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE58753229D76FC003E780F /* SettingsCellView.swift */; };
 		4FE58756229D770E003E780F /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FE58755229D770E003E780F /* Settings.storyboard */; };
 		4FE58758229D772E003E780F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE58757229D772E003E780F /* SettingsViewController.swift */; };
-		5BA477C3AB7A371FD883D050 /* Pods_Chefie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5151682BBFF2F9A0FDC47736 /* Pods_Chefie.framework */; };
 		B0150DAB227579E0006F48FA /* PlateCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0150DAA227579E0006F48FA /* PlateCellView.swift */; };
 		B0150DAD22757B4C006F48FA /* PlateDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0150DAC22757B4C006F48FA /* PlateDetailsViewController.swift */; };
 		B01E051C22758DC700BEAAE8 /* ImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01E051B22758DC700BEAAE8 /* ImageViewExtension.swift */; };
@@ -174,8 +175,6 @@
 		BCBFAAC22292EF1300B4ECD4 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBFAAC12292EF1300B4ECD4 /* BaseCell.swift */; };
 		BCBFAAC42292F4F000B4ECD4 /* DynamicCellExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBFAAC32292F4F000B4ECD4 /* DynamicCellExtensions.swift */; };
 		BCBFAAC62292FBEB00B4ECD4 /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBFAAC52292FBEB00B4ECD4 /* BaseModel.swift */; };
-		BCE1618A22A9479B00CA6F2A /* CustomAlertXIB.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCE1618922A9479B00CA6F2A /* CustomAlertXIB.xib */; };
-		BCE1618E22A94A0A00CA6F2A /* CustomAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE1618D22A94A0A00CA6F2A /* CustomAlertController.swift */; };
 		BCEBD7A1225A432C00CF339B /* ChefieUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEBD7A0225A432C00CF339B /* ChefieUser.swift */; };
 		BCEBD7A3225A43FA00CF339B /* ChefieResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEBD7A2225A43FA00CF339B /* ChefieResult.swift */; };
 		BCEBD7A6225A5A1800CF339B /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEBD7A5225A5A1800CF339B /* AppContainer.swift */; };
@@ -200,8 +199,6 @@
 		33CED569229843F7009B6868 /* DimensionExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimensionExtensions.swift; sourceTree = "<group>"; };
 		33EF169D2296DF5E0002CFA1 /* PlateCommentsVertical.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateCommentsVertical.swift; sourceTree = "<group>"; };
 		33F71AC722A947EC0093D614 /* HomePlatoCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePlatoCellView.swift; sourceTree = "<group>"; };
-		33EF169D2296DF5E0002CFA1 /* PlatosVerticalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatosVerticalCell.swift; sourceTree = "<group>"; };
-		3D646D6D8F0954A4F6588BB4 /* Pods-Chefie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.debug.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.debug.xcconfig"; sourceTree = "<group>"; };
 		420251BC2293E18A004AEBF9 /* MediaCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCellView.swift; sourceTree = "<group>"; };
 		420251BE2293F348004AEBF9 /* BaseCellItemInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCellItemInfo.swift; sourceTree = "<group>"; };
 		421B77C1229B40A40087DF5E /* VerticalTableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalTableSection.swift; sourceTree = "<group>"; };
@@ -219,6 +216,8 @@
 		427CEFAB229D26A600113A1A /* TablePaginatorEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TablePaginatorEx.swift; sourceTree = "<group>"; };
 		4289F892229356320001E03A /* ICellDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICellDataProtocol.swift; sourceTree = "<group>"; };
 		4289F894229367F00001E03A /* ICellDataInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICellDataInfo.swift; sourceTree = "<group>"; };
+		428E9C8622A9E751000191E7 /* CustomAlertXIB.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomAlertXIB.xib; sourceTree = "<group>"; };
+		428E9C8822A9E761000191E7 /* CustomAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomAlertController.swift; path = Chefie/ViewController/CustomAlertController.swift; sourceTree = SOURCE_ROOT; };
 		428FC3B6229986140086ABE4 /* CFMargin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFMargin.swift; sourceTree = "<group>"; };
 		428FC3B822998CE50086ABE4 /* INestedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INestedCell.swift; sourceTree = "<group>"; };
 		428FC3BA22998E0F0086ABE4 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
@@ -234,16 +233,15 @@
 		42FD5E4122949F3200785BE7 /* MultilineLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineLabel.swift; sourceTree = "<group>"; };
 		42FD5E452294BFC200785BE7 /* HorizontalSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalSectionView.swift; sourceTree = "<group>"; };
 		42FD5E492294CACD00785BE7 /* BaseCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionCell.swift; sourceTree = "<group>"; };
+		4964AB5F149BDDB97A3638A8 /* Pods-Chefie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.release.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.release.xcconfig"; sourceTree = "<group>"; };
 		4FE5874B229D7297003E780F /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		4FE5874C229D7297003E780F /* PlatoCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlatoCellView.swift; sourceTree = "<group>"; };
 		4FE5874E229D7297003E780F /* CommentsHorizontalCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsHorizontalCell.swift; sourceTree = "<group>"; };
 		4FE58753229D76FC003E780F /* SettingsCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCellView.swift; sourceTree = "<group>"; };
 		4FE58755229D770E003E780F /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		4FE58757229D772E003E780F /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		6CAF666CF6E20DE190BF05DD /* Pods-Chefie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.release.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.release.xcconfig"; sourceTree = "<group>"; };
-		77E6664A1AAF5A26D2879DCF /* Pods-Chefie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.debug.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.debug.xcconfig"; sourceTree = "<group>"; };
-		9A33AC4419B33A647D9B42B3 /* Pods_Chefie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chefie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5151682BBFF2F9A0FDC47736 /* Pods_Chefie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chefie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		534692AF0A0FF48AFD2FFDB0 /* Pods-Chefie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.debug.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.debug.xcconfig"; sourceTree = "<group>"; };
+		AFAECB65116B473ECD56E850 /* Pods_Chefie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chefie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0150DAA227579E0006F48FA /* PlateCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateCellView.swift; sourceTree = "<group>"; };
 		B0150DAC22757B4C006F48FA /* PlateDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateDetailsViewController.swift; sourceTree = "<group>"; };
 		B01E051B22758DC700BEAAE8 /* ImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewExtension.swift; sourceTree = "<group>"; };
@@ -258,7 +256,6 @@
 		B0824EB0226E3EA000882168 /* Showcase.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Showcase.storyboard; sourceTree = "<group>"; };
 		B08682F522776FD10037A403 /* ShowMoreHolderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowMoreHolderView.xib; sourceTree = "<group>"; };
 		B097E2B72275B28B00C2A177 /* CalcExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalcExtensions.swift; sourceTree = "<group>"; };
-		B0D23FCA16ECF902873E980B /* Pods-Chefie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.release.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.release.xcconfig"; sourceTree = "<group>"; };
 		B0E499AE227776B3002E21C9 /* ShowMoreHolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMoreHolderView.swift; sourceTree = "<group>"; };
 		BC0B132822A2C792002E3BBD /* AlertServiceDelete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlertServiceDelete.swift; path = ../../../Model/AlertServiceDelete.swift; sourceTree = "<group>"; };
 		BC0B132A22A2C832002E3BBD /* AlertDeleteProfile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AlertDeleteProfile.storyboard; sourceTree = "<group>"; };
@@ -360,8 +357,6 @@
 		BCBFAAC12292EF1300B4ECD4 /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		BCBFAAC32292F4F000B4ECD4 /* DynamicCellExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicCellExtensions.swift; sourceTree = "<group>"; };
 		BCBFAAC52292FBEB00B4ECD4 /* BaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
-		BCE1618922A9479B00CA6F2A /* CustomAlertXIB.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomAlertXIB.xib; sourceTree = "<group>"; };
-		BCE1618D22A94A0A00CA6F2A /* CustomAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertController.swift; sourceTree = "<group>"; };
 		BCEBD7A0225A432C00CF339B /* ChefieUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChefieUser.swift; sourceTree = "<group>"; };
 		BCEBD7A2225A43FA00CF339B /* ChefieResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChefieResult.swift; sourceTree = "<group>"; };
 		BCEBD7A5225A5A1800CF339B /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
@@ -374,8 +369,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				09CC9DB53FBE7BD1B6F0419D /* Pods_Chefie.framework in Frameworks */,
-				5BA477C3AB7A371FD883D050 /* Pods_Chefie.framework in Frameworks */,
+				147A10DD6A698AC9B8C0A669 /* Pods_Chefie.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,30 +531,17 @@
 		42FD5E442294BF6A00785BE7 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
-				BCE1618922A9479B00CA6F2A /* CustomAlertXIB.xib */,
+				428E9C8822A9E761000191E7 /* CustomAlertController.swift */,
+				428E9C8622A9E751000191E7 /* CustomAlertXIB.xib */,
 			);
 			path = CustomViews;
-			sourceTree = "<group>";
-		};
-		8475B92084E6E21D9E2B3FB7 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				9A33AC4419B33A647D9B42B3 /* Pods_Chefie.framework */,
-				3D646D6D8F0954A4F6588BB4 /* Pods-Chefie.debug.xcconfig */,
-				B0D23FCA16ECF902873E980B /* Pods-Chefie.release.xcconfig */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		9BF735D886B81CEAAA42E7E1 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				77E6664A1AAF5A26D2879DCF /* Pods-Chefie.debug.xcconfig */,
-				6CAF666CF6E20DE190BF05DD /* Pods-Chefie.release.xcconfig */,
-		A824E67AD9CAEC2030287549 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				5151682BBFF2F9A0FDC47736 /* Pods_Chefie.framework */,
+				534692AF0A0FF48AFD2FFDB0 /* Pods-Chefie.debug.xcconfig */,
+				4964AB5F149BDDB97A3638A8 /* Pods-Chefie.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -646,8 +627,7 @@
 				BC7F2F3B2257993100D3F301 /* Chefie */,
 				BC7F2F3A2257993100D3F301 /* Products */,
 				9BF735D886B81CEAAA42E7E1 /* Pods */,
-				8475B92084E6E21D9E2B3FB7 /* Frameworks */,
-				A824E67AD9CAEC2030287549 /* Frameworks */,
+				C99FAD5FA674ED7C160665B6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -701,7 +681,6 @@
 				33066842229D9BA9007BB2E8 /* SearchViewController.swift */,
 				BC37C54A22A163E6004E0B2F /* UpdateProfileViewController.swift */,
 				BC0B132C22A2C8EF002E3BBD /* AlertDeleteController.swift */,
-				BCE1618D22A94A0A00CA6F2A /* CustomAlertController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -745,8 +724,8 @@
 				B0767ECC2275717D0071AE7C /* SnapshotParser */,
 				BC7F2FAE2257AA1E00D3F301 /* SliderChefie */,
 				BC7F2F5D2257A4E500D3F301 /* Spring */,
-				427CEFAB229D26A600113A1A /* TablePaginatorEx.swift */,
 				42A7D56A229AAB8B00617725 /* PaddingLabel.swift */,
+				427CEFAB229D26A600113A1A /* TablePaginatorEx.swift */,
 			);
 			path = Libs;
 			sourceTree = "<group>";
@@ -976,6 +955,14 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
+		C99FAD5FA674ED7C160665B6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AFAECB65116B473ECD56E850 /* Pods_Chefie.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -983,18 +970,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BC7F2F4B2257993200D3F301 /* Build configuration list for PBXNativeTarget "Chefie" */;
 			buildPhases = (
-				785E47A5EE027D8F1504227A /* [CP] Check Pods Manifest.lock */,
+				B4825B750E5A0D40FF16467A /* [CP] Check Pods Manifest.lock */,
 				BC7F2F352257993100D3F301 /* Sources */,
 				BC7F2F362257993100D3F301 /* Frameworks */,
 				BC7F2F372257993100D3F301 /* Resources */,
-				2C0E97EFC28B10F42E5AB95B /* [CP] Embed Pods Frameworks */,
-				6CBA88B74724ACBFD83E48F9 /* [CP] Copy Pods Resources */,
-				578157B850EDEF7FE03EA901 /* [CP] Check Pods Manifest.lock */,
-				BC7F2F352257993100D3F301 /* Sources */,
-				BC7F2F362257993100D3F301 /* Frameworks */,
-				BC7F2F372257993100D3F301 /* Resources */,
-				4EE7C1F38B9A84810847A6B7 /* [CP] Embed Pods Frameworks */,
-				F448385C9D4C47C086A42949 /* [CP] Copy Pods Resources */,
+				6943368E3602D8960083FE45 /* [CP] Embed Pods Frameworks */,
+				033332D1B1D924FDC6FEB7C0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1058,7 +1039,7 @@
 				428FC3D522999FFB0086ABE4 /* SamsungSans-Thin.ttf in Resources */,
 				BC7F2F442257993200D3F301 /* Assets.xcassets in Resources */,
 				33066849229D9D9A007BB2E8 /* RouteScreen.storyboard in Resources */,
-				BCE1618A22A9479B00CA6F2A /* CustomAlertXIB.xib in Resources */,
+				428E9C8722A9E751000191E7 /* CustomAlertXIB.xib in Resources */,
 				B0767ED22275717D0071AE7C /* LICENSE in Resources */,
 				B0767ED32275717D0071AE7C /* README.md in Resources */,
 				BC7F2FAB2257A96700D3F301 /* GoogleService-Info.plist in Resources */,
@@ -1080,47 +1061,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2C0E97EFC28B10F42E5AB95B /* [CP] Embed Pods Frameworks */ = {
-		4EE7C1F38B9A84810847A6B7 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		578157B850EDEF7FE03EA901 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Chefie-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F448385C9D4C47C086A42949 /* [CP] Copy Pods Resources */ = {
+		033332D1B1D924FDC6FEB7C0 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1137,29 +1078,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6CBA88B74724ACBFD83E48F9 /* [CP] Copy Pods Resources */ = {
+		6943368E3602D8960083FE45 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources.sh",
-				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		785E47A5EE027D8F1504227A /* [CP] Check Pods Manifest.lock */ = {
+		B4825B750E5A0D40FF16467A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1222,7 +1158,6 @@
 				BCA18E0E2263930000F498B4 /* Premium.swift in Sources */,
 				BC2FDA6422983BBB00B1CB40 /* UploadDescriptionCellView.swift in Sources */,
 				B097E2B82275B28B00C2A177 /* CalcExtensions.swift in Sources */,
-				BCE1618E22A94A0A00CA6F2A /* CustomAlertController.swift in Sources */,
 				BC7F2F3D2257993100D3F301 /* AppDelegate.swift in Sources */,
 				BCA18E082263906F00F498B4 /* Tag.swift in Sources */,
 				BC7F2FA32257A6C600D3F301 /* CustomButtons.swift in Sources */,
@@ -1242,6 +1177,7 @@
 				BCA18E062263901100F498B4 /* Community.swift in Sources */,
 				BC7F2F9B2257A63500D3F301 /* LoginViewController.swift in Sources */,
 				BC7F2F972257A51A00D3F301 /* SpringTextField.swift in Sources */,
+				428E9C8922A9E761000191E7 /* CustomAlertController.swift in Sources */,
 				BCEBD7A3225A43FA00CF339B /* ChefieResult.swift in Sources */,
 				BC7F2F7B2257A51A00D3F301 /* DesignableTextField.swift in Sources */,
 				BC7F2F882257A51A00D3F301 /* DesignableButton.swift in Sources */,
@@ -1465,8 +1401,7 @@
 		};
 		BC7F2F4C2257993200D3F301 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 77E6664A1AAF5A26D2879DCF /* Pods-Chefie.debug.xcconfig */;
-			baseConfigurationReference = 3D646D6D8F0954A4F6588BB4 /* Pods-Chefie.debug.xcconfig */;
+			baseConfigurationReference = 534692AF0A0FF48AFD2FFDB0 /* Pods-Chefie.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1485,8 +1420,7 @@
 		};
 		BC7F2F4D2257993200D3F301 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6CAF666CF6E20DE190BF05DD /* Pods-Chefie.release.xcconfig */;
-			baseConfigurationReference = B0D23FCA16ECF902873E980B /* Pods-Chefie.release.xcconfig */;
+			baseConfigurationReference = 4964AB5F149BDDB97A3638A8 /* Pods-Chefie.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

@@ -30,11 +30,6 @@ target 'Chefie' do
   pod 'FaveButton'
   pod 'DLRadioButton', '~> 1.4'
   pod 'UITextView+Placeholder'
-  pod 'ImageSlideshow', '~> 1.8'
-  pod "ImageSlideshow/SDWebImage"
   pod 'SCLAlertView'
 end
 
-
-
-  
