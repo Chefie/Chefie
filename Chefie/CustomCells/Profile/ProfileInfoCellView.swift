@@ -8,7 +8,6 @@
 
 import Foundation
 import Foundation
-import Foundation
 import UIKit
 import Kingfisher
 import SkeletonView
@@ -36,7 +35,7 @@ class ProfileInfoCellView : BaseCell, ICellDataProtocol{
     }
     
     let labelFollowers : UILabel = {
-        let lbl = UILabel()
+        let lbl = UILabel(maskConstraints: false, font: DefaultFonts.DefaultTextFont)
         lbl.font = UIFont.boldSystemFont(ofSize: 15)
         //lbl.textAlignment = .center
         lbl.textColor = .black
@@ -48,7 +47,7 @@ class ProfileInfoCellView : BaseCell, ICellDataProtocol{
     }()
     
     let labelFollowing : UILabel = {
-        let lbl = UILabel()
+        let lbl = UILabel(maskConstraints: false, font: DefaultFonts.DefaultTextFont)
         lbl.font = UIFont.boldSystemFont(ofSize: 15)
         //lbl.textAlignment = .center
         lbl.textColor = .black
@@ -72,7 +71,7 @@ class ProfileInfoCellView : BaseCell, ICellDataProtocol{
     }()
     
     let labelBio : UILabel = {
-        let lbl = UILabel()
+        let lbl = UILabel(maskConstraints: false, font: DefaultFonts.DefaultTextFont)
         lbl.font = UIFont.italicSystemFont(ofSize: 16)
         lbl.textAlignment = .center
         lbl.textColor = .black
@@ -90,9 +89,9 @@ class ProfileInfoCellView : BaseCell, ICellDataProtocol{
     
     override func onLayout(size : CGSize!) {
         
-        let cellSize = CGSize(width: size.width, height: size.heightPercentageOf(amount: 30))
+        let cellSize = CGSize(width: size.width, height: size.heightPercentageOf(amount: 20))
         
-        let titleFontHeight = max(labelFollowers.font.lineHeight, cellSize.height.percentageOf(amount: 15))
+        let titleFontHeight = max(labelFollowers.font.lineHeight, cellSize.height.percentageOf(amount: 5))
       
         labelFollowers.setCornerRadius()
         labelFollowers.snp.makeConstraints { (maker) in
@@ -103,7 +102,7 @@ class ProfileInfoCellView : BaseCell, ICellDataProtocol{
             maker.height.equalTo(titleFontHeight)
         }
         
-        let titleFontHeight2 = max(labelFollowing.font.lineHeight, cellSize.height.percentageOf(amount: 15))
+        let titleFontHeight2 = max(labelFollowing.font.lineHeight, cellSize.height.percentageOf(amount: 5))
         
         
         labelFollowing.setCornerRadius()
@@ -115,7 +114,7 @@ class ProfileInfoCellView : BaseCell, ICellDataProtocol{
             maker.height.equalTo(titleFontHeight2)
         }
         
-        let titleFontHeight3 = max(labelUsername.font.lineHeight, cellSize.height.percentageOf(amount: 15))
+        let titleFontHeight3 = max(labelUsername.font.lineHeight, cellSize.height.percentageOf(amount: 5))
         
         
         labelUsername.setCornerRadius()
@@ -127,7 +126,7 @@ class ProfileInfoCellView : BaseCell, ICellDataProtocol{
             maker.height.equalTo(titleFontHeight3)
         }
         
-        let titleFontHeight4 = max(labelBio.font.lineHeight, cellSize.height.percentageOf(amount: 15))
+        let titleFontHeight4 = max(labelBio.font.lineHeight, cellSize.height.percentageOf(amount: 10))
         
         
         labelBio.setCornerRadius()
@@ -139,6 +138,10 @@ class ProfileInfoCellView : BaseCell, ICellDataProtocol{
             maker.height.equalTo(titleFontHeight4)
         }
         
+        self.contentView.snp.makeConstraints { (maker) in
+            maker.size.equalTo(cellSize)
+        }
+        
         self.showAnimatedGradientSkeleton()
     }
     
@@ -146,17 +149,17 @@ class ProfileInfoCellView : BaseCell, ICellDataProtocol{
         
         doFadeIn()
 
-        self.labelFollowers.text = String("Followers:\(self.model?.followers)")
-        self.labelFollowing.text = String("Following:\(self.model?.following)")
-        self.labelUsername.text = String(describing: self.model?.userName)
-        self.labelBio.text = String(describing: self.model?.biography)
+        self.labelFollowers.text = String("Followers:\(self.model?.followers ?? 0)")
+        self.labelFollowing.text = String("Following:\(self.model?.following ?? 0)")
+        self.labelUsername.text = String(describing: self.model?.userName ?? "")
+        self.labelBio.text = String(describing: self.model?.biography ?? "")
         
         self.hideSkeleton()
     }
     
     
     override func onCreateViews() {
-        
+        super.onCreateViews()
         self.contentView.addSubview(labelFollowers)
         self.contentView.addSubview(labelFollowing)
         self.contentView.addSubview(labelUsername)

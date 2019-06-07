@@ -52,6 +52,8 @@ class PlateRepository {
         })
     }
     
+    var userRepository = UserRepository()
+    
     func getPlatos(idUser : String, completionHandler: @escaping (ChefieResult<[Plate]>) -> Void ) -> Void {
         
         let platesRef = Firestore.firestore().collection("Platos")
@@ -94,5 +96,150 @@ class PlateRepository {
             }
         })
     }
+    
+    func giveLike(idPlate: String, idUser: String, completionHandler: @escaping (ChefieResult<Bool>) -> Void ) -> Void {
+        
+        let plateRef = Firestore.firestore().collection("Platos")
+        plateRef.document("\(idPlate)").updateData([
+            "likes" : "\(idUser)"])
+        
+    }
+    
+    func giveDislike(idPlate: String, idUser: String, completionHandler: @escaping (ChefieResult<Bool>) -> Void ) -> Void {
+        
+        let plateRef = Firestore.firestore().collection("Platos")
+        plateRef.whereField("likes", arrayContains: "\(idUser)").getDocuments { (querySnapshot, err) in
+            if querySnapshot != nil {
+        
+            }
+        }
+        plateRef.document("\(idPlate)").setData([
+            "likes" : "[\(idUser)"])
+        
+        
+        
+    }
+    
+    func checkIfLiked(idPlate: String, idLike: String, completionHandler: @escaping (ChefieResult<Bool>) -> Void) -> Void {
+      
+        Firestore.firestore().collection("Plates")
+            .whereField("idPlate", isEqualTo: idPlate)
+            .whereField("likes", arrayContains: "\(idLike)").getDocuments { (querySnapshot, err) in
+                if querySnapshot != nil {
+                    completionHandler(ChefieResult.success(true))
+                } else {
+                    completionHandler(ChefieResult.success(false))
+                }
+        }
+    }
+    
+        func uploadRecipe(plate: Plate) {
+            let platesRef = Firestore.firestore().collection("Platos")
+    
+            do {
+    
+                let model = try FirestoreEncoder().encode(plate)
+                //   platesRef.document().setData(["": 1])
+                //platesRef.document().setData(model)
+                platesRef.addDocument(data: model) { (err) in
+                    if err != nil {
+                        print("Papito algo funciona mal")
+                    } else {
+                        print("Funcion upload Platillo")
+                        print("Model: \(model)")
+                    }
+                }
+    
+            } catch  {
+                print("Invalid Selection.")
+            }
+    
+    
+        }
+    
+    
+    
+    
+    func getLikesByPlate(idPlate: String, completionHandler: @escaping (ChefieResult<[LikeMin]>) -> Void) -> Void {
+        
+        //Coleccion Likes -> idPlato -> coleccion likesPlatos -> documentos(LikeMin)
+        let collectionLikes = Firestore.firestore().collection("/Likes/\(idPlate)/likes")
+        
+        collectionLikes.getDocuments{ (querySnapshot, err) in
+            var likes = Array<LikeMin>()
+            
+            if (querySnapshot?.documents) != nil{
+                querySnapshot?.documents.forEach({ (document) in
+                    do {
+                        
+                        //let raw = document.data()
+                        let like = LikeMin()
+                        like.username = ((document["username"] ?? "nil") as! String)
+                        like.idLikeMin = ((document["idUserLike"] ?? "nil") as! String)
+                        like.profilePic = ((document["profilePic"] ?? "nil") as! String)
+                        
+                        likes.append(like)
+                        
+                        
+                        print("********---getLikesByPlate---**********")
+                        print("Id -> \(String(describing: like.idLikeMin))")
+                        print("Username -> \(String(describing: like.username))")
+                        print("ProfilePic -> \(String(describing: like.profilePic))")
+                        
+                        completionHandler(.success(likes))
+                    }
+                })
+            } else {
+                completionHandler(.failure(err as! String))
+            }
+        }
+    }
+    
+    
+    func getDataFromSinglePlate(idPlate: String, completionHandler: @escaping (ChefieResult<Plate>) -> Void ) -> Void {
+        
+        let plateRef = Firestore.firestore().collection("Platos").document(idPlate)
+        plateRef.getDocument(completion: { (document, err) in
+            
+            if let document = document, document.exists {
+                
+                do{
+                    let dataDescription = document.data()
+                    let model = try FirestoreDecoder().decode(Plate.self, from: dataDescription!)
+                    model.id = document.documentID
+                    //let idUser = model.idUser
+                    
+                    print("****---getDataFromSinglePlate---******")
+                    print("Id -> \(String(describing: model.id))")
+                    print("Multimedia -> \(String(describing: model.multimedia))")
+                    print("Likes -> \(String(describing: model.numLikes))")
+                    
+                    completionHandler(.success(model))
+                } catch  {
+                    
+                    print("Invalid Selection.")
+                }
+                
+            }else {
+                
+                completionHandler(.failure(err as! String))
+                
+                print("Document does not exist")
+                
+            }
+            
+        })
+        
+    }
+    
+    
 
+    
+    
+    
+
+
+    
+    
+    
 }

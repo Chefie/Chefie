@@ -1,8 +1,8 @@
 //
-//  ProfileViewController.swift
+//  ForeignProfileViewController.swift
 //  Chefie
 //
-//  Created by Nicolae Luchian on 22/05/2019.
+//  Created by Alex Lin on 03/06/2019.
 //  Copyright © 2019 chefie. All rights reserved.
 //
 
@@ -14,8 +14,8 @@ import Kingfisher
 import SkeletonView
 import SDWebImage
 
-class ProfileViewController: UIViewController, DynamicViewControllerProto {
-    
+class ForeignProfileViewController: UIViewController, DynamicViewControllerProto {
+
     var tableItems = Array<BaseItemInfo>()
     var tableCellRegistrator = TableCellRegistrator()
     
@@ -65,7 +65,7 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
         mainTable.backgroundColor = UIColor.white
         
         mainTable.snp.makeConstraints { (make) in
-
+            
             make.width.equalTo(self.view.getWidth())
             make.height.equalTo(self.view.getHeight())
         }
@@ -105,7 +105,7 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
         let bio = ProfileBioItemInfo()
         bio.model = userInfo
         
-        let btnFollow = ProfileFollowBtnItemInfo()
+        let btnFollow = ProfileBioItemInfo()
         
         
         //Adding to array
@@ -116,18 +116,18 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
         tableItems.append(bio)
         //tableItems.append(chefieUserInfo)
         
-
+        
         
         
         mainTable.reloadData()
     }
     
     func onLayout() {
-
+        
     }
     
     override func viewDidLoad() {
-           super.viewDidLoad()
+        super.viewDidLoad()
         navigationItem.title = "Chefie"
         self.navigationController!.navigationBar.isTranslucent = true
         self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Zapfino", size: 13)!]
@@ -144,13 +144,15 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
         //////////////////////////////////////////////////////
         tableCellRegistrator.add(identifier: ProfileBioItemInfo().reuseIdentifier(), cellClass: ProfileBioCellView.self)
         //////////////////////////////////////////////////////
-         tableCellRegistrator.add(identifier: PlatosVerticalCellBaseItemInfo().reuseIdentifier(), cellClass: PlatosVerticalCell.self)
+        tableCellRegistrator.add(identifier: PlatosVerticalCellBaseItemInfo().reuseIdentifier(), cellClass: PlatosVerticalCell.self)
         //////////////////////////////////////////////////////
         tableCellRegistrator.add(identifier: RoutesVerticalCellBaseItemInfo().reuseIdentifier(), cellClass: RoutesVerticalCell.self)
+        
         //////////////////////////////////////////////////////
-       // tableCellRegistrator.add(identifier: ProfileInfoItemInfo().reuseIdentifier(), cellClass: ProfileInfoCellView.self)
+        tableCellRegistrator.add(identifier: ProfileFollowBtnItemInfo().reuseIdentifier(), cellClass: ProfileFollowCellView.self)
+        
         //////////////////////////////////////////////////////
-        tableCellRegistrator.add(identifier: ProfileFollowBtnItemInfo().reuseIdentifier(), cellClass: ProfileFollowBtnCellView.self)
+        // tableCellRegistrator.add(identifier: ProfileInfoItemInfo().reuseIdentifier(), cellClass: ProfileInfoCellView.self)
         
         appContainer.plateRepository.getPlatos(idUser: "2WT9s7km17QdtIwpYlEZ") { (
             result: ChefieResult<[Plate]>) in
@@ -158,7 +160,7 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
             switch result {
                 
             case .success(let data):
-
+                
                 let verticalItemPlateInfo = PlatosVerticalCellBaseItemInfo()
                 verticalItemPlateInfo.setTitle(value: "Plates")
                 verticalItemPlateInfo.model = data as AnyObject
@@ -176,42 +178,13 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
                 break
             }
         }
-        appContainer.userRepository.getUserFollowers(idUser: "2WT9s7km17QdtIwpYlEZ") { (result: (ChefieResult<[FollowMin]>)) in
-            switch result {
-            case .success(_):
-                //var followers = [BaseItemInfo]()
-                
-                var followersMin = [FollowMin]()
-                followersMin.forEach({ (follower) in
-                    
-                    let followerMin = FollowMin()
-                    followerMin.idFollower = follower.idFollower
-                    followerMin.profilePic = follower.profilePic
-                    followerMin.username = follower.username
-                    followersMin.append(followerMin)
-                    print("Followerss =>\(followerMin)")
-                })
-                
-                break
-            case .failure(_):
-                
-                
-                break
-            }
-            
-        }
-        
-        
-        
         tableCellRegistrator.registerAll(tableView: mainTable)
         
         onLoadData()
-        
-        
     }
 }
 
-extension ProfileViewController: SkeletonTableViewDataSource, SkeletonTableViewDelegate {
+extension ForeignProfileViewController: SkeletonTableViewDataSource, SkeletonTableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
@@ -247,4 +220,6 @@ extension ProfileViewController: SkeletonTableViewDataSource, SkeletonTableViewD
         ce.onLoadData()
         return ce
     }
+    
+
 }

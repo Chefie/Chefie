@@ -1,18 +1,18 @@
 //
-//  UserMin.swift
+//  FollowMin.swift
 //  Chefie
 //
-//  Created by Nicolae Luchian on 14/04/2019.
+//  Created by Alex Lin on 04/06/2019.
 //  Copyright © 2019 chefie. All rights reserved.
 //
 
 import Foundation
 import CodableFirebase
 
-class UserMin : Codable {
+class FollowMin : Codable{
     
-    var id : String?
-    var userName : String?
+    var idFollower : String?
+    var username : String?
     var profilePic: String?
     var profileBackground : String?
     

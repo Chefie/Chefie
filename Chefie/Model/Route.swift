@@ -10,6 +10,9 @@ import Foundation
 
 class Route : Codable {
     
+    //Lista de sitios
+    //Nombre - ArrayImagen - Ubicacion - Fecha
+    
     var id : String?
     var idUser : String?
     var title : String?
@@ -18,6 +21,8 @@ class Route : Codable {
     var likes: Array<Like>?
     var comments : Array<Comment>?
     var community : Community?
+    var placeList: Array<Place>?
+    
     
     required init() {
         
