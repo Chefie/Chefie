@@ -20,14 +20,14 @@ import Photos
 import SCLAlertView
 
 class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPickerViewDelegate, UITextFieldDelegate,GalleryControllerDelegate, SkeletonTableViewDataSource, SkeletonTableViewDelegate,FaveButtonDelegate {
-
+    
     var tableItems = Array<BaseItemInfo>()
     var tableCellRegistrator = TableCellRegistrator()
     let gallery = GalleryController()
     var timer = Timer()
     
     var comunidades = [Community]()
-
+    
     //Outlets
     @IBOutlet weak var mainTable: UITableView!
     @IBOutlet var pickerView: UIPickerView!
@@ -46,14 +46,14 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
     
     //Abre la galeria
     @objc func abrirGaleria() {
-       
+        
         present(gallery, animated: true, completion: nil)
     }
     
     //Metodo de subir plato al Firestore
     @IBAction func subirPlato(_ sender: Any) {
         timer.invalidate()
-     
+        
         let numeroComunidad = pickerView.selectedRow(inComponent: 0)
         let titlePlate = titleTextField.text!
         let description = descriptionTextView.text!
@@ -69,26 +69,14 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         plato.idUser = appContainer.dataManager.localData.chefieUser.id
         plato.title = titlePlate
         plato.tags = tags
+        plato.user = appContainer.dataManager.localData.chefieUser.mapToUserMin()
         plato.multimedia = Array<Media>()
         plato.numVisits = 0
         plato.description = description
-        
-      
-      
-            uploadRecipe(plate: plato)
-            
-            let appearance = SCLAlertView.SCLAppearance(
-                showCloseButton: false
-            )
-            let alertView = SCLAlertView(appearance: appearance)
-            alertView.addButton("Great!") {
-                self.goToMainScreen()
-            }
-            alertView.showSuccess("Your recipe has been successfully published.", subTitle: "")
-        
-        
-     
+
+        uploadRecipe(plate: plato)
     }
+    
     func goToMainScreen(){
         let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen" )
@@ -103,9 +91,17 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         }
     }
     
+    var uploadingResponder : SCLAlertViewResponder!
+    
     //Metodo que hace el insert de un plato en la BBDD.
     func uploadRecipe(plate: Plate) {
-
+        
+        let appearance = SCLAlertView.SCLAppearance(
+            showCloseButton: false
+        )
+        let uploadingAlertView = SCLAlertView(appearance: appearance)
+        uploadingResponder = uploadingAlertView.showNotice("Uploading Recipe...", subTitle: "")
+        
         if (!images.isEmpty){
             Image.resolve(images: self.images, completion: { [weak self] resolvedImages in
                 
@@ -129,21 +125,22 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
                         
                         plate.multimedia?.append(contentsOf: urlArray)
                         print("Uploaded photos")
+      
                         break
                     case .failure( _):
-
+                        
                         break
                     }
-                
+                    
                     self?.images.removeAll()
-            
+                    
                     self?.saveToFireBase(plate: plate)
                 }
             })
         }
         
         if (!videos.isEmpty){
-        
+            
             getDataFromVideos(videos: self.videos) { (result : ChefieResult<[GetVideoDataResult]>) in
                 
                 switch result {
@@ -153,7 +150,7 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
                     appContainer.s3Repository.uploadVideoBatch(dataArray: data, completionHandler: { (result : Result<S3MediaUploadBatchResult, Error>) in
                         
                         switch result {
-
+                            
                         case .success(let result):
                             let urlArray = result.result.compactMap({ (item) -> Media? in
                                 let media = Media()
@@ -170,16 +167,19 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
                         case .failure(_) :
                             
                             print("")
-
+                            
                             break
                         }
                         
                         self.videos.removeAll()
                         self.saveToFireBase(plate: plate)
+                        
+                         print("Uploaded videos")
+
                     })
                     break
                 case .failure(_) :
-                        self.videos.removeAll()
+                    self.videos.removeAll()
                     break
                 }
             }
@@ -195,7 +195,7 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
             var batchCount = max(videos.count - 1, 0)
             var running = false, finished = false
             while(!finished) {
- 
+                
                 if (!running && !finished){
                     
                     if (batchCount < 0){
@@ -204,38 +204,45 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
                     }
                     
                     running = true
-        
+                    
                     let asset = videos [batchCount].asset
-   
+                    
                     PHImageManager.default().requestAVAsset(forVideo: asset, options: nil, resultHandler: { (asset, mix, nil) in
                         let myAsset = asset as? AVURLAsset
                         do {
                             let videoData = try Data(contentsOf: (myAsset?.url)!)
-                    
+                            
                             if (batchCount >= 0){
                                 videos[batchCount].fetchThumbnail(size: CGSize(width: 300, height: 280), completion: { (image : UIImage?) in
                                     
-                                    let data = image?.rawData() ?? Data()
-                                    
-                                    let result = GetVideoDataResult(thumbnailData: data, videoData: videoData)
-                                    
-                                    outputData.append(result)
+                                    if image != nil {
+                                        
+                                        let videoThumb = image?.drawDarkRect().with(image: "play_video", rectCalculation: { (parentSize, newSize) -> (CGRect) in
+                                            return CGRect(x: 300 / 2 - 60, y: 280 / 2 - 60, width: 60, height: 60)
+                                        })
+                                        let data = videoThumb!.rawData()
+                                        
+                                        let result = GetVideoDataResult(thumbnailData: data, videoData: videoData)
+                                        
+                                        outputData.append(result)
+                                        
+                                    }
                                     
                                     batchCount -= 1
                                     
                                     running = false
                                 })
                             }
-                       
+                            
                             print("video data : \(videoData)")
                         } catch  {
                             print("exception when getting data from video")
                         }
- 
+                        
                     })
                 }
             }
-  
+            
             completionHandler(.success(outputData))
         }
     }
@@ -244,19 +251,40 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         
         let platesRef = Firestore.firestore().collection("Platos")
         let plateRef = Firestore.firestore().collection("Platos").document()
-
+        
         do {
             plate.id = plateRef.documentID
             let model = try FirestoreEncoder().encode(plate)
-   
+            
             platesRef.addDocument(data: model) { (err) in
+             
+                self.uploadingResponder.close()
                 if err != nil {
+                    
+                    let appearance = SCLAlertView.SCLAppearance(
+                        showCloseButton: false
+                    )
+                    let alertView = SCLAlertView(appearance: appearance)
+                    alertView.addButton("Done") {
+                        self.goToMainScreen()
+                    }
+                    
+                    alertView.showError("Failed to upload Recipe", subTitle: "The recipe couldn't be uploaded")
                     print("---> Algo ha ido mal.")
                 } else {
                     appContainer.dataManager.remoteData.onNewPlate(plate: plate)
                     print("---> Plato subido con exito.")
+                    let appearance = SCLAlertView.SCLAppearance(
+                        showCloseButton: false
+                    )
+                    let alertView = SCLAlertView(appearance: appearance)
+                    alertView.addButton("Great!") {
+                        self.goToMainScreen()
+                    }
+                    
+                    alertView.showSuccess("Recipe Uploaded", subTitle: "Your recipe has been successfully published.")
                 }
-                
+ 
                 self.dismiss(animated: true, completion: {
                     
                 })
@@ -271,7 +299,7 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         super.viewDidLoad()
         
         navigationController?.setTintColor()
-
+        
         mainTable.setDefaultSettings()
         mainTable.alwaysBounceVertical = false
         mainTable.isScrollEnabled = false
@@ -279,7 +307,7 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         //Checking every second if texfields are not empty.
         timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(checkIfDone), userInfo: nil, repeats: true)
         
-        btnDone.isHidden = true
+        btnDone.isHidden = false
         
         navigationItem.title = "New recipe"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add Media", style: .plain, target: self, action: #selector(abrirGaleria))
@@ -326,14 +354,14 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         mainTable.layoutIfNeeded()
         loadData()
     }
-  
+    
     func faveButton(_ faveButton: FaveButton, didSelected selected: Bool) {
         
     }
     
     
     func galleryController(_ controller: GalleryController, didSelectVideo video: Video) {
-     
+        
         videos.append(video)
         
         let mediaDataArray = videos.compactMap { (image) -> MultimediaData in
@@ -345,7 +373,7 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         var model = itemInfo.model as! [MultimediaData]
         model.append(contentsOf: mediaDataArray)
         itemInfo.model = model as AnyObject
-
+        
         self.mainTable.reloadData()
         gallery.dismiss(animated: true) {
             
@@ -354,11 +382,11 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
     
     func galleryController(_ controller: GalleryController, requestLightbox images: [Image]) {
         
-    
+        
     }
     
     func galleryControllerDidCancel(_ controller: GalleryController) {
-       
+        
         gallery.dismiss(animated: true) {
             
         }
@@ -417,9 +445,9 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         if(hastagTextField.text != "" && hastagTextField.text!.count <= 10){
             contadorTags += 1
             if(contadorTags <= 7){
-                 tagListView.addTag(hastagTextField.text!)
+                tagListView.addTag(hastagTextField.text!)
             }
-           
+            
             hastagTextField.text = ""
         }
     }
@@ -436,14 +464,14 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
     }
     
     @objc func close() {
-
+        
         self.dismiss(animated: true) {
             
         }
     }
     
     func loadData() {
-
+        
         appContainer.communityRepository.getCommunities { (result : ChefieResult<[Community]>) in
             
             switch result {

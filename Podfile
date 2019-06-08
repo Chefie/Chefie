@@ -11,7 +11,6 @@ target 'Chefie' do
   pod 'Firebase/Storage'
   pod 'Firebase/Database'
   pod 'Firebase/Firestore'
-  pod 'Kingfisher', '~> 5.0'
   pod 'SkeletonView'
   pod 'CodableFirebase'
   pod 'RxSwift', '~> 4'
@@ -31,5 +30,6 @@ target 'Chefie' do
   pod 'DLRadioButton', '~> 1.4'
   pod 'UITextView+Placeholder'
   pod 'SCLAlertView'
+  pod 'CRRefresh'
 end
 

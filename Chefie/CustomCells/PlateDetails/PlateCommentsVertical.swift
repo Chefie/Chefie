@@ -44,7 +44,7 @@ class PlateCommentsVerticalCell : VerticalTableSectionView<Comment> {
     }
     
     override func onRequestItemSize() -> CGSize {
-        return CGSize(width: self.parentView.getWidth(), height: self.parentView.getHeight().percentageOf(amount: 28))
+        return CGSize(width: self.parentView.getWidth(), height: self.parentView.getHeight().percentageOf(amount: 20))
     }
     
     override func onRequestCell(_ tableView: UITableView, cellForItemAt indexPath: IndexPath) -> UITableViewCell {
@@ -169,7 +169,7 @@ class PlateCommentView : BaseCell, ICellDataProtocol, INestedCell {
         
         self.userName.snp.makeConstraints { (maker) in
             maker.leftMargin.equalTo(iconSize * 3)
-            maker.topMargin.equalTo(10)
+            maker.topMargin.equalTo(12)
         }
         
         self.content.snp.makeConstraints { (maker) in
@@ -180,7 +180,7 @@ class PlateCommentView : BaseCell, ICellDataProtocol, INestedCell {
         
         //self.content.backgroundColor = UIColor.orange
         
-    //    self.backgroundColor = UIColor.purple
+      self.backgroundColor = UIColor.purple
     }
     
     override func onLoadData() {

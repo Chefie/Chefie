@@ -57,6 +57,7 @@ class PlateMediaCarousellCellView : BaseCell, ICellDataProtocol, FSPagerViewData
         pagerView.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         
         pagerView.snp.makeConstraints { (maker) in
+            maker.left.top.right.bottom.equalTo(0)
             maker.size.equalTo(size)
         }
         
@@ -84,18 +85,18 @@ class PlateMediaCarousellCellView : BaseCell, ICellDataProtocol, FSPagerViewData
     }
 
     public func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
-        
-  
+
         let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
         let mediaInfo = multimedia[index]
-          
+        cell.contentView.setCornerRadius(radius: 4)
+        cell.contentView.addShadow(radius: 6)
         if mediaInfo.type == ContentType.VideoMP4.rawValue {
             
             cell.imageView?.sd_setImage(with: URL(string: mediaInfo.thumbnail ?? "")){ (image : UIImage?,
                 error : Error?, cacheType : SDImageCacheType, url : URL?) in
 
                 let image = image?.drawDarkRect().with(image: "play_video", rectCalculation: { (parentSize, newSize) -> (CGRect) in
-                    return CGRect(x: 0, y: 0, width: 90, height: 90)
+                    return CGRect(x: 0, y: 0, width: 20, height: 20)
                 })
                 cell.imageView?.image = image
                       self.hideSkeleton()

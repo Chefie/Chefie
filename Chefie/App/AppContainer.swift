@@ -10,6 +10,8 @@ import Foundation
 
 class AppContainer {
     
+    //static let shared = appContainer()
+    
     var userRepository : UserRepository
     var dataManager : DataManager
     var plateRepository : PlateRepository

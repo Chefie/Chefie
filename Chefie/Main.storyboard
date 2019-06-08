@@ -119,7 +119,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="ewL-95-oYG" kind="relationship" relationship="rootViewController" id="Qlb-JT-BQp"/>
+                        <segue destination="E46-Oj-xnc" kind="relationship" relationship="rootViewController" id="h6n-p6-Tpz"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IBm-m4-SCm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -163,16 +163,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GFK-tJ-d7V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1156" y="-1539"/>
-        </scene>
-        <!--SearchScreen-->
-        <scene sceneID="Jv9-hb-xaS">
-            <objects>
-                <viewControllerPlaceholder storyboardName="SearchScreen" id="ewL-95-oYG" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="tKG-h6-Doh"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BeB-q8-7Qf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-3530" y="-834"/>
         </scene>
         <!--NewRecipeScreen-->
         <scene sceneID="qVm-Er-Cgg">
@@ -231,6 +221,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="86U-5i-v0A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2500" y="-2763"/>
+        </scene>
+        <!--Search-->
+        <scene sceneID="yXw-U7-n2p">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Search" id="E46-Oj-xnc" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Oc2-Wi-Fby"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DJa-8S-xJ7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3551" y="-815"/>
         </scene>
     </scenes>
 </document>

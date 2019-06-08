@@ -31,8 +31,6 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
     @IBOutlet weak var tagListView: TagListView!
     @IBOutlet weak var searchTextField: SpringTextField!
     
-    
-    
     func instanceFromNib() -> UIView {
         return UINib(nibName: "CustomAlertXIB", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! UIView
     }
@@ -41,33 +39,26 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
     @IBAction func openFilter(_ sender: Any) {
         
         let appearance = SCLAlertView.SCLAppearance(
-            kCircleIconHeight: 55.0, showCloseButton: false
+            kCircleIconHeight: 55.0, showCloseButton: true
         )
         let alertView = SCLAlertView(appearance: appearance)
-
-        
-       
-
-   
         let view =  instanceFromNib() as! CustomAlertController
         view.setup()
-       
+        
         alertView.addButton("Select") {
             view.printComunidad()
             
         }
         alertView.customSubview = view
-          alertView.showCustom("Select community", subTitle: "community", color: UIColor(red: 0.9176, green: 0.6314, blue: 0.6039, alpha: 1.0), icon: UIImage.init(named: "flagFilter")!)
-        
-        
+        alertView.showCustom("Select community", subTitle: "community", color: UIColor(red: 0.9176, green: 0.6314, blue: 0.6039, alpha: 1.0), icon: UIImage.init(named: "flagFilter")!)
     }
-    
-    
     
     func onSetup() {
         
-        tableCellRegistrator.add(identifier: NewPlateMediaCellItemInfo().reuseIdentifier(), cellClass: NewPlateMediaCell.self)
+        tableCellRegistrator.add(identifier: HomePlatoCellItemInfo().reuseIdentifier(), cellClass: HomePlatoCellView.self)
         tableCellRegistrator.add(identifier: UserSearchCellItemInfo().reuseIdentifier(), cellClass: UserSearchCell.self)
+            tableCellRegistrator.add(identifier: SeparatorCellItemInfo().reuseIdentifier(), cellClass: SeparatorCell.self)
+        
         tableCellRegistrator.registerAll(tableView: mainTable)
         tableviewPaginator = TableviewPaginatorEx.init(paginatorUI: self, delegate: self)
         tableviewPaginator.initialSetup()
@@ -92,7 +83,7 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
         mainTable.setDefaultSettings()
         tagListView.textFont = DefaultFonts.DefaultTextFont
         tagListView.alignment = .left // possible values are .Left, .Center, and .Right
-
+        
         self.tagListView.delegate = self
         self.mainTable.dataSource = self
         self.mainTable.isSkeletonable = true
@@ -100,18 +91,28 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
         
         filterLabels.append(contentsOf: [SearchQueryInfo.Plates.rawValue, SearchQueryInfo.Users.rawValue, SearchQueryInfo.Routes.rawValue])
         tagListView.addTags(filterLabels)
-        tagListView.tagViews[1].isSelected = true
+        tagListView.tagViews[0].isSelected = true
         
         searchTextField.delegate = self
         
+        mainTable.frame = CGRect(x: 0, y: 0, width: self.view.getWidth(), height: self.view.getHeight())
         mainTable.snp.makeConstraints { (make) in
-            
-            make.left.equalTo(0)
+         
+        //    make.topMargin.equalTo(20)
             make.top.equalTo(self.view.heightPercentageOf(amount: 18))
-            //    make.topMargin.equalTo(50)
             make.width.equalTo(self.view.getWidth())
+          
             make.height.equalTo(self.view.heightPercentageOf(amount: 72))
         }
+        
+//        mainTable.snp.makeConstraints { (make) in
+//
+//            make.left.equalTo(0)
+//
+//            //    make.topMargin.equalTo(50)
+//            make.width.equalTo(self.view.getWidth())
+//            make.height.equalTo(self.view.heightPercentageOf(amount: 72))
+//        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -122,16 +123,15 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
     
     func onLayout() {
         
-       
+        
     }
     
     func clear() {
-        
-        let count = tableItems.count
+
         self.tableItems.removeAll()
         self.mainTable.reloadData()
-      //  self.endlessTableHelper.removeRows(count: count)
-      //  self.mainTable.reloadData()
+        //  self.endlessTableHelper.removeRows(count: count)
+        //  self.mainTable.reloadData()
     }
     
     func doSearch() {
@@ -140,14 +140,14 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
         let tagView = tagListView.selectedTags().first
         let tagValue = tagView?.titleLabel?.text
         switch tagValue {
-
-            case SearchQueryInfo.Users.rawValue:
-                doSearchUsers(query: query)
-                break
-            case SearchQueryInfo.Plates.rawValue: doSearchPlates(query: query)
-                break
-            case SearchQueryInfo.Routes.rawValue: doSearchRoutes(query: query)
-                break
+            
+        case SearchQueryInfo.Users.rawValue:
+            doSearchUsers(query: query)
+            break
+        case SearchQueryInfo.Plates.rawValue: doSearchPlates(query: query)
+            break
+        case SearchQueryInfo.Routes.rawValue: doSearchRoutes(query: query)
+            break
         default:
             doSearchPlates(query: query)
         }
@@ -170,9 +170,9 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
                     })
                     
                     users.forEach({ (item) in
-                        
                         self.tableItems.append(item)
-                        self.endlessTableHelper.insertRow(itemsCount: self.tableItems.count - 1, item: item)
+                        self.endlessTableHelper.insertRow(itemsCount: self.tableItems.count - 1)
+
                     })
                 })
                 
@@ -183,7 +183,7 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
             }
         }
     }
-
+    
     func doSearchPlates(query: String){
         
         appContainer.plateRepository.getPlatos { (result : ChefieResult<[Plate]>) in
@@ -194,9 +194,9 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
                 
                 self.endlessTableHelper.loadMoreItems(itemsCount: data.count, callback: {
                     
-                    let plates = data.compactMap({ (user) -> NewPlateMediaCellItemInfo? in
+                    let plates = data.compactMap({ (user) -> HomePlatoCellItemInfo? in
                         
-                        let item = NewPlateMediaCellItemInfo()
+                        let item = HomePlatoCellItemInfo()
                         item.model = user
                         return item
                     })
@@ -204,7 +204,10 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
                     plates.forEach({ (item) in
                         
                         self.tableItems.append(item)
-                        self.endlessTableHelper.insertRow(itemsCount: self.tableItems.count - 1, item: item)
+                        self.endlessTableHelper.insertRow(itemsCount: self.tableItems.count - 1)
+                   
+                        self.tableItems.append(SeparatorCellItemInfo())
+                        self.endlessTableHelper.insertRow(itemsCount: self.tableItems.count - 1)
                     })
                     
                 })
@@ -218,17 +221,20 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
     }
     
     func doSearchRoutes(query : String){
-    
+        
     }
     
     func onLoadData() {
-        
-
+  
+    //doSearch()
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navigationItem.title = "Discover"
+        self.navigationController!.navigationBar.isTranslucent = true
+        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: DefaultFonts.ZapFino]
+        view.backgroundColor = .white
         onSetup()
         onSetupViews()
         onLoadData()
@@ -251,12 +257,12 @@ extension SearchViewController: SkeletonTableViewDataSource, SkeletonTableViewDe
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    ///    let itemsCount = tableItems.count == 0 ? AppSettings.DefaultSkeletonCellCount : tableItems.count
+        ///    let itemsCount = tableItems.count == 0 ? AppSettings.DefaultSkeletonCellCount : tableItems.count
         
-//        let tableviewPagiantorLoadeMoreCells = (tableviewPaginator?.rowsIn(section: section) ?? 0)
-//      //  return itemsCount + tableviewPagiantorLoadeMoreCells
-//
-         return tableItems.count
+        //        let tableviewPagiantorLoadeMoreCells = (tableviewPaginator?.rowsIn(section: section) ?? 0)
+        //      //  return itemsCount + tableviewPagiantorLoadeMoreCells
+        //
+        return tableItems.count
     }
     
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
@@ -264,14 +270,14 @@ extension SearchViewController: SkeletonTableViewDataSource, SkeletonTableViewDe
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        if let cell = tableviewPaginator?.cellForLoadMore(at: indexPath) {
-//            return cell
-//        }
-//
+        //        if let cell = tableviewPaginator?.cellForLoadMore(at: indexPath) {
+        //            return cell
+        //        }
+        //
         if (self.tableItems.count == 0){
             let ce : BaseCell = mainTable.dequeueReusableCell(withIdentifier: tableCellRegistrator.getRandomIdentifier(), for: indexPath) as! BaseCell
             ce.viewController = self
-          //  ce.cellSize =
+            //  ce.cellSize =
             ce.parentView = tableView
             return ce
         }
@@ -280,7 +286,7 @@ extension SearchViewController: SkeletonTableViewDataSource, SkeletonTableViewDe
         
         let ce : BaseCell = mainTable.dequeueReusableCell(withIdentifier: cellInfo.reuseIdentifier(), for: indexPath) as! BaseCell
         ce.viewController = self
-      //  ce.cellSize = CGSize(width: -1, height: mainTable.heightPercentageOf(amount: 30))
+        //  ce.cellSize = CGSize(width: -1, height: mainTable.heightPercentageOf(amount: 30))
         ce.parentView = tableView
         ce.setBaseItemInfo(info: cellInfo)
         ce.setModel(model: cellInfo.model)
@@ -314,7 +320,8 @@ extension SearchViewController: TableviewPaginatorUIProtocol {
 
 extension SearchViewController: TableviewPaginatorProtocol {
     func loadPaginatedData(offset: Int, shouldAppend: Bool, paginator: TableviewPaginatorEx) {
-
+        
+        doSearch()
         
     }
 }

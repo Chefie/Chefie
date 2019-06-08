@@ -63,6 +63,8 @@ class CommentCell : BaseCell, ICellDataProtocol{
         
         contentLabel.displayLines(height: size.heightPercentageOf(amount: 10))
         self.showAnimatedGradientSkeleton()
+        
+        self.backgroundColor = UIColor.purple
     }
     
     override func onLoadData() {

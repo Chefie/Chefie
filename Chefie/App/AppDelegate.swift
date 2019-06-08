@@ -12,10 +12,6 @@ let gLabelRadius = 4
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     var window: UIWindow?
-  
-    
-    
-
     func application(_ application: UIApplication,
                      handleEventsForBackgroundURLSession identifier: String,
                      completionHandler: @escaping () -> Void) {
@@ -77,7 +73,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             print("AWSMobileClient initialized.")
         }
         
-        
         //Setup credentials, see your awsconfiguration.json for the "YOUR-IDENTITY-POOL-ID"
         let credentialProvider = AWSCognitoCredentialsProvider(regionType: AWSRegionType.USEast1, identityPoolId: "")
         
@@ -120,7 +115,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     func NextViewController(storybordid:String)
     {
-        
         let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let exampleVC = storyBoard.instantiateViewController(withIdentifier:storybordid )
         // self.present(exampleVC, animated: true)

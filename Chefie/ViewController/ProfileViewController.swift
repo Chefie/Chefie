@@ -120,10 +120,10 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
     }
     
     override func viewDidLoad() {
-           super.viewDidLoad()
-        navigationItem.title = "Chefie"
+        super.viewDidLoad()
+        navigationItem.title = "Profile"
         self.navigationController!.navigationBar.isTranslucent = true
-        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Zapfino", size: 13)!]
+        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: DefaultFonts.ZapFino]
         view.backgroundColor = .white
         onSetup()
         onSetupViews()

@@ -40,7 +40,7 @@ class PlateInfoCell : BaseCell, ICellDataProtocol{
     let picInfoUser : UIImageView = {
         
         let pic = UIImageView(maskConstraints: false)
-        pic.image = UIImage(named: "user")
+        pic.image = UIImage(named: "user")!.withRenderingMode(.alwaysTemplate)
         pic.tintColor = AppSettings.LightColor
         return pic
     }()
@@ -122,9 +122,11 @@ class PlateInfoCell : BaseCell, ICellDataProtocol{
         
         let date = "".parseDateWithFormat(format: "dd-mm-yyyy HH:mm:ss")
         lblInfoDate.text = model?.created_at?.extractInfoFromDate(date: date)
-        lblInfoUser.text = model?.description
+        lblInfoUser.text = model?.user?.userName
         
         self.hideSkeleton()
+        
+        
     }
     
     override func onCreateViews() {

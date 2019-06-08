@@ -45,9 +45,15 @@ class EndlessTableHelper {
 
         if (itemsCount > 0){
             
+            let First = self.isFirst ? true : false
             begin()
             callback()
             end()
+            
+            if (First){
+                
+                tableView.reloadData()
+            }
             
             addOffset(count: itemsCount)
         }
@@ -69,7 +75,7 @@ class EndlessTableHelper {
         self.tableView.insertRows(at: [indexPath], with: .fade)
     }
     
-    func insertRow(itemsCount : Int, item : BaseItemInfo){
+    func insertRow(itemsCount : Int){
 
         let indexPath:IndexPath = IndexPath(row:(itemsCount), section:0)
         self.tableView.insertRows(at: [indexPath], with: .fade)

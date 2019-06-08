@@ -38,7 +38,7 @@ class VerticalTableSectionView<T> : BaseCell, SkeletonTableViewDataSource, Skele
     var sectionTitleStr : String = "Vertical Table Section"
     
     let sectionTitleLabel : PaddingLabel = {
-        let lbl = PaddingLabel(maskConstraints: false, font: DefaultFonts.DefaultHeaderTextBoldFont)
+        let lbl = PaddingLabel(maskConstraints: false, font: DefaultFonts.DefaultHeaderTextFont)
         lbl.numberOfLines = 1
         lbl.textAlignment = .left
         lbl.leftInset = AppSettings.HeaderLeftMargin

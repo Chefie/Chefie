@@ -62,9 +62,8 @@ extension UIImage {
     
         let context = UIGraphicsGetCurrentContext()
         context!.move(to: CGPoint(x: 0, y: 0))
-        image.draw(in: CGRect(x: 20, y: 20, width: 42, height: 42))
-     
-        
+        image.draw(in: CGRect(x: 0, y: 0, width: 24, height: 24))
+       
         let result = UIGraphicsGetImageFromCurrentImageContext()
         
         UIGraphicsEndImageContext()
@@ -101,12 +100,40 @@ extension UIImageView {
         self.layer.cornerRadius = radius
         self.layer.masksToBounds = true
     }
-    
+//    func tint(with color: UIColor) -> UIImage {
+//        var image = UIImageRenderingMode(.alwaysTemplate)
+//        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+//        color.set()
+//        
+//        image.draw(in: CGRect(origin: .zero, size: size))
+//        image = UIGraphicsGetImageFromCurrentImageContext()!
+//        UIGraphicsEndImageContext()
+//        return image
+//    }
 //    func loadFromRemote(url : String){
 //        let finalUrl = URL(string:url) ?? URL(string: "")
 //        let provider = LocalFileImageDataProvider(fileURL: finalUrl!)
 //        
 //        self.kf.setImage(with: provider)
+//    }
+    
+//    func imageWithColor(color1: UIColor) -> UIImage {
+//        UIGraphicsBeginImageContextWithOptions(self.frame.size, false, self.scale)
+//        color1.setFill()
+//
+//        let context = UIGraphicsGetCurrentContext()
+//        context?.translateBy(x: 0, y: self.frame.size.height)
+//        context?.scaleBy(x: 1.0, y: -1.0)
+//        context?.setBlendMode(CGBlendMode.normal)
+//
+//        let rect = CGRect(origin: .zero, size: CGSize(width: self.size.width, height: self.size.height))
+//        context?.clip(to: rect, mask: self.cgImage!)
+//        context?.fill(rect)
+//
+//        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+//        UIGraphicsEndImageContext()
+//
+//        return newImage!
 //    }
     
     func roundedImage() {

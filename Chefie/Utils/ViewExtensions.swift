@@ -15,7 +15,7 @@ let g_ShadowRadius = CGFloat(2.0)
 
 extension UITableView {
     
-    func setDefaultSettings() {
+    func setDefaultSettings(shouldBounce : Bool = false) {
         
         self.setCellsToAutomaticDimension()
         self.separatorStyle = UITableViewCell.SeparatorStyle.none
@@ -25,8 +25,14 @@ extension UITableView {
         self.alwaysBounceHorizontal = false
         self.alwaysBounceVertical = false
         self.bounces = false
+        
+        if (shouldBounce){
+            
+            self.alwaysBounceHorizontal = true
+            self.bounces = true
+        }
         self.showsVerticalScrollIndicator = false
-        self.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 50, right: 0)
+        self.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 200, right: 0)
     }
 }
 

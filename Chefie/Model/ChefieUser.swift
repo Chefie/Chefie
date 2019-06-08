@@ -35,3 +35,17 @@ class ChefieUser : Codable {
 //        self.password = password
 //    }
 }
+
+extension ChefieUser {
+    
+    func mapToUserMin() -> UserMin {
+    
+        let min = UserMin()
+        min.id = id
+        min.profileBackground = profileBackgroundPic
+        min.profilePic = profilePic
+        min.userName = userName
+        
+        return min
+    }
+}

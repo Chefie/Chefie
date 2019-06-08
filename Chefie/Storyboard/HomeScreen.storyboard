@@ -27,7 +27,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="w1v-15-EOP">
-                                <rect key="frame" x="0.0" y="34" width="414" height="794"/>
+                                <rect key="frame" x="0.0" y="62" width="414" height="766"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
@@ -46,13 +46,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="QEx-g5-LTo"/>
                     <connections>
-                        <outlet property="mainTable" destination="w1v-15-EOP" id="LrV-gI-Oon"/>
+                        <outlet property="mainTable" destination="w1v-15-EOP" id="O9p-sZ-0AC"/>
                         <segue destination="9Fc-ce-paZ" kind="presentation" id="7wL-Ls-yZ7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4B5-PH-exa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4399.1999999999998" y="-814.54272863568224"/>
+            <point key="canvasLocation" x="-4400" y="-814.95535714285711"/>
         </scene>
     </scenes>
 </document>

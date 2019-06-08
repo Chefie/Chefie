@@ -111,7 +111,6 @@ class PlateMediaCell : BaseCollectionCell, ICellDataProtocol, INestedCell {
         
         let img = UIImageView(maskConstraints: false)
         img.contentMode = ContentMode.scaleToFill
-        
         return img
     }()
     
@@ -147,6 +146,7 @@ class PlateMediaCell : BaseCollectionCell, ICellDataProtocol, INestedCell {
             Image.resolve(images: [(model?.image!)!], completion: { [weak self] resolvedImages in
                 
                 let imageResolved = resolvedImages.first!
+                
                 self?.frontImageView.image = imageResolved
                 self?.doFadeIn()
             })
@@ -154,7 +154,10 @@ class PlateMediaCell : BaseCollectionCell, ICellDataProtocol, INestedCell {
         else {
             model?.video?.fetchThumbnail(size: collectionItemSize, completion: { (image : UIImage?) in
              
-                self.frontImageView.image = image
+                let image2 = image?.drawDarkRect().with(image: "play_video", rectCalculation: { (parentSize, newSize) -> (CGRect) in
+                    return CGRect(x: parentSize.width / 2 - 60, y: parentSize.height / 2 - 60, width: 60, height: 60)
+                })
+                self.frontImageView.image = image2
                 self.doFadeIn()
             })
         }

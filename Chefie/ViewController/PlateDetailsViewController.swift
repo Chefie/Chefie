@@ -27,6 +27,8 @@ class PlateDetailsViewController : UIViewController, DynamicViewControllerProto 
 
     func onLoadData() {
         
+        navigationItem.title = model?.title
+        
         let plateMediaCarousel = PlateMediaCarousellItemInfo()
         plateMediaCarousel.model = model
         tableItems.append(plateMediaCarousel)
@@ -79,6 +81,15 @@ class PlateDetailsViewController : UIViewController, DynamicViewControllerProto 
 
         mainTable.setDefaultSettings()
         
+        mainTable.frame = CGRect(x: 0, y: 0, width: self.view.getWidth(), height: self.view.getHeight())
+        mainTable.snp.makeConstraints { (make) in
+            
+            make.topMargin.equalTo(0)
+            
+            make.width.equalTo(self.view.getWidth())
+            make.height.equalTo(self.view.getHeight())
+        }
+        
         mainTable.delegate = self
         mainTable.dataSource = self
     }
@@ -91,6 +102,10 @@ class PlateDetailsViewController : UIViewController, DynamicViewControllerProto 
         super.viewDidLoad()
         navigationController?.setTintColor()
         
+        let backButton = UIBarButtonItem()
+        backButton.title = ""
+        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
+    
         onSetup()
         onSetupViews()
         onLayout()
