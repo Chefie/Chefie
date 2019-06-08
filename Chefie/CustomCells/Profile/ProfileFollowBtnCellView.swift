@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import Kingfisher
 import SkeletonView
 import SDWebImage
 
@@ -17,7 +16,6 @@ class ProfileFollowBtnItemInfo : BaseItemInfo {
         return "ProfileFollowBtnCellView"
     }
 }
-
 
 class ProfileFollowBtnCellView : BaseCell, ICellDataProtocol {
     

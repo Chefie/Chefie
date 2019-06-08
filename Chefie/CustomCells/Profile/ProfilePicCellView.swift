@@ -12,18 +12,12 @@ import UIKit
 import SkeletonView
 import SDWebImage
 
-
-
 class ProfilePicCellItemInfo : BaseItemInfo {
     
     override func reuseIdentifier() -> String {
-        return "ProfilePicCellView"
-        
+        return "ProfilePicCellView"       
     }
-    
 }
-
-
 
 class ProfilePicCellView : BaseCell, ICellDataProtocol{
     
@@ -34,13 +28,9 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol{
         return model
     }
     
-    
-    
     override func setModel(model: AnyObject?) {
         self.model = model as? UserMin
     }
-    
-    
     
     let backGroundImage : UIImageView = {
         let img = UIImageView(maskConstraints: false)
@@ -48,15 +38,11 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol{
         return img
     }()
     
-    
-    
     let profilePic : UIImageView = {
         let img = UIImageView(maskConstraints: false)
         img.contentMode = ContentMode.scaleToFill
         return img
     }()
-    
-    
     
     let buttonUpload: UIButton = {
         let button = UIButton()
@@ -70,8 +56,6 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol{
         
     }()
     
-    
-    
     override func onLayout(size : CGSize!) {
         
         let cellSize = CGSize(width: size.width, height: size.heightPercentageOf(amount: 35))
@@ -82,10 +66,7 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol{
             maker.left.top.right.bottom.equalTo(0)
             maker.width.equalTo(cellSize.width)
             maker.height.equalTo(cellSize.height)
-            
         }
-        
-        
         
         backGroundImage.snp.makeConstraints { (maker) in
             
@@ -95,15 +76,7 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol{
             maker.bottomMargin.equalToSuperview()
             
         }
-        
-        
-        
-        //profilePic.setCornerRadius()
-        
-        
-        
-        //profilePic.addShadow()
-        
+
         profilePic.snp.makeConstraints { (maker) in
             
             maker.width.equalTo(cellSize.widthPercentageOf(amount: 36))
@@ -153,8 +126,6 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol{
         
     }
     
-    
-    
     override func onLoadData() {
         
         self.backGroundImage.sd_setImage(with: URL(string: model?.profileBackground ?? "")){ (image : UIImage?,
@@ -168,9 +139,7 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol{
         }
         
     }
-    
-    
-    
+
     override func onCreateViews() {
         self.contentView.addSubview(backGroundImage)
         self.contentView.addSubview(profilePic)
@@ -183,15 +152,14 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol{
     }
     
     @objc func buttonAction() {
-
+        
         print("*********VAMOS AL SETTINGS")
         let storyboard = UIStoryboard(name: "UpdateProfile", bundle: nil)
         let vc  : UpdateProfileViewController = storyboard.instantiateViewController(withIdentifier: "UpdateProfileStory") as! UpdateProfileViewController
-
+        
         self.viewController?.navigationController?.pushViewController(vc, animated: true)
         
     }
-    
 }
 
 

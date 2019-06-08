@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 import Firebase
 import GoogleSignIn
-import Kingfisher
 import SkeletonView
 import SDWebImage
 
@@ -46,12 +45,7 @@ class ForeignProfileViewController: UIViewController, DynamicViewControllerProto
     
     func onSetup() {
         
-        let cache = ImageCache.default
-        cache.clearMemoryCache()
-        cache.clearDiskCache()
-        
-        SDImageCache.shared.clearMemory()
-        SDImageCache.shared.clearDisk()
+       
     }
     
     func onSetupViews() {
@@ -144,9 +138,9 @@ class ForeignProfileViewController: UIViewController, DynamicViewControllerProto
         //////////////////////////////////////////////////////
         tableCellRegistrator.add(identifier: ProfileBioItemInfo().reuseIdentifier(), cellClass: ProfileBioCellView.self)
         //////////////////////////////////////////////////////
-        tableCellRegistrator.add(identifier: PlatosVerticalCellBaseItemInfo().reuseIdentifier(), cellClass: PlatosVerticalCell.self)
-        //////////////////////////////////////////////////////
-        tableCellRegistrator.add(identifier: RoutesVerticalCellBaseItemInfo().reuseIdentifier(), cellClass: RoutesVerticalCell.self)
+//        tableCellRegistrator.add(identifier: PlatosVerticalCellBaseItemInfo().reuseIdentifier(), cellClass: PlatosVerticalCell.self)
+//        //////////////////////////////////////////////////////
+//        tableCellRegistrator.add(identifier: RoutesVerticalCellBaseItemInfo().reuseIdentifier(), cellClass: RoutesVerticalCell.self)
         
         //////////////////////////////////////////////////////
         tableCellRegistrator.add(identifier: ProfileFollowBtnItemInfo().reuseIdentifier(), cellClass: ProfileFollowCellView.self)
@@ -161,18 +155,18 @@ class ForeignProfileViewController: UIViewController, DynamicViewControllerProto
                 
             case .success(let data):
                 
-                let verticalItemPlateInfo = PlatosVerticalCellBaseItemInfo()
-                verticalItemPlateInfo.setTitle(value: "Plates")
-                verticalItemPlateInfo.model = data as AnyObject
-                
-                self.tableItems.append(verticalItemPlateInfo)
-                data.forEach({ (plate) in
-                    
-                    let cellInfo = PlatoCellItemInfo()
-                    cellInfo.model = plate
-                    
-                })
-                self.mainTable.reloadData()
+//                let verticalItemPlateInfo = PlatosVerticalCellBaseItemInfo()
+//                verticalItemPlateInfo.setTitle(value: "Plates")
+//                verticalItemPlateInfo.model = data as AnyObject
+//                
+//                self.tableItems.append(verticalItemPlateInfo)
+//                data.forEach({ (plate) in
+//                    
+//                    let cellInfo = PlatoCellItemInfo()
+//                    cellInfo.model = plate
+//                    
+//                })
+//                self.mainTable.reloadData()
                 break
             case .failure(_):
                 break

@@ -9,7 +9,6 @@
 import Foundation
 import Foundation
 import UIKit
-import Kingfisher
 import SkeletonView
 import SDWebImage
 
@@ -20,7 +19,6 @@ class ProfileUsernameItemInfo : BaseItemInfo {
 }
 
 class ProfileUsernameCellView : BaseCell, ICellDataProtocol {
-   
     
     typealias T = UserMin
     var model: UserMin?
