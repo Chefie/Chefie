@@ -193,7 +193,6 @@
 		BCEBD7A6225A5A1800CF339B /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEBD7A5225A5A1800CF339B /* AppContainer.swift */; };
 		BCEBD7A9225A5A7800CF339B /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEBD7A8225A5A7800CF339B /* DataManager.swift */; };
 		BCEBD7AD225A5AB300CF339B /* LocalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEBD7AC225A5AB300CF339B /* LocalData.swift */; };
-		CB5330338BBEEF51F0A8A840 /* Pods_Chefie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0767F6DA3DCA6C763F43D8E7 /* Pods_Chefie.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1010,14 +1009,6 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
-		CBCD7741A2608F5AC2BAB50F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				0767F6DA3DCA6C763F43D8E7 /* Pods_Chefie.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1035,8 +1026,6 @@
 				BC7F2F352257993100D3F301 /* Sources */,
 				BC7F2F362257993100D3F301 /* Frameworks */,
 				BC7F2F372257993100D3F301 /* Resources */,
-				853859938099AD60EAB70FAB /* [CP] Embed Pods Frameworks */,
-				BFF9E5BBDA5066D85EF3D5D9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
