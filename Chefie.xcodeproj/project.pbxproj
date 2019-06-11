@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1991D48622AABA9D0086D9BA /* FollowMin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1991D48222AABA9C0086D9BA /* FollowMin.swift */; };
+		1991D48722AABA9D0086D9BA /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1991D48322AABA9C0086D9BA /* Place.swift */; };
+		1991D48822AABA9D0086D9BA /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1991D48422AABA9D0086D9BA /* Route.swift */; };
+		1991D48922AABA9D0086D9BA /* LikeMin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1991D48522AABA9D0086D9BA /* LikeMin.swift */; };
+		1991D49022AABAEB0086D9BA /* ProfileFollowCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1991D48A22AABAEA0086D9BA /* ProfileFollowCellView.swift */; };
+		1991D49122AABAEB0086D9BA /* ProfileFollowBtnCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1991D48B22AABAEA0086D9BA /* ProfileFollowBtnCellView.swift */; };
+		1991D49222AABAEB0086D9BA /* ProfileInfoCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1991D48C22AABAEB0086D9BA /* ProfileInfoCellView.swift */; };
+		1991D49322AABAEB0086D9BA /* ProfileBioCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1991D48D22AABAEB0086D9BA /* ProfileBioCellView.swift */; };
+		1991D49422AABAEB0086D9BA /* ProfileUsernameCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1991D48E22AABAEB0086D9BA /* ProfileUsernameCellView.swift */; };
+		1991D49522AABAEB0086D9BA /* ProfilePlatesCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1991D48F22AABAEB0086D9BA /* ProfilePlatesCellView.swift */; };
 		33066843229D9BA9007BB2E8 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33066842229D9BA9007BB2E8 /* SearchViewController.swift */; };
 		33066847229D9D83007BB2E8 /* NewRecipeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33066846229D9D83007BB2E8 /* NewRecipeScreen.storyboard */; };
 		33066849229D9D9A007BB2E8 /* RouteScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33066848229D9D9A007BB2E8 /* RouteScreen.storyboard */; };
@@ -203,6 +213,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1991D48222AABA9C0086D9BA /* FollowMin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowMin.swift; sourceTree = "<group>"; };
+		1991D48322AABA9C0086D9BA /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		1991D48422AABA9D0086D9BA /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		1991D48522AABA9D0086D9BA /* LikeMin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeMin.swift; sourceTree = "<group>"; };
+		1991D48A22AABAEA0086D9BA /* ProfileFollowCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFollowCellView.swift; sourceTree = "<group>"; };
+		1991D48B22AABAEA0086D9BA /* ProfileFollowBtnCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFollowBtnCellView.swift; sourceTree = "<group>"; };
+		1991D48C22AABAEB0086D9BA /* ProfileInfoCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileInfoCellView.swift; sourceTree = "<group>"; };
+		1991D48D22AABAEB0086D9BA /* ProfileBioCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileBioCellView.swift; sourceTree = "<group>"; };
+		1991D48E22AABAEB0086D9BA /* ProfileUsernameCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUsernameCellView.swift; sourceTree = "<group>"; };
+		1991D48F22AABAEB0086D9BA /* ProfilePlatesCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePlatesCellView.swift; sourceTree = "<group>"; };
 		33066842229D9BA9007BB2E8 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		33066846229D9D83007BB2E8 /* NewRecipeScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NewRecipeScreen.storyboard; sourceTree = "<group>"; };
 		33066848229D9D9A007BB2E8 /* RouteScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = RouteScreen.storyboard; sourceTree = "<group>"; };
