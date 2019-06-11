@@ -14,6 +14,14 @@ class EventContainer {
     public static let shared = EventContainer()
 
     public let FilterSubject = PublishSubject<SearchFilter>()
+    
+    public let NewPlateUploaded = PublishSubject<String>()
+    
+    public let NewPostLike = PublishSubject<String>()
+    
+    public let NewPostComment = PublishSubject<String>()
+    
+    public let NewStoryUploaded = PublishSubject<String>()
 }
 
 struct SearchFilter  {

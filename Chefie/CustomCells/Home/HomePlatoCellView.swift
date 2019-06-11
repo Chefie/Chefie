@@ -199,7 +199,7 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
             maker.left.equalTo(marginLeft * 3)
             maker.width.equalTo(mediaSection.width.percentageOf(amount: 80))
             maker.height.equalTo(bottomSection.height.percentageOf(amount: 60))
-            maker.top.equalTo(mediaSection.maxY + marginTop + 10)
+            maker.top.equalTo(mediaSection.maxY + marginTop + 5)
         }
         
         self.profilePicIcon.snp.makeConstraints { (maker) in
@@ -282,14 +282,11 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
         self.labelNumLikes.showAnimatedGradientSkeleton()
         
         self.labelAgo.showAnimatedGradientSkeleton()
-        
-     //   self.contentView.backgroundColor = UIColor.purple
     }
 
     override func onLoadData() {
         super.onLoadData()
         
-        self.hideSkeleton()
         if let mediaList = model?.multimedia {
             
             multimedia.removeAll()
@@ -297,7 +294,12 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
         }
         
         self.labelPlateTitle.text = model?.title
-        self.labelUsername.text = model?.idUser
+        
+        if let user = model?.user{
+            
+            self.labelUsername.text = "@" + user.userName! 
+        }
+    
         self.heartIcon.show()
         self.labelNumLikes.text = "120 Likes"
         
@@ -326,6 +328,8 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
         }
         
         carousel.reloadData()
+     
+        self.hideSkeleton()
     }
     
     func doToggleLike() {
@@ -381,7 +385,7 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
         if model != nil {
             let storyboard = UIStoryboard(name: "PlateDetailStoryboard", bundle: nil)
             let vc  : PlateDetailsViewController = storyboard.instantiateViewController(withIdentifier: "PlateDetailViewController") as! PlateDetailsViewController
-            
+
             vc.model = model
             self.viewController?.navigationController?.pushViewController(vc, animated: true)
         }
@@ -390,6 +394,15 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
     @objc func onLike() {
         
         doToggleLike()
+    }
+    
+    @objc func onGoToProfile() {
+        
+        let storyboard = UIStoryboard(name: "ForeignProfileStoryboard", bundle: nil)
+        let vc  : ForeignProfileViewController = storyboard.instantiateViewController(withIdentifier: "ForeignProfileViewController") as! ForeignProfileViewController
+        
+        vc.model = model?.user
+        self.viewController?.navigationController?.pushViewController(vc, animated: true)
     }
     
     override func onCreateViews() {
@@ -412,7 +425,8 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
         carousel.delegate = self
         carousel.dataSource = self
         
-        self.contentView.setTouch(target: self, selector: #selector(onTouch))    
+        self.contentView.setTouch(target: self, selector: #selector(onTouch))
+        self.profilePicIcon.setTouch(target: self, selector: #selector(onGoToProfile))
         self.heartIcon.setTouch(target: self, selector: #selector(onLike))
     }
 }

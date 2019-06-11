@@ -8,6 +8,7 @@
 
 import Foundation
 import CodableFirebase
+import Firebase
 
 class Plate : Codable
 {
@@ -29,3 +30,4 @@ class Plate : Codable
     var ingredients : Array<String>?
     var user : UserMin?
 }
+

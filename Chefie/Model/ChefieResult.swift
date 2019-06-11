@@ -14,7 +14,7 @@ enum ChefieResult<T>{
     case failure (String)
 }
 
-enum ChefieResultOut<T, O>{
+enum ChefieBiResult<T, O>{
     
     case success (T)
     case failure (T)

@@ -42,7 +42,8 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
             kCircleIconHeight: 55.0, showCloseButton: true
         )
         let alertView = SCLAlertView(appearance: appearance)
-        let view =  instanceFromNib() as! CustomAlertController
+        let view = instanceFromNib() as! CustomAlertController
+     
         view.setup()
         
         alertView.addButton("Select") {
@@ -50,7 +51,9 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
             
         }
         alertView.customSubview = view
-        alertView.showCustom("Select community", subTitle: "community", color: UIColor(red: 0.9176, green: 0.6314, blue: 0.6039, alpha: 1.0), icon: UIImage.init(named: "flagFilter")!)
+        
+        alertView.showEdit("Edit", subTitle: "")
+     //   alertView.showCustom("Select community", subTitle: "community", color: UIColor(red: 0.9176, green: 0.6314, blue: 0.6039, alpha: 1.0), icon: UIImage.init(named: "flagFilter")!)
     }
     
     func onSetup() {
@@ -63,7 +66,7 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
         tableviewPaginator = TableviewPaginatorEx.init(paginatorUI: self, delegate: self)
         tableviewPaginator.initialSetup()
         
-        endlessTableHelper = EndlessTableHelper(table: mainTable, paginator: tableviewPaginator)
+        endlessTableHelper = EndlessTableHelper(table: mainTable)
         endlessTableHelper.firstItemsCount = 0
     }
     
@@ -81,6 +84,7 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
     func onSetupViews() {
         
         mainTable.setDefaultSettings()
+       
         tagListView.textFont = DefaultFonts.DefaultTextFont
         tagListView.alignment = .left // possible values are .Left, .Center, and .Right
         
@@ -97,22 +101,13 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
         
         mainTable.frame = CGRect(x: 0, y: 0, width: self.view.getWidth(), height: self.view.getHeight())
         mainTable.snp.makeConstraints { (make) in
-         
-        //    make.topMargin.equalTo(20)
+          
             make.top.equalTo(self.view.heightPercentageOf(amount: 18))
             make.width.equalTo(self.view.getWidth())
-          
             make.height.equalTo(self.view.heightPercentageOf(amount: 72))
         }
+    
         
-//        mainTable.snp.makeConstraints { (make) in
-//
-//            make.left.equalTo(0)
-//
-//            //    make.topMargin.equalTo(50)
-//            make.width.equalTo(self.view.getWidth())
-//            make.height.equalTo(self.view.heightPercentageOf(amount: 72))
-//        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

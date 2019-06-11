@@ -12,6 +12,22 @@ import GoogleSignIn
 import Firebase
 import CodableFirebase
 
+public struct RetrieveFollowingInfo{
+    
+    var currentOffset : Int = 0
+    var limit: Int = 5
+    var snapShot : QueryDocumentSnapshot?
+    var data : [UserMin]?
+    
+    mutating func update(result : RetrieveFollowingInfo){
+        
+        if let data = result.data{
+            
+             self.currentOffset =  self.currentOffset + data.count
+        }
+    }
+}
+
 class UserRepository{
     
     func getUserById(id : String,completionHandler: @escaping (ChefieResult<ChefieUser>) -> Void) -> Void{
@@ -29,7 +45,7 @@ class UserRepository{
                             
                             let document = snapshot.documents.first!
                             let model = try FirestoreDecoder().decode(ChefieUser.self, from: document.data())
-                            model.id = document.documentID
+                         //   model.id = document.documentID
                             
                             completionHandler(.success(model))
                             print("GetUserById: \(model)")
@@ -80,6 +96,42 @@ class UserRepository{
         }
     }
     
+    func getFollowingUsers(idUser: String, request: RetrieveFollowingInfo, completionHandler: @escaping (ChefieResult<RetrieveFollowingInfo>) -> Void ) -> Void {
+        
+        let collectionFollowings = Firestore.firestore().collection("/Following/\(idUser)/following")
+        
+        _ = collectionFollowings.limit(to: request.limit).getDocuments { (snapShot, err) in
+            
+            if (snapShot?.documents) != nil {
+                var result = RetrieveFollowingInfo()
+                var following = Array<UserMin>()
+                
+                if !snapShot!.documents.isEmpty {
+                    
+                    snapShot?.documents.forEach({ (document) in
+                        do {
+                            
+                            let model = try FirestoreDecoder().decode(UserMin.self, from: document.data())
+                            following.append(model)
+                            
+                            print("Model: \(model)")
+                        } catch  {
+                            print("Could not decode plate")
+                        }
+                    })
+                    
+                    result.snapShot = snapShot?.documents.last
+                }
+               
+                result.data = following
+                
+                completionHandler(.success(result))
+            } else {
+                completionHandler(.failure(err as! String))
+            }
+        }
+    }
+    
     func getAllUsers(offset : Int, completionHandler: @escaping (Result<[ChefieUser], Error>) -> Void){
       
         let usersRef = Firestore.firestore().collection("Users").limit(to: offset)
@@ -94,7 +146,6 @@ class UserRepository{
                     do {
                         
                         let model = try FirestoreDecoder().decode(ChefieUser.self, from: document.data())
-                        model.id = document.documentID
                         users.append(model)
                         
                         print("Model: \(model)")
@@ -162,7 +213,7 @@ class UserRepository{
                     
                     let dataDescription = document.data()
                     let model = try FirestoreDecoder().decode(ChefieUser.self, from: dataDescription!)
-                    model.id = document.documentID
+                  //  model.id = document.documentID
                     
                     print("Id -> \(String(describing: model.id))")
                     print("Username -> \(String(describing: model.userName))")
@@ -199,100 +250,56 @@ class UserRepository{
         query.getDocuments(completion: { (querySnapshot, err) in
             
             if (querySnapshot != nil){
-                let doc = querySnapshot!.documents.first
-                let _id = doc?.data()["id"] as! String
-                let _profilePic = doc?.data()["profilePic"] as! String
-                let _username = doc?.data()["userName"] as! String
-                
-                var userMin = UserMin()
-                userMin.id = _id
-                userMin.profilePic = _profilePic
-                userMin.userName = _username
-                
-                completionHandler(.success(userMin))
+
+                do {
+                      let doc = querySnapshot!.documents.first
+                      let result = try FirebaseDecoder().decode(UserMin.self, from: doc!.data())
+                    
+                       completionHandler(.success(result))
+                }
+                catch {
+                    
+                    let msg = "Couldn't decode User Min from user: " + idUser
+                    print(msg)
+                    completionHandler(.failure(msg))
+                }
             }
             else{
                 completionHandler(.failure(err as! String))
             }
         })
-        
-        //        userMinRef.getDocument(completion: { (document, err) in
-        //
-        //            if let document = document, document.exists {
-        //
-        //                do{
-        //
-        //                    let dataDescription = document.data()
-        //                    let model = try FirestoreDecoder().decode(UserMin.self, from: dataDescription!)
-        //                    model.id = document.documentID
-        //                    print("********---getUserMinByID---**********")
-        //                    print("Id -> \(String(describing: model.id))")
-        //                    print("Username -> \(String(describing: model.userName))")
-        //                    print("ProfilePic -> \(String(describing: model.profilePic))")
-        //
-        //                    completionHandler(.success(model))
-        //                } catch  {
-        //
-        //                    print("Invalid Selection.")
-        //                }
-        //
-        //            }else {
-        //
-        //                completionHandler(.failure(err as! String))
-        //
-        //                print("Document does not exist")
-        //
-        //            }
-        
-        
     }
     
-    
-    
-    func getUserFollowers(idUser: String, completionHandler: @escaping (ChefieResult<[FollowMin]>) -> Void) -> Void {
-        
-        //let followerRef = Firestore.firestore().collection("Followers").document("UaD5Xq6t3OtXSNINTMu7")
-        
+    func getUserFollowers(idUser: String, completionHandler: @escaping (ChefieResult<[UserMin]>) -> Void) -> Void {
+
         let collectionFollowers = Firestore.firestore().collection("/Followers/\(idUser)/followers")
-        
         collectionFollowers.getDocuments { (querySnapshot, err) in
             
-            var followers = Array<FollowMin>()
+            var followers = Array<UserMin>()
             
             if (querySnapshot?.documents) != nil{
                 querySnapshot?.documents.forEach({ (document) in
                     do{
-                        let follower = FollowMin()
-                        follower.username = ((document["username"] ?? "nil") as! String)
-                        follower.idFollower = ((document["idFollower"] ?? "nil") as! String)
-                        follower.profilePic = ((document["profilePic"] ?? "nil") as! String)
                         
-                        let model = try FirestoreDecoder().decode(UserMin.self, from: document.data())
-                        model.id = document.documentID
-                        
+                        let follower = try FirebaseDecoder().decode(UserMin.self, from: document.data())
+                      
                         followers.append(follower)
-                        print("********---getUserFollowrs---**********")
-                        print("Id -> \(String(describing: follower.idFollower))")
-                        print("Username -> \(String(describing: follower.username))")
-                        print("ProfilePic -> \(String(describing: follower.profilePic))")
                         
+                        print("********---getUserFollowers---**********")
+                        print("Id -> \(String(describing: follower.id))")
+                        print("Username -> \(String(describing: follower.userName))")
+         
                         completionHandler(.success(followers))
                         
                     } catch  {
-                        completionHandler(.failure(err as! String))
+                        completionHandler(.failure("Couldn't decode User Follower"))
                         
-                        print("Invalid Selection.")
-                        
+                        print("Could'nt decode User Follower")
                     }
-                    
                 })
             }
-            
         }
     }
-    
-    
-    
     
     //TODO: Las variables excepto el idUser van a ser opcionales
     func updateUserProfile(idUser: String, username: String, password: String, bio: String, genero: String, location: String, commmunity: String, profilePic: String, backgroundPic: String, deleteAccount: Bool, completionHandler: @escaping (ChefieResult<Bool>) -> Void) -> Void {
@@ -342,52 +349,46 @@ class UserRepository{
         
     }
     
-    
-    
     func addFollower(idUser: String, idFollower: String, completionHandler: @escaping (ChefieResult<Bool>) -> Void) -> Void {
-        var isFollowing: Bool = false
-        //var ref: DocumentReference? = nil
-        var followerMin = FollowMin()
-        
-        
+     
         appContainer.userRepository.getUserMinByID(idUser: idFollower) { (result: (ChefieResult<UserMin>)) in
             switch result {
             case .success(let data):
-                followerMin.idFollower = data.id
-                followerMin.username = data.userName
-                followerMin.profilePic = data.profilePic
-                let collectionFollowers = Firestore.firestore().collection("/Followers/\(idUser)/followers")
-                    .addDocument(data: [
-                        "idFollower": followerMin.idFollower!,
-                        "profilePic": followerMin.profilePic!,
-                        "username": followerMin.username!
-                    ]) { err in
-                        if let err = err {
-                            print("Error adding document: \(err)")
-                        } else {
-                            isFollowing = true
-                            let attrRef = Firestore.firestore().collection("Followers").document("\(idUser)")
-                            attrRef.setData([
-                                "created_at" : "Chefie.date"])
-                            completionHandler(.success(true))
-                            print("Documento añadido!")
-                        }
-                        
+                
+                do {
+                    
+                    let followerUserMin = try FirestoreEncoder().encode(data)
+                    Firestore.firestore().collection("/Followers/\(idUser)/followers")
+                        .addDocument(data: followerUserMin) { err in
+                            if let err = err {
+                                print("Error adding document: \(err)")
+                            } else {
+                                
+                                let attrRef = Firestore.firestore().collection("Followers").document("\(idUser)")
+                                attrRef.setData([
+                                    "created_at" : Date().convertDateToString()])
+                                completionHandler(.success(true))
+                                print("Documento añadido!")
+                            }
+            
+                    }
                 }
+                catch {
+               
+                }
+    
                 break
             case .failure(_):
                 completionHandler(.success(false))
                 break
             }
-            
         }
-    
     }
     
     func removeFollower(idUser: String, idFollower: String, completionHandler: @escaping (ChefieResult<Bool>) -> Void) -> Void {
-        var isRemoved: Bool = false
+  
         let collectionFollowers = Firestore.firestore().collection("/Followers/\(idUser)/followers")
-        let query = collectionFollowers.whereField("idFollower", isEqualTo: idFollower)
+        let query = collectionFollowers.whereField("id", isEqualTo: idFollower)
         
         query.getDocuments(completion: { (querySnapshot, err) in
             
@@ -396,28 +397,29 @@ class UserRepository{
                 for document in querySnapshot!.documents {
                     document.reference.delete()
                 }
-                isRemoved = true
                 
                 completionHandler(.success(true))
-                
             }
             else{
-                isRemoved = false
+      
                 print("Error removing document: \(String(describing: err))")
                 completionHandler(.success(false))
             }
         })
     }
     
-    
-    
     func checkIfFollowing(idUser: String, idFollower: String, completionHandler: @escaping (ChefieResult<Bool>) -> Void) -> Void {
         var isFollowing: Bool = false
         let collectionFollowers = Firestore.firestore().collection("/Followers/\(idUser)/followers")
-        let query = collectionFollowers.whereField("idFollower", isEqualTo: idFollower)
+        let query = collectionFollowers.whereField("id", isEqualTo: idFollower)
         
         query.getDocuments(completion: { (querySnapshot, err) in
-            
+     
+            if (err != nil){
+                
+                completionHandler(.failure(err!.localizedDescription))
+                return
+            }
             
             if querySnapshot!.isEmpty {
                 
@@ -428,74 +430,58 @@ class UserRepository{
                 isFollowing = true
                 completionHandler(.success(isFollowing))
             }
-
-        })
-       
+        })  
     }
     
+    func removeFollowing(follower: String, idTargetUser: String, completionHandler: @escaping (ChefieResult<Bool>) -> Void) -> Void {
 
-    
-    func removeFollowerFollowing(idUser: String, idFollowing: String, completionHandler: @escaping (ChefieResult<Bool>) -> Void) -> Void {
-        var isRemoved: Bool = false
-        let collectionFollowers = Firestore.firestore().collection("/Following/\(idUser)/following")
-        let query = collectionFollowers.whereField("idUserTarget", isEqualTo: idFollowing)
+        let collectionFollowings = Firestore.firestore().collection("/Following/\(follower)/following")
+        let query = collectionFollowings.whereField("id", isEqualTo: idTargetUser)
         query.getDocuments(completion: { (querySnapshot, err) in
             
             if (querySnapshot != nil){
                 
+                let documents = querySnapshot!.documents.compactMap({ (snap) -> [String:Any]? in
+                    return snap.data()
+                })
+                
                 for document in querySnapshot!.documents {
                     document.reference.delete()
                 }
-                isRemoved = true
-                
+        
                 completionHandler(.success(true))
-                
             }
             else{
-                isRemoved = false
                 print("Error removing document: \(String(describing: err))")
                 completionHandler(.success(false))
             }
         })
     }
     
-    func addFollowerFollowing(idUser: String, idFollowing: String, completionHandler: @escaping (ChefieResult<Bool>) -> Void) -> Void {
-        //var ref: DocumentReference? = nil
-        var followerMin = FollowMin()
-        
-        appContainer.userRepository.getUserMinByID(idUser: idFollowing) { (result: (ChefieResult<UserMin>)) in
-            switch result {
-            case .success(let data):
-                followerMin.idFollower = data.id
-                followerMin.username = data.userName
-                followerMin.profilePic = data.profilePic
-                let collectionFollowers = Firestore.firestore().collection("/Following/\(idUser)/following")
-                    .addDocument(data: [
-                        "idFollower": followerMin.idFollower!,
-                        "profilePic": followerMin.profilePic!,
-                        "username": followerMin.username!
-                    ]) { err in
-                        if let err = err {
-                            print("Error adding document: \(err)")
-                        } else {
-                            let attrRef = Firestore.firestore().collection("Following").document("\(idUser)")
-                            attrRef.setData([
-                                "created_at" : "Chefie.date"])
-                            completionHandler(.success(true))
-                            print("Documento añadido!")
-                        }
-                        
-                }
-                break
-            case .failure(_):
-                completionHandler(.success(false))
-                break
+    func addFollowing(follower: UserMin, targetUser: UserMin, completionHandler: @escaping (ChefieResult<Bool>) -> Void) -> Void {
+   
+        do {
+
+            let followerId = follower.id!
+            let followTargetData = try FirestoreEncoder().encode(targetUser)
+            
+            let collectionFollowers = Firestore.firestore().collection("/Following/\(followerId)/following")
+                .addDocument(data: followTargetData) { err in
+                    if let err = err {
+                        print("Error adding document: \(err)")
+                    } else {
+                        let attrRef = Firestore.firestore().collection("Following").document("\(followerId)")
+                        attrRef.setData([
+                            "created_at" : Date().convertDateToString() ])
+                        completionHandler(.success(true))
+                        print("Documento añadido!")
+                    }
             }
+        }
+        catch {
             
         }
-        
     }
-    
 }
 
 

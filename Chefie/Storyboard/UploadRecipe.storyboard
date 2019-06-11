@@ -64,38 +64,28 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uab-hx-WSG" customClass="TagListView" customModule="TagListView">
-                                <rect key="frame" x="47" y="627" width="320" height="100"/>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Hashtags" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X9u-UT-WcQ" customClass="SpringTextField" customModule="Chefie" customModuleProvider="target">
+                                <rect key="frame" x="8" y="621" width="398" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="animateEvenIfNotFirstResponder" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="keepBaseline" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kim-am-ROZ">
+                                <rect key="frame" x="172" y="662" width="35" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Hashtags" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X9u-UT-WcQ" customClass="SpringTextField" customModule="Chefie" customModuleProvider="target">
-                                        <rect key="frame" x="-39" y="-23" width="398" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="animateEvenIfNotFirstResponder" value="YES"/>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="keepBaseline" value="YES"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kim-am-ROZ">
-                                        <rect key="frame" x="132" y="15" width="56" height="43"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="addHastag"/>
-                                        <connections>
-                                            <action selector="addTagToList:" destination="Npo-Lj-6Wk" eventType="touchUpInside" id="6HN-cZ-CtD"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TIa-fS-VP6">
-                                        <rect key="frame" x="216" y="24" width="27" height="24"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="deleteHastag"/>
-                                        <connections>
-                                            <action selector="removeAllTags:" destination="Npo-Lj-6Wk" eventType="touchUpInside" id="YIU-Po-Ej0"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
+                                <state key="normal" image="addHastag"/>
+                                <connections>
+                                    <action selector="addTagToList:" destination="Npo-Lj-6Wk" eventType="touchUpInside" id="6HN-cZ-CtD"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uab-hx-WSG" customClass="TagListView" customModule="TagListView">
+                                <rect key="frame" x="47" y="705" width="320" height="68"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="tagBackgroundColor">
@@ -135,6 +125,14 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="subirPlato:" destination="Npo-Lj-6Wk" eventType="touchUpInside" id="AOY-l4-MId"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TIa-fS-VP6">
+                                <rect key="frame" x="226" y="669" width="27" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="deleteHastag"/>
+                                <connections>
+                                    <action selector="removeAllTags:" destination="Npo-Lj-6Wk" eventType="touchUpInside" id="YIU-Po-Ej0"/>
                                 </connections>
                             </button>
                         </subviews>

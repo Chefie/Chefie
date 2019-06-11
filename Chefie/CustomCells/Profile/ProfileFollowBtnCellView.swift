@@ -51,10 +51,6 @@ class ProfileFollowBtnCellView : BaseCell, ICellDataProtocol {
         return button
     }()
     
-    
-    
-    
-    
     let buttonUpload: UIButton = {
         let button = UIButton()
         let image = UIImage(named: "addButton") as UIImage?
@@ -64,13 +60,11 @@ class ProfileFollowBtnCellView : BaseCell, ICellDataProtocol {
         button.setImage(image, for: .normal)
         //button.setTouch(target: self, selector: #selector(buttonAction))
         return button
-        
     }()
     
     override func onLayout(size: CGSize!) {
         
         let cellSize = CGSize(width: size.width, height: size.heightPercentageOf(amount: 5))
-
         
         followBtn.snp.makeConstraints { (maker) in
             
@@ -86,13 +80,12 @@ class ProfileFollowBtnCellView : BaseCell, ICellDataProtocol {
         }
         
         self.showAnimatedGradientSkeleton()
-        
-        
     }
     
     override func onLoadData() {
         doFadeIn()
-        appContainer.userRepository.checkIfFollowing(idUser: "2WT9s7km17QdtIwpYlEZ", idFollower: "uBkEMUpQjCUWMnbj3sQSmQLdG9q2") {
+        
+        appContainer.userRepository.checkIfFollowing(idUser: model!.id!, idFollower: appContainer.dataManager.localData.chefieUser.id!) {
             (result:(ChefieResult<Bool>)) in
             switch result {
             case .success(let data):
@@ -102,11 +95,9 @@ class ProfileFollowBtnCellView : BaseCell, ICellDataProtocol {
                 break
                 
             }
-            
         }
         
         self.hideSkeleton()
-        
     }
     
     func changeState(isFollowing : Bool) {
@@ -120,18 +111,17 @@ class ProfileFollowBtnCellView : BaseCell, ICellDataProtocol {
         }
     }
     
-    
     override func onCreateViews() {
         self.contentView.addSubview(followBtn)
         self.followBtn.setTouch(target: self, selector: #selector(followBtnTapped))
     }
     
     @objc func followBtnTapped() {
-        appContainer.userRepository.checkIfFollowing(idUser: "2WT9s7km17QdtIwpYlEZ", idFollower: "uBkEMUpQjCUWMnbj3sQSmQLdG9q2") {
+        appContainer.userRepository.checkIfFollowing(idUser: model!.id!, idFollower: appContainer.getUser().id!) {
             (result:(ChefieResult<Bool>)) in
             switch result{
-            case .success(let data):
-                if data {
+            case .success(let isFollowing):
+                if isFollowing {
                     self.unfollowAction()
                     self.rmvFollowing()
                 } else {
@@ -141,16 +131,14 @@ class ProfileFollowBtnCellView : BaseCell, ICellDataProtocol {
                 break
             case .failure(_):
                 break
-                
             }
         }
-        
     }
     
     func followAction() {
         let image = UIImage(named: "unfollowBtn") as UIImage?
         self.followBtn.setImage(image, for: .normal)
-        appContainer.userRepository.addFollower(idUser: "2WT9s7km17QdtIwpYlEZ", idFollower: "uBkEMUpQjCUWMnbj3sQSmQLdG9q2") {
+        appContainer.userRepository.addFollower(idUser: model!.id!, idFollower: appContainer.getUser().id!) {
             (result:(ChefieResult<Bool>)) in
             switch result{
             case .success(let data):
@@ -160,16 +148,14 @@ class ProfileFollowBtnCellView : BaseCell, ICellDataProtocol {
                 break
             case .failure(_):
                 break
-            }
-            
+            }      
         }
-        
     }
     
     func unfollowAction(){
         let image = UIImage(named: "followBtn") as UIImage?
         self.followBtn.setImage(image, for: .normal)
-        appContainer.userRepository.removeFollower(idUser: "2WT9s7km17QdtIwpYlEZ", idFollower: "uBkEMUpQjCUWMnbj3sQSmQLdG9q2") {
+        appContainer.userRepository.removeFollower(idUser: model!.id!, idFollower: appContainer.getUser().id!) {
             (result: (ChefieResult<Bool>)) in
             switch result{
             case .success(let data):
@@ -183,11 +169,11 @@ class ProfileFollowBtnCellView : BaseCell, ICellDataProtocol {
             }
             
         }
-        
     }
     
     func addFollowing(){
-        appContainer.userRepository.addFollowerFollowing(idUser: "2WT9s7km17QdtIwpYlEZ", idFollowing: "uBkEMUpQjCUWMnbj3sQSmQLdG9q2") {
+
+        appContainer.userRepository.addFollowing(follower: appContainer.getUser().mapToUserMin(), targetUser: model!) {
             (result: (ChefieResult<Bool>)) in
             switch result{
             case .success(let data):
@@ -199,12 +185,11 @@ class ProfileFollowBtnCellView : BaseCell, ICellDataProtocol {
                 break
                 
             }
-            
         }
     }
     
     func rmvFollowing(){
-        appContainer.userRepository.removeFollowerFollowing(idUser: "2WT9s7km17QdtIwpYlEZ", idFollowing: "uBkEMUpQjCUWMnbj3sQSmQLdG9q2") {
+        appContainer.userRepository.removeFollowing(follower: appContainer.getUser().id!, idTargetUser: model!.id!) {
             (result: (ChefieResult<Bool>)) in
             switch result{
             case .success(let data):
@@ -216,8 +201,6 @@ class ProfileFollowBtnCellView : BaseCell, ICellDataProtocol {
                 break
                 
             }
-            
         }
     }
-    
 }

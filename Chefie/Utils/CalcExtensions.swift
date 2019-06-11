@@ -51,8 +51,25 @@ extension CGSize {
         
         return self.height * (amount / 100)
     }
+    
+    func marginX(amount: CGFloat) -> MarginResult {
+        
+        let result = MarginResult(margin: self.width.percentageOf(amount: amount), amount: self.width.minus(amount: amount * 2))
+       return result
+    }
+ 
+    func marginY(amount: CGFloat) -> MarginResult {
+        
+        let result = MarginResult(margin: self.height.percentageOf(amount: amount / 2), amount: self.height.minus(amount: amount * 2))
+        return result
+    }
 }
 
+public struct MarginResult {
+    
+    var margin : CGFloat
+    var amount: CGFloat
+}
 
 extension CGFloat {
 

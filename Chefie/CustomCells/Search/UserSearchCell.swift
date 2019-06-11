@@ -53,11 +53,9 @@ class UserSearchCell : BaseCell, ICellDataProtocol{
         self.userIcon.frame = CGRect(x: 0, y: 0, width: cellSize.widthPercentageOf(amount: 24), height: cellSize.heightPercentageOf(amount: 80))
         
         self.userIcon.snp.makeConstraints { (maker) in
-         //  maker.edges.equalToSuperview()
-          // maker.center.equalTo(self.contentView)
+
             maker.left.equalTo(10)
             maker.centerY.equalToSuperview()
-            
             maker.width.equalTo(cellSize.widthPercentageOf(amount: 32))
             maker.height.equalTo(cellSize.heightPercentageOf(amount: 80))
         }
@@ -69,24 +67,38 @@ class UserSearchCell : BaseCell, ICellDataProtocol{
         self.userIcon.setCircularImageView()
         self.backgroundColor = .clear
     
-        contentView.showAnimatedGradientSkeleton()
+        self.userLabel.displayLines(height: 50)
+        self.userIcon.showAnimatedGradientSkeleton()
     }
     
     override func onLoadData() {
         super.onLoadData()
-        userLabel.text = model?.userName
-        
+
         self.userIcon.sd_setImage(with: URL(string: self.model?.profilePic ?? "")){ (image : UIImage?,
             error : Error?, cacheType : SDImageCacheType, url : URL?) in
             
-            self.hideSkeleton()
+            self.userLabel.hideLines()
+            self.userIcon.hideSkeleton()
+            
+            self.userLabel.text = self.model?.userName
         }
+    }
+    
+    @objc func onTouch() {
+
+        let storyboard = UIStoryboard(name: "ForeignProfileStoryboard", bundle: nil)
+        let vc  : ForeignProfileViewController = storyboard.instantiateViewController(withIdentifier: "ForeignProfileViewController") as! ForeignProfileViewController
+        
+        vc.model = model?.mapToUserMin()
+        self.viewController?.navigationController?.pushViewController(vc, animated: true)
     }
     
     override func onCreateViews() {
         super.onCreateViews()
         self.contentView.addSubview(userLabel)
         self.contentView.addSubview(userIcon)
+        
+        self.contentView.setTouch(target: self, selector: #selector(onTouch))
     }
 }
 

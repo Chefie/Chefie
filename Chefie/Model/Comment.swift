@@ -18,4 +18,6 @@ class Comment : Codable {
     required init() {
         
     }
+    
+    var userMin : UserMin?
 }

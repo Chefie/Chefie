@@ -15,5 +15,4 @@ class UserMin : Codable {
     var userName : String?
     var profilePic: String?
     var profileBackground : String?
-    
 }

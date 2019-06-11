@@ -16,4 +16,11 @@ extension UINavigationController {
         self.navigationBar.tintColor = UIColor.lightGray
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "<", style: .plain, target: self, action: nil)
     }
+    
+    func setBackButton(title : String = "") {
+        
+        let backButton = UIBarButtonItem()
+        backButton.title = title
+        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
+    }
 }

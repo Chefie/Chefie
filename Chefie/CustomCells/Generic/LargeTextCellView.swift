@@ -18,6 +18,8 @@ class LargeTextCellItemInfo : BaseItemInfo {
     override func reuseIdentifier() -> String {
         return "LargeTextCellView"
     }
+    
+    var alignment : NSTextAlignment = .center
 }
 
 class LargeTextCellView : BaseCell, ICellDataProtocol {
@@ -29,6 +31,7 @@ class LargeTextCellView : BaseCell, ICellDataProtocol {
     let lblContent : MultilineLabel = {
         let lbl = MultilineLabel(maskConstraints: false, font: DefaultFonts.DefaultTextFont)
         lbl.text = ""
+        lbl.textAlignment = .center
         return lbl
     }()
     
@@ -49,7 +52,7 @@ class LargeTextCellView : BaseCell, ICellDataProtocol {
   
         lblContent.snp.makeConstraints { (maker) in
             
-            maker.topMargin.equalTo(10)
+            maker.topMargin.equalTo(2)
             maker.left.equalTo(size.widthPercentageOf(amount: 1))
             maker.rightMargin.bottomMargin.equalTo(0)
             maker.width.equalTo(size.width.margin(amount: 0.5))
@@ -57,12 +60,23 @@ class LargeTextCellView : BaseCell, ICellDataProtocol {
 
         lblContent.displayLines(height: size.heightPercentageOf(amount: 10))
 
-       // self.backgroundColor = UIColor.purple
+        //self.backgroundColor = UIColor.purple
+    }
+    
+    override func setBaseItemInfo(info: BaseItemInfo) {
+        super.setBaseItemInfo(info: info)
+        
+        guard let itemInfo = info as? LargeTextCellItemInfo else {
+            return
+        }
+        
+        lblContent.textAlignment = itemInfo.alignment
     }
     
     override func onLoadData() {
         super.onLoadData()
-        
+ 
+
         lblContent.text = model?.text
         lblContent.hideLines()
     }

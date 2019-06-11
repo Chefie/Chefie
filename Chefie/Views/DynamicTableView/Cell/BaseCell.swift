@@ -60,6 +60,8 @@ class BaseCell : UITableViewCell, IDynamicCellProtocol{
       //   self.contentView.translatesAutoresizingMaskIntoConstraints = false
     }
     
+    private var cellReloaded : Bool = false
+    
     func onCreateViews() {
      
         self.preservesSuperviewLayoutMargins = true
@@ -68,6 +70,26 @@ class BaseCell : UITableViewCell, IDynamicCellProtocol{
      //   self.contentView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         
        //      cell.preservesSuperviewLayoutMargins = false
+    }
+    
+    func isCellReloaded() -> Bool {
+        
+        return cellReloaded
+    }
+    
+    func reloadCell(force : Bool = false) {
+        
+        if (force){
+            
+            cellReloaded = false
+        }
+        
+        if (!cellReloaded){
+            
+            let table = self.parentView as! UITableView
+            table.reloadRows(at: [IndexPath(row: self.index ?? 0, section: 0)], with: .none)
+            cellReloaded = true
+        }
     }
     
     func onLoadData() {

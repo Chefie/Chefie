@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+
         self.application(application, handleEventsForBackgroundURLSession: AppSettings.TransferUtilityIdentifier) {
             
         }
@@ -46,11 +46,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         configureS3()
-        
-        
+  
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
-        
+
         //AQUI SE COMBRUEBA SI HAY ALGO GUARDADO EN EL USER DEFAULTS
         //EN LA KEY "runed"
         let isLogin = UserDefaults.standard.string(forKey: "runed")
@@ -143,6 +142,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                         switch result {
                             
                         case .success(let user) :
+                            
                             
                             appContainer.dataManager.localData.onLogin(user: user)
                             

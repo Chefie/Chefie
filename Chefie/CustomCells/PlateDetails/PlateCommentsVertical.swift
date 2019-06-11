@@ -14,7 +14,7 @@ import SDWebImage
 class PlateCommentsItemInfo : VerticalTableSectionCellBaseInfo {
     
     override func reuseIdentifier() -> String {
-       return String(describing: PlateCommentsVerticalCell.self)
+        return String(describing: PlateCommentsVerticalCell.self)
     }
     
     override func title() -> String {
@@ -22,21 +22,25 @@ class PlateCommentsItemInfo : VerticalTableSectionCellBaseInfo {
     }
 }
 
-class PlateCommentsVerticalCell : VerticalTableSectionView<Comment> {
-
-    override var modelSet: [Comment]{
+class PlateCommentsVerticalCell : VerticalTableSectionView<Plate> {
+    
+    var comments = [Comment]()
+    
+    override var modelSet: [Plate] {
         
         didSet{
             
         }
+        
     }
     
     override func getVisibleItemsCount() -> Int {
-        return 3
+        return comments.count < 3 ? comments.count : 3
     }
     
     override func setModel(model: AnyObject?) {
-        self.modelSet = (model as? [Comment])!.getFirstElements(upTo: getVisibleItemsCount())
+        
+        self.modelSet = ((model as? [Plate])!)
     }
     
     override func getModel() -> AnyObject? {
@@ -44,21 +48,21 @@ class PlateCommentsVerticalCell : VerticalTableSectionView<Comment> {
     }
     
     override func onRequestItemSize() -> CGSize {
-        return CGSize(width: self.parentView.getWidth(), height: self.parentView.getHeight().percentageOf(amount: 20))
+        return CGSize(width: self.parentView.getWidth(), height: self.parentView.getHeight().percentageOf(amount: 16))
     }
     
     override func onRequestCell(_ tableView: UITableView, cellForItemAt indexPath: IndexPath) -> UITableViewCell {
-        if (modelSet.count == 0) {
+        if (comments.count == 0) {
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: getCellIdentifier(), for: indexPath) as! PlateCommentView
-            cell.viewController = viewController
-            cell.collectionItemSize = onRequestItemSize()
-            cell.parentView = tableView
-            return cell
+            //            let cell = tableView.dequeueReusableCell(withIdentifier: getCellIdentifier(), for: indexPath) as! PlateCommentView
+            //            cell.viewController = viewController
+            //            cell.collectionItemSize = onRequestItemSize()
+            //            cell.parentView = tableView
+            return UITableViewCell()
         }
         
-        if indexPath.row < modelSet.count {
-            let cellInfo = self.modelSet[indexPath.row]
+        if indexPath.row < comments.count {
+            let cellInfo = self.comments[indexPath.row]
             
             let cell = tableView.dequeueReusableCell(withIdentifier: getCellIdentifier(), for: indexPath) as! PlateCommentView
             cell.viewController = viewController
@@ -69,7 +73,7 @@ class PlateCommentsVerticalCell : VerticalTableSectionView<Comment> {
             
             return cell
         }
-     
+        
         return super.onRequestCell(tableView, cellForItemAt: indexPath)
     }
     
@@ -77,12 +81,49 @@ class PlateCommentsVerticalCell : VerticalTableSectionView<Comment> {
         
         tableView.register(PlateCommentView.self, forCellReuseIdentifier: getCellIdentifier())
     }
-
+    
     override func onLoadData() {
         super.onLoadData()
         
-        tableView.reloadData()
-        hideSkeleton()
+        //   tableView.reloadData()
+        // hideSkeleton()
+        
+        self.hideSkeleton()
+        //self.contentView.backgroundColor = UIColor.purple
+        if let plate = modelSet.first {
+            
+            appContainer.commentRepository.getComments(idRecipe: plate.id!) { (result : ChefieResult<[Comment]>) in
+                
+                switch result{
+                    
+                case .success(let data):
+                    
+                    let shouldReload = data.count > self.comments.count
+                    self.comments.removeAll()
+                    self.comments.append(contentsOf: data)
+                    
+                    //  self.comments = data.getFirstElements(upTo: self.getVisibleItemsCount())
+                    
+                    let count = self.comments.count < 3 ? self.comments.count : 3
+                    
+                    self.onLayoutSection(count: count)
+                    
+                    if (shouldReload){
+                        
+                        self.reloadCell(force: true)
+                        self.tableView.reloadData()
+                    }
+                    
+                    self.onReady()
+                    
+                    break
+                    
+                case .failure(_): break
+                    
+                    
+                }
+            }
+        }
     }
     
     override func onLayout(size: CGSize!) {
@@ -98,7 +139,7 @@ class PlateCommentsVerticalCell : VerticalTableSectionView<Comment> {
     
     override func onCreateViews() {
         super.onCreateViews()
-
+        
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -121,8 +162,9 @@ class PlateCommentView : BaseCell, ICellDataProtocol, INestedCell {
     
     let userName : MultilineLabel = {
         let lbl = MultilineLabel(maskConstraints: false, font: DefaultFonts.DefaultTextFont)
-        lbl.text = "user"
+        lbl.text = ""
         lbl.numberOfLines = 1
+        lbl.textAlignment = .left
         return lbl
     }()
     
@@ -145,10 +187,10 @@ class PlateCommentView : BaseCell, ICellDataProtocol, INestedCell {
         super.onLayout(size: size)
         
         let cellSize = CGSize(width: collectionItemSize.width, height: collectionItemSize.height)
-
+        
         let iconSize = cellSize.widthPercentageOf(amount: 5)
         let leftMargin = CGFloat(20)
-        let topMargin = CGFloat(10)
+        _ = CGFloat(10)
         
         let firstSectionSize = CGSize(width: size.width, height: cellSize.heightPercentageOf(amount: 8))
         
@@ -167,34 +209,62 @@ class PlateCommentView : BaseCell, ICellDataProtocol, INestedCell {
             maker.height.equalTo(iconSize)
         }
         
+        self.userIcon.frame = CGRect(x: 0, y: 0, width: iconSize, height: iconSize)
+        self.userIcon.setCircularImageView()
+        
         self.userName.snp.makeConstraints { (maker) in
-            maker.leftMargin.equalTo(iconSize * 3)
-            maker.topMargin.equalTo(12)
+            maker.leftMargin.equalTo(iconSize * 2)
+            maker.topMargin.equalTo(10.5)
+            maker.width.equalTo(cellSize.widthPercentageOf(amount: 40))
+            maker.height.equalTo(iconSize)
         }
+        
+        let marginXInfo = contentSize.marginX(amount: 2)
+        let marginYInfo = contentSize.marginY(amount: 10)
         
         self.content.snp.makeConstraints { (maker) in
             
-            maker.top.equalTo(firstSectionSize.height + 20)
-            maker.size.equalTo(contentSize)
+            maker.left.equalTo(marginXInfo.margin)
+            maker.top.equalTo(firstSectionSize.height + 24)
+            maker.width.equalTo(marginXInfo.amount)
+            maker.height.equalTo(marginYInfo.amount)
         }
         
-        //self.content.backgroundColor = UIColor.orange
+        self.userIcon.showAnimatedSkeleton()
         
-      self.backgroundColor = UIColor.purple
+        self.contentView.showAnimatedGradientSkeleton()
+        
+        //self.content.backgroundColor = UIColor.orange
+        //  self.backgroundColor = UIColor.purple
     }
     
     override func onLoadData() {
+        super.onLoadData()
         
+        self.userIcon.sd_setImage(with: URL(string: self.model?.userMin?.profilePic ?? "")){ (image : UIImage?,
+            error : Error?, cacheType : SDImageCacheType, url : URL?) in
+            
+      
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+        //    self.hideSkeleton()
+            //        self.doFadeIn()
+            self.userName.text = self.model?.userMin?.userName
+            self.content.text = self.model?.content
+            
+            self.hideSkeleton()
+        })
     }
     
     @objc func onTouch() {
         
-     
+        
     }
     
     override func onCreateViews() {
         super.onCreateViews()
-
+        
         contentView.addSubview(userIcon)
         contentView.addSubview(userName)
         contentView.addSubview(content)

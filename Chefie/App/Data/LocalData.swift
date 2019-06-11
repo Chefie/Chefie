@@ -22,6 +22,10 @@ class LocalData {
     func onLogin(user : ChefieUser){
   
         self.chefieUser = user
+  
+        NotificationManager.shared.listenForNotifications()
+        
+        print("Logged User: ", user.userName, ",", user.id)
        // LoginSubject.on(.next(id))
     }
 }

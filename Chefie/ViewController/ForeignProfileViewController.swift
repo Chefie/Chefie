@@ -18,19 +18,17 @@ class ForeignProfileViewController: UIViewController, DynamicViewControllerProto
     var tableItems = Array<BaseItemInfo>()
     var tableCellRegistrator = TableCellRegistrator()
     
+    var model : UserMin?{
+        
+        didSet{
+            
+            
+        }
+    }
+    
     @IBOutlet var mainTable: UITableView!{
         didSet {
-            mainTable.setCellsToAutomaticDimension()
-            mainTable.separatorStyle = UITableViewCell.SeparatorStyle.none
-            mainTable.allowsSelection = false
-            mainTable.allowsMultipleSelection = false
-            mainTable.showsHorizontalScrollIndicator = false
-            mainTable.alwaysBounceHorizontal = false
-            mainTable.alwaysBounceVertical = false
-            mainTable.bounces = false
-            
-            mainTable.showsVerticalScrollIndicator = false
-            mainTable.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+          
         }
     }
     
@@ -45,11 +43,19 @@ class ForeignProfileViewController: UIViewController, DynamicViewControllerProto
     
     func onSetup() {
         
+        tableCellRegistrator.add(identifier: ProfilePicCellItemInfo().reuseIdentifier(), cellClass: ProfilePicCellView.self)
        
+        tableCellRegistrator.add(identifier: ProfileUsernameItemInfo().reuseIdentifier(), cellClass: ProfileUsernameCellView.self)
+        
+        tableCellRegistrator.add(identifier: ProfileFollowItemInfo().reuseIdentifier(), cellClass: ProfileFollowCellView.self)
+      
+        tableCellRegistrator.add(identifier: ProfileBioItemInfo().reuseIdentifier(), cellClass: ProfileBioCellView.self)
+
+        tableCellRegistrator.add(identifier: ProfileFollowBtnItemInfo().reuseIdentifier(), cellClass: ProfileFollowBtnCellView.self)
     }
     
     func onSetupViews() {
-        
+    
         mainTable.backgroundColor = UIColor.white
         
         self.mainTable.dataSource = self
@@ -57,12 +63,15 @@ class ForeignProfileViewController: UIViewController, DynamicViewControllerProto
         self.mainTable.delegate = self
         
         mainTable.backgroundColor = UIColor.white
-        
         mainTable.snp.makeConstraints { (make) in
             
             make.width.equalTo(self.view.getWidth())
             make.height.equalTo(self.view.getHeight())
         }
+
+        tableCellRegistrator.registerAll(tableView: mainTable)
+  
+        mainTable.setDefaultSettings(shouldBounce: false)
     }
     
     func onLoadData() {
@@ -70,16 +79,15 @@ class ForeignProfileViewController: UIViewController, DynamicViewControllerProto
         let userMin = UserMin()
         
         let userInfo = ChefieUser()
-        userMin.profilePic = "https://www.cheftochefconference.com/wp-content/uploads/2018/11/John-Folse-web-300x300.jpg"
-        userMin.profileBackground = "https://s3.envato.com/files/253777548/FMX_2289.jpg"
-        userMin.userName = "@joseAntonio"
+        userMin.profilePic = model?.profilePic
+        userMin.profileBackground = model?.profileBackground
+        userMin.userName =  model?.userName
         
         userInfo.followers = 222
         userInfo.following = 333
         
-        userInfo.userName = "@joseAntonio"
+        userInfo.userName = userMin.userName
         userInfo.biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lacus orci, lacinia nec arcu et, dictum tincidunt elit. Mauris in nibh ut lorem euismod commodo. Integer nec est neque. Quisque et turpis commodo, suscipit elit id, efficitur augue."
-        
         
         
         //Model UserMin
@@ -99,21 +107,15 @@ class ForeignProfileViewController: UIViewController, DynamicViewControllerProto
         let bio = ProfileBioItemInfo()
         bio.model = userInfo
         
-        let btnFollow = ProfileBioItemInfo()
-        
-        
+        let btnFollow = ProfileFollowBtnItemInfo()
+
+        btnFollow.model = model
         //Adding to array
         tableItems.append(pInfo)
         tableItems.append(username)
         tableItems.append(follows)
         tableItems.append(btnFollow)
         tableItems.append(bio)
-        //tableItems.append(chefieUserInfo)
-        
-        
-        
-        
-        mainTable.reloadData()
     }
     
     func onLayout() {
@@ -122,58 +124,17 @@ class ForeignProfileViewController: UIViewController, DynamicViewControllerProto
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Chefie"
-        self.navigationController!.navigationBar.isTranslucent = true
-        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Zapfino", size: 13)!]
+     
+        navigationController?.setTintColor()
+        navigationItem.title = model?.userName
         view.backgroundColor = .white
+        
+        let backButton = UIBarButtonItem()
+        backButton.title = ""
+        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
+        
         onSetup()
         onSetupViews()
-        
-        //////////////////////////////////////////////////////
-        tableCellRegistrator.add(identifier: ProfilePicCellItemInfo().reuseIdentifier(), cellClass: ProfilePicCellView.self)
-        /////////////////////////////////////////////////////
-        tableCellRegistrator.add(identifier: ProfileUsernameItemInfo().reuseIdentifier(), cellClass: ProfileUsernameCellView.self)
-        //////////////////////////////////////////////////////
-        tableCellRegistrator.add(identifier: ProfileFollowItemInfo().reuseIdentifier(), cellClass: ProfileFollowCellView.self)
-        //////////////////////////////////////////////////////
-        tableCellRegistrator.add(identifier: ProfileBioItemInfo().reuseIdentifier(), cellClass: ProfileBioCellView.self)
-        //////////////////////////////////////////////////////
-//        tableCellRegistrator.add(identifier: PlatosVerticalCellBaseItemInfo().reuseIdentifier(), cellClass: PlatosVerticalCell.self)
-//        //////////////////////////////////////////////////////
-//        tableCellRegistrator.add(identifier: RoutesVerticalCellBaseItemInfo().reuseIdentifier(), cellClass: RoutesVerticalCell.self)
-        
-        //////////////////////////////////////////////////////
-        tableCellRegistrator.add(identifier: ProfileFollowBtnItemInfo().reuseIdentifier(), cellClass: ProfileFollowCellView.self)
-        
-        //////////////////////////////////////////////////////
-        // tableCellRegistrator.add(identifier: ProfileInfoItemInfo().reuseIdentifier(), cellClass: ProfileInfoCellView.self)
-        
-        appContainer.plateRepository.getPlatos(idUser: "2WT9s7km17QdtIwpYlEZ") { (
-            result: ChefieResult<[Plate]>) in
-            
-            switch result {
-                
-            case .success(let data):
-                
-//                let verticalItemPlateInfo = PlatosVerticalCellBaseItemInfo()
-//                verticalItemPlateInfo.setTitle(value: "Plates")
-//                verticalItemPlateInfo.model = data as AnyObject
-//                
-//                self.tableItems.append(verticalItemPlateInfo)
-//                data.forEach({ (plate) in
-//                    
-//                    let cellInfo = PlatoCellItemInfo()
-//                    cellInfo.model = plate
-//                    
-//                })
-//                self.mainTable.reloadData()
-                break
-            case .failure(_):
-                break
-            }
-        }
-        tableCellRegistrator.registerAll(tableView: mainTable)
-        
         onLoadData()
     }
 }
@@ -214,6 +175,4 @@ extension ForeignProfileViewController: SkeletonTableViewDataSource, SkeletonTab
         ce.onLoadData()
         return ce
     }
-    
-
 }

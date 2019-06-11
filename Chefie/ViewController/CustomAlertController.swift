@@ -13,7 +13,7 @@ class CustomAlertController: UIView, UIPickerViewDelegate,UIPickerViewDataSource
     var valorComunidad = ""
     
     let comunidades = ["Andalucía", "Aragón", "Canarias", "Cantabria", "Castilla y León", "Castilla-La Mancha", "Cataluña", "Ceuta", "Comunidad Valenciana", "Comunidad de Madrid", "Extremadura", "Galicia", "Islas Baleares", "La Rioja", "Melilla", "Navarra", "País Vasco", "Principado de Asturias", "Región de Murcia"]
-
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -27,12 +27,12 @@ class CustomAlertController: UIView, UIPickerViewDelegate,UIPickerViewDataSource
         valorComunidad = comunidades[selected]
         return comunidades[row]
     }
-    
-  
-    func setup(){
+
+    func setup() {
         pickerView.delegate = self
         pickerView.dataSource = self
     }
+    
     func printComunidad(){
         
         print(valorComunidad)
@@ -40,5 +40,4 @@ class CustomAlertController: UIView, UIPickerViewDelegate,UIPickerViewDataSource
     
     @IBOutlet var labelCommunity: UILabel!
     @IBOutlet var pickerView: UIPickerView!
-    
 }

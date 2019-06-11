@@ -19,17 +19,7 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
     
     @IBOutlet var mainTable: UITableView!{
         didSet {
-            mainTable.setCellsToAutomaticDimension()
-            mainTable.separatorStyle = UITableViewCell.SeparatorStyle.none
-            mainTable.allowsSelection = false
-            mainTable.allowsMultipleSelection = false
-            mainTable.showsHorizontalScrollIndicator = false
-            mainTable.alwaysBounceHorizontal = false
-            mainTable.alwaysBounceVertical = false
-            mainTable.bounces = false
-            
-            mainTable.showsVerticalScrollIndicator = false
-            mainTable.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+      
         }
     }
     
@@ -62,23 +52,23 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
             make.width.equalTo(self.view.getWidth())
             make.height.equalTo(self.view.getHeight())
         }
+        
+        mainTable.setDefaultSettings(shouldBounce: false)
     }
     
     func onLoadData() {
         
-        let userMin = UserMin()
-        
+        let userMin = appContainer.getUser().mapToUserMin()
+
         let userInfo = ChefieUser()
-        userMin.profilePic = "https://www.cheftochefconference.com/wp-content/uploads/2018/11/John-Folse-web-300x300.jpg"
-        userMin.profileBackground = "https://s3.envato.com/files/253777548/FMX_2289.jpg"
-        userMin.userName = "@joseAntonio"
+        userInfo.profilePic = userMin.profilePic
+        userInfo.profileBackgroundPic = userMin.profileBackground
+        userInfo.userName =  userMin.userName
         
-        userInfo.followers = 222
-        userInfo.following = 333
+        userInfo.followers = 0
+        userInfo.following = 0
         
-        userInfo.userName = "@joseAntonio"
         userInfo.biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lacus orci, lacinia nec arcu et, dictum tincidunt elit. Mauris in nibh ut lorem euismod commodo. Integer nec est neque. Quisque et turpis commodo, suscipit elit id, efficitur augue."
-        
         
         
         //Model UserMin
@@ -97,22 +87,17 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
         
         let bio = ProfileBioItemInfo()
         bio.model = userInfo
-        
-        let btnFollow = ProfileFollowBtnItemInfo()
-        
-        
+ 
         //Adding to array
         tableItems.append(pInfo)
         tableItems.append(username)
         tableItems.append(follows)
-        tableItems.append(btnFollow)
+   
         tableItems.append(bio)
         //tableItems.append(chefieUserInfo)
-        
 
-        
-        
         mainTable.reloadData()
+
     }
     
     func onLayout() {
@@ -143,8 +128,9 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
         //////////////////////////////////////////////////////
        // tableCellRegistrator.add(identifier: ProfileInfoItemInfo().reuseIdentifier(), cellClass: ProfileInfoCellView.self)
         //////////////////////////////////////////////////////
-        tableCellRegistrator.add(identifier: ProfileFollowBtnItemInfo().reuseIdentifier(), cellClass: ProfileFollowBtnCellView.self)
+    
         
+        tableCellRegistrator.registerAll(tableView: mainTable)
         appContainer.plateRepository.getPlatos(idUser: "2WT9s7km17QdtIwpYlEZ") { (
             result: ChefieResult<[Plate]>) in
             
@@ -169,22 +155,22 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
                 break
             }
         }
-        appContainer.userRepository.getUserFollowers(idUser: "2WT9s7km17QdtIwpYlEZ") { (result: (ChefieResult<[FollowMin]>)) in
+        appContainer.userRepository.getUserFollowers(idUser: "2WT9s7km17QdtIwpYlEZ") { (result: (ChefieResult<[UserMin]>)) in
             switch result {
             case .success(_):
                 //var followers = [BaseItemInfo]()
                 
-                var followersMin = [FollowMin]()
-                followersMin.forEach({ (follower) in
-                    
-                    let followerMin = FollowMin()
-                    followerMin.idFollower = follower.idFollower
-                    followerMin.profilePic = follower.profilePic
-                    followerMin.username = follower.username
-                    followersMin.append(followerMin)
-                    print("Followerss =>\(followerMin)")
-                })
-                
+//                var followersMin = [FollowMin]()
+//                followersMin.forEach({ (follower) in
+//                    
+//                    let followerMin = FollowMin()
+//                    followerMin.idFollower = follower.idFollower
+//                    followerMin.profilePic = follower.profilePic
+//                    followerMin.username = follower.username
+//                    followersMin.append(followerMin)
+//                    print("Followerss =>\(followerMin)")
+//                })
+//                
                 break
             case .failure(_):
                 
@@ -193,14 +179,8 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
             }
             
         }
-        
-        
-        
-        tableCellRegistrator.registerAll(tableView: mainTable)
-        
+
         onLoadData()
-        
-        
     }
 }
 

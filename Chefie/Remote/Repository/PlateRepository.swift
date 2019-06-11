@@ -9,6 +9,25 @@
 import Foundation
 import FirebaseFirestore
 import CodableFirebase
+
+
+public struct RetrievePlatesInfo{
+    
+    var currentOffset : Int = 0
+    var limit: Int = 5
+    var snapShot : QueryDocumentSnapshot?
+    var data : [Plate]?
+    
+    mutating func update(result : RetrievePlatesInfo){
+        
+        if let data = result.data{
+            
+            self.currentOffset =  self.currentOffset + data.count
+        }
+    }
+}
+
+
 class PlateRepository {
     
     func getPlatos(completionHandler: @escaping (ChefieResult<[Plate]>) -> Void ) -> Void {
@@ -24,12 +43,63 @@ class PlateRepository {
                     do {
                         
                         let model = try FirestoreDecoder().decode(Plate.self, from: document.data())
-                        model.id = document.documentID
+                   //     model.id = document.documentID
                         plates.append(model)
                         
                         print("Model: \(model)")
                     } catch  {
                         print("Invalid Selection.")
+                    }
+                })
+                
+                let filteredPlates = plates.map({ (plate) -> Plate in
+                    
+                    let multiMedia = plate.multimedia?.filter({ (media) -> Bool in
+                        return media.type != "video"
+                    })
+                    
+                    plate.multimedia = multiMedia
+                    
+                    return plate
+                })
+                
+                
+                completionHandler(.success( filteredPlates))
+            } else {
+                completionHandler(.failure(err as! String))
+            }
+        })
+    }
+    
+    var userRepository = UserRepository()
+
+    func getPlatos(idUser : String, request: RetrievePlatesInfo, completionHandler: @escaping (ChefieResult<RetrievePlatesInfo>) -> Void ) -> Void {
+        
+        let platesRef = Firestore.firestore().collection("Platos")
+     
+    }
+    
+    func getPlatos(idUser : String, completionHandler: @escaping (ChefieResult<[Plate]>) -> Void ) -> Void {
+        
+        let platesRef = Firestore.firestore().collection("Platos")
+        let query = platesRef.whereField("idUser", isEqualTo: idUser)
+        
+        query.getDocuments(completion: { (querySnapshot, err) in
+            
+            var plates = Array<Plate>()
+            
+            if (querySnapshot?.documents) != nil {
+                
+                querySnapshot?.documents.forEach({ (document) in
+                    do {
+                        
+                        let model = try FirestoreDecoder().decode(Plate.self, from: document.data())
+                        //      model.id = document.documentID
+                        plates.append(model)
+                        
+                        print("Model: \(model)")
+                    } catch  {
+                        print("Could not decode plate")
                     }
                 })
                 
@@ -52,51 +122,6 @@ class PlateRepository {
         })
     }
     
-    var userRepository = UserRepository()
-    
-    func getPlatos(idUser : String, completionHandler: @escaping (ChefieResult<[Plate]>) -> Void ) -> Void {
-        
-        let platesRef = Firestore.firestore().collection("Platos")
-        let query = platesRef.whereField("idUser", isEqualTo: idUser)
-   
-        query.getDocuments(completion: { (querySnapshot, err) in
-            
-            var plates = Array<Plate>()
-
-            if let documents = querySnapshot?.documents {
-                
-                querySnapshot?.documents.forEach({ (document) in
-                    do {
-                        
-                        let model = try FirestoreDecoder().decode(Plate.self, from: document.data())
-                        model.id = document.documentID
-                        plates.append(model)
-                        
-                        print("Model: \(model)")
-                    } catch  {
-                        print("Invalid Selection.")
-                    }
-                })
-
-              let filteredPlates =  plates.map({ (plate) -> Plate in
-                    
-                    let multiMedia = plate.multimedia?.filter({ (media) -> Bool in
-                             return media.type != "video"
-                    })
-                    
-                    plate.multimedia = multiMedia
-                    
-                    return plate
-                })
-
-
-                completionHandler(.success( filteredPlates))
-            } else {
-                completionHandler(.failure(err as! String))
-            }
-        })
-    }
-    
     func giveLike(idPlate: String, idUser: String, completionHandler: @escaping (ChefieResult<Bool>) -> Void ) -> Void {
         
         let plateRef = Firestore.firestore().collection("Platos")
@@ -110,18 +135,15 @@ class PlateRepository {
         let plateRef = Firestore.firestore().collection("Platos")
         plateRef.whereField("likes", arrayContains: "\(idUser)").getDocuments { (querySnapshot, err) in
             if querySnapshot != nil {
-        
+                
             }
         }
         plateRef.document("\(idPlate)").setData([
-            "likes" : "[\(idUser)"])
-        
-        
-        
+            "likes" : "[\(idUser)"])  
     }
     
     func checkIfLiked(idPlate: String, idLike: String, completionHandler: @escaping (ChefieResult<Bool>) -> Void) -> Void {
-      
+        
         Firestore.firestore().collection("Plates")
             .whereField("idPlate", isEqualTo: idPlate)
             .whereField("likes", arrayContains: "\(idLike)").getDocuments { (querySnapshot, err) in
@@ -133,32 +155,30 @@ class PlateRepository {
         }
     }
     
-        func uploadRecipe(plate: Plate) {
-            let platesRef = Firestore.firestore().collection("Platos")
-    
-            do {
-    
-                let model = try FirestoreEncoder().encode(plate)
-                //   platesRef.document().setData(["": 1])
-                //platesRef.document().setData(model)
-                platesRef.addDocument(data: model) { (err) in
-                    if err != nil {
-                        print("Papito algo funciona mal")
-                    } else {
-                        print("Funcion upload Platillo")
-                        print("Model: \(model)")
-                    }
+    func uploadRecipe(plate: Plate) {
+        let platesRef = Firestore.firestore().collection("Platos")
+        
+        let plateRef = platesRef.document()
+        do {
+            
+            plate.id = plateRef.documentID
+            let model = try FirestoreEncoder().encode(plate)
+            
+            //   platesRef.document().setData(["": 1])
+            //platesRef.document().setData(model)
+            platesRef.addDocument(data: model) { (err) in
+                if err != nil {
+                    print("Papito algo funciona mal")
+                } else {
+                    print("Funcion upload Platillo")
+                    print("Model: \(model)")
                 }
-    
-            } catch  {
-                print("Invalid Selection.")
             }
-    
-    
+            
+        } catch  {
+            print("Invalid Selection.")
         }
-    
-    
-    
+    }
     
     func getLikesByPlate(idPlate: String, completionHandler: @escaping (ChefieResult<[LikeMin]>) -> Void) -> Void {
         
@@ -206,7 +226,7 @@ class PlateRepository {
                 do{
                     let dataDescription = document.data()
                     let model = try FirestoreDecoder().decode(Plate.self, from: dataDescription!)
-                    model.id = document.documentID
+                //    model.id = document.documentID
                     //let idUser = model.idUser
                     
                     print("****---getDataFromSinglePlate---******")
@@ -231,15 +251,4 @@ class PlateRepository {
         })
         
     }
-    
-    
-
-    
-    
-    
-
-
-    
-    
-    
 }

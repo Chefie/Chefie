@@ -45,24 +45,36 @@ class PlateDetailsViewController : UIViewController, DynamicViewControllerProto 
         headerDescription.model = HeaderTextModel(title: "Description") as AnyObject
         tableItems.append(headerDescription)
         
-        let description = LargeTextCellItemInfo()
-        description.model = LargeTextModel(text: "Rich in mystery quasar intelligent beings encyclopaedia galactica billions upon billions across the centuries. Tendrils of gossamer clouds bits of moving fluff concept of the number one a very small stage in a vast cosmic arena with pretty stories for which there's little good evidence a still more glorious dawn awaits.Rich in mystery quasar intelligent beings encyclopaedia galactica billions upon billions across the centuries. Tendrils of gossamer clouds bits of moving fluff concept of the number one a very small stage in a vast cosmic arena with pretty stories for which there's little good evidence a still more glorious dawn awaits") as AnyObject
+        tableItems.append(SeparatorCellItemInfo(separatorPercentage: 1))
         
+        let description = LargeTextCellItemInfo()
+        description.model = LargeTextModel(text: model?.description ?? "") as AnyObject
+        description.alignment = .left
+
         tableItems.append(description)
         
-        let comments = Array(0...3).compactMap { (num) -> Comment? in
-               let comment = Comment()
-               comment.likes = Array()
-               comment.id = String(describing: num)
-               return comment
-        }
-
+        tableItems.append(SeparatorCellItemInfo(separatorPercentage: 1))
+        
         let commentVertical = PlateCommentsItemInfo()
+        commentVertical.UID = "Comments"
         commentVertical.setTitle(value: "Comments")
-        commentVertical.model = comments as AnyObject
-        tableItems.append(commentVertical)
+        commentVertical.model = [model] as AnyObject
+ 
+        
+        let addComment = AddCommentItemInfo()
+        addComment.model = self.model
+        addComment.onCommentSent = {
+       
+//            let val = self.tableItems.firstIndex(where: { (item) -> Bool in
+//                  return item.UID == "Comments"
+//            })
 
-        mainTable.reloadData()
+            self.mainTable.reloadData()
+        }
+        
+        self.tableItems.append(commentVertical)
+        self.tableItems.append(addComment)
+        self.mainTable.reloadData()
     }
     
     func onSetup() {
@@ -73,6 +85,9 @@ class PlateDetailsViewController : UIViewController, DynamicViewControllerProto 
         tableCellRegistrator.add(identifier: PlateMediaCarousellItemInfo().reuseIdentifier(), cellClass: PlateMediaCarousellCellView.self)
         
           tableCellRegistrator.add(identifier: PlateCommentsItemInfo().reuseIdentifier(), cellClass: PlateCommentsVerticalCell.self)
+
+        tableCellRegistrator.add(identifier: AddCommentItemInfo().reuseIdentifier(), cellClass: AddCommentCell.self)
+        tableCellRegistrator.add(identifier: SeparatorCellItemInfo().reuseIdentifier(), cellClass: SeparatorCell.self)
         
         tableCellRegistrator.registerAll(tableView: mainTable)
     }
@@ -104,7 +119,7 @@ class PlateDetailsViewController : UIViewController, DynamicViewControllerProto 
         
         let backButton = UIBarButtonItem()
         backButton.title = ""
-        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
+      self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
     
         onSetup()
         onSetupViews()

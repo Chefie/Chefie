@@ -18,6 +18,12 @@ class AppContainer {
     var s3Repository : S3Repository
     var mediaRepository : MultiMediaRepository
     var communityRepository : CommunityRepository
+    var commentRepository : CommentRepository
+    
+    func getUser() -> ChefieUser{
+        
+        return dataManager.localData.chefieUser
+    }
     
     init() {
         self.plateRepository = PlateRepository()
@@ -26,5 +32,6 @@ class AppContainer {
         self.s3Repository = S3Repository()
         self.mediaRepository = MultiMediaRepository()
         self.communityRepository = CommunityRepository()
+        self.commentRepository = CommentRepository()
     }
 }

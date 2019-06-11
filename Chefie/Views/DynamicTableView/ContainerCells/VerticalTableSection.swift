@@ -118,6 +118,12 @@ class VerticalTableSectionView<T> : BaseCell, SkeletonTableViewDataSource, Skele
     override func onLayout(size: CGSize!) {
         super.onLayout(size: size)
         
+        self.contentView.snp.makeConstraints { (maker) in
+            maker.left.right.top.bottom.equalTo(0)
+            maker.width.equalTo(size.width)
+            maker.height.equalTo(size.heightPercentageOf(amount: 30))
+        }
+        
         sectionTitleLabel.snp.makeConstraints { (maker) in
             
             maker.top.equalTo(2)
@@ -126,17 +132,27 @@ class VerticalTableSectionView<T> : BaseCell, SkeletonTableViewDataSource, Skele
             maker.width.equalTo(size.width.minus(amount: 10))
         }
         
+        seeAllBtn.snp.makeConstraints { (maker) in
+            
+            maker.leftMargin.equalTo(config.footerMargin.left)
+            maker.rightMargin.equalTo(config.footerMargin.right)
+         
+            maker.bottom.equalTo(0)
+        }
+
         tableView.frame = CGRect(x: 0, y: sectionTitleLabel.calculateTextHeight() + 10, width: size.width, height: size.heightPercentageOf(amount: 34))
         
    //     sectionTitleLabel.displayLines(height: size.heightPercentageOf(amount: 10))
         seeAllBtn.titleLabel?.defaultFooterTextFont(bold: true)
     }
     
-    func onLayoutSection(){
+    func onLayoutSection(count : Int = -1){
         
         let headerHeight = sectionTitleLabel.calculateTextHeight() + config.headerMargin.top
         
-        let collectionViewHeight = onRequestItemSize().height * CGFloat(getVisibleItemsCount()) + CGFloat(onRequestVerticalSpacing()  * CGFloat(getVisibleItemsCount()))
+        let itemsCount = count != -1 ? count : getVisibleItemsCount()
+     
+        let collectionViewHeight = onRequestItemSize().height * CGFloat(itemsCount) + CGFloat(onRequestVerticalSpacing() * CGFloat(itemsCount))
         
         let footerButtonHeight = parentView.heightPercentageOf(amount: 4)
         
@@ -145,27 +161,32 @@ class VerticalTableSectionView<T> : BaseCell, SkeletonTableViewDataSource, Skele
         tableView.frame.addY(value: margin)
         tableView.frame.size.height = collectionViewHeight
         
+        tableView.contentSize = CGSize(width: parentView.getWidth(), height: collectionViewHeight)
       //  sectionTitleLabel.backgroundColor = UIColor.purple
         
 
-        seeAllBtn.snp.makeConstraints { (maker) in
-            
-            maker.bottom.equalTo(0)
-            maker.leftMargin.equalTo(config.footerMargin.left)
-            maker.topMargin.equalTo(config.footerMargin.top * 2)
-            maker.rightMargin.equalTo(config.footerMargin.right)
-            maker.bottomMargin.equalToSuperview()
-            //   maker.width.equalTo(parentView.widthPercentageOf(amount: 20))
-            maker.height.equalTo(footerButtonHeight)
-            maker.bottomMargin.equalToSuperview()
-        }
         
-        self.contentView.snp.makeConstraints { (maker) in
+        _ = headerHeight + collectionViewHeight + footerButtonHeight + config.footerMargin.top * 2 + 10
+
+        self.contentView.snp.remakeConstraints { (maker) in
              maker.left.top.right.bottom.equalTo(0)
             maker.width.equalTo(parentView.getWidth())
             maker.height.equalTo(headerHeight + collectionViewHeight + footerButtonHeight + config.footerMargin.top * 2 + 10)
         }
  
+        
+        seeAllBtn.snp.remakeConstraints { (maker) in
+  
+//            maker.leftMargin.equalTo(config.footerMargin.left)
+//            maker.rightMargin.equalTo(config.footerMargin.right)
+
+            maker.height.equalTo(footerButtonHeight)
+            maker.bottom.equalTo(0)
+           maker.bottomMargin.equalTo(0)
+       
+            maker.centerX.equalToSuperview()
+        }
+        
         seeAllBtn.paletteDefaultTextColor()
         sectionTitleLabel.paletteDefaultTextColor()
         
@@ -176,7 +197,8 @@ class VerticalTableSectionView<T> : BaseCell, SkeletonTableViewDataSource, Skele
         
         seeAllBtn.hide()
         
-      //  self.backgroundColor = UIColor.red
+        tableView.isScrollEnabled = false
+        //self.backgroundColor = UIColor.red
     }
     
     override func onCreateViews() {
@@ -192,7 +214,11 @@ class VerticalTableSectionView<T> : BaseCell, SkeletonTableViewDataSource, Skele
     override func onLoadData() {
         super.onLoadData()
         onLayoutSection()
+    }
+    
+    func onReady(){
         
+        seeAllBtn.show()
         sectionTitleLabel.doFadeIn()
         seeAllBtn.doFadeIn()
         

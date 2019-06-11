@@ -31,5 +31,6 @@ target 'Chefie' do
   pod 'UITextView+Placeholder'
   pod 'SCLAlertView'
   pod 'CRRefresh'
+  pod 'SwiftEntryKit', '1.0.1'
 end
 

@@ -21,6 +21,9 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
     
     @IBOutlet var mainTable: UITableView!
     
+    var followingRetrieveResult = RetrieveFollowingInfo()
+    var platesRetrieveResult = RetrievePlatesInfo()
+    
     override func updateViewConstraints() {
         
         onSetupViews()
@@ -29,29 +32,83 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
     }
     
     func onSetup() {
-        //        let cache = ImageCache.default
-        //        cache.clearMemoryCache()
-        //        cache.clearDiskCache()
-        //
-        //   SDImageCache.shared.clearMemory()
-        // SDImageCache.shared.clearDisk()
-    tableviewPaginator = TableviewPaginatorEx.init(paginatorUI: self, delegate: self)
-       // tableviewPaginator.initialSetup()
-       endlessTableHelper = EndlessTableHelper(table: mainTable, paginator: tableviewPaginator)
+
+       endlessTableHelper = EndlessTableHelper(table: mainTable)
         
         mainTable.setDefaultSettings(shouldBounce: true)
-        appContainer.dataManager.remoteData.NewPlateSubject.subscribe { (
-            event : Event<Plate>) in
+        
+        appContainer.plateRepository.getPlatos { (result : ChefieResult<[Plate]>) in
+            switch result {
+                
+            case .success(let data):
+                
+                let items = data.compactMap({ (plate) -> HomePlatoCellItemInfo? in
+                    let item = HomePlatoCellItemInfo()
+                    item.model = plate
+                    return item
+                    
+                })
+                
+                
+                //self.mainTable.reloadData()
+                self.endlessTableHelper.loadMoreItems(itemsCount: items.count
+                    , callback: {
+                        
+                        items.forEach({ (item) in
+                            
+                            self.tableItems.append(item)
+                            self.endlessTableHelper.insertRow(itemsCount: self.tableItems.count - 1)
+                        })
+                })
+                //
+                break
+            case .failure(_):
+                break
+            }
             
-            self.endlessTableHelper.begin()
-            
-            let item = HomePlatoCellItemInfo()
-            item.model = event.element
-            
-            self.tableItems.insert(item, at: 0)
-            self.endlessTableHelper.insertRowAt(row: 0)
-            self.endlessTableHelper.end()
+       
+            self.mainTable.cr.endHeaderRefresh()
+
         }
+        
+//        appContainer.userRepository.getFollowingUsers(idUser: appContainer.getUser().id!, request: followingRetrieveResult) { (result : ChefieResult<RetrieveFollowingInfo>) in
+//
+//            switch result {
+//                
+//            case .success(let result):
+//                
+//                self.followingRetrieveResult.update(result: result)
+//                print("")  
+//                break
+//            case .failure(_): break
+//            }
+//        }
+//        
+//        appContainer.plateRepository.getPlatos(idUser: appContainer.getUser().id!, request: platesRetrieveResult) { (result : ChefieResult<RetrievePlatesInfo>) in
+//            switch result {
+//                
+//            case .success(let result):
+//                
+//                self.platesRetrieveResult.update(result: result)
+//                print("")
+//                
+//                break
+//            case .failure(_): break
+//            }
+//        }
+//        
+//        appContainer.dataManager.remoteData.NewPlateSubject.subscribe { (
+//            event : Event<Plate>) in
+//            
+//            self.endlessTableHelper.begin()
+//            
+//            let item = HomePlatoCellItemInfo()
+//            item.model = event.element
+//            
+//            self.tableItems.insert(item, at: 0)
+//            self.endlessTableHelper.insertRowAt(row: 0)
+//            self.endlessTableHelper.end()
+//        }
     }
     
     func onSetupViews(){
@@ -140,16 +197,7 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
     func loadPlates(){
         
         print("Loading plates")
-        //  mainTable.cr.beginHeaderRefresh()
-        var comments = [String]()
-        comments.append("Este es un comentario corto")
-        comments.append("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.")
-        comments.append("Five hours? Aw, man! Couldn't you just get me the death penalty?")
-        comments.append("Five hours? Aw, man! Couldn't you just get me the death penalty?")
-        comments.append("Five hours? Aw, man! Couldn't you just get me the death penalty?")
-        comments.append("Five hours? Aw, man! Couldn't you just get me the death penalty?")
-        comments.append("Vastness is bearable only through love take root and flourish radio telescope not a sunrise but a galaxyrise rings of Uranus a very small stage in a vast cosmic arena. Descended from astronomers Tunguska event the only home we've ever known two ghostly white figures in coveralls and helmets are soflty dancing realm of the galaxies across the centuries. Emerged into consciousness gathered by gravity two ghostly white figures in coveralls and helmets are soflty dancing concept of the number one the only home we've ever known dispassionate extraterrestrial observer and billions upon billions upon billions upon billions upon billions upon billions upon billions.")
-        
+
         appContainer.plateRepository.getPlatos { (result : ChefieResult<[Plate]>) in
             switch result {
                 
@@ -173,23 +221,12 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
                             self.endlessTableHelper.insertRow(itemsCount: self.tableItems.count - 1)
                         })
                 })
-//
                 break
             case .failure(_):
                 break
             }
             
-        //    self.mainTable.cr.removeHeader()
             self.mainTable.cr.endHeaderRefresh()
-
-          //  self.mainTable.reloadData()
-            
-            /// If common end
-            ///self.mainTable.cr.endLoadingMore()
-//            /// If no more data
-//            self.mainTable.cr.noticeNoMoreData()
-//            /// Reset no more data
-//            self.tableView.cr.resetNoMore()
         }
     }
 }
@@ -197,10 +234,6 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
 extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//
-//        if let height = tableviewPaginator.heightForLoadMore(cell: indexPath) {
-//            return height
-//        }
         
         return UITableView.automaticDimension
     }
@@ -211,8 +244,7 @@ extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDele
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let itemsCount = tableItems.count == 0 ? AppSettings.DefaultSkeletonCellCount : tableItems.count
-        
-        //     let tableviewPagiantorLoadeMoreCells = (tableviewPaginator?.rowsIn(section: section) ?? 0)
+
         return itemsCount
     }
     
@@ -221,10 +253,7 @@ extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDele
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //        if let cell = tableviewPaginator.cellForLoadMore(at: indexPath) {
-        //            return cell
-        //        }
-        
+
         if (self.tableItems.count == 0){
             let ce : BaseCell = mainTable.dequeueReusableCell(withIdentifier: tableCellRegistrator.getRandomIdentifier(), for: indexPath) as! BaseCell
             ce.viewController = self
@@ -250,8 +279,6 @@ class LoadingCell : UITableViewCell {
         let lbl = MultilineLabel(maskConstraints: false, font: DefaultFonts.DefaultTextFont)
         lbl.text = "Loading...."
         lbl.numberOfLines = 1
-        //lbl.textColor = UIColor.white
-        //lbl.backgroundColor = UIColor.blue
         return lbl
     }()
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -284,13 +311,5 @@ extension HomeViewController: TableviewPaginatorUIProtocol {
     
     func getRefreshControlTintColor(paginator: TableviewPaginatorEx) -> UIColor {
         return UIColor.orange
-    }
-}
-
-extension HomeViewController: TableviewPaginatorProtocol {
-    func loadPaginatedData(offset: Int, shouldAppend: Bool, paginator: TableviewPaginatorEx) {
-        print("LOAD")
-        
-        //        loadPlates()
     }
 }

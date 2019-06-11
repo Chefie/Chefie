@@ -237,8 +237,7 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
                             print("video data : \(videoData)")
                         } catch  {
                             print("exception when getting data from video")
-                        }
-                        
+                        }            
                     })
                 }
             }
@@ -282,7 +281,7 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
                         self.goToMainScreen()
                     }
                     
-                    alertView.showSuccess("Recipe Uploaded", subTitle: "Your recipe has been successfully published.")
+                    alertView.showSuccess("Recipe Uploaded", subTitle: "Your recipe has been successfully published")
                 }
  
                 self.dismiss(animated: true, completion: {
@@ -335,17 +334,8 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         descriptionTextView.layer.cornerRadius = 5.0;
         
         //Main table settings.
-        mainTable.translatesAutoresizingMaskIntoConstraints = false
-        mainTable.setCellsToAutomaticDimension()
-        mainTable.separatorStyle = UITableViewCell.SeparatorStyle.none
-        mainTable.allowsSelection = false
-        mainTable.allowsMultipleSelection = false
-        mainTable.showsHorizontalScrollIndicator = false
-        mainTable.alwaysBounceHorizontal = false
-        mainTable.alwaysBounceVertical = false
-        mainTable.bounces = false
-        mainTable.showsVerticalScrollIndicator = false
-        mainTable.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+        mainTable.setDefaultSettings()
+        mainTable.setContentInset(top: 10)
         self.mainTable.isSkeletonable = true
         
         tableCellRegistrator.registerAll(tableView: mainTable)

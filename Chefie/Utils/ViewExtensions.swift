@@ -34,6 +34,10 @@ extension UITableView {
         self.showsVerticalScrollIndicator = false
         self.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 200, right: 0)
     }
+    
+    func setContentInset(top : CGFloat = 0, left : CGFloat = 0,bottom : CGFloat = 0,right : CGFloat = 0){
+        self.contentInset = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
+    }
 }
 
 extension UILabel {

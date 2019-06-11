@@ -121,7 +121,7 @@ class PlateInfoCell : BaseCell, ICellDataProtocol{
         super.onLoadData()
         
         let date = "".parseDateWithFormat(format: "dd-mm-yyyy HH:mm:ss")
-        lblInfoDate.text = model?.created_at?.extractInfoFromDate(date: date)
+        //lblInfoDate.text = model?.created_at?.extractInfoFromDate(date: date)
         lblInfoUser.text = model?.user?.userName
         
         self.hideSkeleton()

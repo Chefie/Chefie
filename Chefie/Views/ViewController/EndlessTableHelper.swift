@@ -13,12 +13,10 @@ class EndlessTableHelper {
     var isFirst = false
     var firstItemsCount = AppSettings.DefaultSkeletonCellCount
     var tableView : UITableView
-    var tablePaginator : TableviewPaginatorEx
     
-    init(table : UITableView, paginator : TableviewPaginatorEx) {
+    init(table : UITableView) {
         
         self.tableView = table
-        self.tablePaginator = paginator
     }
     
      func begin() {
@@ -64,8 +62,8 @@ class EndlessTableHelper {
     }
     
     func addOffset(count : Int){
-        self.tablePaginator.incrementOffsetBy(delta: count)
-        self.tablePaginator.partialDataFetchingDone()
+       // self.tablePaginator.incrementOffsetBy(delta: count)
+        //self.tablePaginator.partialDataFetchingDone()
     }
     
     

@@ -99,9 +99,6 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="SDc-l6-UjR" kind="relationship" relationship="rootViewController" id="Miu-5e-5L0"/>
-                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eDM-M3-Caw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

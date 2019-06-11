@@ -7,7 +7,18 @@
 //
 
 import Foundation
+
 extension Date {
+
+    func convertDateToTimeStamp() -> String {
+        
+        let date = Date()
+        let format = DateFormatter()
+        format.dateFormat = "dd-MM-yyyy HH:mm:ss"
+        let formattedDate = format.string(from: date)
+        
+        return formattedDate
+    }
     
     func convertDateToString() -> String {
         
