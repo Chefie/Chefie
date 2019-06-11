@@ -17,6 +17,8 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
     var tableItems = Array<BaseItemInfo>()
     var tableCellRegistrator = TableCellRegistrator()
     
+    
+    
     @IBOutlet var mainTable: UITableView!{
         didSet {
       
@@ -91,6 +93,7 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
         //Adding to array
         tableItems.append(pInfo)
         tableItems.append(username)
+        tableItems.append(bio)
         tableItems.append(follows)
    
         tableItems.append(bio)
@@ -104,12 +107,20 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
 
     }
     
+    @objc func settings() {
+        
+        //present(gallery, animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Profile"
         self.navigationController!.navigationBar.isTranslucent = true
         self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: DefaultFonts.ZapFino]
         view.backgroundColor = .white
+        navigationItem.leftItemsSupplementBackButton = true
+        //navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(close))
+        //view.backgroundColor = .white
         onSetup()
         onSetupViews()
         
@@ -118,9 +129,9 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
         /////////////////////////////////////////////////////
         tableCellRegistrator.add(identifier: ProfileUsernameItemInfo().reuseIdentifier(), cellClass: ProfileUsernameCellView.self)
         //////////////////////////////////////////////////////
-        tableCellRegistrator.add(identifier: ProfileFollowItemInfo().reuseIdentifier(), cellClass: ProfileFollowCellView.self)
-        //////////////////////////////////////////////////////
         tableCellRegistrator.add(identifier: ProfileBioItemInfo().reuseIdentifier(), cellClass: ProfileBioCellView.self)
+        //////////////////////////////////////////////////////
+        tableCellRegistrator.add(identifier: ProfileFollowItemInfo().reuseIdentifier(), cellClass: ProfileFollowCellView.self)
         //////////////////////////////////////////////////////
       //   tableCellRegistrator.add(identifier: PlatosVerticalCellBaseItemInfo().reuseIdentifier(), cellClass: PlatosVerticalCell.self)
         //////////////////////////////////////////////////////

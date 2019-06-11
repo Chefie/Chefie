@@ -33,27 +33,31 @@ class ProfileUsernameCellView : BaseCell, ICellDataProtocol {
     
     let labelUsername : UILabel = {
        let lbl = UILabel(maskConstraints: false, font: DefaultFonts.DefaultHeaderTextFont)
+        let border = CALayer()
         lbl.text = ""
         lbl.textAlignment = .center
         lbl.textColor = .black
         lbl.isSkeletonable = true
         lbl.adjustsFontForContentSizeCategory = true
+        //lbl.backgroundColor = .red
+
         //lbl.frame = CGRect(x: 22, y: 40, width: 100, height: 10)
-        lbl.linesCornerRadius = 10
+        //lbl.linesCornerRadius = 10
         return lbl
     }()
     
     override func onLayout(size: CGSize!) {
         
-        let cellSize = CGSize(width: size.width, height: size.heightPercentageOf(amount: 5))
+        let cellSize = CGSize(width: size.width, height: size.heightPercentageOf(amount: 3))
         
        // let titleFontHeight = max(labelUsername.font.lineHeight, cellSize.height.percentageOf(amount: 5))
         
         labelUsername.snp.makeConstraints { (maker) in
             
-            maker.leftMargin.equalTo(size.widthPercentageOf(amount: 0))
-            maker.topMargin.equalTo(5)
+          //  maker.leftMargin.equalTo(size.widthPercentageOf(amount: 0))
+            maker.topMargin.equalTo(10)
             maker.width.equalTo(cellSize.width)
+            //maker.centerXWithinMargins.equalTo(50)
             
           //  maker.left.equalTo(cellSize.widthPercentageOf(amount: 1))
           //  maker.top.equalTo(cellSize.height.percentageOf(amount: 2))
@@ -83,6 +87,6 @@ class ProfileUsernameCellView : BaseCell, ICellDataProtocol {
     override func onCreateViews() {
         self.contentView.addSubview(labelUsername)
     }
-    
-    
+
 }
+

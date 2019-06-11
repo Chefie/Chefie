@@ -97,5 +97,16 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
 
             self.present(navigationController, animated: true, completion: nil)
         }
+        if item.tag == 4 {
+            
+            let vc = UIStoryboard(name: "", bundle: nil).instantiateViewController(withIdentifier: "")
+            
+            let navigationController = UINavigationController(rootViewController: vc)
+            
+            navigationItem.leftItemsSupplementBackButton = true
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: nil)
+            
+            self.present(navigationController, animated: true, completion: nil)
+        }
     }
 }

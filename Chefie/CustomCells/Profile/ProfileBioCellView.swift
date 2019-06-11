@@ -17,10 +17,11 @@ class ProfileBioItemInfo : BaseItemInfo {
     }
 }
 
-class ProfileBioCellView : BaseCell, ICellDataProtocol {
+class ProfileBioCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     typealias T = ChefieUser
     var model: ChefieUser?
+    var imagePicker = UIImagePickerController()
     
     override func getModel() -> AnyObject? {
         return model
@@ -32,17 +33,13 @@ class ProfileBioCellView : BaseCell, ICellDataProtocol {
     
     let labelBio : MultilineLabel = {
         let lbl = MultilineLabel(maskConstraints: false, font: DefaultFonts.DefaultTextLightFont)
-        lbl.textColor = .black
         lbl.numberOfLines = 0
         lbl.sizeToFit()
-        lbl.textAlignment = .left
-        
+        lbl.textAlignment = .center
+        //lbl.backgroundColor = .red
         //lbl.isSkeletonable = true
         //lbl.linesCornerRadius = 10
-       
         //lbl.frame = CGRect(x: 22, y: 40, width: 100, height: 20)
-        
-       
         return lbl
     }()
     
@@ -50,19 +47,22 @@ class ProfileBioCellView : BaseCell, ICellDataProtocol {
         super.onLayout(size: size)
         //let cellSize = CGSize(width: size.width, height: size.heightPercentageOf(amount: CGFloat(labelBio.numberOfLines)))
         
-        let cellSize2 = CGSize(width: size.width, height: size.heightPercentageOf(amount: 40))
+        let cellSize2 = CGSize(width: size.width, height: size.heightPercentageOf(amount: 45))
         
         labelBio.snp.makeConstraints { (maker) in
             //maker.leftMargin.equalTo(size.widthPercentageOf(amount: 0))
-            //maker.topMargin.equalTo(2)
-             maker.leftMargin.equalTo(1.5)
-            maker.rightMargin.equalTo(1.5)
+            maker.topMargin.equalTo(10)
+            //maker.leftMargin.equalTo(1)
+            //maker.rightMargin.equalTo(1)
             maker.width.equalTo(cellSize2.width)
             //maker.height.equalTo(40)
         }
         
         labelBio.displayLines(height: 200)
         
+        self.contentView.snp.makeConstraints { (maker) in
+            maker.size.equalTo(cellSize2)
+        }
         self.showGradientSkeleton()
     }
     
@@ -73,14 +73,14 @@ class ProfileBioCellView : BaseCell, ICellDataProtocol {
         
         self.labelBio.text = String("\(self.model?.biography ?? "")")
         
-       
+        
         contentView.snp.makeConstraints { (maker) in
-           
-            maker.topMargin.bottomMargin.equalTo(2)
-           
+            
+            maker.topMargin.bottomMargin.equalTo(4)
+            
             maker.width.equalTo(parentView.getWidth())
             maker.height.equalTo(labelBio.calculateTextHeight() + 55)
-           // maker.height.equalTo(40)
+            // maker.height.equalTo(40)
         }
         
         //self.backgroundColor = UIColor.red
@@ -90,8 +90,12 @@ class ProfileBioCellView : BaseCell, ICellDataProtocol {
     
     override func onCreateViews() {
         super.onCreateViews()
+        
         self.contentView.addSubview(labelBio)
     }
+    
+
+    
     
     
     
