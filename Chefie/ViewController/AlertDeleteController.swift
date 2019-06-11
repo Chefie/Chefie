@@ -57,9 +57,8 @@ class AlertDeleteController: UIViewController {
                     // Perhaps this is an error for you?
                 } else {
                     let document = querySnapshot!.documents.first
-                    document!.reference.updateData([
-                        "deleted" : true
-                        ])
+                    document!.reference.delete()
+               
                 }
                 
                 

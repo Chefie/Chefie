@@ -7,16 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1991D48622AABA9D0086D9BA /* FollowMin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1991D48222AABA9C0086D9BA /* FollowMin.swift */; };
-		1991D48722AABA9D0086D9BA /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1991D48322AABA9C0086D9BA /* Place.swift */; };
-		1991D48822AABA9D0086D9BA /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1991D48422AABA9D0086D9BA /* Route.swift */; };
-		1991D48922AABA9D0086D9BA /* LikeMin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1991D48522AABA9D0086D9BA /* LikeMin.swift */; };
-		1991D49022AABAEB0086D9BA /* ProfileFollowCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1991D48A22AABAEA0086D9BA /* ProfileFollowCellView.swift */; };
-		1991D49122AABAEB0086D9BA /* ProfileFollowBtnCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1991D48B22AABAEA0086D9BA /* ProfileFollowBtnCellView.swift */; };
-		1991D49222AABAEB0086D9BA /* ProfileInfoCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1991D48C22AABAEB0086D9BA /* ProfileInfoCellView.swift */; };
-		1991D49322AABAEB0086D9BA /* ProfileBioCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1991D48D22AABAEB0086D9BA /* ProfileBioCellView.swift */; };
-		1991D49422AABAEB0086D9BA /* ProfileUsernameCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1991D48E22AABAEB0086D9BA /* ProfileUsernameCellView.swift */; };
-		1991D49522AABAEB0086D9BA /* ProfilePlatesCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1991D48F22AABAEB0086D9BA /* ProfilePlatesCellView.swift */; };
+		148E93EBF2A19BF816448D7F /* Pods_Chefie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC8B8A0B201CCAFE3AC70D24 /* Pods_Chefie.framework */; };
 		33066843229D9BA9007BB2E8 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33066842229D9BA9007BB2E8 /* SearchViewController.swift */; };
 		33066847229D9D83007BB2E8 /* NewRecipeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33066846229D9D83007BB2E8 /* NewRecipeScreen.storyboard */; };
 		33066849229D9D9A007BB2E8 /* RouteScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33066848229D9D9A007BB2E8 /* RouteScreen.storyboard */; };
@@ -213,16 +204,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1991D48222AABA9C0086D9BA /* FollowMin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowMin.swift; sourceTree = "<group>"; };
-		1991D48322AABA9C0086D9BA /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
-		1991D48422AABA9D0086D9BA /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
-		1991D48522AABA9D0086D9BA /* LikeMin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeMin.swift; sourceTree = "<group>"; };
-		1991D48A22AABAEA0086D9BA /* ProfileFollowCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFollowCellView.swift; sourceTree = "<group>"; };
-		1991D48B22AABAEA0086D9BA /* ProfileFollowBtnCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFollowBtnCellView.swift; sourceTree = "<group>"; };
-		1991D48C22AABAEB0086D9BA /* ProfileInfoCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileInfoCellView.swift; sourceTree = "<group>"; };
-		1991D48D22AABAEB0086D9BA /* ProfileBioCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileBioCellView.swift; sourceTree = "<group>"; };
-		1991D48E22AABAEB0086D9BA /* ProfileUsernameCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUsernameCellView.swift; sourceTree = "<group>"; };
-		1991D48F22AABAEB0086D9BA /* ProfilePlatesCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePlatesCellView.swift; sourceTree = "<group>"; };
 		33066842229D9BA9007BB2E8 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		33066846229D9D83007BB2E8 /* NewRecipeScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NewRecipeScreen.storyboard; sourceTree = "<group>"; };
 		33066848229D9D9A007BB2E8 /* RouteScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = RouteScreen.storyboard; sourceTree = "<group>"; };
@@ -300,6 +281,7 @@
 		4FE58753229D76FC003E780F /* SettingsCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCellView.swift; sourceTree = "<group>"; };
 		4FE58755229D770E003E780F /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		4FE58757229D772E003E780F /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		7F7825EC2260F8BA4B55EE0A /* Pods-Chefie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.release.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.release.xcconfig"; sourceTree = "<group>"; };
 		B0150DAA227579E0006F48FA /* PlateCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateCellView.swift; sourceTree = "<group>"; };
 		B0150DAC22757B4C006F48FA /* PlateDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateDetailsViewController.swift; sourceTree = "<group>"; };
 		B01E051B22758DC700BEAAE8 /* ImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewExtension.swift; sourceTree = "<group>"; };
@@ -420,6 +402,8 @@
 		BCEBD7A5225A5A1800CF339B /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
 		BCEBD7A8225A5A7800CF339B /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		BCEBD7AC225A5AB300CF339B /* LocalData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalData.swift; sourceTree = "<group>"; };
+		D408BD644EBE64283413E575 /* Pods-Chefie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chefie.debug.xcconfig"; path = "Target Support Files/Pods-Chefie/Pods-Chefie.debug.xcconfig"; sourceTree = "<group>"; };
+		FC8B8A0B201CCAFE3AC70D24 /* Pods_Chefie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chefie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -427,6 +411,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				148E93EBF2A19BF816448D7F /* Pods_Chefie.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -610,6 +595,8 @@
 		9BF735D886B81CEAAA42E7E1 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
+				D408BD644EBE64283413E575 /* Pods-Chefie.debug.xcconfig */,
+				7F7825EC2260F8BA4B55EE0A /* Pods-Chefie.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -650,6 +637,14 @@
 				BC9CCD98227E2F57008CDCDB /* InfoView.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		B53F7B20A23A99BB79BE2619 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FC8B8A0B201CCAFE3AC70D24 /* Pods_Chefie.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		BC1EE17322A729DE00513D56 /* Generic */ = {
@@ -696,6 +691,7 @@
 				BC7F2F3B2257993100D3F301 /* Chefie */,
 				BC7F2F3A2257993100D3F301 /* Products */,
 				9BF735D886B81CEAAA42E7E1 /* Pods */,
+				B53F7B20A23A99BB79BE2619 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1045,9 +1041,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BC7F2F4B2257993200D3F301 /* Build configuration list for PBXNativeTarget "Chefie" */;
 			buildPhases = (
+				92AC29FD7FC0A0334C1510C2 /* [CP] Check Pods Manifest.lock */,
 				BC7F2F352257993100D3F301 /* Sources */,
 				BC7F2F362257993100D3F301 /* Frameworks */,
 				BC7F2F372257993100D3F301 /* Resources */,
+				59BFD97A5D23066DB6463461 /* [CP] Embed Pods Frameworks */,
+				95DEF74402E0C2858A2A0CBA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1134,6 +1133,143 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		59BFD97A5D23066DB6463461 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AACarousel/AACarousel.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSAuthCore/AWSAuthCore.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProvider/AWSCognitoIdentityProvider.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProviderASF/AWSCognitoIdentityProviderASF.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSMobileClient/AWSMobileClient.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSS3/AWSS3.framework",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/CRRefresh/CRRefresh.framework",
+				"${BUILT_PRODUCTS_DIR}/CodableFirebase/CodableFirebase.framework",
+				"${BUILT_PRODUCTS_DIR}/DLRadioButton/DLRadioButton.framework",
+				"${BUILT_PRODUCTS_DIR}/FSPagerView/FSPagerView.framework",
+				"${BUILT_PRODUCTS_DIR}/FaveButton/FaveButton.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/Gallery/Gallery.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/QuickLayout/QuickLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/RYFloatingInput/RYFloatingInput.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SkeletonView/SkeletonView.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftEntryKit/SwiftEntryKit.framework",
+				"${BUILT_PRODUCTS_DIR}/TableviewPaginator/TableviewPaginator.framework",
+				"${BUILT_PRODUCTS_DIR}/TagListView/TagListView.framework",
+				"${BUILT_PRODUCTS_DIR}/UITextView+Placeholder/UITextView_Placeholder.framework",
+				"${BUILT_PRODUCTS_DIR}/VersaPlayer/VersaPlayer.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AACarousel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSAuthCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognitoIdentityProvider.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognitoIdentityProviderASF.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSMobileClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSS3.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CRRefresh.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CodableFirebase.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DLRadioButton.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSPagerView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FaveButton.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Gallery.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QuickLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RYFloatingInput.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkeletonView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftEntryKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TableviewPaginator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TagListView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UITextView_Placeholder.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VersaPlayer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		92AC29FD7FC0A0334C1510C2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Chefie-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		95DEF74402E0C2858A2A0CBA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chefie/Pods-Chefie-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BC7F2F352257993100D3F301 /* Sources */ = {
@@ -1435,6 +1571,7 @@
 		};
 		BC7F2F4C2257993200D3F301 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D408BD644EBE64283413E575 /* Pods-Chefie.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1453,6 +1590,7 @@
 		};
 		BC7F2F4D2257993200D3F301 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7F7825EC2260F8BA4B55EE0A /* Pods-Chefie.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
