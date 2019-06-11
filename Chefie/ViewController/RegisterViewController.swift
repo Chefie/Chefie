@@ -98,9 +98,15 @@ class RegisterViewController : UIViewController, UITextFieldDelegate {
                             
                             if  querySnapshot?.count == 0 {
                                 
+                                
+                                let fullName = Auth.auth().currentUser!.email
+                                let fullNameArr = fullName!.components(separatedBy: "@")
+                                let firstName = fullNameArr[0] //First
+                                //let lastName = fullNameArr[1] //Last
+                                
                                 let usuarioChefie = ChefieUser()
                                 usuarioChefie.id = Auth.auth().currentUser!.uid
-                                usuarioChefie.userName = ""
+                                usuarioChefie.userName = firstName
                                 usuarioChefie.email = Auth.auth().currentUser!.email
                                 usuarioChefie.fullName = ""
                                 usuarioChefie.biography = ""

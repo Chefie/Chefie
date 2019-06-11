@@ -19,6 +19,8 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
     
     let db = Firestore.firestore()
     
+    var usernameGlobal: ChefieUser!
+    
     //Array comunidades de España
     let comunidades = ["Andalucía", "Aragón", "Canarias", "Cantabria", "Castilla y León", "Castilla-La Mancha", "Cataluña", "Ceuta", "Comunidad Valenciana", "Comunidad de Madrid", "Extremadura", "Galicia", "Islas Baleares", "La Rioja", "Melilla", "Navarra", "País Vasco", "Principado de Asturias", "Región de Murcia"]
     
@@ -85,9 +87,26 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
         }
     }
     
-    //Metodo que hace un apdate del usuario logueado.
-    func modificarUsuario(){
+    func checkIfUsernameExist(username: String, completionHandler: @escaping (ChefieResult<Bool>) -> Void) -> Void{
+        let db = Firestore.firestore()
         
+        db.collection("Users").whereField("userName", isEqualTo: self.textFieldUsername.text!)
+            .getDocuments() { (querySnapshot, err) in
+                
+                if  querySnapshot?.count == 0 {
+                    
+                   completionHandler(.success(true))
+                }
+                
+                else {
+                    
+                    completionHandler(.failure("Not found"))
+                }
+               
+        }
+    }
+    
+    func insertDatosUsuario(){
         let id = Auth.auth().currentUser!.uid
         self.db.collection("Users")
             .whereField("id", isEqualTo: id)
@@ -107,37 +126,56 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
                         "location" : self.provinciaUser
                         ])
                     
-//                    let alert = UIAlertController(title: "Profile updated succesfully", message: "", preferredStyle: .alert)
-//                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-//                        switch action.style{
-//                        case .default:
-//                            print("default")
-//
-//                            let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//                            let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen" )
-//
-//                            self.present(exampleVC, animated: true)
-//
-//                        case .cancel:
-//                            print("cancel")
-//
-//                        case .destructive:
-//                            print("destructive")
-//
-//
-//                        }}))
-//                    self.present(alert, animated: true, completion: nil)
+                    
                     let appearance = SCLAlertView.SCLAppearance(
                         showCloseButton: false
                     )
                     let alertView = SCLAlertView(appearance: appearance)
-//                    alertView.addButton("First Button", target:self, selector:Selector("firstButton"))
+                    //                    alertView.addButton("First Button", target:self, selector:Selector("firstButton"))
                     alertView.addButton("Great!") {
                         self.goToMainAfterUpdate()
                     }
                     alertView.showSuccess("Your profile was successfully updated.", subTitle: "")
                 }
         }
+    }
+    
+    //Metodo que hace un apdate del usuario logueado.
+    func modificarUsuario(){
+        
+        if(usernameGlobal.userName != textFieldUsername.text!){
+            
+            checkIfUsernameExist(username: textFieldUsername.text!) { (result : ChefieResult<Bool>) in
+                
+                switch result{
+                    
+                case .success(_):
+                    
+                    self.insertDatosUsuario()
+                  
+                    break
+                    
+                case .failure(_):
+                    
+                    let appearance = SCLAlertView.SCLAppearance(
+                        showCloseButton: true
+                    )
+                    let alertView = SCLAlertView(appearance: appearance)
+                    alertView.showWarning("Ups..", subTitle: "This username already exists.")
+                    break
+                }
+            }
+        }else{
+            self.insertDatosUsuario()
+        }
+        
+       
+     
+        
+
+        
+        
+      
     }
     
     
@@ -155,6 +193,8 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
             switch result {
                 
             case .success(let user) :
+                
+                self.usernameGlobal = user
                 
                 self.textFieldFullname.text = user.fullName
                 self.textFieldUsername.text = user.userName
@@ -284,9 +324,8 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
                             // Perhaps this is an error for you?
                         } else {
                             let document = querySnapshot!.documents.first
-                            document!.reference.updateData([
-                                "deleted" : true
-                                ])
+                          
+                             document!.reference.delete()
                         }
                         
                 }
