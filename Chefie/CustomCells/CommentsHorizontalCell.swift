@@ -24,7 +24,7 @@ class CommentsHorizontalCell : HorizontalSectionView<Comment> {
         didSet(value){
         }
     }
-
+    
     override func getCellIdentifier() -> String {
         return String(describing: CommentCollectionCell.self)
     }
@@ -33,9 +33,9 @@ class CommentsHorizontalCell : HorizontalSectionView<Comment> {
         
         collectionView.register(CommentCollectionCell.self, forCellWithReuseIdentifier: getCellIdentifier())
     }
-
+    
     override func onLoadData() {
-      
+        
         collectionView.reloadData()
         
         super.onLoadData()
@@ -56,7 +56,7 @@ class CommentsHorizontalCell : HorizontalSectionView<Comment> {
     }
     
     override func onRequestItemSize() -> CGSize {
-         return CGSize(width: collectionView.getWidth() / 2, height: parentView.heightPercentageOf(amount: 28))
+        return CGSize(width: collectionView.getWidth() / 2, height: parentView.heightPercentageOf(amount: 28))
     }
     
     override func onRequestCell(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -96,37 +96,30 @@ class CommentCollectionCell : BaseCollectionCell, ICellDataProtocol, INestedCell
         lbl.text = "Text"
         return lbl
     }()
-
-  
+    
+    
     override func onLayout(size: CGSize!) {
         super.onLayout(size: size)
         
         self.contentView.snp.makeConstraints { (maker) in
             // this makes collectionview not responsible??
-         //   maker.top.left.right.bottom.equalToSuperview()
+            //   maker.top.left.right.bottom.equalToSuperview()
             maker.width.equalTo(collectionItemSize.width)
             maker.height.equalTo(collectionItemSize.height)
         }
         
         label.snp.makeConstraints { (maker) in
-
+            
             maker.top.equalTo(0)
             maker.bottomMargin.equalTo(0)
-          //  maker.topMargin.equalTo(10)
+            //  maker.topMargin.equalTo(10)
             maker.leftMargin.rightMargin.equalTo(10)
             maker.width.equalTo(size.widthPercentageOf(amount: 20))
             
             maker.height.equalTo(collectionItemSize.height - 10)
         }
-
-
+        
         label.paletteDefaultTextColor()
-        
-  
-        //    label.displayLines(height: 500)
-        
-        //self.backgroundColor = UIColor.red
-        //    self.showAnimatedGradientSkeleton()
     }
     
     override func setModel(model: AnyObject?) {
@@ -138,27 +131,24 @@ class CommentCollectionCell : BaseCollectionCell, ICellDataProtocol, INestedCell
     }
     
     override func onLoadData() {
-        
-
-       label.text = model?.content
-        
+    
+        label.text = model?.content
         label.hideLines()
-        
     }
     
     override func onCreateViews() {
         super.onCreateViews()
- 
-    //    self.contentView.addShadow()
-       // self.contentView.addSubview(cardView)
+        
+        //    self.contentView.addShadow()
+        // self.contentView.addSubview(cardView)
         self.contentView.addSubview(label)
         
         
-     //   self.contentView.setTouch(target: self, selector: #selector(onTouch))
+        //   self.contentView.setTouch(target: self, selector: #selector(onTouch))
     }
     
     @objc func onTouch() {
         
-       print("test")
+        print("test")
     }
 }

@@ -16,7 +16,7 @@ class NotificationManager {
     
     public static let shared = NotificationManager()
     
-    func createNotificationEntry() {
+    func createNotificationEntry(completionHandler: @escaping () -> Void) {
         
         let UID = appContainer.getUser().id!
         
@@ -27,72 +27,59 @@ class NotificationManager {
                 if snap.isEmpty{
                     
                     let attrRef = Firestore.firestore().collection("Notifications").document(UID)
-                    attrRef.setData([
-                        "created_at" : Date().convertDateToString()])
+                    attrRef.setData(CollectionManager.shared.getDefaultCollectionData())
                 }
             }
+            
+            completionHandler()
         }
     }
     
     func listenForNotifications(){
         
-        createNotificationEntry()
-        
-        let user = appContainer.getUser()
-        let UID = user.id!
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
-        
-        let startTime: Date = formatter.date(from: Date().convertDateToString()) ?? Date(timeIntervalSince1970: 0)
-        let startTimestamp: Timestamp = Timestamp(date: startTime)
-        
-        // Firestore.firestore().collection("/Notifications/\(UID)/data").addDocument(data: ["time":  startTimestamp])
-        
-        Firestore.firestore().collection("/Notifications/\(UID)/data").whereField("date", isGreaterThanOrEqualTo: startTimestamp)
-            .addSnapshotListener { (snapshot, err) in
-                
-                if err != nil{
+        createNotificationEntry {
+            
+            let user = appContainer.getUser()
+            let UID = user.id!
+
+            let startTimestamp: Timestamp = DateUtils.getCurrentTimeStamp()
+            
+            // Firestore.firestore().collection("/Notifications/\(UID)/data").addDocument(data: ["time":  startTimestamp])
+            
+            Firestore.firestore().collection("/Notifications/\(UID)/data").whereField("timeStamp", isGreaterThanOrEqualTo: startTimestamp)
+                .addSnapshotListener { (snapshot, err) in
                     
-                    print("Notification document snapshot failed")
-                }
-                else {
-                    
-                    if snapshot != nil{
+                    if err != nil{
                         
-                        if !snapshot!.isEmpty{
+                        print("Notification document snapshot failed")
+                    }
+                    else {
+                        
+                        if snapshot != nil{
                             
-                            let addedDocuments = snapshot?.documentChanges.filter({ (document) -> Bool in
-                                return document.type == DocumentChangeType.added
-                            })
-                            addedDocuments?.forEach({ (addedDocument) in
+                            if !snapshot!.isEmpty{
                                 
-                                let snap = addedDocument.document
-                                
-                                print(snap.documentID)
-                                print(snap.data() as Any)
-                                
-                                print("Notification document got : " + snap.documentID)
-                                
-                                self.parseNotification(doc: snap.data())
-                            })
+                                let addedDocuments = snapshot?.documentChanges.filter({ (document) -> Bool in
+                                    return document.type == DocumentChangeType.added
+                                })
+                                addedDocuments?.forEach({ (addedDocument) in
+                                    
+                                    let snap = addedDocument.document
+                                    
+                                    print(snap.documentID)
+                                    print(snap.data() as Any)
+                                    
+                                    print("Notification document got : " + snap.documentID)
+                                    
+                                    self.parseNotification(doc: snap.data())
+                                })
+                            }
                         }
                     }
-                }
+            }
         }
-    }
-    
-    func getCurrentTimeStamp() -> Timestamp {
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
-        
-        let time: Date = formatter.date(from: Date().convertDateToString()) ?? Date(timeIntervalSince1970: 0)
-        let timeStamp: Timestamp = Timestamp(date: time)
-        
-        return timeStamp
-    }
-    
+  }
+
     func sendPostLikeNotification(sender: UserMin, targetUser : UserMin, recipeTitle: String){
         
         do {
@@ -103,7 +90,7 @@ class NotificationManager {
             notification.targetUser = targetUser
             
             var encoded = try FirestoreEncoder().encode(notification)
-            encoded["date"] = getCurrentTimeStamp()
+            encoded["timeStamp"] = DateUtils.getCurrentTimeStamp()
             
             sendNotification(targetId: targetUser.id!, data: encoded, completionHandler:  {didSend in
                 
@@ -127,7 +114,31 @@ class NotificationManager {
             notification.targetUser = targetUser
             
             var encoded = try FirestoreEncoder().encode(notification)
-            encoded["date"] = getCurrentTimeStamp()
+            encoded["timeStamp"] = DateUtils.getCurrentTimeStamp()
+            
+            sendNotification(targetId: targetUser.id!, data: encoded, completionHandler:  {didSend in
+                
+                if (didSend){
+                    
+                }
+            })
+        }
+        catch {
+            
+        }
+    }
+    
+    func sendFollowingNotification(sender: UserMin, targetUser : UserMin){
+        
+        do {
+            let notification = NotificationSnapshot<NotificationFollowing>()
+            notification.type = NotificationFollowing.NOTIFY_IDENTIFIER
+            notification.data = NotificationFollowing(userName: sender.userName!)
+            notification.sender = sender
+            notification.targetUser = targetUser
+            
+            var encoded = try FirestoreEncoder().encode(notification)
+            encoded["timeStamp"] = DateUtils.getCurrentTimeStamp()
             
             sendNotification(targetId: targetUser.id!, data: encoded, completionHandler:  {didSend in
                 
@@ -176,6 +187,13 @@ class NotificationManager {
                 let message = "@" + notificationSnap.sender!.userName! + " liked your recipe: " + notificationSnap.data!.recipeTitle!
                 
                 showNotification(title: "Recipe Liked", text: message)
+                break
+            case NotificationFollowing.NOTIFY_IDENTIFIER:
+                
+                let notificationSnap = try FirestoreDecoder().decode(NotificationSnapshot<NotificationFollowing>.self, from: doc)
+                let message = "@" + notificationSnap.sender!.userName! + " is following you!"
+                
+                showNotification(title: "New Follower", text: message)
                 break
             default:
                 break

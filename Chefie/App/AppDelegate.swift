@@ -72,32 +72,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             print("AWSMobileClient initialized.")
         }
         
-        //Setup credentials, see your awsconfiguration.json for the "YOUR-IDENTITY-POOL-ID"
-        let credentialProvider = AWSCognitoCredentialsProvider(regionType: AWSRegionType.USEast1, identityPoolId: "")
+        let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.EUWest2, identityPoolId:"")
         
-        //Setup the service configuration
-        let configuration = AWSServiceConfiguration(region: .USEast1, credentialsProvider: credentialProvider)
+        let configuration = AWSServiceConfiguration(region:.EUWest2, credentialsProvider:credentialsProvider)
         
         //Setup the transfer utility configuration
-        let tuConf = AWSS3TransferUtilityConfiguration()
-        tuConf.isAccelerateModeEnabled = true
-        tuConf.bucket = "chefiebucket"
-        //tuConf.multiPartConcurrencyLimit = 5
-        
+//        let tuConf = AWSS3TransferUtilityConfiguration()
+////        tuConf.isAccelerateModeEnabled = true
+//        tuConf.bucket = "eu.chefie"
+//        tuConf.multiPartConcurrencyLimit = 5
+//        
         AWSServiceManager.default().defaultServiceConfiguration = configuration
         
-        //  Register a transfer utility object asynchronously
-        //        AWSS3TransferUtility.register(
-        //            with: configuration!,
-        //            transferUtilityConfiguration: tuConf,
-        //            forKey: AppSettings.TransferUtilityIdentifier
-        //        ) { (error) in
-        //            if error != nil {
-        //                print("Error when registering TransferUtility")
-        //            }
-        //
-        //            print("Loaded")
-        //        }
+        //      Register a transfer utility object asynchronously
+//        AWSS3TransferUtility.register(
+//            with: configuration!,
+//            transferUtilityConfiguration: tuConf,
+//            forKey: AppSettings.TransferUtilityIdentifier
+//        ) { (error) in
+//            if error != nil {
+//                print("Error when registering TransferUtility")
+//            }
+//
+//            print("Loaded")
+//        }
     }
     //METODO QUE RECIBE EL ID DE LA VISTA Y NOS SACA UNA U OTRA VISTA
     //DEPENDIENDO DE LO QUE HAY GUARDADO EN EL USERDEFAULTS
@@ -177,8 +175,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                                 let fullName = Auth.auth().currentUser!.email
                                 let fullNameArr = fullName!.components(separatedBy: "@")
                                 let firstName = fullNameArr[0] //First
-                                //let lastName = fullNameArr[1] //Last
-                                
+        
                                 let usuarioChefie = ChefieUser()
                                 usuarioChefie.id = Auth.auth().currentUser!.uid
                                 usuarioChefie.userName = firstName
@@ -196,17 +193,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                                 usuarioChefie.location = ""
                                 
                                 self.insertUser(user: usuarioChefie)
-                            }
-                            
-                            
-                            if let err = err {
-                                print("Error getting documents: \(err)")
-                                
-                                
-                                
-                            } else {
-                                //                                    for document in querySnapshot!.documents {
-  
                             }
                     }
                     

@@ -67,8 +67,7 @@ class CommentRepository {
                     } else {
                         
                         let attrRef = Firestore.firestore().collection("Comments").document("\(idRecipe)")
-                        attrRef.setData([
-                            "created_at" : Date().convertDateToString()])
+                        attrRef.setData(CollectionManager.shared.getDefaultCollectionData())
                         completionHandler(.success(true))
                         print("Documento añadido!")
                     }

@@ -29,22 +29,14 @@ class ProfileFollowCellView : BaseCell, ICellDataProtocol {
         self.model = model as? ChefieUser
     }
     
-    
-    
     let labelFollowers : MultilineLabel = {
         let lbl = MultilineLabel(maskConstraints: false, font: DefaultFonts.DefaultHeaderTextLightFont)
         let borderColorPalette = UIColor.black
         lbl.textColor = .black
         lbl.text = ""
         lbl.isSkeletonable = true
-        //lbl.frame = CGRect(x: 22, y: 10, width: 50, height: 20)
         lbl.linesCornerRadius = 10
         lbl.numberOfLines = 2
-        //lbl.layer.addBorder(edge: UIRectEdge.left, color: UIColor.black, thickness: 2)
-        //lbl.layer.borderColor = borderColorPalette.cgColor
-        
-        //lbl.layer.borderWidth = 1
-        //lbl.backgroundColor = .green
         return lbl
     }()
     
@@ -53,10 +45,8 @@ class ProfileFollowCellView : BaseCell, ICellDataProtocol {
         lbl.textColor = .black
         lbl.text = ""
         lbl.isSkeletonable = true
-        //lbl.frame = CGRect(x: 22, y: 10, width: 50, height: 20)
         lbl.linesCornerRadius = 10
         lbl.numberOfLines = 2
-        //lbl.backgroundColor = .blue
         return lbl
     }()
     
@@ -69,10 +59,8 @@ class ProfileFollowCellView : BaseCell, ICellDataProtocol {
     }
     
     override func onLayout(size: CGSize!) {
-       
-        let cellSize = CGSize(width: size.width, height: size.heightPercentageOf(amount: 8))
         
-        //let titleFontHeight = max(labelFollowers.font.lineHeight, cellSize.heightPercentageOf(amount: 5))
+        let cellSize = CGSize(width: size.width, height: size.heightPercentageOf(amount: 8))
         
         labelFollowers.snp.makeConstraints { (maker) in
             maker.leftMargin.equalTo(size.widthPercentageOf(amount: 65))
@@ -80,15 +68,11 @@ class ProfileFollowCellView : BaseCell, ICellDataProtocol {
             maker.topMargin.equalTo(20)
             
         }
-        
-        
-        let titleFontHeight2 = max(labelFollowing.font.lineHeight, cellSize.heightPercentageOf(amount: 5))
-        
+     
         labelFollowing.snp.makeConstraints { (maker) in
             maker.leftMargin.equalTo(size.widthPercentageOf(amount: 5))
             maker.width.equalTo(size.widthPercentageOf(amount: 25))
             maker.topMargin.equalTo(20)
-        
         }
         
         self.contentView.snp.makeConstraints { (maker) in
@@ -96,15 +80,22 @@ class ProfileFollowCellView : BaseCell, ICellDataProtocol {
         }
         
         self.showAnimatedGradientSkeleton()
-        
     }
     
     override func onLoadData() {
         super.onLoadData()
-        doFadeIn()
-        self.labelFollowers.text = String("Followers\n\(self.model?.followers ?? 0)")
-        self.labelFollowing.text = String("Following\n\(self.model?.following ?? 0)")
-        self.hideSkeleton()
+        
+        appContainer.userRepository.getUserFollowingCount(userId: model!.id!) { (count) in
+            
+            self.labelFollowing.text = String("Following\n\(count)")
+        }
+        
+        appContainer.userRepository.getUserFollowersCount(userId: model!.id!) { (count) in
+            self.labelFollowers.text = String("Followers\n\(count)")
+            
+            self.hideSkeleton()
+            self.doFadeIn()
+        }
     }
     
     override func onCreateViews() {
@@ -114,8 +105,6 @@ class ProfileFollowCellView : BaseCell, ICellDataProtocol {
         self.contentView.addSubview(labelFollowers)
         self.contentView.addSubview(labelFollowing)
     }
-    
-    
 }
 
 extension CALayer {

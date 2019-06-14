@@ -161,44 +161,24 @@ class UserRepository{
         })
     }
     
-    func getUsersFollowing(id: String){
+    func getUserFollowersCount(userId: String, completionHandler: @escaping (Int) -> Void) -> Void {
         
+        let collectionFollowers = Firestore.firestore().collection("/Followers/\(userId)/followers")
+        
+        collectionFollowers.getDocuments { (snapshot, err) in
+            
+            completionHandler(snapshot?.count ?? 0)
+        }
     }
     
-    
-    func updateUserAtts(user: ChefieUser){
-        let sfReference = Firestore.firestore().collection("Users").document(user.id!)
+    func getUserFollowingCount(userId: String, completionHandler: @escaping (Int) -> Void) -> Void {
         
-        /*  sfReference.runTransaction({ (transaction, errorPointer) -> Any? in
-         let sfDocument: DocumentSnapshot
-         do {
-         try sfDocument = transaction.getDocument(sfReference)
-         } catch let fetchError as NSError {
-         errorPointer?.pointee = fetchError
-         return nil
-         }
-         
-         guard let oldPopulation = sfDocument.data()?["population"] as? Int else {
-         let error = NSError(
-         domain: "AppErrorDomain",
-         code: -1,
-         userInfo: [
-         NSLocalizedDescriptionKey: "Unable to retrieve population from snapshot \(sfDocument)"
-         ]
-         )
-         errorPointer?.pointee = error
-         return nil
-         }
-         
-         transaction.updateData(["population": oldPopulation + 1], forDocument: sfReference)
-         return nil
-         }) { (object, error) in
-         if let error = error {
-         print("Transaction failed: \(error)")
-         } else {
-         print("Transaction successfully committed!")
-         }
-         }*/
+         let collectionFollowings = Firestore.firestore().collection("/Following/\(userId)/following")
+        
+         collectionFollowings.getDocuments { (snapshot, err) in
+            
+            completionHandler(snapshot?.count ?? 0)
+        }
     }
     
     func getProfileData(idUser : String, completionHandler: @escaping (ChefieResult<ChefieUser>) -> Void) -> Void {
@@ -232,8 +212,8 @@ class UserRepository{
                     }
                 }
                 else {
-                    
-                    print("err")
+                    completionHandler(.failure("Failed to get profile data"))
+                    print("Failed to get profile data")
                 }
             }
         }
@@ -279,7 +259,6 @@ class UserRepository{
                     do{
                         
                         let follower = try FirebaseDecoder().decode(UserMin.self, from: document.data())
-                      
                         followers.append(follower)
                         
                         print("********---getUserFollowers---**********")
@@ -361,17 +340,14 @@ class UserRepository{
                                 print("Error adding document: \(err)")
                             } else {
                                 
-                                let attrRef = Firestore.firestore().collection("Followers").document("\(idUser)")
-                                attrRef.setData([
-                                    "created_at" : Date().convertDateToString()])
-                                completionHandler(.success(true))
+                              completionHandler(.success(true))
                                 print("Documento añadido!")
                             }
             
                     }
                 }
                 catch {
-               
+                  completionHandler(.success(false))
                 }
     
                 break
@@ -467,9 +443,9 @@ class UserRepository{
                     if let err = err {
                         print("Error adding document: \(err)")
                     } else {
-                        let attrRef = Firestore.firestore().collection("Following").document("\(followerId)")
-                        attrRef.setData([
-                            "created_at" : Date().convertDateToString() ])
+//                        let attrRef = Firestore.firestore().collection("Following").document("\(followerId)")
+//                        attrRef.setData([
+//                            "created_at" : Date().convertDateToString() ])
                         completionHandler(.success(true))
                         print("Documento añadido!")
                     }

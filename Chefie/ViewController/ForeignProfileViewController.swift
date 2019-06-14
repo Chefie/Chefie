@@ -14,7 +14,7 @@ import SkeletonView
 import SDWebImage
 
 class ForeignProfileViewController: UIViewController, DynamicViewControllerProto {
-
+    
     var tableItems = Array<BaseItemInfo>()
     var tableCellRegistrator = TableCellRegistrator()
     
@@ -28,7 +28,7 @@ class ForeignProfileViewController: UIViewController, DynamicViewControllerProto
     
     @IBOutlet var mainTable: UITableView!{
         didSet {
-          
+            
         }
     }
     
@@ -44,17 +44,16 @@ class ForeignProfileViewController: UIViewController, DynamicViewControllerProto
     func onSetup() {
         
         tableCellRegistrator.add(identifier: ProfilePicCellItemInfo().reuseIdentifier(), cellClass: ProfilePicCellView.self)
-       
+        
         tableCellRegistrator.add(identifier: ProfileUsernameItemInfo().reuseIdentifier(), cellClass: ProfileUsernameCellView.self)
         
         tableCellRegistrator.add(identifier: ProfileFollowItemInfo().reuseIdentifier(), cellClass: ProfileFollowCellView.self)
-      
+        
         tableCellRegistrator.add(identifier: ProfileBioItemInfo().reuseIdentifier(), cellClass: ProfileBioCellView.self)
-
     }
     
     func onSetupViews() {
-    
+        
         mainTable.backgroundColor = UIColor.white
         
         self.mainTable.dataSource = self
@@ -67,17 +66,17 @@ class ForeignProfileViewController: UIViewController, DynamicViewControllerProto
             make.width.equalTo(self.view.getWidth())
             make.height.equalTo(self.view.getHeight())
         }
-
+        
         tableCellRegistrator.registerAll(tableView: mainTable)
-  
+        
         mainTable.setDefaultSettings(shouldBounce: false)
     }
     
     func onLoadData() {
         
-        
-        let userMin = UserMin()
+        let userMin = model!
         let userInfo = ChefieUser()
+        userInfo.id = userMin.id
         guard let modelUser = model?.id else {
             dismiss(animated: true) {
                 
@@ -85,7 +84,7 @@ class ForeignProfileViewController: UIViewController, DynamicViewControllerProto
             return
         }
         
-        appContainer.userRepository.getProfileData(idUser: modelUser) { (result:(ChefieResult<ChefieUser>)) in
+        appContainer.userRepository.getProfileData(idUser: modelUser) { [weak self] (result:(ChefieResult<ChefieUser>))  in
             switch result {
             case.success(let data):
                 userMin.id = data.id
@@ -110,18 +109,18 @@ class ForeignProfileViewController: UIViewController, DynamicViewControllerProto
                 let bio = ProfileBioItemInfo()
                 bio.model = userInfo
                 
-                self.tableItems.append(pInfo)
-                self.tableItems.append(username)
-                self.tableItems.append(follows)
-                self.tableItems.append(bio)
-                self.mainTable.reloadData()
+                self?.tableItems.append(pInfo)
+                self?.tableItems.append(username)
+                self?.tableItems.append(follows)
+                self?.tableItems.append(bio)
+                self?.mainTable.reloadData()
                 break
             case.failure(_):
                 break
             }
         }
-
-
+        
+        
     }
     
     func onLayout() {
@@ -130,7 +129,7 @@ class ForeignProfileViewController: UIViewController, DynamicViewControllerProto
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+        
         navigationController?.setTintColor()
         navigationItem.title = model?.userName
         view.backgroundColor = .white

@@ -15,13 +15,18 @@ class EventContainer {
 
     public let FilterSubject = PublishSubject<SearchFilter>()
     
-    public let NewPlateUploaded = PublishSubject<String>()
+    public let NewPlateUploaded = PublishSubject<Plate>()
     
     public let NewPostLike = PublishSubject<String>()
     
     public let NewPostComment = PublishSubject<String>()
     
     public let NewStoryUploaded = PublishSubject<String>()
+    
+    public func onNewPlateUploaded(plate : Plate){
+        
+        self.NewPlateUploaded.on(.next(plate))
+    }
 }
 
 struct SearchFilter  {

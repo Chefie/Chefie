@@ -7,6 +7,22 @@
 //
 
 import Foundation
+import Firebase
+
+class DateUtils {
+    
+    public static func getCurrentTimeStamp() -> Timestamp {
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
+        formatter.locale = Locale.current
+        
+        let time: Date = formatter.date(from: Date().convertDateToString()) ?? Date(timeIntervalSince1970: 0)
+        let timeStamp: Timestamp = Timestamp(date: time)
+        
+        return timeStamp
+    }
+}
 
 extension Date {
 
@@ -25,6 +41,7 @@ extension Date {
         let date = Date()
         let format = DateFormatter()
         format.dateFormat = "dd-MM-yyyy HH:mm:ss"
+        format.locale = Locale.current
         let formattedDate = format.string(from: date)
       
         return formattedDate
@@ -81,10 +98,10 @@ extension Date {
         
         if minuteAgo < self {
             let diff = Calendar.current.dateComponents([.second], from: self, to: Date()).second ?? 0
-            return "\(diff)sec"
+            return "\(diff)s"
         } else if hourAgo < self {
             let diff = Calendar.current.dateComponents([.minute], from: self, to: Date()).minute ?? 0
-            return "\(diff)min"
+            return "\(diff)m"
         } else if dayAgo < self {
             let diff = Calendar.current.dateComponents([.hour], from: self, to: Date()).hour ?? 0
             return "\(diff)h"

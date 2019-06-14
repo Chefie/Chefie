@@ -13,7 +13,6 @@ import SkeletonView
 import SDWebImage
 import Gallery
 
-
 class ProfilePicCellItemInfo : BaseItemInfo {
     
     override func reuseIdentifier() -> String {
@@ -21,10 +20,7 @@ class ProfilePicCellItemInfo : BaseItemInfo {
     }
 }
 
-
-
 class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
     
     typealias T = UserMin
     var model: UserMin?
@@ -47,7 +43,7 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
     
     let profilePic : UIImageView = {
         let img = UIImageView(maskConstraints: false)
-        img.contentMode = ContentMode.scaleToFill
+        img.contentMode = ContentMode.scaleAspectFit
         return img
     }()
     
@@ -75,7 +71,6 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
         return button
     }()
     
-    
     override func onLayout(size : CGSize!) {
         
         let cellSize = CGSize(width: size.width, height: size.heightPercentageOf(amount: 35))
@@ -97,11 +92,7 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
             
         }
         
-        
-        
         profilePic.setCircularImageView()
-        
-        
         
         //profilePic.addShadow()
         
@@ -134,16 +125,21 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
             maker.height.equalTo(cellSize.heightPercentageOf(amount: 13.5))
         }
         
-        layoutIfNeeded()
-        
+        iconAddRoute.showAnimatedGradientSkeleton()
+
         profilePic.setCircularImageView()
-        self.showAnimatedGradientSkeleton()
-        
-        
-        
+        self.showAnimatedGradientSkeleton() 
     }
     
     override func onLoadData() {
+        
+        if let id = model?.id {
+            
+            if appContainer.getUser().id != id {
+                
+                self.iconAddRoute.hide()
+            }
+        }
         
         appContainer.userRepository.checkIfFollowing(idUser: model!.id!, idFollower: appContainer.dataManager.localData.chefieUser.id!) {
             (result:(ChefieResult<Bool>)) in
@@ -153,20 +149,19 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
                 break
             case .failure(_):
                 break
-                
             }
         }
         
         self.backGroundImage.sd_setImage(with: URL(string: model?.profileBackground ?? "")){ (image : UIImage?,
             error : Error?, cacheType : SDImageCacheType, url : URL?) in
         }
+        
         self.profilePic.sd_setImage(with: URL(string: self.model?.profilePic ?? "")){ (image : UIImage?,
             error : Error?, cacheType : SDImageCacheType, url : URL?) in
             
         }
+        
         self.hideSkeleton()
-        
-        
     }
     
     override func onCreateViews() {
@@ -301,7 +296,6 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
             imagePicker.sourceType = .savedPhotosAlbum;
             imagePicker.allowsEditing = true
             viewController?.present(imagePicker, animated: true, completion: nil)
-            
         }
         else
         {
@@ -310,7 +304,6 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
             viewController?.present(alert, animated: true, completion: nil)
         }
     }
-    
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         imagePicker.dismiss(animated: true, completion: nil)
@@ -322,7 +315,6 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
             profilePic.image = image
             appContainer.s3Repository.uploadImage(data: profilePic.image!.rawData()) { (result : Result<S3MediaUploadResult, Error>
                 ) in
-                
                 
                 switch result {
                 case .success(let data):
@@ -345,16 +337,12 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
                     })
                     
                     break
-                case .failure(let error):
+                case .failure(let _):
                     print("Fail")
                     break
                 }
-                
-                
-                
             }
         }
-        
         
         guard let imageBackground = info[.originalImage] as? UIImage else {
             fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
@@ -383,20 +371,13 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
                         }
                         
                     })
-                    
                     break
-                case .failure(let error):
+                case .failure(let _):
                     print("Fail")
                     break
                 }
-                
-                
-                
             }
         }
-        
-        
-        
     }
 }
 

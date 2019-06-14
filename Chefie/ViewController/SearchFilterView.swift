@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomAlertController: UIView, UIPickerViewDelegate,UIPickerViewDataSource {
+class SearchFilterView: UIView, UIPickerViewDelegate,UIPickerViewDataSource {
     
     var valorComunidad = ""
     
@@ -27,7 +27,7 @@ class CustomAlertController: UIView, UIPickerViewDelegate,UIPickerViewDataSource
         valorComunidad = comunidades[selected]
         return comunidades[row]
     }
-
+    
     func setup() {
         pickerView.delegate = self
         pickerView.dataSource = self

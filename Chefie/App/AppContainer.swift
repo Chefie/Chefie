@@ -19,6 +19,7 @@ class AppContainer {
     var mediaRepository : MultiMediaRepository
     var communityRepository : CommunityRepository
     var commentRepository : CommentRepository
+    var feedRepository : FeedRepository
     
     func getUser() -> ChefieUser{
         
@@ -28,10 +29,18 @@ class AppContainer {
     init() {
         self.plateRepository = PlateRepository()
         self.userRepository = UserRepository()
+        self.feedRepository = FeedRepository()
         self.dataManager = DataManager()
         self.s3Repository = S3Repository()
         self.mediaRepository = MultiMediaRepository()
         self.communityRepository = CommunityRepository()
         self.commentRepository = CommentRepository()
+    }
+    
+    func setup() {
+        
+        CollectionManager.shared.initialSetup()
+        NotificationManager.shared.listenForNotifications()
+        FeedManager.shared.listenForFeed()
     }
 }

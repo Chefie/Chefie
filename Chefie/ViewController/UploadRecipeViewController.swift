@@ -61,7 +61,7 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         
         var tags = [String:Bool]()
         tagListView.tagViews.forEach { (tagView) in
-
+            
             tags[tagView.titleLabel!.text!] = true
         }
         let plato = Plate()
@@ -74,15 +74,8 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         plato.multimedia = Array<Media>()
         plato.numVisits = 0
         plato.description = description
-
-        uploadRecipe(plate: plato)
-    }
-    
-    func goToMainScreen(){
-        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen" )
         
-        self.present(exampleVC, animated: true)
+        uploadRecipe(plate: plato)
     }
     
     func saveToFireBase(plate : Plate) {
@@ -126,7 +119,7 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
                         
                         plate.multimedia?.append(contentsOf: urlArray)
                         print("Uploaded photos")
-      
+                        
                         break
                     case .failure( _):
                         
@@ -175,8 +168,8 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
                         self.videos.removeAll()
                         self.saveToFireBase(plate: plate)
                         
-                         print("Uploaded videos")
-
+                        print("Uploaded videos")
+                        
                     })
                     break
                 case .failure(_) :
@@ -238,7 +231,7 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
                             print("video data : \(videoData)")
                         } catch  {
                             print("exception when getting data from video")
-                        }            
+                        }
                     })
                 }
             }
@@ -248,30 +241,39 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
     }
     
     func createPlateEntry(plate : Plate) {
-        
-        let platesRef = Firestore.firestore().collection("Platos")
-        let plateRef = Firestore.firestore().collection("Platos").document()
-        
-        do {
-            plate.id = plateRef.documentID
-            let model = try FirestoreEncoder().encode(plate)
+        appContainer.plateRepository.uploadRecipe(plate: plate) { (result : ChefieResult<UploadRecipeResult>) in
             
-            platesRef.addDocument(data: model) { (err) in
-             
+            switch result {
+                
+            case .success(let result):
+                
                 self.uploadingResponder.close()
-                if err != nil {
+                if !result.succeded {
                     
                     let appearance = SCLAlertView.SCLAppearance(
                         showCloseButton: false
                     )
                     let alertView = SCLAlertView(appearance: appearance)
                     alertView.addButton("Done") {
-                        self.goToMainScreen()
+                        self.dismiss(animated: true, completion: {
+                            
+                        })
                     }
                     
-                    alertView.showError("Failed to upload Recipe", subTitle: "The recipe couldn't be uploaded")
+                    alertView.showError("Failed to upload Recipe", subTitle: "The recipe couldn't be uploaded").setDismissBlock {
+                        self.dismiss(animated: true, completion: {
+                            
+                        })
+                    }
                     print("---> Algo ha ido mal.")
                 } else {
+                    // Don't need to wait for this
+                    appContainer.feedRepository.sendFeedToFollowers(idUser: appContainer.getUser().id!, plate: plate, timeStamp: result.timeStamp)
+                    
+                    appContainer.feedRepository.sendFeedTo(id: appContainer.getUser().id!, timeStamp: result.timeStamp, data: plate, completionHandler: { (result) in
+                        
+                    })
+                    
                     appContainer.dataManager.remoteData.onNewPlate(plate: plate)
                     print("---> Plato subido con exito.")
                     let appearance = SCLAlertView.SCLAppearance(
@@ -279,19 +281,26 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
                     )
                     let alertView = SCLAlertView(appearance: appearance)
                     alertView.addButton("Great!") {
-                        self.goToMainScreen()
+                        self.dismiss(animated: true, completion: {
+                            
+                        })
                     }
                     
-                    alertView.showSuccess("Recipe Uploaded", subTitle: "Your recipe has been successfully published")
+                    alertView.showSuccess("Recipe Uploaded", subTitle: "Your recipe has been successfully published").setDismissBlock {
+                        
+                        self.dismiss(animated: true, completion: {
+                            
+                        })
+                    }
                 }
- 
-                self.dismiss(animated: true, completion: {
-                    
-                })
+                
+                break
+            case .failure(let err):
+                
+                // This must never happen
+                print(err)
+                break
             }
-            
-        } catch  {
-            print("Invalid Selection.")
         }
     }
     
@@ -309,7 +318,7 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         
         btnDone.isHidden = false
         
-        navigationItem.title = "New recipe"
+        navigationItem.title = "New Recipe"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add Media", style: .plain, target: self, action: #selector(abrirGaleria))
         
         tableCellRegistrator.add(identifier: PlateMediaHorizontalBaseInfo().reuseIdentifier(), cellClass: PlateMediaHorizontalCell.self)
@@ -317,7 +326,7 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Zapfino", size: 13)!]
         view.backgroundColor = .white
         navigationItem.leftItemsSupplementBackButton = true
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(close))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "<", style: .plain, target: self, action: #selector(close))
         
         //Delegates.
         gallery.delegate = self
@@ -328,7 +337,6 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         mainTable.delegate = self
         mainTable.dataSource = self
         
-        //tagListView.addTags(["casero", "rico", "tortilla"])
         tagListView.alignment = .center
         tagListView.textFont = UIFont.systemFont(ofSize: 22)
         descriptionTextView.layer.borderWidth = 0.1;
@@ -344,6 +352,12 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         view.layoutIfNeeded()
         mainTable.layoutIfNeeded()
         loadData()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        self.view.endEditing(true)
+        return true
     }
     
     func faveButton(_ faveButton: FaveButton, didSelected selected: Bool) {
@@ -459,6 +473,7 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         self.dismiss(animated: true) {
             
         }
+        self.navigationController?.popViewController(animated: true)
     }
     
     func loadData() {

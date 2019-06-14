@@ -60,10 +60,10 @@ class S3Repository {
         AWSS3TransferUtility.default()
     }()
     
-    let S3BucketName = "chefiebucket"
-    let S3_URL = "https://chefiebucket.s3.amazonaws.com/"
+    let S3BucketName = "eu.chefie"
+    let S3_URL = "https://s3.eu-west-2.amazonaws.com/eu.chefie/"
 
-    func getCurrentMillis()->Int64 {
+    func getCurrentMillis()-> Int64 {
         return Int64(Date().timeIntervalSince1970 * 1000)
     }
     

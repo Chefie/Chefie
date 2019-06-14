@@ -26,7 +26,7 @@ class CommunityRepository {
                     model.id = document.documentID
                     communities.append(model)
                     
-                    print("Model: \(model)")
+                   // print("Model: \(model)")
                 } catch  {
                 }
             })

@@ -13,7 +13,7 @@ class LocalData {
     
     var chefieUser = ChefieUser()
     
-    let LoginSubject = PublishSubject<String>()
+    let LoginSubject = PublishSubject<ChefieUser>()
     
     init() {
     
@@ -22,10 +22,8 @@ class LocalData {
     func onLogin(user : ChefieUser){
   
         self.chefieUser = user
-  
-        NotificationManager.shared.listenForNotifications()
-        
+        appContainer.setup()
         print("Logged User: ", user.userName, ",", user.id)
-       // LoginSubject.on(.next(id))
+        LoginSubject.on(.next(user))
     }
 }

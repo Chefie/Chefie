@@ -28,7 +28,7 @@ extension UITableView {
         
         if (shouldBounce){
             
-            self.alwaysBounceHorizontal = true
+            self.alwaysBounceVertical = true
             self.bounces = true
         }
         self.showsVerticalScrollIndicator = false

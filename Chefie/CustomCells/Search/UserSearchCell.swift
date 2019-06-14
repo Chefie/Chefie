@@ -25,7 +25,7 @@ class UserSearchCell : BaseCell, ICellDataProtocol{
 
     let userIcon : UIImageView = {
         let img = UIImageView(maskConstraints: false)
-      //  img.contentMode = ContentMode.scaleAspectFit
+        img.contentMode = ContentMode.scaleAspectFit
         return img
     }()
     

@@ -60,8 +60,6 @@ class AddCommentCell : BaseCell, ICellDataProtocol{
             maker.edges.equalToSuperview()
             maker.width.equalToSuperview()
         }
-        
- //       self.contentView.backgroundColor = UIColor.orange
     }
     
     override func onLoadData() {
@@ -79,7 +77,7 @@ class AddCommentCell : BaseCell, ICellDataProtocol{
         alertView.customSubview = view
         
         var cancelled = false
- 
+        
         alertView.addButton("Send") {
             
             if (!cancelled){
@@ -87,13 +85,17 @@ class AddCommentCell : BaseCell, ICellDataProtocol{
                 comment.content = view.contentText.text
                 comment.userMin = appContainer.getUser().mapToUserMin()
                 comment.idUser = appContainer.getUser().id!
-            
+                
                 appContainer.commentRepository.addComment(idRecipe: self.model!.id!, comment: comment) { (result : ChefieResult<Bool>) in
                     
                     let info = self.baseItemInfo as! AddCommentItemInfo
                     info.onCommentSent!()
                     
-                    NotificationManager.shared.sendPostCommentNotification(sender: appContainer.getUser().mapToUserMin(), targetUser: self.model!.user!, title: self.model!.title!, comment: comment)
+                    let user = appContainer.getUser()
+             
+                    if (user.id! != self.model!.idUser){
+                        NotificationManager.shared.sendPostCommentNotification(sender: user.mapToUserMin(), targetUser: self.model!.user!, title: self.model!.title!, comment: comment)
+                    }
                 }
             }
         }

@@ -10,19 +10,13 @@ import AWSCore
 import RxSwift
 import CRRefresh
 
-let PlateCellIdentifier = "PlateCellView"
-
 class HomeViewController: UIViewController, DynamicViewControllerProto {
     
-    var tableviewPaginator: TableviewPaginatorEx!
     var tableItems = Array<BaseItemInfo>()
     var tableCellRegistrator = TableCellRegistrator()
     var endlessTableHelper : EndlessTableHelper!
     
     @IBOutlet var mainTable: UITableView!
-    
-    var followingRetrieveResult = RetrieveFollowingInfo()
-    var platesRetrieveResult = RetrievePlatesInfo()
     
     override func updateViewConstraints() {
         
@@ -31,89 +25,28 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
         super.updateViewConstraints()
     }
     
+    var newPlateSubscription : Disposable!
+    var feedRetrieveInfo = RetrieveFeedInfo()
     func onSetup() {
-
-       endlessTableHelper = EndlessTableHelper(table: mainTable)
+        
+        endlessTableHelper = EndlessTableHelper(table: mainTable)
         
         mainTable.setDefaultSettings(shouldBounce: true)
         
-        appContainer.plateRepository.getPlatos { (result : ChefieResult<[Plate]>) in
-            switch result {
-                
-            case .success(let data):
-                
-                let items = data.compactMap({ (plate) -> HomePlatoCellItemInfo? in
-                    let item = HomePlatoCellItemInfo()
-                    item.model = plate
-                    return item
-                    
-                })
-                
-                
-                //self.mainTable.reloadData()
-                self.endlessTableHelper.loadMoreItems(itemsCount: items.count
-                    , callback: {
-                        
-                        items.forEach({ (item) in
-                            
-                            self.tableItems.append(item)
-                            self.endlessTableHelper.insertRow(itemsCount: self.tableItems.count - 1)
-                        })
-                })
-                //
-                break
-            case .failure(_):
-                break
-            }
+        newPlateSubscription = EventContainer.shared.NewPlateUploaded.subscribe { (event : Event<Plate>) in
             
-       
-            self.mainTable.cr.endHeaderRefresh()
-
+            self.endlessTableHelper.begin()
+            
+            let item = HomePlatoCellItemInfo()
+            item.model = event.element
+            
+            self.tableItems.insert(item, at: 0)
+            self.endlessTableHelper.insertRowAt(row: 0)
+            self.endlessTableHelper.end()
         }
-        
-//        appContainer.userRepository.getFollowingUsers(idUser: appContainer.getUser().id!, request: followingRetrieveResult) { (result : ChefieResult<RetrieveFollowingInfo>) in
-//
-//            switch result {
-//                
-//            case .success(let result):
-//                
-//                self.followingRetrieveResult.update(result: result)
-//                print("")  
-//                break
-//            case .failure(_): break
-//            }
-//        }
-//        
-//        appContainer.plateRepository.getPlatos(idUser: appContainer.getUser().id!, request: platesRetrieveResult) { (result : ChefieResult<RetrievePlatesInfo>) in
-//            switch result {
-//                
-//            case .success(let result):
-//                
-//                self.platesRetrieveResult.update(result: result)
-//                print("")
-//                
-//                break
-//            case .failure(_): break
-//            }
-//        }
-//        
-//        appContainer.dataManager.remoteData.NewPlateSubject.subscribe { (
-//            event : Event<Plate>) in
-//            
-//            self.endlessTableHelper.begin()
-//            
-//            let item = HomePlatoCellItemInfo()
-//            item.model = event.element
-//            
-//            self.tableItems.insert(item, at: 0)
-//            self.endlessTableHelper.insertRowAt(row: 0)
-//            self.endlessTableHelper.end()
-//        }
     }
     
     func onSetupViews(){
-        
-      //  mainTable.backgroundColor = UIColor.red
         
         mainTable.frame = CGRect(x: 0, y: 0, width: self.view.getWidth(), height: self.view.getHeight())
         mainTable.snp.makeConstraints { (make) in
@@ -123,33 +56,6 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
             make.width.equalTo(self.view.getWidth())
             make.height.equalTo(self.view.getHeight())
         }
-
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        //       tableviewPaginator.scrollViewDidScroll(scrollView)
-    }
-    
-    func onLoadData() {
-        
-     
-    }
-    
-    func onLayout() {
-        
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        mainTable.register(LoadingCell.self, forCellReuseIdentifier: "LoadingCell")
-        
-        tableCellRegistrator.add(identifier: HomePlatoCellItemInfo().reuseIdentifier(), cellClass: HomePlatoCellView.self)
-        onSetup()
-        onSetupViews()
-        
-        tableCellRegistrator.registerAll(tableView: mainTable)
         
         navigationItem.title = "Chefie"
         //Custom navigationItem (Title) font Zapfino
@@ -164,63 +70,71 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
         
         self.mainTable.alwaysBounceVertical = false
         self.mainTable.alwaysBounceHorizontal = false
-
-       // self.loadPlates()
+    }
+    
+    func onLoadData() {
         
-        mainTable.cr.addHeadRefresh(animator: NormalHeaderAnimator()) { [weak self] in
-
-            self?.loadPlates()
-        }
         
+    }
+    
+    func onLayout() {
+        
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        tableCellRegistrator.add(identifier: HomePlatoCellItemInfo().reuseIdentifier(), cellClass: HomePlatoCellView.self)
+        onSetup()
+        onSetupViews()
+        
+        tableCellRegistrator.registerAll(tableView: mainTable)
         
         mainTable.cr.addFootRefresh(animator: NormalFooterAnimator()) {
             
+            self.loadFeed(loadingFromTop: false)
+        }
+        
+        mainTable.cr.addHeadRefresh(animator: NormalHeaderAnimator()) { [weak self] in
+            
+            self?.loadFeed(loadingFromTop: true)
         }
         
         self.mainTable.cr.beginHeaderRefresh()
     }
     
-    @IBAction func onTouchsss(_ sender: UIButton) {
-    }
-    
-    @IBAction func btnTap(_ sender: Any) {
+    func loadFeed(loadingFromTop : Bool = false){
         
-        //       let item = self.tableItems[1].model as? Comment
-        //      item?.content = "La celda se debe adaptar al texto"
-        //
-        //      mainTable.reloadRows(at: [IndexPath(item:1 , section: 0)], with: .none)
-    }
-    
-    var section = 0
-    var isFirst = false
-    
-    func loadPlates(){
+        print("Loading feed")
         
-        print("Loading plates")
-
-        appContainer.plateRepository.getPlatos { (result : ChefieResult<[Plate]>) in
+        appContainer.feedRepository.getFeed(userId:  appContainer.getUser().id!, retrieveInfo: feedRetrieveInfo) { (result : ChefieResult<RetrieveFeedInfo>) in
+            
             switch result {
                 
-            case .success(let data):
+            case .success(let result) :
                 
-                let items = data.compactMap({ (plate) -> HomePlatoCellItemInfo? in
-                    let item = HomePlatoCellItemInfo()
-                    item.model = plate
-                    return item
+                self.feedRetrieveInfo.update(result: result)
+                
+                if let data = result.data{
                     
-                })
+                    let items = data.compactMap({ (plate) -> HomePlatoCellItemInfo? in
+                        let item = HomePlatoCellItemInfo()
+                        item.model = plate
+                        return item
+                        
+                    })
+                    
+                    self.endlessTableHelper.loadMoreItems(itemsCount: items.count
+                        , callback: {
+                            
+                            items.forEach({ (item) in
+                                
+                                self.tableItems.append(item)
+                                self.endlessTableHelper.insertRow(itemsCount: self.tableItems.count - 1)
+                            })
+                    })
+                }
                 
-                
-                //self.mainTable.reloadData()
-                self.endlessTableHelper.loadMoreItems(itemsCount: items.count
-                    , callback: {
-
-                        items.forEach({ (item) in
-
-                            self.tableItems.append(item)
-                            self.endlessTableHelper.insertRow(itemsCount: self.tableItems.count - 1)
-                        })
-                })
                 break
             case .failure(_):
                 break
@@ -244,7 +158,7 @@ extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDele
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let itemsCount = tableItems.count == 0 ? AppSettings.DefaultSkeletonCellCount : tableItems.count
-
+        
         return itemsCount
     }
     
@@ -253,7 +167,7 @@ extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDele
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         if (self.tableItems.count == 0){
             let ce : BaseCell = mainTable.dequeueReusableCell(withIdentifier: tableCellRegistrator.getRandomIdentifier(), for: indexPath) as! BaseCell
             ce.viewController = self

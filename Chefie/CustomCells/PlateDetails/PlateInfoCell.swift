@@ -32,7 +32,7 @@ class PlateInfoCell : BaseCell, ICellDataProtocol{
     
     let lblInfoDate : MultilineLabel = {
         let lbl = MultilineLabel(maskConstraints: false, font: DefaultFonts.DefaultTextFont)
-        lbl.text = "Aqui va el date"
+        lbl.text = ""
         lbl.numberOfLines = 1
         return lbl
     }()
@@ -47,7 +47,7 @@ class PlateInfoCell : BaseCell, ICellDataProtocol{
     
     let lblInfoUser : MultilineLabel = {
         let lbl = MultilineLabel(maskConstraints: false, font: DefaultFonts.DefaultTextFont)
-        lbl.text = "Steven"
+        lbl.text = ""
         lbl.numberOfLines = 1
         return lbl
     }()
@@ -120,13 +120,14 @@ class PlateInfoCell : BaseCell, ICellDataProtocol{
     override func onLoadData() {
         super.onLoadData()
         
-        let date = "".parseDateWithFormat(format: "dd-mm-yyyy HH:mm:ss")
-        //lblInfoDate.text = model?.created_at?.extractInfoFromDate(date: date)
         lblInfoUser.text = model?.user?.userName
         
+        if let parsed = model?.created_at?.parseToDate(){
+            
+             lblInfoDate.text = model?.created_at?.extractInfoFromDate(date: parsed)
+        }
+     
         self.hideSkeleton()
-        
-        
     }
     
     override func onCreateViews() {

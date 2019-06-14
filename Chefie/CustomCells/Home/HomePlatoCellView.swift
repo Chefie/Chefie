@@ -51,32 +51,23 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
         return img
     }()
     
-    let shareIcon : UIImageView = {
+    let commentIcon : UIImageView = {
         let img = UIImageView(maskConstraints: false)
-        img.contentMode = ContentMode.scaleToFill
-        img.frame = CGRect(x: 0, y: 0, width: 40, height: 0)
-        img.layer.borderWidth = 1
-        img.layer.borderColor = UIColor.black.cgColor
-        img.layer.cornerRadius = img.frame.size.width / 2;
-        img.clipsToBounds = true
-        img.image = UIImage(named: "user")
+        img.image = UIImage(named: "IconComment")
+        img.hide()
         return img
     }()
     
     let profilePicIcon : UIImageView = {
         let img = UIImageView(maskConstraints: false)
         img.contentMode = ContentMode.scaleToFill
-        img.frame = CGRect(x: 0, y: 0, width: 27, height: 0)
-        img.layer.borderColor = UIColor.black.cgColor
-        img.layer.cornerRadius = img.frame.size.width / 2;
-        img.clipsToBounds = true
         img.image = UIImage(named: "user")
         return img
     }()
     
     let labelMonth : UILabel = {
         let lbl = UILabel(maskConstraints: false, font: DefaultFonts.DefaultTextBoldFont)
-        lbl.text = "FEB"
+        lbl.text = ""
         lbl.textAlignment = .center
         lbl.textColor = Palette.TextDefaultColor
         return lbl
@@ -84,7 +75,7 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
     
     let labelDay : UILabel = {
         let lbl = UILabel(maskConstraints: false, font: DefaultFonts.DefaultTextLightFont)
-        lbl.text = "03"
+        lbl.text = ""
         lbl.textAlignment = .center
         lbl.textColor = .black
         return lbl
@@ -92,7 +83,7 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
     
     let labelPlateTitle : MultilineLabel = {
         let lbl = MultilineLabel(maskConstraints: false, font: DefaultFonts.DefaultHeaderTextFont)
-        lbl.text = "PAELLA DE MARISCO CON MUCHAS COSAS"
+        lbl.text = ""
         lbl.numberOfLines = 0
         lbl.textAlignment = .left
         return lbl
@@ -100,7 +91,7 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
     
     let labelUsername : MultilineLabel = {
         let lbl = MultilineLabel(maskConstraints: false, font: DefaultFonts.DefaultTextLightFont)
-        lbl.text = "@joseantonio"
+        lbl.text = ""
         lbl.numberOfLines = 0
         lbl.textAlignment = .left
         return lbl
@@ -122,6 +113,8 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
         lbl.font = DefaultFonts.DefaultTextFont.withSize(11)
         return lbl
     }()
+    
+    var likesCount = 0
     
     override func getSize() -> CGSize {
         return CGSize(width: parentView.getWidth(), height: parentView.heightPercentageOf(amount: 38))
@@ -228,9 +221,18 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
         let heartSize = CGSize(width: size.widthPercentageOf(amount: 16), height: size.widthPercentageOf(amount: 16))
         self.heartIcon.snp.makeConstraints { (maker) in
             
-            maker.left.equalTo(size.widthPercentageOf(amount: 65))
+            maker.left.equalTo(size.widthPercentageOf(amount: 62))
             maker.size.equalTo(heartSize)
             maker.top.equalTo(mediaSection.maxY - (heartSize.height))
+            //    maker.height.equalTo(labelHeight)
+        }
+        
+        let commentSize = CGSize(width: size.widthPercentageOf(amount: 14), height: size.widthPercentageOf(amount: 14))
+        self.commentIcon.snp.makeConstraints { (maker) in
+            
+            maker.left.equalTo(size.widthPercentageOf(amount: 78))
+            maker.size.equalTo(commentSize)
+            maker.top.equalTo(mediaSection.maxY - (commentSize.height + 1))
             //    maker.height.equalTo(labelHeight)
         }
         
@@ -246,7 +248,7 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
             
             maker.left.equalTo(size.widthPercentageOf(amount: 65) + heartSize.width + marginLeft)
             //  maker.height.equalTo(labelHeight)
-            maker.top.equalTo(mediaSection.maxY - marginTop + 8)
+            maker.top.equalTo(mediaSection.maxY - marginTop / 2)
             //    maker.height.equalTo(labelHeight)
         }
         
@@ -282,10 +284,16 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
         self.labelNumLikes.showAnimatedGradientSkeleton()
         
         self.labelAgo.showAnimatedGradientSkeleton()
+        
+        self.heartIcon.hide()
     }
 
     override func onLoadData() {
         super.onLoadData()
+        
+        getLikeState()
+        
+        getLikesCount()
         
         if let mediaList = model?.multimedia {
             
@@ -301,6 +309,8 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
         }
     
         self.heartIcon.show()
+        self.commentIcon.show()
+        
         self.labelNumLikes.text = "120 Likes"
         
         if let picUrl = model?.user?.profilePic {
@@ -326,23 +336,75 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
             
             self.labelAgo.text = parsedDate.timeAgoDisplay()
         }
-        
+
         carousel.reloadData()
-     
+        
         self.hideSkeleton()
     }
     
-    func doToggleLike() {
+    func getLikesCount() {
         
-        if (!self.isLiked){
+        appContainer.plateRepository.getPlateLikesCount(idPlate: model!.id!) { (count : Int) in
             
-            self.heartIcon.image = UIImage(named: "LikeButton")
-            self.isLiked = true
+            self.setLikes(num: count)
+        }
+    }
+
+    func setLikes(num : Int){
+        
+         self.labelNumLikes.text = String(describing: "\(num) likes")
+         likesCount = num
+    }
+    
+    func getLikeState() {
+
+        if let id = model?.id {
+            
+            appContainer.plateRepository.checkIsLiked(idPlate: id, userId: appContainer.getUser().id!) { (result : ChefieResult<Bool>) in
+                
+                switch result {
+                    
+                case .success(let liked):
+                    
+                    self.changeLikeState(liked: liked)
+                    break
+                case .failure(_) : break
+                }
+            }
+        }
+    }
+    
+    func changeLikeState(liked : Bool){
+        
+        if liked {
+             self.heartIcon.image = UIImage(named: "LikeButton")
         }
         else {
-            
             self.heartIcon.image = UIImage(named: "NotLikedButton")
-            self.isLiked = false
+        }
+        
+        self.isLiked = liked
+    }
+    
+    @objc func doToggleLike() {
+        
+        if (!self.isLiked){
+         
+            self.setLikes(num: likesCount + 1)
+            changeLikeState(liked: true)
+            
+            appContainer.plateRepository.insertLike(idPlate: model!.id!, user: appContainer.getUser().mapToUserMin()) { (result : ChefieResult<Bool>) in
+      
+            }
+        }
+        else {
+            self.setLikes(num: likesCount - 1)
+            
+            changeLikeState(liked: false)
+
+            appContainer.plateRepository.disLike(idPlate: model!.id!, user: appContainer.getUser().mapToUserMin()) { (result : ChefieBiResult<Bool, Bool>) in
+                
+            }
         }
     }
     
@@ -391,11 +453,6 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
         }
     }
     
-    @objc func onLike() {
-        
-        doToggleLike()
-    }
-    
     @objc func onGoToProfile() {
         
         let storyboard = UIStoryboard(name: "ForeignProfileStoryboard", bundle: nil)
@@ -416,6 +473,7 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
         self.contentView.addSubview(labelUsername)
         self.contentView.addSubview(profilePicIcon)
         self.contentView.addSubview(heartIcon)
+        self.contentView.addSubview(commentIcon)
         self.contentView.addSubview(labelNumLikes)
         self.contentView.addSubview(labelAgo)
         self.carousel.register(FSPagerViewCell.self, forCellWithReuseIdentifier: "cell")
@@ -427,7 +485,7 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
         
         self.contentView.setTouch(target: self, selector: #selector(onTouch))
         self.profilePicIcon.setTouch(target: self, selector: #selector(onGoToProfile))
-        self.heartIcon.setTouch(target: self, selector: #selector(onLike))
+        self.heartIcon.setTouch(target: self, selector: #selector(doToggleLike))
     }
 }
 

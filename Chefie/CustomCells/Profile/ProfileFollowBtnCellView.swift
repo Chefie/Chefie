@@ -167,23 +167,25 @@ class ProfileFollowBtnCellView : BaseCell, ICellDataProtocol {
                 break
                 
             }
-            
         }
     }
     
     func addFollowing(){
-
-        appContainer.userRepository.addFollowing(follower: appContainer.getUser().mapToUserMin(), targetUser: model!) {
+        
+        let userMin = appContainer.getUser().mapToUserMin()
+        let target = model!
+        
+        appContainer.userRepository.addFollowing(follower: userMin, targetUser: model!) {
             (result: (ChefieResult<Bool>)) in
             switch result{
             case .success(let data):
                 if data {
                     print("Se ha añadido following")
                 }
+                NotificationManager.shared.sendFollowingNotification(sender: userMin, targetUser: target)
                 break
             case .failure(_):
                 break
-                
             }
         }
     }

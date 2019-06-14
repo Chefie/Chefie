@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Tag : Codable{
+struct Tag : Codable{
     
     var id : String?
     var label : String?
@@ -17,8 +17,5 @@ class Tag : Codable{
         
         self.label = label
     }
-    
-    required init() {
-        
-    }
+
 }

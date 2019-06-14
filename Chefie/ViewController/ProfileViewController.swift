@@ -11,12 +11,13 @@ import Firebase
 import GoogleSignIn
 import SkeletonView
 import SDWebImage
+import CRRefresh
 
 class ProfileViewController: UIViewController, DynamicViewControllerProto {
     
     var tableItems = Array<BaseItemInfo>()
     var tableCellRegistrator = TableCellRegistrator()
-
+    
     var model : UserMin?{
         
         didSet{
@@ -27,7 +28,7 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
     
     @IBOutlet var mainTable: UITableView!{
         didSet {
-      
+            
         }
     }
     
@@ -42,12 +43,18 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
     
     func onSetup() {
         
-     
+        //////////////////////////////////////////////////////
+        tableCellRegistrator.add(identifier: ProfilePicCellItemInfo().reuseIdentifier(), cellClass: ProfilePicCellView.self)
+        /////////////////////////////////////////////////////
+        tableCellRegistrator.add(identifier: ProfileUsernameItemInfo().reuseIdentifier(), cellClass: ProfileUsernameCellView.self)
+        //////////////////////////////////////////////////////
+        tableCellRegistrator.add(identifier: ProfileBioItemInfo().reuseIdentifier(), cellClass: ProfileBioCellView.self)
+        //////////////////////////////////////////////////////
+        tableCellRegistrator.add(identifier: ProfileFollowItemInfo().reuseIdentifier(), cellClass: ProfileFollowCellView.self)
+        //////////////////////////////////////////////////////
     }
     
     func onSetupViews() {
-        
-        mainTable.backgroundColor = UIColor.white
         
         self.mainTable.dataSource = self
         self.mainTable.isSkeletonable = true
@@ -56,20 +63,39 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
         mainTable.backgroundColor = UIColor.white
         
         mainTable.snp.makeConstraints { (make) in
-
+            
             make.width.equalTo(self.view.getWidth())
             make.height.equalTo(self.view.getHeight())
         }
         
-        mainTable.setDefaultSettings(shouldBounce: false)
+        navigationController?.setTintColor()
+  
+        navigationItem.title = "Profile"
+        self.navigationController!.navigationBar.isTranslucent = true
+        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: DefaultFonts.ZapFino]
+        view.backgroundColor = .white
+        navigationItem.leftItemsSupplementBackButton = true
+        //navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(close))
+        //view.backgroundColor = .white
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(onGoToSettings))
+        self.mainTable.setDefaultSettings(shouldBounce: false)
+    }
+    
+    @objc func onGoToSettings() {
+      
+        let storyboard = UIStoryboard(name: "UpdateProfile", bundle: nil)
+        let vc  : SettingsViewController = storyboard.instantiateViewController(withIdentifier: "UpdateProfileStory") as! SettingsViewController
+
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func onLoadData() {
-        
-     self.model = appContainer.getUser().mapToUserMin()
+    
+        self.model = appContainer.getUser().mapToUserMin()
         
         let userMin = UserMin()
-        let userInfo = ChefieUser()
+        let userInfo = appContainer.getUser()
         guard let modelUser = model?.id else {
             dismiss(animated: true) {
                 
@@ -102,43 +128,48 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
                 let bio = ProfileBioItemInfo()
                 bio.model = userInfo
                 
+                self.tableItems.removeAll()
                 self.tableItems.append(pInfo)
                 self.tableItems.append(username)
                 self.tableItems.append(follows)
                 self.tableItems.append(bio)
                 self.mainTable.reloadData()
+             
                 break
             case.failure(_):
-                break
-            }
-        }
-        
-        
-        
-        
-        appContainer.plateRepository.getPlatos(idUser: modelUser) { (result:(ChefieResult<[Plate]>)) in
-            switch result {
-            case.success(let data):
-                
-                let items = data.compactMap({ (plate) -> HomePlatoCellItemInfo? in
-                    let item = HomePlatoCellItemInfo()
-                    item.model = plate
-                    return item
-                    
-                    
-                })
-                items.forEach({ (item) in
-                    self.tableItems.append(item)
+                self.dismiss(animated: true
+                    , completion: {
+                        
                 })
                 break
-            case.failure(_):
-                break
             }
+            
+            self.mainTable.cr.endHeaderRefresh()
         }
+        
+        //        appContainer.plateRepository.getPlatos(idUser: modelUser) { (result:(ChefieResult<[Plate]>)) in
+        //            switch result {
+        //            case.success(let data):
+        //
+        //                let items = data.compactMap({ (plate) -> HomePlatoCellItemInfo? in
+        //                    let item = HomePlatoCellItemInfo()
+        //                    item.model = plate
+        //                    return item
+        //
+        //
+        //                })
+        //                items.forEach({ (item) in
+        //                    self.tableItems.append(item)
+        //                })
+        //                break
+        //            case.failure(_):
+        //                break
+        //            }
+        //        }
     }
     
     func onLayout() {
-
+        
     }
     
     @objc func settings() {
@@ -148,30 +179,18 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Profile"
-        self.navigationController!.navigationBar.isTranslucent = true
-        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: DefaultFonts.ZapFino]
-        view.backgroundColor = .white
-        navigationItem.leftItemsSupplementBackButton = true
-        //navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(close))
-        //view.backgroundColor = .white
+        
         onSetup()
         onSetupViews()
         
-        //////////////////////////////////////////////////////
-        tableCellRegistrator.add(identifier: ProfilePicCellItemInfo().reuseIdentifier(), cellClass: ProfilePicCellView.self)
-        /////////////////////////////////////////////////////
-        tableCellRegistrator.add(identifier: ProfileUsernameItemInfo().reuseIdentifier(), cellClass: ProfileUsernameCellView.self)
-        //////////////////////////////////////////////////////
-        tableCellRegistrator.add(identifier: ProfileBioItemInfo().reuseIdentifier(), cellClass: ProfileBioCellView.self)
-        //////////////////////////////////////////////////////
-        tableCellRegistrator.add(identifier: ProfileFollowItemInfo().reuseIdentifier(), cellClass: ProfileFollowCellView.self)
-        //////////////////////////////////////////////////////
-   
         tableCellRegistrator.registerAll(tableView: mainTable)
- 
-     
-        onLoadData()
+        
+        mainTable.cr.addHeadRefresh(animator: NormalHeaderAnimator()) { [weak self] in
+            
+            self?.onLoadData()
+        }
+       
+        self.mainTable.cr.beginHeaderRefresh()
     }
 }
 
