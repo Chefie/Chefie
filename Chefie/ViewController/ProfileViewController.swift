@@ -16,8 +16,14 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
     
     var tableItems = Array<BaseItemInfo>()
     var tableCellRegistrator = TableCellRegistrator()
-    
-    
+
+    var model : UserMin?{
+        
+        didSet{
+            
+            
+        }
+    }
     
     @IBOutlet var mainTable: UITableView!{
         didSet {
@@ -60,47 +66,75 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
     
     func onLoadData() {
         
-        let userMin = appContainer.getUser().mapToUserMin()
-
+     self.model = appContainer.getUser().mapToUserMin()
+        
+        let userMin = UserMin()
         let userInfo = ChefieUser()
-        userInfo.profilePic = userMin.profilePic
-        userInfo.profileBackgroundPic = userMin.profileBackground
-        userInfo.userName =  userMin.userName
+        guard let modelUser = model?.id else {
+            dismiss(animated: true) {
+                
+            }
+            return
+        }
         
-        userInfo.followers = 0
-        userInfo.following = 0
+        appContainer.userRepository.getProfileData(idUser: modelUser) { (result:(ChefieResult<ChefieUser>)) in
+            switch result {
+            case.success(let data):
+                userMin.id = data.id
+                userMin.userName = data.userName
+                userMin.profilePic = data.profilePic
+                userMin.profileBackground = data.profileBackgroundPic
+                userInfo.followers = data.followers
+                userInfo.following = data.following
+                let pInfo = ProfilePicCellItemInfo()
+                pInfo.model = userMin
+                
+                //Model ChefieUser
+                let chefieUserInfo = ProfileInfoItemInfo()
+                chefieUserInfo.model = userInfo
+                
+                let username = ProfileUsernameItemInfo()
+                username.model = userMin
+                
+                let follows = ProfileFollowItemInfo()
+                follows.model = userInfo
+                
+                let bio = ProfileBioItemInfo()
+                bio.model = userInfo
+                
+                self.tableItems.append(pInfo)
+                self.tableItems.append(username)
+                self.tableItems.append(follows)
+                self.tableItems.append(bio)
+                self.mainTable.reloadData()
+                break
+            case.failure(_):
+                break
+            }
+        }
         
-        userInfo.biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lacus orci, lacinia nec arcu et, dictum tincidunt elit. Mauris in nibh ut lorem euismod commodo. Integer nec est neque. Quisque et turpis commodo, suscipit elit id, efficitur augue."
         
         
-        //Model UserMin
-        let pInfo = ProfilePicCellItemInfo()
-        pInfo.model = userMin
         
-        //Model ChefieUser
-        let chefieUserInfo = ProfileInfoItemInfo()
-        chefieUserInfo.model = userInfo
-        
-        let username = ProfileUsernameItemInfo()
-        username.model = userMin
-        
-        let follows = ProfileFollowItemInfo()
-        follows.model = userInfo
-        
-        let bio = ProfileBioItemInfo()
-        bio.model = userInfo
- 
-        //Adding to array
-        tableItems.append(pInfo)
-        tableItems.append(username)
-        tableItems.append(bio)
-        tableItems.append(follows)
-   
-        tableItems.append(bio)
-        //tableItems.append(chefieUserInfo)
-
-        mainTable.reloadData()
-
+        appContainer.plateRepository.getPlatos(idUser: modelUser) { (result:(ChefieResult<[Plate]>)) in
+            switch result {
+            case.success(let data):
+                
+                let items = data.compactMap({ (plate) -> HomePlatoCellItemInfo? in
+                    let item = HomePlatoCellItemInfo()
+                    item.model = plate
+                    return item
+                    
+                    
+                })
+                items.forEach({ (item) in
+                    self.tableItems.append(item)
+                })
+                break
+            case.failure(_):
+                break
+            }
+        }
     }
     
     func onLayout() {
@@ -133,64 +167,10 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
         //////////////////////////////////////////////////////
         tableCellRegistrator.add(identifier: ProfileFollowItemInfo().reuseIdentifier(), cellClass: ProfileFollowCellView.self)
         //////////////////////////////////////////////////////
-      //   tableCellRegistrator.add(identifier: PlatosVerticalCellBaseItemInfo().reuseIdentifier(), cellClass: PlatosVerticalCell.self)
-        //////////////////////////////////////////////////////
-        //tableCellRegistrator.add(identifier: RoutesVerticalCellBaseItemInfo().reuseIdentifier(), cellClass: RoutesVerticalCell.self)
-        //////////////////////////////////////////////////////
-       // tableCellRegistrator.add(identifier: ProfileInfoItemInfo().reuseIdentifier(), cellClass: ProfileInfoCellView.self)
-        //////////////////////////////////////////////////////
-    
-        
+   
         tableCellRegistrator.registerAll(tableView: mainTable)
-        appContainer.plateRepository.getPlatos(idUser: "2WT9s7km17QdtIwpYlEZ") { (
-            result: ChefieResult<[Plate]>) in
-            
-            switch result {
-                
-            case .success(let data):
-
-//                let verticalItemPlateInfo = PlatosVerticalCellBaseItemInfo()
-//                verticalItemPlateInfo.setTitle(value: "Plates")
-//                verticalItemPlateInfo.model = data as AnyObject
-//
-//                self.tableItems.append(verticalItemPlateInfo)
-//                data.forEach({ (plate) in
-//
-//                    let cellInfo = PlatoCellItemInfo()
-//                    cellInfo.model = plate
-//
-//                })
-//                self.mainTable.reloadData()
-                break
-            case .failure(_):
-                break
-            }
-        }
-        appContainer.userRepository.getUserFollowers(idUser: "2WT9s7km17QdtIwpYlEZ") { (result: (ChefieResult<[UserMin]>)) in
-            switch result {
-            case .success(_):
-                //var followers = [BaseItemInfo]()
-                
-//                var followersMin = [FollowMin]()
-//                followersMin.forEach({ (follower) in
-//                    
-//                    let followerMin = FollowMin()
-//                    followerMin.idFollower = follower.idFollower
-//                    followerMin.profilePic = follower.profilePic
-//                    followerMin.username = follower.username
-//                    followersMin.append(followerMin)
-//                    print("Followerss =>\(followerMin)")
-//                })
-//                
-                break
-            case .failure(_):
-                
-                
-                break
-            }
-            
-        }
-
+ 
+     
         onLoadData()
     }
 }

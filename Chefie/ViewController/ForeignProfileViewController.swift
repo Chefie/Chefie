@@ -51,7 +51,6 @@ class ForeignProfileViewController: UIViewController, DynamicViewControllerProto
       
         tableCellRegistrator.add(identifier: ProfileBioItemInfo().reuseIdentifier(), cellClass: ProfileBioCellView.self)
 
-        tableCellRegistrator.add(identifier: ProfileFollowBtnItemInfo().reuseIdentifier(), cellClass: ProfileFollowBtnCellView.self)
     }
     
     func onSetupViews() {
@@ -76,46 +75,53 @@ class ForeignProfileViewController: UIViewController, DynamicViewControllerProto
     
     func onLoadData() {
         
+        
         let userMin = UserMin()
-        
         let userInfo = ChefieUser()
-        userMin.profilePic = model?.profilePic
-        userMin.profileBackground = model?.profileBackground
-        userMin.userName =  model?.userName
+        guard let modelUser = model?.id else {
+            dismiss(animated: true) {
+                
+            }
+            return
+        }
         
-        userInfo.followers = 222
-        userInfo.following = 333
-        
-        userInfo.userName = userMin.userName
-        userInfo.biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lacus orci, lacinia nec arcu et, dictum tincidunt elit. Mauris in nibh ut lorem euismod commodo. Integer nec est neque. Quisque et turpis commodo, suscipit elit id, efficitur augue."
-        
-        
-        //Model UserMin
-        let pInfo = ProfilePicCellItemInfo()
-        pInfo.model = userMin
-        
-        //Model ChefieUser
-        let chefieUserInfo = ProfileInfoItemInfo()
-        chefieUserInfo.model = userInfo
-        
-        let username = ProfileUsernameItemInfo()
-        username.model = userMin
-        
-        let follows = ProfileFollowItemInfo()
-        follows.model = userInfo
-        
-        let bio = ProfileBioItemInfo()
-        bio.model = userInfo
-        
-        let btnFollow = ProfileFollowBtnItemInfo()
+        appContainer.userRepository.getProfileData(idUser: modelUser) { (result:(ChefieResult<ChefieUser>)) in
+            switch result {
+            case.success(let data):
+                userMin.id = data.id
+                userMin.userName = data.userName
+                userMin.profilePic = data.profilePic
+                userMin.profileBackground = data.profileBackgroundPic
+                userInfo.followers = data.followers
+                userInfo.following = data.following
+                let pInfo = ProfilePicCellItemInfo()
+                pInfo.model = userMin
+                
+                //Model ChefieUser
+                let chefieUserInfo = ProfileInfoItemInfo()
+                chefieUserInfo.model = userInfo
+                
+                let username = ProfileUsernameItemInfo()
+                username.model = userMin
+                
+                let follows = ProfileFollowItemInfo()
+                follows.model = userInfo
+                
+                let bio = ProfileBioItemInfo()
+                bio.model = userInfo
+                
+                self.tableItems.append(pInfo)
+                self.tableItems.append(username)
+                self.tableItems.append(follows)
+                self.tableItems.append(bio)
+                self.mainTable.reloadData()
+                break
+            case.failure(_):
+                break
+            }
+        }
 
-        btnFollow.model = model
-        //Adding to array
-        tableItems.append(pInfo)
-        tableItems.append(username)
-        tableItems.append(follows)
-        tableItems.append(btnFollow)
-        tableItems.append(bio)
+
     }
     
     func onLayout() {

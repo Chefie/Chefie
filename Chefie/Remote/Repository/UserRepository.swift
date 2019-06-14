@@ -203,43 +203,40 @@ class UserRepository{
     
     func getProfileData(idUser : String, completionHandler: @escaping (ChefieResult<ChefieUser>) -> Void) -> Void {
         
-        let user = Firestore.firestore().collection("Users").document(idUser)
-        
-        user.getDocument { (document, err) in
+        let user = Firestore.firestore().collection("Users")
+        let query = user.whereField("id", isEqualTo: idUser)
+        query.getDocuments { (snapshot, err) in
             
-            if let document = document, document.exists {
+            if let documents = snapshot?.documents  {
                 
-                do{
+                if !documents.isEmpty {
                     
-                    let dataDescription = document.data()
-                    let model = try FirestoreDecoder().decode(ChefieUser.self, from: dataDescription!)
-                  //  model.id = document.documentID
-                    
-                    print("Id -> \(String(describing: model.id))")
-                    print("Username -> \(String(describing: model.userName))")
-                    print("Followers -> \(String(describing: model.followers))")
-                    print("Following -> \(String(describing: model.following))")
-                    print("ProfilePic -> \(String(describing: model.profilePic))")
-                    print("BackgroundPic -> \(String(describing: model.profileBackgroundPic))")
-                    
-                    completionHandler(.success(model))
-                    
-                } catch  {
-                    
-                    print("Invalid Selection.")
-                    
+                    do{
+                        
+                        let model = try FirestoreDecoder().decode(ChefieUser.self, from:  documents.first!.data())
+                        //  model.id = document.documentID
+                        
+                        print("Id -> \(String(describing: model.id))")
+                        print("Username -> \(String(describing: model.userName))")
+                        print("Followers -> \(String(describing: model.followers))")
+                        print("Following -> \(String(describing: model.following))")
+                        print("ProfilePic -> \(String(describing: model.profilePic))")
+                        print("BackgroundPic -> \(String(describing: model.profileBackgroundPic))")
+                        
+                        completionHandler(.success(model))
+                        
+                    } catch  {
+                        
+                        print("Invalid Selection.")
+                        
+                    }
                 }
-                
-            }else {
-                
-                completionHandler(.failure(err as! String))
-                
-                print("Document does not exist")
-                
+                else {
+                    
+                    print("err")
+                }
             }
-            
         }
-        
     }
     
     func getUserMinByID(idUser: String, completionHandler: @escaping (ChefieResult<UserMin>) -> Void) -> Void {
@@ -480,6 +477,21 @@ class UserRepository{
         }
         catch {
             
+        }
+    }
+    
+    func updateUserImageData(userMin: UserMin, completionHandler: @escaping (ChefieResult<Bool>) -> Void) -> Void {
+    
+        Firestore.firestore().collection("Users")
+        .whereField("id", isEqualTo: userMin.id!)
+        .getDocuments { (querySnapshot, err) in
+            let document = querySnapshot!.documents.first
+            document!.reference.updateData([
+                "profilePic": userMin.profilePic  ?? "",
+                "profileBackgroundPic": userMin.profileBackground  ?? ""
+                ])
+            
+            completionHandler(.success(true))
         }
     }
 }

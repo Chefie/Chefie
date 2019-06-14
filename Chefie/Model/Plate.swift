@@ -26,7 +26,7 @@ class Plate : Codable
     var numVisits : Int?
     var comments : Array<Comment>?
     var community : Community?
-    var tags : Array<Tag>?
+    var tags : [String:Bool]?
     var ingredients : Array<String>?
     var user : UserMin?
 }

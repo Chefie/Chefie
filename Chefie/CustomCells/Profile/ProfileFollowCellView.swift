@@ -75,12 +75,7 @@ class ProfileFollowCellView : BaseCell, ICellDataProtocol {
         //let titleFontHeight = max(labelFollowers.font.lineHeight, cellSize.heightPercentageOf(amount: 5))
         
         labelFollowers.snp.makeConstraints { (maker) in
-            //  maker.left.equalTo(cellSize.widthPercentageOf(amount: 5))
-            //  maker.top.equalTo(cellSize.height.percentageOf(amount: 0))
-            //  maker.width.equalTo(cellSize.width.minus(amount: 4))
-            //  maker.height.equalTo(titleFontHeight)
-            
-            maker.leftMargin.equalTo(size.widthPercentageOf(amount: 5))
+            maker.leftMargin.equalTo(size.widthPercentageOf(amount: 65))
             maker.width.equalTo(size.widthPercentageOf(amount: 25))
             maker.topMargin.equalTo(20)
             
@@ -90,19 +85,11 @@ class ProfileFollowCellView : BaseCell, ICellDataProtocol {
         let titleFontHeight2 = max(labelFollowing.font.lineHeight, cellSize.heightPercentageOf(amount: 5))
         
         labelFollowing.snp.makeConstraints { (maker) in
-            
-            //            maker.topMargin.equalTo(20)
-            //            maker.right.equalTo(size.widthPercentageOf(amount: -10))
-            //            maker.width.equalTo(size.widthPercentageOf(amount: 20))
-            
-            maker.leftMargin.equalTo(size.widthPercentageOf(amount: 65))
-            //maker.rightMargin.equalTo(size.widthPercentageOf(amount: -5))
+            maker.leftMargin.equalTo(size.widthPercentageOf(amount: 5))
             maker.width.equalTo(size.widthPercentageOf(amount: 25))
             maker.topMargin.equalTo(20)
-            //maker.top.equalTo(cellSize.heightPercentageOf(amount: 50))
+        
         }
-        //labelFollowers.displayLines(height: size.heightPercentageOf(amount: 10))
-        //labelFollowing.displayLines(height: size.heightPercentageOf(amount: 10))
         
         self.contentView.snp.makeConstraints { (maker) in
             maker.size.equalTo(cellSize)

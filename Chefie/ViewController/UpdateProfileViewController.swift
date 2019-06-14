@@ -107,7 +107,7 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
     }
     
     func insertDatosUsuario(){
-        let id = Auth.auth().currentUser!.uid
+        let id = appContainer.getUser().id!
         self.db.collection("Users")
             .whereField("id", isEqualTo: id)
             .getDocuments() { (querySnapshot, err) in

@@ -24,7 +24,7 @@ class ProfilePicCellItemInfo : BaseItemInfo {
 
 
 class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+    
     
     typealias T = UserMin
     var model: UserMin?
@@ -52,7 +52,7 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
     }()
     
     let iconChange : UIImageView = {
-      let img = UIImageView(maskConstraints: false)
+        let img = UIImageView(maskConstraints: false)
         //img.backgroundColor = .white
         img.image = UIImage(named: "change3")
         img.contentMode = ContentMode.scaleToFill
@@ -70,25 +70,10 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
     var followBtn : UIButton = {
         var button = UIButton()
         button.contentMode = ContentMode.scaleToFill
-        let image = UIImage(named: "followChefie") as UIImage?
+        let image = UIImage(named: "followChefie")!.withRenderingMode(.alwaysOriginal)
         button.setImage(image, for: .normal)
         return button
     }()
-    
-    
-    
-//    let buttonUpload: UIButton = {
-//        let button = UIButton()
-//        let image = UIImage(named: "addButton") as UIImage?
-//        //button.backgroundColor = UIColor.green
-//        button.contentMode = ContentMode.scaleToFill
-//        button.setTitle("Upload recipe", for: .normal)
-//        button.setImage(image, for: .normal)
-//        //button.setTouch(target: self, selector: #selector(buttonAction))
-//        return button
-//
-//    }()
-    
     
     
     override func onLayout(size : CGSize!) {
@@ -124,13 +109,7 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
             maker.top.equalTo(cellSize.height.percentageOf(amount: 50))
             maker.width.equalTo(cellSize.widthPercentageOf(amount: 40))
             maker.height.equalTo(cellSize.heightPercentageOf(amount: 52))
-            //     maker.left.top.right.bottom.equalTo(0)
-            //   maker.bottomMargin.equalToSuperview()
-            //maker.bottomMargin.equalTo(cellSize.height.percentageOf(amount: 150))
-            //maker.center.equalToSuperview()
-//            maker.left.equalTo(cellSize.widthPercentageOf(amount: 31))
-            
-             maker.leftMargin.equalTo(cellSize.widthPercentageOf(amount: 26))
+            maker.leftMargin.equalTo(cellSize.widthPercentageOf(amount: 26))
         }
         
         iconChange.snp.makeConstraints { (maker) in
@@ -141,52 +120,23 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
         }
         
         iconAddRoute.snp.makeConstraints { (maker) in
-            maker.top.equalTo(cellSize.height.percentageOf(amount: 82))
+            maker.top.equalTo(cellSize.height.percentageOf(amount: 83))
             maker.left.equalTo(cellSize.widthPercentageOf(amount: 12))
-            maker.width.equalTo(cellSize.widthPercentageOf(amount: 7))
-            maker.height.equalTo(cellSize.heightPercentageOf(amount: 10))
+            maker.width.equalTo(cellSize.widthPercentageOf(amount: 8.5))
+            maker.height.equalTo(cellSize.heightPercentageOf(amount: 11.5))
         }
         
         followBtn.snp.makeConstraints { (maker) in
             
             maker.top.equalTo(cellSize.height.percentageOf(amount: 82))
             maker.left.equalTo(cellSize.widthPercentageOf(amount: 81))
-            maker.width.equalTo(cellSize.widthPercentageOf(amount: 9))
-            maker.height.equalTo(cellSize.heightPercentageOf(amount: 12))
+            maker.width.equalTo(cellSize.widthPercentageOf(amount: 10.5))
+            maker.height.equalTo(cellSize.heightPercentageOf(amount: 13.5))
         }
-        
-        
-        //buttonUpload.addShadow()
-        
-//        buttonUpload.snp.makeConstraints { (maker) in
-//
-//            maker.width.equalTo(cellSize.widthPercentageOf(amount: 32))
-//            maker.height.equalTo(cellSize.heightPercentageOf(amount: 20))
-//            maker.top.rightMargin.equalToSuperview()
-//        }
-        
-        //    profilePic.frame = CGRect(x: 20, y: 20, width: cellSize.widthPercentageOf(amount: 20), height: cellSize.heightPercentageOf(amount: 18))
-        
-        
         
         layoutIfNeeded()
         
-        
-        
         profilePic.setCircularImageView()
-        
-        
-        //   profilePic.backgroundColor = UIColor.yellow
-        //Trying to make a rounded profile Pic
-        
-        //profilePic.setCircularImageView()
-        //profilePic.layer.cornerRadius = profilePic.frame.height/2
-        //profilePic.layer.borderWidth = 1
-        //profilePic.layer.borderColor = UIColor.black.cgColor
-        //profilePic.layer.masksToBounds = false
-        //profilePic.clipsToBounds = true
-        
-        
         self.showAnimatedGradientSkeleton()
         
         
@@ -195,43 +145,139 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
     
     override func onLoadData() {
         
+        appContainer.userRepository.checkIfFollowing(idUser: model!.id!, idFollower: appContainer.dataManager.localData.chefieUser.id!) {
+            (result:(ChefieResult<Bool>)) in
+            switch result {
+            case .success(let data):
+                self.changeState(isFollowing: data)
+                break
+            case .failure(_):
+                break
+                
+            }
+        }
+        
         self.backGroundImage.sd_setImage(with: URL(string: model?.profileBackground ?? "")){ (image : UIImage?,
             error : Error?, cacheType : SDImageCacheType, url : URL?) in
         }
         self.profilePic.sd_setImage(with: URL(string: self.model?.profilePic ?? "")){ (image : UIImage?,
-                error : Error?, cacheType : SDImageCacheType, url : URL?) in
-                
-            }
-            self.hideSkeleton()
+            error : Error?, cacheType : SDImageCacheType, url : URL?) in
+            
+        }
+        self.hideSkeleton()
         
         
     }
-
+    
     override func onCreateViews() {
         imagePicker.delegate = self
         self.contentView.addSubview(backGroundImage)
         self.contentView.addSubview(profilePic)
-        //self.contentView.addSubview(buttonUpload)
         self.contentView.addSubview(iconChange)
         self.contentView.addSubview(iconAddRoute)
         self.contentView.addSubview(followBtn)
-        //self.isUserInteractionEnabled = true
-        
+        self.followBtn.setTouch(target: self, selector: #selector(followBtnTapped))
         self.profilePic.setTouch(target: self, selector: #selector(onChangeProfile))
         self.backGroundImage.setTouch(target: self, selector: #selector(onChangeBackground))
         
     }
     
-//    @objc func buttonAction() {
-//
-//        print("*********VAMOS AL SETTINGS")
-//        let storyboard = UIStoryboard(name: "UpdateProfile", bundle: nil)
-//        let vc  : UpdateProfileViewController = storyboard.instantiateViewController(withIdentifier: "UpdateProfileStory") as! UpdateProfileViewController
-//
-//        self.viewController?.navigationController?.pushViewController(vc, animated: true)
-//
-//    }
+    func changeState(isFollowing : Bool) {
+        
+        if(isFollowing){
+            let image = UIImage(named: "unfollowChefie") as UIImage?
+            self.followBtn.setImage(image, for: .normal)
+        } else {
+            let image = UIImage(named: "followChefie") as UIImage?
+            self.followBtn.setImage(image, for: .normal)
+        }
+    }
     
+    @objc func followBtnTapped() {
+        appContainer.userRepository.checkIfFollowing(idUser: model!.id!, idFollower: appContainer.getUser().id!) {
+            (result:(ChefieResult<Bool>)) in
+            switch result{
+            case .success(let isFollowing):
+                if isFollowing {
+                    self.unfollowAction()
+                    self.rmvFollowing()
+                } else {
+                    self.followAction()
+                    self.addFollowing()
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    func followAction() {
+        let image = UIImage(named: "unfollowChefie") as UIImage?
+        self.followBtn.setImage(image, for: .normal)
+        appContainer.userRepository.addFollower(idUser: model!.id!, idFollower: appContainer.getUser().id!) {
+            (result:(ChefieResult<Bool>)) in
+            switch result{
+            case .success(let data):
+                if data {
+                    print("Se ha añadido follower")
+                }
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    func unfollowAction(){
+        let image = UIImage(named: "followChefie") as UIImage?
+        self.followBtn.setImage(image, for: .normal)
+        appContainer.userRepository.removeFollower(idUser: model!.id!, idFollower: appContainer.getUser().id!) {
+            (result: (ChefieResult<Bool>)) in
+            switch result{
+            case .success(let data):
+                if data {
+                    print("Se ha borrado follower")
+                }
+                break
+            case .failure(_):
+                break
+            }
+            
+        }
+    }
+    
+    func addFollowing(){
+        appContainer.userRepository.addFollowing(follower: appContainer.getUser().mapToUserMin(), targetUser: model!) {
+            (result: (ChefieResult<Bool>)) in
+            switch result{
+            case .success(let data):
+                if data {
+                    print("Se ha añadido following")
+                }
+                break
+            case .failure(_):
+                break
+                
+            }
+        }
+    }
+    
+    func rmvFollowing(){
+        appContainer.userRepository.removeFollowing(follower: appContainer.getUser().id!, idTargetUser: model!.id!) {
+            (result: (ChefieResult<Bool>)) in
+            switch result{
+            case .success(let data):
+                if data {
+                    print("Se ha borrado following")
+                }
+                break
+            case .failure(_):
+                break
+                
+            }
+        }
+    }
     
     var isChangingProfile = false
     
@@ -248,14 +294,14 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
         
         openGallery()
     }
-   @objc func openGallery()
+    @objc func openGallery()
     {
         if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
             print("Button capture")
             imagePicker.sourceType = .savedPhotosAlbum;
             imagePicker.allowsEditing = true
             viewController?.present(imagePicker, animated: true, completion: nil)
-        
+            
         }
         else
         {
@@ -271,38 +317,86 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
         guard let image = info[.originalImage] as? UIImage else {
             fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
         }
-     
+        
         if (isChangingProfile){
             profilePic.image = image
+            appContainer.s3Repository.uploadImage(data: profilePic.image!.rawData()) { (result : Result<S3MediaUploadResult, Error>
+                ) in
+                
+                
+                switch result {
+                case .success(let data):
+                    
+                    let img = appContainer.getUser().mapToUserMin()
+                    img.profilePic = data.url
+                    appContainer.userRepository.updateUserImageData(userMin: img, completionHandler: { (result:(ChefieResult<Bool>)) in
+                        switch result{
+                        case .success(let data):
+                            if(data) {
+                                print("Imagen de perfil updateada correctamente")
+                            } else {
+                                print("No se ha subido bien")
+                            }
+                            break
+                        case .failure(_):
+                            break
+                        }
+                        
+                    })
+                    
+                    break
+                case .failure(let error):
+                    print("Fail")
+                    break
+                }
+                
+                
+                
+            }
         }
-       
-       
+        
+        
         guard let imageBackground = info[.originalImage] as? UIImage else {
             fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
         }
         
         if (!isChangingProfile) {
             backGroundImage.image = imageBackground
+            appContainer.s3Repository.uploadImage(data: backGroundImage.image!.rawData()) { (result : Result<S3MediaUploadResult, Error>
+                ) in
+                switch result {
+                case .success(let data):
+                    
+                    let img = appContainer.getUser().mapToUserMin()
+                    img.profileBackground = data.url
+                    appContainer.userRepository.updateUserImageData(userMin: img, completionHandler: { (result:(ChefieResult<Bool>)) in
+                        switch result{
+                        case .success(let data):
+                            if(data) {
+                                print("Imagen de background updateada correctamente")
+                            } else {
+                                print("No se ha subido bien")
+                            }
+                            break
+                        case .failure(_):
+                            break
+                        }
+                        
+                    })
+                    
+                    break
+                case .failure(let error):
+                    print("Fail")
+                    break
+                }
+                
+                
+                
+            }
         }
         
         
-//        appContainer.s3Repository.uploadImage(data: profilePic.image!.rawData()) { (result : Result<S3MediaUploadResult, Error>
-//            ) in
-//
-//
-//            switch result {
-//            case .success(let data):
-//
-//                print("Uploaded")
-//                break
-//            case .failure(let error):
-//                print("Fail")
-//                break
-//            }
-//
-//
-//
-//        }
+        
     }
 }
 

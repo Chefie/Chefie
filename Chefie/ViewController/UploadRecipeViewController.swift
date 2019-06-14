@@ -59,10 +59,11 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         let description = descriptionTextView.text!
         let comunidadNombre = comunidades[numeroComunidad]
         
-        let tags = tagListView.tagViews.compactMap { (tagView) -> Tag? in
-            return Tag(label: tagView.titleLabel!.text!)
+        var tags = [String:Bool]()
+        tagListView.tagViews.forEach { (tagView) in
+
+            tags[tagView.titleLabel!.text!] = true
         }
-        
         let plato = Plate()
         plato.created_at = Date().convertDateToString()
         plato.community = comunidadNombre

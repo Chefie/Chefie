@@ -1,8 +1,8 @@
 //
-//  ProfilePlatesCellView.swift
+//  PlatosVerticalCell.swift
 //  Chefie
 //
-//  Created by Alex Lin on 30/05/2019.
+//  Created by DAM on 23/05/2019.
 //  Copyright © 2019 chefie. All rights reserved.
 //
 
@@ -10,137 +10,94 @@ import Foundation
 import UIKit
 import SkeletonView
 import SDWebImage
-import AACarousel
 
-class ProfilePlateCellItemInfo : BaseItemInfo {
+class ProfilePlatesCellView : VerticalTableSectionCellBaseInfo {
+    
     override func reuseIdentifier() -> String {
-        return "ProfilePlateCellView"
+        return String(describing: ProfilePlatesVerticalCell.self)
+    }
+    
+    override func title() -> String {
+        return "Plates"
     }
 }
 
-class ProfilePlateCellView : BaseCell, ICellDataProtocol, INestedCell, AACarouselDelegate {
+class ProfilePlatesVerticalCell : VerticalTableSectionView<Plate> {
+
+    override var modelSet: [Plate] {
+        
+        didSet{
+            
+        }
+        
+    }
     
-    typealias T = Plate
-    
-    var model: Plate?
-    
-    var collectionItemSize: CGSize!
-    
-    let fontImageView : UIImageView = {
-        let img = UIImageView(maskConstraints: false)
-        img.contentMode = ContentMode.scaleAspectFill
-        return img
-    }()
-    
-    let plateTitle : MultilineLabel = {
-        let lbl = MultilineLabel(maskConstraints: false, font: DefaultFonts.DefaultTextFont)
-        lbl.text = ""
-        lbl.numberOfLines = 1
-        return lbl
-    }()
-    
-    let carousel : AACarousel = {
-        let view = AACarousel(maskConstraints: false)
-        return view
-    }()
+    override func getVisibleItemsCount() -> Int {
+        return modelSet.count < 3 ? modelSet.count : 3
+    }
     
     override func setModel(model: AnyObject?) {
-        self.model = (model as! Plate)
+        
+        self.modelSet = ((model as? [Plate])!)
     }
     
     override func getModel() -> AnyObject? {
-        return model
+        return modelSet as AnyObject
+    }
+    
+    override func onRequestItemSize() -> CGSize {
+        return CGSize(width: self.parentView.getWidth(), height: self.parentView.getHeight().percentageOf(amount: 35))
+    }
+    
+    override func onRequestCell(_ tableView: UITableView, cellForItemAt indexPath: IndexPath) -> UITableViewCell {
+        if (modelSet.count == 0) {
+            
+            return UITableViewCell()
+        }
+        
+        if indexPath.row < modelSet.count {
+            let cellInfo = self.modelSet[indexPath.row]
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: getCellIdentifier(), for: indexPath) as! HomePlatoCellView
+            cell.viewController = viewController
+            cell.collectionItemSize = onRequestItemSize()
+            cell.parentView = tableView
+            cell.setModel(model: cellInfo)
+            cell.onLoadData()
+            
+            return cell
+        }
+        
+        return super.onRequestCell(tableView, cellForItemAt: indexPath)
+    }
+    
+    override func onRegisterCells() {
+        
+        tableView.register(HomePlatoCellView.self, forCellReuseIdentifier: getCellIdentifier())
+    }
+    
+    override func onLoadData() {
+        super.onLoadData()
+        
+        self.hideSkeleton()
     }
     
     override func onLayout(size: CGSize!) {
         super.onLayout(size: size)
         
-        self.contentView.snp.makeConstraints { (maker) in
-            maker.edges.equalToSuperview()
-            maker.left.top.right.bottom.equalTo(0)
-            maker.width.equalTo(size.width)
-            maker.height.equalTo(collectionItemSize.height)
-        }
-        
-        carousel.snp.makeConstraints { (maker) in
-            
-            maker.width.equalTo(collectionItemSize.width.minus(amount: 10))
-            maker.height.equalTo(collectionItemSize.heightPercentageOf(amount: 88))
-            maker.topMargin.equalTo(0)
-            maker.bottomMargin.equalTo(10)
-            maker.left.equalTo(collectionItemSize.widthPercentageOf(amount: 5))
-        }
-        
-        self.plateTitle.snp.makeConstraints { (maker) in
-            
-            maker.width.equalTo(collectionItemSize.width.minus(amount: 20))
-            maker.height.equalTo(collectionItemSize.heightPercentageOf(amount: 10))
-            maker.bottomMargin.equalToSuperview().offset(4)
-            maker.centerX.equalToSuperview()
-        }
-        
-        carousel.setCarouselOpaque(layer: true, describedTitle: true, pageIndicator: false)
-        
-        self.carousel.setCornerRadius(radius: 8)
-        
-        plateTitle.displayLines(height: collectionItemSize.heightPercentageOf(amount: 10))
-        contentView.showAnimatedGradientSkeleton()
+        onLayoutSection()
     }
     
-    override func onLoadData() {
+    override func getCellIdentifier() -> String {
         
-        carousel.delegate = self
-        
-        let arrayStr = model?.multimedia?.map({ (media) -> String in
-            return media.url ?? ""
-        })
-        
-        carousel.setCarouselData(paths: arrayStr!,  describedTitle: [""], isAutoScroll: true, timer: 5.0, defaultImage: "placeholder")
-        
-        self.carousel.doFadeIn()
-        
-        
-    }
-    
-    
-    func didSelectCarouselView(_ view: AACarousel, _ index: Int) {
-        
-    }
-    
-    func callBackFirstDisplayView(_ imageView: UIImageView, _ url: [String], _ index: Int) {
-        
-    }
-    
-    func downloadImages(_ url: String, _ index: Int) {
-        let url = URL(string: url)
-        
-        SDWebImageManager.shared.loadImage(with: url, options: .continueInBackground, progress: nil) { (image : UIImage?, data : Data?, error : Error?, cache : SDImageCacheType, result : Bool, url : URL?) in
-            
-            if let data = image {
-                self.carousel.images[index] = data
-            }
-            
-            self.hideSkeleton()
-        }
-    }
-    
-    @objc func onTouch() {
-        
-        let storyboard = UIStoryboard(name: "PlateDetailStoryboard", bundle: nil)
-        let vc  : PlateDetailsViewController = storyboard.instantiateViewController(withIdentifier: "PlateDetailViewController") as! PlateDetailsViewController
-        
-        vc.model = model
-        
-        self.viewController?.navigationController?.pushViewController(vc, animated: true)
+        return String(describing: HomePlatoCellView.self)
     }
     
     override func onCreateViews() {
         super.onCreateViews()
-        self.contentView.addSubview(carousel)
-        //self.contentView.addSubview(frontImageView)
-        self.contentView.addSubview(plateTitle)
+        
+        tableView.delegate = self
+        tableView.dataSource = self
     }
-    
-    
-    
 }
+
