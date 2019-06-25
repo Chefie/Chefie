@@ -1,8 +1,8 @@
 //
-//  BaseModel.swift
+//  NotificationCell.swift
 //  Chefie
 //
-//  Created by Nicolae Luchian on 20/05/2019.
+//  Created by DAM on 14/06/2019.
 //  Copyright © 2019 chefie. All rights reserved.
 //
 
