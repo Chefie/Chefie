@@ -9,6 +9,7 @@
 import Foundation
 import FSPagerView
 import SDWebImage
+import Lightbox
 
 class PlateMediaCarousellItemInfo : BaseItemInfo {
     
@@ -95,11 +96,7 @@ class PlateMediaCarousellCellView : BaseCell, ICellDataProtocol, FSPagerViewData
             cell.imageView?.sd_setImage(with: URL(string: mediaInfo.thumbnail ?? "")){ (image : UIImage?,
                 error : Error?, cacheType : SDImageCacheType, url : URL?) in
 
-                let image = image?.drawDarkRect().with(image: "play_video", rectCalculation: { (parentSize, newSize) -> (CGRect) in
-                    return CGRect(x: 0, y: 0, width: 20, height: 20)
-                })
-                cell.imageView?.image = image
-                      self.hideSkeleton()
+                self.hideSkeleton()
             }
         }
         else {
@@ -110,7 +107,7 @@ class PlateMediaCarousellCellView : BaseCell, ICellDataProtocol, FSPagerViewData
             }
         }
 
-        cell.imageView?.contentMode = .scaleAspectFill
+        cell.imageView?.contentMode = .scaleToFill
         cell.imageView?.clipsToBounds = true
         return cell
     }
@@ -119,12 +116,39 @@ class PlateMediaCarousellCellView : BaseCell, ICellDataProtocol, FSPagerViewData
         pagerView.deselectItem(at: index, animated: true)
         pagerView.scrollToItem(at: index, animated: true)
     }
+    
+    @objc func onOpenLightBox() {
+        
+        if let media = self.model?.multimedia {
+            
+           let items = media.compactMap({ (media) -> LightboxImage? in
+                
+                if media.type == ContentType.Jpeg.rawValue {
+                    
+                    return LightboxImage(imageURL: URL(string: media.url!)!)
+                }
+                else if (media.type == ContentType.VideoMP4.rawValue){
+                    return LightboxImage(imageURL: URL(string: media.thumbnail!)!, text: "", videoURL: URL(string: media.url!))
+                }
+                
+                return LightboxImage(image: UIImage(named: "no_media")!)
+            })
+            
+            let controller = LightboxController(images: items)
+            controller.dynamicBackground = true
+            
+            viewController?.present(controller, animated: true, completion: {
+                
+            })
+        }
+    }
 
     override func onCreateViews() {
         super.onCreateViews()
         
         contentView.addSubview(pagerView)
-        
+
+        self.contentView.setTouch(target: self, selector: #selector(onOpenLightBox))
         self.pagerView.register(FSPagerViewCell.self, forCellWithReuseIdentifier: "cell")
         self.pagerView.itemSize = FSPagerView.automaticSize
         self.pagerView.transformer = FSPagerViewTransformer(type:.coverFlow)

@@ -25,7 +25,19 @@ extension NSAttributedString {
 }
 
 extension String {
-
+  
+    var floatValue: Float {
+            return (self as NSString).floatValue
+    }
+    
+    func CGFloatValue() -> CGFloat? {
+        guard let doubleValue = Double(self) else {
+            return nil
+        }
+        
+        return CGFloat(doubleValue)
+    }
+   
     func width(withConstrainedHeight height: CGFloat, font: UIFont) -> CGFloat
         {
             let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height);

@@ -8,28 +8,69 @@
 
 import Foundation
 import UIKit
+
+enum DataState {
+    case idle, firstLoad, loaded, dataNotFound
+}
+
 class EndlessTableHelper {
     
     var isFirst = false
-    var firstItemsCount = AppSettings.DefaultSkeletonCellCount
+    var firstItemsCount : Int = AppSettings.DefaultSkeletonCellCount {
+        
+        didSet {
+          
+            self.itemsCount = firstItemsCount
+        }
+    }
     var tableView : UITableView
+    
+    var dataState : DataState = DataState.idle
+    var itemsCount : Int = AppSettings.DefaultSkeletonCellCount
+    
+    var noData : Bool = false
     
     init(table : UITableView) {
         
         self.tableView = table
     }
     
-     func begin() {
+    func begin() {
         
         self.tableView.beginUpdates()
         doFirstItemsCheck()
     }
     
-     func end() {
+    func end() {
         
         self.tableView.endUpdates()
     }
     
+    func setCount(count: Int){
+        
+        noData = count == 0
+        itemsCount = count
+    }
+    
+    func reset(reloadNow : Bool = true) {
+        
+        noData = true
+        self.itemsCount = 0
+        if (reloadNow) {
+             tableView.reloadData()
+        }
+    }
+    
+    func getCount() -> Int {
+        
+        if (noData){
+
+            return 0
+        }
+        let count = itemsCount == 0 ? firstItemsCount : itemsCount
+        return count
+    }
+
     func removeRows(count : Int){
         
         let rowsToRemove = Array(0..<count).compactMap({ (num) -> IndexPath in
@@ -41,9 +82,10 @@ class EndlessTableHelper {
     
     func loadMoreItems(itemsCount : Int, callback:(() -> Void)){
 
-        if (itemsCount > 0){
+        if (itemsCount >= 0){
             
             let First = self.isFirst ? true : false
+  
             begin()
             callback()
             end()
@@ -52,7 +94,6 @@ class EndlessTableHelper {
                 
                 tableView.reloadData()
             }
-            
             addOffset(count: itemsCount)
         }
         else {
@@ -65,7 +106,6 @@ class EndlessTableHelper {
        // self.tablePaginator.incrementOffsetBy(delta: count)
         //self.tablePaginator.partialDataFetchingDone()
     }
-    
     
     func insertRowAt(row : Int){
         
@@ -89,7 +129,11 @@ class EndlessTableHelper {
                     return IndexPath(row: num, section: 0)
                 })
                 
-                self.tableView.deleteRows(at: skeletonItemsCount, with: .none)
+                if self.tableView.numberOfRows(inSection: 0) > 0{
+                    
+                   self.tableView.deleteRows(at: skeletonItemsCount, with: .none)
+                }
+               
             }
             self.isFirst = true
         }

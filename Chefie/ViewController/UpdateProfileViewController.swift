@@ -15,14 +15,13 @@ import CodableFirebase
 import FaveButton
 import SCLAlertView
 
-class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate , UITextViewDelegate, UITextFieldDelegate {
     
     let db = Firestore.firestore()
     
     var usernameGlobal: ChefieUser!
     
-    //Array comunidades de España
-    let comunidades = ["Andalucía", "Aragón", "Canarias", "Cantabria", "Castilla y León", "Castilla-La Mancha", "Cataluña", "Ceuta", "Comunidad Valenciana", "Comunidad de Madrid", "Extremadura", "Galicia", "Islas Baleares", "La Rioja", "Melilla", "Navarra", "País Vasco", "Principado de Asturias", "Región de Murcia"]
+    var comunidades = [Community]()
     
     //Arrays de Strings de Provincias
     let andalucía =  ["Almeria","Cadiz","Cordoba","Granada","Huelva","Jaen","Malaga","Sevilla"]
@@ -49,7 +48,7 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
     var secondColumnData = [[String]]()
     var timer = Timer()
     var timerUpdate = Timer()
-
+    
     @IBOutlet weak var textFieldFullname: SpringTextField!
     @IBOutlet weak var textFieldUsername: SpringTextField!
     @IBOutlet weak var textViewBiography: SpringTextView!
@@ -63,8 +62,6 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
     var valorComunidadUsuario = ""
     @IBAction func genreAction(_ sender: DLRadioButton) {
         
-        
-        
         if(sender.tag == 1){
             genre = "Female"
         }else{
@@ -72,15 +69,30 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
         }
     }
     
+    @IBAction func onGoToChefieTeamSection(_ sender: Any) {
+        
+        let url = URL(string: "https://master.d25if42x0mnuvf.amplifyapp.com/#team")!
+        UIApplication.shared.open(url, options: [:]) { (result ) in
+            
+        }
+    }
+    @IBAction func onGoToPrivacySection(_ sender: Any) {
+        
+        let url = URL(string: "https://master.d25if42x0mnuvf.amplifyapp.com/#privacy")!
+        UIApplication.shared.open(url, options: [:]) { (result ) in
+            
+        }
+    }
+    
     @IBAction func insertUserInfo(_ sender: Any) {
         
         timer.invalidate()
         //Creando el usuario y sus atributos.
-//        let user = ChefieUser()
-//
-//        let idUser = Auth.auth().currentUser!.uid
-//
-//
+        //        let user = ChefieUser()
+        //
+        //        let idUser = Auth.auth().currentUser!.uid
+        //
+        //
         
         if(textFieldFullname.text != "" && textFieldUsername.text != ""){
             modificarUsuario()
@@ -90,23 +102,23 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
     func checkIfUsernameExist(username: String, completionHandler: @escaping (ChefieResult<Bool>) -> Void) -> Void{
         let db = Firestore.firestore()
         
-        db.collection("Users").whereField("userName", isEqualTo: self.textFieldUsername.text!)
+        db.collection("Users").whereField("userName", isEqualTo: username)
             .getDocuments() { (querySnapshot, err) in
                 
                 if  querySnapshot?.count == 0 {
                     
-                   completionHandler(.success(true))
+                    completionHandler(.success(true))
                 }
-                
+                    
                 else {
                     
                     completionHandler(.failure("Not found"))
                 }
-               
+                
         }
     }
     
-    func insertDatosUsuario(){
+    func updateUserData(){
         let id = appContainer.getUser().id!
         self.db.collection("Users")
             .whereField("id", isEqualTo: id)
@@ -117,15 +129,31 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
                     // Perhaps this is an error for you?
                 } else {
                     let document = querySnapshot!.documents.first
-                    document!.reference.updateData([
-                        "fullName": self.textFieldFullname.text,
-                        "userName": self.textFieldUsername.text,
-                        "biography": self.textViewBiography.text,
-                        "gender" : self.genre,
+                    
+                    document?.reference.updateData([
+                        "fullName": self.textFieldFullname.text ?? "",
+                        "userName": self.textFieldUsername.text ?? "",
+                        "biography": self.textViewBiography.text ?? "",
                         "community": self.comunidadUser,
                         "location" : self.provinciaUser
-                        ])
-                    
+                        ], completion: { (err
+                            ) in
+                            
+                            appContainer.userRepository.getUserById(id: id, completionHandler: { (result : ChefieResult<ChefieUser>) in
+                                
+                                switch result {
+                                    
+                                case .success(let newUser):
+     
+                                    appContainer.updateUser(user: newUser)
+                                    appContainer.userRepository.updateUserDataGlobally(userMin: newUser.mapToUserMin())
+                                    
+                                    break
+                                    
+                                case .failure(_) : break
+                                }
+                            })
+                    })
                     
                     let appearance = SCLAlertView.SCLAppearance(
                         showCloseButton: false
@@ -133,9 +161,14 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
                     let alertView = SCLAlertView(appearance: appearance)
                     //                    alertView.addButton("First Button", target:self, selector:Selector("firstButton"))
                     alertView.addButton("Great!") {
-                        self.goToMainAfterUpdate()
+                        
+                         EventContainer.shared.ProfileSubject.on(.next(""))
+                        self.navigationController?.popViewController(animated: true)
                     }
-                    alertView.showSuccess("Your profile was successfully updated.", subTitle: "")
+                    alertView.showSuccess("Your profile was successfully updated", subTitle: "").setDismissBlock {
+                        
+                       
+                    }
                 }
         }
     }
@@ -151,8 +184,8 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
                     
                 case .success(_):
                     
-                    self.insertDatosUsuario()
-                  
+                    self.updateUserData()
+                    
                     break
                     
                 case .failure(_):
@@ -166,25 +199,16 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
                 }
             }
         }else{
-            self.insertDatosUsuario()
+            self.updateUserData()
         }
-        
-       
-     
-        
-
-        
-        
-      
     }
-    
     
     func goBackToLogin(){
         let storyboard = UIStoryboard(name: "Login", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "loginView")
         self.present(controller, animated: true, completion: nil)
     }
-
+    
     //Metodo que trae los datos del usuario logueado.
     func loadUserInfo() {
         
@@ -202,8 +226,8 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
                 self.genre = user.gender!
                 self.valorComunidadUsuario = user.community!
                 
-                var gender = user.gender
-               
+                let gender = user.gender
+                
                 if (gender == "Male") {
                     
                     self.btnGenre.otherButtons.forEach({ (btn) in
@@ -213,6 +237,20 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
                 else {
                     self.btnGenre.isSelected = true
                 }
+                
+                let item = self.comunidades.firstIndex { (com) -> Bool in
+                    com.id == user.community
+                }
+                
+                self.pickerView.selectRow(item ?? 0, inComponent: 0, animated: true)
+                
+                let secondIndex = self.secondColumnData[self.pickerView.selectedRow(inComponent: 0)].firstIndex(where: { (str) -> Bool in
+                    
+                    str == user.location
+                })
+                
+                self.pickerView.reloadComponent(1)
+                self.pickerView.selectRow(secondIndex ?? 0, inComponent: 1, animated: true)
                 break
             case .failure(_) : break
             }
@@ -221,10 +259,25 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
     
     override func viewDidLoad() {
         super.viewDidLoad()
-         pickerView.reloadComponent(0)
-         pickerView.reloadComponent(1)
+        pickerView.reloadComponent(0)
+        pickerView.reloadComponent(1)
         
-        loadUserInfo()
+        appContainer.communityRepository.getCommunities { (result : ChefieResult<[Community]>) in
+            
+            switch result {
+                
+            case .success(let data) :
+                
+                self.comunidades.removeAll()
+                self.comunidades.append(contentsOf: data)
+                self.pickerView.reloadAllComponents()
+                
+                self.loadUserInfo()
+                break
+            case .failure(_): break
+            }
+        }
+        
         
         //Checking every second if texfields are not empty.
         timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(checkIfDone), userInfo: nil, repeats: true)
@@ -242,18 +295,17 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
         pickerView.reloadAllComponents()
         pickerView.selectRow(0, inComponent: 0, animated: false)
         
+        textFieldFullname.delegate = self
+        textFieldUsername.delegate = self
+        textViewBiography.delegate = self
         //Nav-Bar Settings
         self.navigationItem.title = "Settings"
         self.navigationController!.navigationBar.isTranslucent = true
-        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Zapfino", size: 13)!]
+        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: DefaultFonts.ZapFinoXs]
         let button = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.trash, target: self, action: #selector(showDeleteAlert))
         navigationItem.rightBarButtonItem = button
         
-        navigationItem.leftBarButtonItem?.title = "<"
-        //        navigationItem.leftItemsSupplementBackButton = true
-        //    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(close))
-        //
-        
+        self.setDefaultBackButton()
         //Biography border and radius.
         textViewBiography.layer.borderWidth = 0.1;
         textViewBiography.layer.cornerRadius = 5.0;
@@ -277,13 +329,12 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
         
         if component == 0 {
             let selected = pickerView.selectedRow(inComponent: 0)
-            comunidadUser = comunidades[selected]
-            return comunidades[row]
+            comunidadUser = comunidades[selected].id!
+            return comunidades[row].name
         } else {
             let selected = pickerView.selectedRow(inComponent: 0)
             
             return secondColumnData[selected][row]
-            
         }
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -297,23 +348,17 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
         }
     }
     
-    
-    
-    var txt = UITextField()
     //Metodo para borrar el usuario con alerta.
     @objc func showDeleteAlert(){
         
-//        print("----->   Borrando usuario UNDER CONSTRUCTION")
-        
-
         let appearance = SCLAlertView.SCLAppearance(
             showCloseButton: true
         )
         let alertView = SCLAlertView(appearance: appearance)
-        txt = alertView.addTextField("Confirm your email")
+        let txt = alertView.addTextField("Confirm your email")
         
         alertView.addButton("Submit") {
-            if(self.txt.text == Auth.auth().currentUser!.email){
+            if(txt.text == Auth.auth().currentUser!.email){
                 
                 self.db.collection("Users")
                     .whereField("id", isEqualTo: Auth.auth().currentUser!.uid)
@@ -324,8 +369,8 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
                             // Perhaps this is an error for you?
                         } else {
                             let document = querySnapshot!.documents.first
-                          
-                             document!.reference.delete()
+                            
+                            document!.reference.delete()
                         }
                         
                 }
@@ -339,15 +384,14 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
                     Auth.auth().currentUser?.delete(completion: { (error : Error?) in
                         try! Auth.auth().signOut()
                         try! GIDSignIn.sharedInstance()?.signOut()
-                          self.goBackToLogin()
+                        let delegate =  UIApplication.shared.delegate as! AppDelegate
+                        delegate.reset()
                     })
                     // LOG OUT
-            
-                  
                 }
                 alertView.showSuccess("Your Account has been deleted", subTitle: "")
-               
-              
+                
+                
             }else{
                 let appearance = SCLAlertView.SCLAppearance(
                     showCloseButton: true
@@ -358,24 +402,23 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
         }
         
         alertView.showEdit("Are you sure you want to delete your account?", subTitle: " Deleting your account is permanent and will remove all content including comments, avatars and profile settings.")
-        
-        
-        
     }
     
     //Metodo que borra un usuario de la bbdd. Cambia atributo 'deleted'
-
+    
     @IBAction func logOut(_ sender: Any) {
         
         // LOG OUT
         try! Auth.auth().signOut()
         try! GIDSignIn.sharedInstance()?.signOut()
-
-        let storyboard = UIStoryboard(name: "Login", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "loginView")
-        self.present(controller, animated: true, completion: nil)
+        self.view.window?.rootViewController = nil
+        self.navigationController?.popToRootViewController(animated: true)
+        self.dismiss(animated: true) {
+            
+        }
         
-        //self.navigationController?.popToRootViewController(animated: true)
+        let delegate =  UIApplication.shared.delegate as! AppDelegate
+        delegate.reset()
     }
     
     //Ocultar el keybord haciendo click en la pantalla.
@@ -386,21 +429,10 @@ class UpdateProfileViewController: UIViewController, UIPickerViewDataSource, UIP
     //Va comprobando si el usuario ha llenado los campos y muestra boton.
     @objc func checkIfDone(){
         
-        if(textFieldFullname.text != "" && textFieldUsername.text != "" && textViewBiography.text != ""){
+        if(textFieldFullname.text != "" && textFieldUsername.text != ""){
             btnDone.isHidden = false
         }else{
             btnDone.isHidden = true
         }
     }
-    
-    //Va al Home despues de hacer el update.
-    @objc func goToMainAfterUpdate(){
-        
-        //timerUpdate.invalidate()
-        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen")
-        self.present(exampleVC, animated: true)
-    }
-    
-    
 }

@@ -31,7 +31,6 @@ class PlateCommentsVerticalCell : VerticalTableSectionView<Plate> {
         didSet{
             
         }
-        
     }
     
     override func getVisibleItemsCount() -> Int {
@@ -39,7 +38,6 @@ class PlateCommentsVerticalCell : VerticalTableSectionView<Plate> {
     }
     
     override func setModel(model: AnyObject?) {
-        
         self.modelSet = ((model as? [Plate])!)
     }
     

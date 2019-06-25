@@ -11,14 +11,14 @@ import UIKit
 import SkeletonView
 import SDWebImage
 
-class ProfilePlatesCellView : VerticalTableSectionCellBaseInfo {
+class ProfilePlatesCellItemInfo: VerticalTableSectionCellBaseInfo {
     
     override func reuseIdentifier() -> String {
         return String(describing: ProfilePlatesVerticalCell.self)
     }
     
     override func title() -> String {
-        return "Plates"
+        return "Recipes"
     }
 }
 
@@ -29,7 +29,6 @@ class ProfilePlatesVerticalCell : VerticalTableSectionView<Plate> {
         didSet{
             
         }
-        
     }
     
     override func getVisibleItemsCount() -> Int {
@@ -46,23 +45,25 @@ class ProfilePlatesVerticalCell : VerticalTableSectionView<Plate> {
     }
     
     override func onRequestItemSize() -> CGSize {
-        return CGSize(width: self.parentView.getWidth(), height: self.parentView.getHeight().percentageOf(amount: 35))
+        return CGSize(width: self.parentView.getWidth(), height: self.parentView.getHeight().percentageOf(amount: 30))
     }
     
     override func onRequestCell(_ tableView: UITableView, cellForItemAt indexPath: IndexPath) -> UITableViewCell {
         if (modelSet.count == 0) {
-            
-            return UITableViewCell()
+        
+         return super.onRequestCell(tableView, cellForItemAt: indexPath)
         }
         
         if indexPath.row < modelSet.count {
             let cellInfo = self.modelSet[indexPath.row]
             
             let cell = tableView.dequeueReusableCell(withIdentifier: getCellIdentifier(), for: indexPath) as! HomePlatoCellView
+            cell.shouldUseInternalSize = false
             cell.viewController = viewController
-            cell.collectionItemSize = onRequestItemSize()
+            cell.cellSize = onRequestItemSize()
             cell.parentView = tableView
             cell.setModel(model: cellInfo)
+   
             cell.onLoadData()
             
             return cell
@@ -72,14 +73,18 @@ class ProfilePlatesVerticalCell : VerticalTableSectionView<Plate> {
     }
     
     override func onRegisterCells() {
-        
+        super.onRegisterCells()
         tableView.register(HomePlatoCellView.self, forCellReuseIdentifier: getCellIdentifier())
     }
     
     override func onLoadData() {
         super.onLoadData()
-        
-        self.hideSkeleton()
+   
+        self.onLayoutSection(count: modelSet.count)
+        self.tableView.reloadData()
+        self.onReady()
+           
+        self.reloadCell()
     }
     
     override func onLayout(size: CGSize!) {
@@ -100,4 +105,3 @@ class ProfilePlatesVerticalCell : VerticalTableSectionView<Plate> {
         tableView.dataSource = self
     }
 }
-

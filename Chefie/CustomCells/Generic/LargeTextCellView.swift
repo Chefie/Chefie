@@ -53,14 +53,12 @@ class LargeTextCellView : BaseCell, ICellDataProtocol {
         lblContent.snp.makeConstraints { (maker) in
             
             maker.topMargin.equalTo(2)
-            maker.left.equalTo(size.widthPercentageOf(amount: 1))
+            maker.left.equalTo(size.widthPercentageOf(amount: 3))
             maker.rightMargin.bottomMargin.equalTo(0)
-            maker.width.equalTo(size.width.margin(amount: 0.5))
+            maker.width.equalTo(size.width.margin(amount: 3))
         }
 
         lblContent.displayLines(height: size.heightPercentageOf(amount: 10))
-
-        //self.backgroundColor = UIColor.purple
     }
     
     override func setBaseItemInfo(info: BaseItemInfo) {
@@ -76,9 +74,10 @@ class LargeTextCellView : BaseCell, ICellDataProtocol {
     override func onLoadData() {
         super.onLoadData()
  
-
         lblContent.text = model?.text
         lblContent.hideLines()
+        
+        self.reloadCell()
     }
     
     override func onCreateViews() {

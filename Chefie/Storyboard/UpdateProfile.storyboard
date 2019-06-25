@@ -108,11 +108,17 @@
                                 <rect key="frame" x="135" y="106" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="settingsHelp"/>
+                                <connections>
+                                    <action selector="onGoToPrivacySection:" destination="Mh5-Y7-IJr" eventType="touchUpInside" id="pw6-HX-1qt"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yyH-Cn-sU5">
                                 <rect key="frame" x="239" y="106" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="settingsInfo"/>
+                                <connections>
+                                    <action selector="onGoToChefieTeamSection:" destination="Mh5-Y7-IJr" eventType="touchUpInside" id="xSh-tZ-y63"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DqJ-t6-Bah">
                                 <rect key="frame" x="344" y="106" width="50" height="50"/>

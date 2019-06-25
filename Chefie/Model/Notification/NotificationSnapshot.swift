@@ -19,6 +19,8 @@ public class NotificationSnapshot<T: Codable>: Codable {
     
     var data : T?
     
+    var message : String?
+    
     init() {
      
         self.dateStr = Date().convertDateToString()

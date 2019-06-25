@@ -41,6 +41,7 @@ class VerticalTableSectionView<T> : BaseCell, SkeletonTableViewDataSource, Skele
         let lbl = PaddingLabel(maskConstraints: false, font: DefaultFonts.DefaultHeaderTextFont)
         lbl.numberOfLines = 1
         lbl.textAlignment = .left
+       // lbl.backgroundColor = UIColor.red
         lbl.leftInset = AppSettings.HeaderLeftMargin
         return lbl
     }()
@@ -144,6 +145,8 @@ class VerticalTableSectionView<T> : BaseCell, SkeletonTableViewDataSource, Skele
         
    //     sectionTitleLabel.displayLines(height: size.heightPercentageOf(amount: 10))
         seeAllBtn.titleLabel?.defaultFooterTextFont(bold: true)
+        
+      //  self.backgroundColor = UIColor.purple
     }
     
     func onLayoutSection(count : Int = -1){
@@ -264,7 +267,7 @@ class VerticalTableSectionView<T> : BaseCell, SkeletonTableViewDataSource, Skele
     
     open func onRequestNumberOfItemsInSection()  -> Int {
         
-        return 3
+        return self.getVisibleItemsCount()
     }
     
     open func onRequestNumberOfSections()  -> Int {

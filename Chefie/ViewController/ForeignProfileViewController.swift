@@ -49,7 +49,9 @@ class ForeignProfileViewController: UIViewController, DynamicViewControllerProto
         
         tableCellRegistrator.add(identifier: ProfileFollowItemInfo().reuseIdentifier(), cellClass: ProfileFollowCellView.self)
         
-        tableCellRegistrator.add(identifier: ProfileBioItemInfo().reuseIdentifier(), cellClass: ProfileBioCellView.self)
+        tableCellRegistrator.add(identifier: LargeTextCellItemInfo().reuseIdentifier(), cellClass: LargeTextCellView.self)
+        
+         tableCellRegistrator.add(identifier: ProfilePlatesCellItemInfo().reuseIdentifier(), cellClass: ProfilePlatesVerticalCell.self)
     }
     
     func onSetupViews() {
@@ -77,50 +79,85 @@ class ForeignProfileViewController: UIViewController, DynamicViewControllerProto
         let userMin = model!
         let userInfo = ChefieUser()
         userInfo.id = userMin.id
-        guard let modelUser = model?.id else {
-            dismiss(animated: true) {
-                
-            }
+        guard let modelUserId = model?.id else {
+            self.navigationController?.popViewController(animated: true)
             return
         }
         
-        appContainer.userRepository.getProfileData(idUser: modelUser) { [weak self] (result:(ChefieResult<ChefieUser>))  in
-            switch result {
-            case.success(let data):
-                userMin.id = data.id
-                userMin.userName = data.userName
-                userMin.profilePic = data.profilePic
-                userMin.profileBackground = data.profileBackgroundPic
-                userInfo.followers = data.followers
-                userInfo.following = data.following
-                let pInfo = ProfilePicCellItemInfo()
-                pInfo.model = userMin
+        let dispatchQueue = DispatchQueue(label: "LoadForeignProfile", qos: .background)
+        dispatchQueue.async{
+            
+            let group = DispatchGroup()
+            group.enter()
+            appContainer.userRepository.getProfileData(idUser: modelUserId) { [weak self] (result:(ChefieResult<ChefieUser>))  in
+                switch result {
+                case.success(let data):
+                    userMin.id = data.id
+                    userMin.userName = data.userName
+                    userMin.profilePic = data.profilePic
+                    userMin.profileBackground = data.profileBackgroundPic
+                    userInfo.followers = data.followers
+                    userInfo.following = data.following
+                    let pInfo = ProfilePicCellItemInfo()
+                    pInfo.model = userMin
+                    
+                    let chefieUserInfo = ProfileInfoItemInfo()
+                    chefieUserInfo.model = userInfo
+                    
+                    let username = ProfileUsernameItemInfo()
+                    username.model = userMin
+                    
+                    let follows = ProfileFollowItemInfo()
+                    follows.model = userInfo
+                    
+                    let bio = LargeTextCellItemInfo()
+                    bio.model = LargeTextModel(text: data.biography ?? "") as AnyObject
+                    
+                    self?.tableItems.append(pInfo)
+                    self?.tableItems.append(username)
+                    self?.tableItems.append(follows)
+                    self?.tableItems.append(bio)
+                    self?.mainTable.reloadData()
+                    break
+                case.failure(_):
+                    break
+                }
                 
-                //Model ChefieUser
-                let chefieUserInfo = ProfileInfoItemInfo()
-                chefieUserInfo.model = userInfo
-                
-                let username = ProfileUsernameItemInfo()
-                username.model = userMin
-                
-                let follows = ProfileFollowItemInfo()
-                follows.model = userInfo
-                
-                let bio = ProfileBioItemInfo()
-                bio.model = userInfo
-                
-                self?.tableItems.append(pInfo)
-                self?.tableItems.append(username)
-                self?.tableItems.append(follows)
-                self?.tableItems.append(bio)
-                self?.mainTable.reloadData()
-                break
-            case.failure(_):
-                break
+                group.leave()
             }
+            
+            group.wait()
+            
+            group.enter()
+            
+            appContainer.plateRepository.getPlatos(idUser: modelUserId, completionHandler: { (result : ChefieResult<[Plate]>) in
+                
+                switch result {
+                    
+                case .success(let data) :
+                    
+                    let items = data.getFirstElements(upTo: 3)
+                    
+                    let item = ProfilePlatesCellItemInfo()
+                    item.setTitle(value: "Recipes")
+                    item.UID = "Recipes"
+                    item.model = items as AnyObject
+                    
+                    self.tableItems.append(item)
+                    break
+                case .failure(_): break
+                }
+                
+                group.leave()
+            })
+            
+            group.wait()
+            
+            group.notify(queue: .main, execute: {
+                
+                self.mainTable.reloadData()
+            })
         }
-        
-        
     }
     
     func onLayout() {
@@ -137,10 +174,13 @@ class ForeignProfileViewController: UIViewController, DynamicViewControllerProto
         let backButton = UIBarButtonItem()
         backButton.title = ""
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
-        
+        self.navigationController!.navigationBar.isTranslucent = true
+        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: DefaultFonts.ZapFinoXs]
         onSetup()
         onSetupViews()
         onLoadData()
+        
+        self.setDefaultBackButton()
     }
 }
 
@@ -177,6 +217,7 @@ extension ForeignProfileViewController: SkeletonTableViewDataSource, SkeletonTab
         ce.viewController = self
         ce.parentView = tableView
         ce.setModel(model: cellInfo.model)
+        ce.setBaseItemInfo(info: cellInfo)
         ce.onLoadData()
         return ce
     }

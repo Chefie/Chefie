@@ -34,35 +34,26 @@ class ProfileBioCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
     let labelBio : MultilineLabel = {
         let lbl = MultilineLabel(maskConstraints: false, font: DefaultFonts.DefaultTextLightFont)
         lbl.numberOfLines = 0
-        lbl.sizeToFit()
         lbl.textAlignment = .center
-        //lbl.backgroundColor = .red
-        //lbl.isSkeletonable = true
-        //lbl.linesCornerRadius = 10
-        //lbl.frame = CGRect(x: 22, y: 40, width: 100, height: 20)
         return lbl
     }()
     
     override func onLayout(size: CGSize!) {
         super.onLayout(size: size)
-        //let cellSize = CGSize(width: size.width, height: size.heightPercentageOf(amount: CGFloat(labelBio.numberOfLines)))
-        
-        let cellSize2 = CGSize(width: size.width, height: size.heightPercentageOf(amount: 45))
+  
+        let cellSize = CGSize(width: size.width, height: size.heightPercentageOf(amount: 45))
         
         labelBio.snp.makeConstraints { (maker) in
-            //maker.leftMargin.equalTo(size.widthPercentageOf(amount: 0))
             maker.topMargin.equalTo(10)
-            //maker.leftMargin.equalTo(1)
-            //maker.rightMargin.equalTo(1)
-            maker.width.equalTo(cellSize2.width)
-            //maker.height.equalTo(40)
+            maker.width.equalTo(cellSize.width)
         }
         
         labelBio.displayLines(height: 200)
         
         self.contentView.snp.makeConstraints { (maker) in
-            maker.size.equalTo(cellSize2)
+            maker.size.equalTo(cellSize)
         }
+        
         self.showGradientSkeleton()
     }
     

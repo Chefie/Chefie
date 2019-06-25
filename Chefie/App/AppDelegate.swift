@@ -23,13 +23,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             }
             print("AWSMobileClient initialized.")
         }
-        
-        setup()
-        
+            
         //provide the completionHandler to the TransferUtility to support background transfers.
         AWSS3TransferUtility.interceptApplication(application,
                                                   handleEventsForBackgroundURLSession: identifier,
                                                   completionHandler: completionHandler)
+        
+        setup()
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -56,7 +56,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         //self.NextViewController(storybordid: "loginView")
         //self.NextViewController(storybordid: "loginView")
         if isLogin == "vamos"{
-            self.NextViewController(storybordid: "loginView")
+      
+            self.ShowLoginViewController()
         }else{
             self.onShowCase()
         }
@@ -72,7 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             print("AWSMobileClient initialized.")
         }
         
-        let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.EUWest2, identityPoolId:"")
+        let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.EUWest2, identityPoolId:"eu-west-2:06227b6f-41ff-4edb-a08e-3b334e063ad1")
         
         let configuration = AWSServiceConfiguration(region:.EUWest2, credentialsProvider:credentialsProvider)
         
@@ -110,13 +111,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         self.window?.makeKeyAndVisible()
     }
     
-    func NextViewController(storybordid:String)
+    func ShowLoginViewController()
     {
         let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let exampleVC = storyBoard.instantiateViewController(withIdentifier:storybordid )
+        let exampleVC = storyBoard.instantiateViewController(withIdentifier:"loginView" )
         // self.present(exampleVC, animated: true)
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.rootViewController = exampleVC
+        self.window?.makeKeyAndVisible()
+    }
+    
+    func NextViewController(storyboardId:String)
+    {
+        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let exampleVC = storyBoard.instantiateViewController(withIdentifier:storyboardId )
+        // self.present(exampleVC, animated: true)
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.rootViewController = exampleVC
+        self.window?.makeKeyAndVisible()
+    }
+    
+    func reset(){
+        
+        EventContainer.shared.reset()
+        self.ShowLoginViewController()
+    }
+    
+    func doAutoLogin(info : AutoLoginInfo){
+        EventContainer.shared.reset()
+        self.window?.rootViewController = nil
+        let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc : LoginViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: "loginView") as! LoginViewController
+        
+        vc.autoLoginInfo = info
+        self.window?.rootViewController = vc
+        self.window?.makeKeyAndVisible()
+    }
+    
+    func startMainScreen() {
+        let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: "loginView") as UIViewController
+        
+        let navigationController = UINavigationController(rootViewController: initialViewControlleripad)
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
     }
     
@@ -141,18 +180,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                             
                         case .success(let user) :
                             
-                            
                             appContainer.dataManager.localData.onLogin(user: user)
                             
                             //Perform Segue to main screen
-                            let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                            let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: "mainScreen") as UIViewController
-                            
-                            let navigationController = UINavigationController(rootViewController: initialViewControlleripad)
-                            
-                            self.window = UIWindow(frame: UIScreen.main.bounds)
-                            self.window?.rootViewController = navigationController
-                            self.window?.makeKeyAndVisible()
+                         
+                            self.startMainScreen()
                             break
                         case .failure(_) :
                             
@@ -225,18 +257,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         } catch  {
             print("Invalid Selection.")
         }
-        
-        
     }
-    
-    
-    
+
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         return GIDSignIn.sharedInstance().handle(url,
                                                  sourceApplication:options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
                                                  annotation: [:])
     }
-    
     
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -259,7 +286,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-    
-    
 }
 

@@ -47,6 +47,12 @@ struct DefaultFonts {
         return font!
     }()
     
+    static let ZapFinoXs : UIFont = {
+        
+        let font = UIFont(name: "Zapfino", size: 14)
+        return font!
+    }()
+    
     static let DefaultTextFont : UIFont = {
         
         guard let customFont = UIFont(name: "SamsungSans-Regular", size:  DefaultDimensions.DefaultTextSize) else {

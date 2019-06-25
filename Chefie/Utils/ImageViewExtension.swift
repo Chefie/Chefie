@@ -22,8 +22,11 @@ extension UIImage {
         if let image = image {
             UIGraphicsBeginImageContext(size)
             
+            let s = size
             draw(in: CGRect(origin: .zero, size: size))
-            image.draw(in: rectCalculation(size, image.size))
+            
+            let rec = rectCalculation(size, image.size)
+            image.draw(in: rec)
             
             let newImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
@@ -40,12 +43,12 @@ extension UIImage {
         return data ?? Data()
     }
     
-    func drawDarkRect() -> UIImage {
+    func drawDarkRect(alpha : CGFloat = 0.7) -> UIImage {
         UIGraphicsBeginImageContext(self.size)
         self.draw(at: CGPoint.zero)
         let context = UIGraphicsGetCurrentContext()
         
-        context!.setFillColor(gray: 0, alpha: 0.5)
+        context!.setFillColor(gray: 0, alpha: alpha)
         context!.move(to: CGPoint(x: 0, y: 0))
         context!.fill(CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
         context!.strokePath()

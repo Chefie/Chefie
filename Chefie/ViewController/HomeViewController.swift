@@ -18,32 +18,41 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
     
     @IBOutlet var mainTable: UITableView!
     
-    override func updateViewConstraints() {
-        
-        onSetupViews()
-        
-        super.updateViewConstraints()
-    }
-    
     var newPlateSubscription : Disposable!
     var feedRetrieveInfo = RetrieveFeedInfo()
     func onSetup() {
         
         endlessTableHelper = EndlessTableHelper(table: mainTable)
-        
+        endlessTableHelper.firstItemsCount = 8
         mainTable.setDefaultSettings(shouldBounce: true)
+        
+        _ = EventContainer.shared.HomeSubject.subscribe { (event) in
+            
+            self.feedRetrieveInfo.reset()
+            self.tableItems.removeAll()
+            self.endlessTableHelper.reset()
+   
+            self.mainTable.cr.beginHeaderRefresh()
+           // self.mainTable.cr.endLoadingMore()
+        }
         
         newPlateSubscription = EventContainer.shared.NewPlateUploaded.subscribe { (event : Event<Plate>) in
             
-            self.endlessTableHelper.begin()
-            
-            let item = HomePlatoCellItemInfo()
-            item.model = event.element
-            
-            self.tableItems.insert(item, at: 0)
-            self.endlessTableHelper.insertRowAt(row: 0)
-            self.endlessTableHelper.end()
+            self.endlessTableHelper.loadMoreItems(itemsCount: 1, callback: {
+                
+                let item = HomePlatoCellItemInfo()
+                item.model = event.element
+                
+                self.tableItems.insert(item, at: 0)
+                
+                self.endlessTableHelper.insertRow(itemsCount: self.tableItems.count - 1)
+                self.endlessTableHelper.setCount(count: self.tableItems.count)
+            })
         }
+        
+        tableCellRegistrator.add(identifier: HomePlatoCellItemInfo().reuseIdentifier(), cellClass: HomePlatoCellView.self)
+        
+        tableCellRegistrator.add(identifier: StoriesHorizontalItemInfo().reuseIdentifier(), cellClass: StoriesHorizontalView.self)
     }
     
     func onSetupViews(){
@@ -57,19 +66,14 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
             make.height.equalTo(self.view.getHeight())
         }
         
-        navigationItem.title = "Chefie"
-        //Custom navigationItem (Title) font Zapfino
-        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: DefaultFonts.ZapFino]
-        
         view.backgroundColor = .white
         
-        //self.mainTable.delegate = self as! UITableViewDelegate
+        navigationItem.title = "Chefie"
+        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: DefaultFonts.ZapFino]
+        
         self.mainTable.dataSource = self
         self.mainTable.isSkeletonable = true
         self.mainTable.delegate = self
-        
-        self.mainTable.alwaysBounceVertical = false
-        self.mainTable.alwaysBounceHorizontal = false
     }
     
     func onLoadData() {
@@ -84,7 +88,6 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableCellRegistrator.add(identifier: HomePlatoCellItemInfo().reuseIdentifier(), cellClass: HomePlatoCellView.self)
         onSetup()
         onSetupViews()
         
@@ -103,11 +106,32 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
         self.mainTable.cr.beginHeaderRefresh()
     }
     
+   // var first = false
+    func loadStories() {
+        //
+        //        if (!first){
+        //
+        //            first = true
+        //            let storiesSection = StoriesHorizontalItemInfo()
+        //
+        //            var stories = [Story]()
+        //            storiesSection.setTitle(value: "Stories")
+        //            let model = Story()
+        //            model.media = Media(title: "Hola", url: appContainer.getUser().profileBackgroundPic!)
+        //            model.user = appContainer.getUser().mapToUserMin()
+        //
+        //            stories.append(model)
+        //            storiesSection.model = stories as AnyObject
+        //            self.tableItems.insert(storiesSection, at: 0)
+        //
+        //        }
+    }
+    
     func loadFeed(loadingFromTop : Bool = false){
         
         print("Loading feed")
         
-        appContainer.feedRepository.getFeed(userId:  appContainer.getUser().id!, retrieveInfo: feedRetrieveInfo) { (result : ChefieResult<RetrieveFeedInfo>) in
+        appContainer.feedRepository.getFeed(userId: appContainer.getUser().id!, retrieveInfo: feedRetrieveInfo) { (result : ChefieResult<RetrieveFeedInfo>) in
             
             switch result {
                 
@@ -132,6 +156,8 @@ class HomeViewController: UIViewController, DynamicViewControllerProto {
                                 self.tableItems.append(item)
                                 self.endlessTableHelper.insertRow(itemsCount: self.tableItems.count - 1)
                             })
+                            
+                            self.endlessTableHelper.setCount(count: self.tableItems.count)
                     })
                 }
                 
@@ -157,7 +183,7 @@ extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDele
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let itemsCount = tableItems.count == 0 ? AppSettings.DefaultSkeletonCellCount : tableItems.count
+        let itemsCount = endlessTableHelper.getCount()
         
         return itemsCount
     }
@@ -187,43 +213,3 @@ extension HomeViewController: SkeletonTableViewDataSource, SkeletonTableViewDele
     }
 }
 
-class LoadingCell : UITableViewCell {
-    
-    let loading : MultilineLabel = {
-        let lbl = MultilineLabel(maskConstraints: false, font: DefaultFonts.DefaultTextFont)
-        lbl.text = "Loading...."
-        lbl.numberOfLines = 1
-        return lbl
-    }()
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        self.contentView.addSubview(loading)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension HomeViewController: TableviewPaginatorUIProtocol {
-    func getTableview(paginator: TableviewPaginatorEx) -> UITableView {
-        return mainTable
-    }
-    
-    func shouldAddRefreshControl(paginator: TableviewPaginatorEx) -> Bool {
-        return false
-    }
-    
-    func getPaginatedLoadMoreCellHeight(paginator: TableviewPaginatorEx) -> CGFloat {
-        return 0
-    }
-    
-    func getPaginatedLoadMoreCell(paginator: TableviewPaginatorEx) -> UITableViewCell {
-        return UITableViewCell.init()
-    }
-    
-    func getRefreshControlTintColor(paginator: TableviewPaginatorEx) -> UIColor {
-        return UIColor.orange
-    }
-}

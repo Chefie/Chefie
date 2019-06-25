@@ -21,7 +21,7 @@ class RoutesViewController: UIViewController, DynamicViewControllerProto{
         super.viewDidLoad()
         navigationItem.title = "Routes"
         self.navigationController!.navigationBar.isTranslucent = true
-        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: DefaultFonts.ZapFino]
+        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: DefaultFonts.ZapFinoXs]
         onSetup()
         onSetupViews()
         onLayout()

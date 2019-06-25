@@ -20,10 +20,16 @@ class AppContainer {
     var communityRepository : CommunityRepository
     var commentRepository : CommentRepository
     var feedRepository : FeedRepository
+    var notificationRepository : NotificationRepository
     
     func getUser() -> ChefieUser{
         
         return dataManager.localData.chefieUser
+    }
+    
+    func updateUser(user : ChefieUser){
+        
+        dataManager.localData.update(user : user)
     }
     
     init() {
@@ -35,6 +41,7 @@ class AppContainer {
         self.mediaRepository = MultiMediaRepository()
         self.communityRepository = CommunityRepository()
         self.commentRepository = CommentRepository()
+        self.notificationRepository = NotificationRepository()
     }
     
     func setup() {

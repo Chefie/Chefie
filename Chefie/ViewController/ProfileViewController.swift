@@ -48,10 +48,11 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
         /////////////////////////////////////////////////////
         tableCellRegistrator.add(identifier: ProfileUsernameItemInfo().reuseIdentifier(), cellClass: ProfileUsernameCellView.self)
         //////////////////////////////////////////////////////
-        tableCellRegistrator.add(identifier: ProfileBioItemInfo().reuseIdentifier(), cellClass: ProfileBioCellView.self)
+        tableCellRegistrator.add(identifier: LargeTextCellItemInfo().reuseIdentifier(), cellClass: LargeTextCellView.self)
         //////////////////////////////////////////////////////
         tableCellRegistrator.add(identifier: ProfileFollowItemInfo().reuseIdentifier(), cellClass: ProfileFollowCellView.self)
         //////////////////////////////////////////////////////
+        tableCellRegistrator.add(identifier: ProfilePlatesCellItemInfo().reuseIdentifier(), cellClass: ProfilePlatesVerticalCell.self)
     }
     
     func onSetupViews() {
@@ -69,103 +70,126 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
         }
         
         navigationController?.setTintColor()
-  
+        
         navigationItem.title = "Profile"
         self.navigationController!.navigationBar.isTranslucent = true
-        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: DefaultFonts.ZapFino]
+        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: DefaultFonts.ZapFinoXs]
         view.backgroundColor = .white
         navigationItem.leftItemsSupplementBackButton = true
-        //navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(close))
-        //view.backgroundColor = .white
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(onGoToSettings))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "notificationicon"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(onGoToNotifications))
+        self.navigationController?.navigationBar.topItem?.leftBarButtonItem?.tintColor =  Palette.TextDefaultColor
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(onGoToSettings))
+        self.navigationController?.navigationBar.topItem?.rightBarButtonItem?.tintColor = Palette.TextDefaultColor
         self.mainTable.setDefaultSettings(shouldBounce: false)
     }
     
+    @objc func onGoToNotifications() {
+        
+        let storyboard = UIStoryboard(name: "NotificationScreen", bundle: nil)
+        let vc  : NotificationViewController = storyboard.instantiateViewController(withIdentifier: "NotificationViewController") as! NotificationViewController
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     @objc func onGoToSettings() {
-      
+        
         let storyboard = UIStoryboard(name: "UpdateProfile", bundle: nil)
-        let vc  : SettingsViewController = storyboard.instantiateViewController(withIdentifier: "UpdateProfileStory") as! SettingsViewController
-
+        let vc  : UpdateProfileViewController = storyboard.instantiateViewController(withIdentifier: "UpdateProfileStory") as! UpdateProfileViewController
+        
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func onLoadData() {
-    
+        self.tableItems.removeAll()
         self.model = appContainer.getUser().mapToUserMin()
         
         let userMin = UserMin()
         let userInfo = appContainer.getUser()
         guard let modelUser = model?.id else {
-            dismiss(animated: true) {
-                
-            }
+            
             return
         }
         
-        appContainer.userRepository.getProfileData(idUser: modelUser) { (result:(ChefieResult<ChefieUser>)) in
-            switch result {
-            case.success(let data):
-                userMin.id = data.id
-                userMin.userName = data.userName
-                userMin.profilePic = data.profilePic
-                userMin.profileBackground = data.profileBackgroundPic
-                userInfo.followers = data.followers
-                userInfo.following = data.following
-                let pInfo = ProfilePicCellItemInfo()
-                pInfo.model = userMin
+        let dispatchQueue = DispatchQueue(label: "LoadProfileData", qos: .background)
+        dispatchQueue.async{
+            
+            let group = DispatchGroup()
+            
+            group.enter()
+            appContainer.userRepository.getProfileData(idUser: modelUser) { (result:(ChefieResult<ChefieUser>)) in
+                switch result {
+                case.success(let data):
+                    
+                    userMin.id = data.id
+                    userMin.userName = data.userName
+                    userMin.profilePic = data.profilePic
+                    userMin.profileBackground = data.profileBackgroundPic
+                    userInfo.followers = data.followers
+                    userInfo.following = data.following
+                    let pInfo = ProfilePicCellItemInfo()
+                    pInfo.model = userMin
+                    
+                    let chefieUserInfo = ProfileInfoItemInfo()
+                    chefieUserInfo.model = userInfo
+                    
+                    let username = ProfileUsernameItemInfo()
+                    username.model = userMin
+                    
+                    let follows = ProfileFollowItemInfo()
+                    follows.model = userInfo
+                    
+                    let bio = LargeTextCellItemInfo()
+                    bio.model = LargeTextModel(text: data.biography ?? "") as AnyObject
+                    
+                    self.tableItems.append(pInfo)
+                    self.tableItems.append(username)
+                    self.tableItems.append(follows)
+                    self.tableItems.append(bio)
+                    break
+                case.failure(_):
+                    self.dismiss(animated: true
+                        , completion: {
+                            
+                    })
+                    break
+                }
                 
-                //Model ChefieUser
-                let chefieUserInfo = ProfileInfoItemInfo()
-                chefieUserInfo.model = userInfo
-                
-                let username = ProfileUsernameItemInfo()
-                username.model = userMin
-                
-                let follows = ProfileFollowItemInfo()
-                follows.model = userInfo
-                
-                let bio = ProfileBioItemInfo()
-                bio.model = userInfo
-                
-                self.tableItems.removeAll()
-                self.tableItems.append(pInfo)
-                self.tableItems.append(username)
-                self.tableItems.append(follows)
-                self.tableItems.append(bio)
-                self.mainTable.reloadData()
-             
-                break
-            case.failure(_):
-                self.dismiss(animated: true
-                    , completion: {
-                        
-                })
-                break
+                group.leave()
             }
             
-            self.mainTable.cr.endHeaderRefresh()
+            group.wait()
+            
+            group.enter()
+            appContainer.plateRepository.getPlatos(idUser: appContainer.getUser().id!, completionHandler: { (result : ChefieResult<[Plate]>) in
+                
+                switch result {
+                    
+                case .success(let data) :
+                    
+                    let items = data.getFirstElements(upTo: 3)
+                    
+                    let item = ProfilePlatesCellItemInfo()
+                    item.setTitle(value: "Recipes")
+                    item.UID = "Recipes"
+                    item.model = items as AnyObject
+                    
+                    self.tableItems.append(item)
+                    break
+                case .failure(_): break
+                }
+                
+                group.leave()
+            })
+            
+            group.wait()
+            
+            group.notify(queue: .main, execute: {
+                
+                self.mainTable.reloadData()
+            })
         }
-        
-        //        appContainer.plateRepository.getPlatos(idUser: modelUser) { (result:(ChefieResult<[Plate]>)) in
-        //            switch result {
-        //            case.success(let data):
-        //
-        //                let items = data.compactMap({ (plate) -> HomePlatoCellItemInfo? in
-        //                    let item = HomePlatoCellItemInfo()
-        //                    item.model = plate
-        //                    return item
-        //
-        //
-        //                })
-        //                items.forEach({ (item) in
-        //                    self.tableItems.append(item)
-        //                })
-        //                break
-        //            case.failure(_):
-        //                break
-        //            }
-        //        }
     }
     
     func onLayout() {
@@ -185,12 +209,12 @@ class ProfileViewController: UIViewController, DynamicViewControllerProto {
         
         tableCellRegistrator.registerAll(tableView: mainTable)
         
-        mainTable.cr.addHeadRefresh(animator: NormalHeaderAnimator()) { [weak self] in
+        _ = EventContainer.shared.ProfileSubject.subscribe { (event ) in
             
-            self?.onLoadData()
+            self.onLoadData()
         }
-       
-        self.mainTable.cr.beginHeaderRefresh()
+        
+        self.onLoadData()
     }
 }
 
@@ -227,6 +251,7 @@ extension ProfileViewController: SkeletonTableViewDataSource, SkeletonTableViewD
         ce.viewController = self
         ce.parentView = tableView
         ce.setModel(model: cellInfo.model)
+        ce.setBaseItemInfo(info: cellInfo)
         ce.onLoadData()
         return ce
     }
