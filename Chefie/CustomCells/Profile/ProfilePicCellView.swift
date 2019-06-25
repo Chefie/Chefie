@@ -43,18 +43,10 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
     
     let profilePic : UIImageView = {
         let img = UIImageView(maskConstraints: false)
-        img.contentMode = ContentMode.scaleAspectFit
-        return img
-    }()
-    
-    let iconChange : UIImageView = {
-        let img = UIImageView(maskConstraints: false)
-        //img.backgroundColor = .white
-        img.image = UIImage(named: "change3")
         img.contentMode = ContentMode.scaleToFill
         return img
     }()
-    
+
     let iconAddRoute : UIImageView = {
         let img = UIImageView(maskConstraints: false)
         //img.backgroundColor = .white
@@ -85,31 +77,18 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
         
         backGroundImage.snp.makeConstraints { (maker) in
             
-            //maker.left.top.right.bottom.equalTo(0)
             maker.width.equalTo(cellSize.width)
             maker.height.equalTo(cellSize.height/1.3)
-            //maker.bottomMargin.equalToSuperview()
-            
         }
         
-        profilePic.setCircularImageView()
-        
-        //profilePic.addShadow()
-        
+        profilePic.frame = CGRect(x: 0, y: 0, width: cellSize.widthPercentageOf(amount: 40), height: cellSize.heightPercentageOf(amount: 52))
         profilePic.snp.makeConstraints { (maker) in
-            maker.top.equalTo(cellSize.height.percentageOf(amount: 50))
+            maker.top.equalTo(cellSize.height.percentageOf(amount: 47))
             maker.width.equalTo(cellSize.widthPercentageOf(amount: 40))
             maker.height.equalTo(cellSize.heightPercentageOf(amount: 52))
             maker.leftMargin.equalTo(cellSize.widthPercentageOf(amount: 26))
         }
-        
-        iconChange.snp.makeConstraints { (maker) in
-            maker.top.equalTo(cellSize.height.percentageOf(amount: 90))
-            maker.left.equalTo(cellSize.widthPercentageOf(amount: 63))
-            maker.width.equalTo(cellSize.widthPercentageOf(amount: 5))
-            maker.height.equalTo(cellSize.heightPercentageOf(amount: 6))
-        }
-        
+    
         iconAddRoute.snp.makeConstraints { (maker) in
             maker.top.equalTo(cellSize.height.percentageOf(amount: 83))
             maker.left.equalTo(cellSize.widthPercentageOf(amount: 12))
@@ -125,9 +104,12 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
             maker.height.equalTo(cellSize.heightPercentageOf(amount: 13.5))
         }
         
+        followBtn.hide()
+        
         iconAddRoute.showAnimatedGradientSkeleton()
-
+        
         profilePic.setCircularImageView()
+     
         self.showAnimatedGradientSkeleton() 
     }
     
@@ -138,6 +120,7 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
             if appContainer.getUser().id != id {
                 
                 self.iconAddRoute.hide()
+                followBtn.show()
             }
         }
         
@@ -159,7 +142,12 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
         self.profilePic.sd_setImage(with: URL(string: self.model?.profilePic ?? "")){ (image : UIImage?,
             error : Error?, cacheType : SDImageCacheType, url : URL?) in
             
+               self.profilePic.setCircularViewWith()
+//
+//            self.profilePic.setCircularViewWith(roundness: 2, borderWidth: 1, borderColor: rgbaToUIColor(red: 0, green: 0, blue: 0, alpha: 0.5))
         }
+     
+       // self.backgroundColor = UIColor.red
         
         self.hideSkeleton()
     }
@@ -168,7 +156,7 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
         imagePicker.delegate = self
         self.contentView.addSubview(backGroundImage)
         self.contentView.addSubview(profilePic)
-        self.contentView.addSubview(iconChange)
+     //   self.contentView.addSubview(iconChange)
         self.contentView.addSubview(iconAddRoute)
         self.contentView.addSubview(followBtn)
         self.followBtn.setTouch(target: self, selector: #selector(followBtnTapped))
@@ -234,26 +222,43 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
                 if data {
                     print("Se ha borrado follower")
                 }
+                
+                appContainer.feedRepository.removeUserPlatesFromMyFeed(idUser: self.model!.id!, completion: {
+                    
+                    
+                })
                 break
             case .failure(_):
                 break
+                
             }
-            
         }
     }
     
     func addFollowing(){
-        appContainer.userRepository.addFollowing(follower: appContainer.getUser().mapToUserMin(), targetUser: model!) {
+        
+        let userMin = appContainer.getUser().mapToUserMin()
+        let target = model!
+        
+        appContainer.userRepository.addFollowing(follower: userMin, targetUser: target) {
             (result: (ChefieResult<Bool>)) in
             switch result{
             case .success(let data):
                 if data {
                     print("Se ha añadido following")
                 }
+  
+                appContainer.feedRepository.getLastFeedFromUser(idUser: target.id!, completion: {
+                         EventContainer.shared.HomeSubject.onNext(EventContainer.HOME_FEED_SHOULD_REFRESH)
+                })
+ 
+                NotificationManager.shared.sendFollowingNotification(sender: userMin, targetUser: target)
+
+                
+                self.reloadTable()
                 break
             case .failure(_):
                 break
-                
             }
         }
     }
@@ -266,6 +271,11 @@ class ProfilePicCellView : BaseCell, ICellDataProtocol, UIImagePickerControllerD
                 if data {
                     print("Se ha borrado following")
                 }
+    
+                EventContainer.shared.HomeSubject.onNext(EventContainer.HOME_FEED_SHOULD_REFRESH)
+                
+                self.reloadTable()
+                
                 break
             case .failure(_):
                 break

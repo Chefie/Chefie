@@ -7,7 +7,33 @@
 //
 
 import Foundation
+
+extension Array where Element: Equatable {
+    func removingDuplicates() -> Array {
+        return reduce(into: []) { result, element in
+            if !result.contains(element) {
+                result.append(element)
+            }
+        }
+    }
+}
+
 extension Array {
+    
+    func filterDuplicates(includeElement: @escaping (_ lhs:Element, _ rhs:Element) -> Bool) -> [Element]{
+        var results = [Element]()
+        
+        forEach { (element) in
+            let existingElements = results.filter {
+                return includeElement(element, $0)
+            }
+            if existingElements.count == 0 {
+                results.append(element)
+            }
+        }
+        
+        return results
+    }
     
     func getFirstElements(upTo position: Int) -> Array<Element> {
         

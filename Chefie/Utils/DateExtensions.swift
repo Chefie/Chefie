@@ -86,15 +86,56 @@ extension Date {
     
     }
     
+    func timeAgoSinceDate() -> String {
+        
+        // From Time
+        let fromDate = Date()
+        
+        // To Time
+        let toDate = self
+        
+        // Estimation
+        // Year
+        if let interval = Calendar.current.dateComponents([.year], from: fromDate, to: toDate).year, interval > 0  {
+            
+            return interval == 1 ? "\(interval)" + " " + "year ago" : "\(interval)" + " " + "years ago"
+        }
+        
+        // Month
+        if let interval = Calendar.current.dateComponents([.month], from: fromDate, to: toDate).month, interval > 0  {
+            
+            return interval == 1 ? "\(interval)" + " " + "month ago" : "\(interval)" + " " + "months ago"
+        }
+        
+        // Day
+        if let interval = Calendar.current.dateComponents([.day], from: fromDate, to: toDate).day, interval > 0  {
+            
+            return interval == 1 ? "\(interval)" + " " + "day ago" : "\(interval)" + " " + "days ago"
+        }
+        
+        // Hours
+        if let interval = Calendar.current.dateComponents([.hour], from: fromDate, to: toDate).hour, interval > 0 {
+            
+            return interval == 1 ? "\(interval)" + " " + "hour ago" : "\(interval)" + " " + "hours ago"
+        }
+        
+        // Minute
+        if let interval = Calendar.current.dateComponents([.minute], from: fromDate, to: toDate).minute, interval > 0 {
+            
+            return interval == 1 ? "\(interval)" + " " + "minute ago" : "\(interval)" + " " + "minutes ago"
+        }
+        
+        return "a moment ago"
+    }
     func timeAgoDisplay() -> String {
         
         var calendar = Calendar.current
-        calendar.locale = Locale(identifier: Bundle.main.preferredLocalizations[0])
+    //    calendar.locale = Locale(identifier: Bundle.main.preferredLocalizations[0])
         
-        let minuteAgo = calendar.date(byAdding: .minute, value: -1, to: Date())!
-        let hourAgo = calendar.date(byAdding: .hour, value: -1, to: Date())!
-        let dayAgo = calendar.date(byAdding: .day, value: -1, to:  Date())!
-        let weekAgo = calendar.date(byAdding: .day, value: -7, to: Date())!
+        let minuteAgo = calendar.date(byAdding: .minute, value: -1, to: self)!
+        let hourAgo = calendar.date(byAdding: .hour, value: -1, to: self)!
+        let dayAgo = calendar.date(byAdding: .day, value: -1, to:  self)!
+        let weekAgo = calendar.date(byAdding: .day, value: -7, to: self)!
         
         if minuteAgo < self {
             let diff = Calendar.current.dateComponents([.second], from: self, to: Date()).second ?? 0

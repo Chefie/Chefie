@@ -25,7 +25,7 @@ class UserSearchCell : BaseCell, ICellDataProtocol{
 
     let userIcon : UIImageView = {
         let img = UIImageView(maskConstraints: false)
-        img.contentMode = ContentMode.scaleAspectFit
+        img.contentMode = ContentMode.scaleToFill
         return img
     }()
     
@@ -45,28 +45,32 @@ class UserSearchCell : BaseCell, ICellDataProtocol{
         self.contentView.snp.makeConstraints { (maker) in
          
             maker.edges.equalToSuperview()
-            //maker.left.top.right.equalToSuperview()
+            maker.left.top.right.bottom.equalTo(0)
             maker.width.equalTo(cellSize.width)
             maker.height.equalTo(cellSize.height)
         }
         
-        self.userIcon.frame = CGRect(x: 0, y: 0, width: cellSize.widthPercentageOf(amount: 24), height: cellSize.heightPercentageOf(amount: 80))
+        let userIconFrame = CGRect(x: 0, y: 0, width: cellSize.widthPercentageOf(amount: 24), height: cellSize.heightPercentageOf(amount: 80))
         
+        
+        self.userIcon.frame = userIconFrame
         self.userIcon.snp.makeConstraints { (maker) in
 
-            maker.left.equalTo(10)
+         //  maker.edges.equalToSuperview()
+            maker.leftMargin.equalTo(10)
             maker.centerY.equalToSuperview()
-            maker.width.equalTo(cellSize.widthPercentageOf(amount: 32))
-            maker.height.equalTo(cellSize.heightPercentageOf(amount: 80))
+            maker.width.equalTo(userIconFrame.width)
+            
+             maker.height.equalTo(userIconFrame.height)
         }
         
         self.userLabel.snp.makeConstraints { (maker) in
             maker.center.equalToSuperview()
+            maker.width.equalTo(cellSize.widthPercentageOf(amount: 70))
         }
         
         self.userIcon.setCircularImageView()
-        self.backgroundColor = .clear
-    
+       
         self.userLabel.displayLines(height: 50)
         self.userIcon.showAnimatedGradientSkeleton()
     }
@@ -79,8 +83,11 @@ class UserSearchCell : BaseCell, ICellDataProtocol{
             
             self.userLabel.hideLines()
             self.userIcon.hideSkeleton()
-            
+           
             self.userLabel.text = self.model?.userName
+            
+            
+            self.reloadCell()
         }
     }
     

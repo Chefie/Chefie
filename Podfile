@@ -32,5 +32,6 @@ target 'Chefie' do
   pod 'SCLAlertView'
   pod 'CRRefresh'
   pod 'SwiftEntryKit', '1.0.1'
+  pod 'Lightbox'
 end
 

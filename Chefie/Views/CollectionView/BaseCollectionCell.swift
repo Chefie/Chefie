@@ -12,6 +12,8 @@ class BaseCollectionCell : UICollectionViewCell, IDynamicCellProtocol{
   
     var baseItemInfo : BaseItemInfo?
     
+    var index : Int?
+    
     func cellReuseIdentifier() -> String {
         return ""
     }
@@ -45,6 +47,14 @@ class BaseCollectionCell : UICollectionViewCell, IDynamicCellProtocol{
         }
     }
     
+    func reloadCell() {
+        
+        if let collection = parentView as? UICollectionView{
+            
+            collection.reloadItems(at: [IndexPath(row: index ?? 0, section: 0)])
+        }
+    }
+    
     func onLayout(size: CGSize!) {
         
     }
@@ -74,7 +84,6 @@ class BaseCollectionCell : UICollectionViewCell, IDynamicCellProtocol{
             self.transform = down ? CGAffineTransform(scaleX: scale, y: scale) : .identity
         }
     }
-    
  
     var didTouchAction: (() -> Void)?
     

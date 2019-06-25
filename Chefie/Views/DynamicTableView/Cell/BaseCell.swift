@@ -18,6 +18,8 @@ class BaseCell : UITableViewCell, IDynamicCellProtocol{
     
     var index : Int?
     
+    var shouldUseInternalSize : Bool = true
+    
     func setBaseItemInfo(info : BaseItemInfo){
         
         self.baseItemInfo = info
@@ -89,6 +91,14 @@ class BaseCell : UITableViewCell, IDynamicCellProtocol{
             let table = self.parentView as! UITableView
             table.reloadRows(at: [IndexPath(row: self.index ?? 0, section: 0)], with: .none)
             cellReloaded = true
+        }
+    }
+    
+    func reloadTable() {
+        
+        if let table = self.parentView as? UITableView{
+
+            table.reloadData()
         }
     }
     

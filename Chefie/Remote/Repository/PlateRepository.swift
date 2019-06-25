@@ -34,10 +34,11 @@ public struct UploadRecipeResult {
 
 class PlateRepository {
     
-    func getPlatos(completionHandler: @escaping (ChefieResult<[Plate]>) -> Void ) -> Void {
+    func getPlatos(community: String, completionHandler: @escaping (ChefieResult<[Plate]>) -> Void ) -> Void {
         
         let platesRef = Firestore.firestore().collection("Platos")
-        platesRef.getDocuments(completion: { (querySnapshot, err) in
+        
+        platesRef.whereField("community.id", isEqualTo: community).getDocuments(completion: { (querySnapshot, err) in
             
             var plates = Array<Plate>()
             
@@ -56,19 +57,9 @@ class PlateRepository {
                     }
                 })
                 
-                let filteredPlates = plates.map({ (plate) -> Plate in
-                    
-                    let multiMedia = plate.multimedia?.filter({ (media) -> Bool in
-                        return media.type != "video"
-                    })
-                    
-                    plate.multimedia = multiMedia
-                    
-                    return plate
-                })
-                
-                
-                completionHandler(.success( filteredPlates))
+               
+                completionHandler(.success(plates))
+
             } else {
                 completionHandler(.failure(err as! String))
             }
@@ -86,7 +77,7 @@ class PlateRepository {
     func getPlatos(idUser : String, completionHandler: @escaping (ChefieResult<[Plate]>) -> Void ) -> Void {
         
         let platesRef = Firestore.firestore().collection("Platos")
-        let query = platesRef.whereField("idUser", isEqualTo: idUser)
+        let query = platesRef.whereField("idUser", isEqualTo: idUser).order(by: "timeStamp", descending: true)
         
         query.getDocuments(completion: { (querySnapshot, err) in
             
@@ -98,7 +89,6 @@ class PlateRepository {
                     do {
                         
                         let model = try FirestoreDecoder().decode(Plate.self, from: document.data())
-                        //      model.id = document.documentID
                         plates.append(model)
                         
                         print("Model: \(model)")
@@ -107,20 +97,9 @@ class PlateRepository {
                     }
                 })
                 
-                let filteredPlates =  plates.map({ (plate) -> Plate in
-                    
-                    let multiMedia = plate.multimedia?.filter({ (media) -> Bool in
-                        return media.type != "video"
-                    })
-                    
-                    plate.multimedia = multiMedia
-                    
-                    return plate
-                })
-                
-                completionHandler(.success( filteredPlates))
+                completionHandler(.success( plates))
             } else {
-                completionHandler(.failure(err as! String))
+                completionHandler(.failure("Error"))
             }
         })
     }

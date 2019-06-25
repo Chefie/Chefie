@@ -52,6 +52,27 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
     
     //Metodo de subir plato al Firestore
     @IBAction func subirPlato(_ sender: Any) {
+        
+        let mediaItem = tableItems.first { (item) -> Bool in
+            item.UID == "Media"
+        }
+        
+        if let media = mediaItem as? PlateMediaHorizontalBaseInfo {
+            
+            let array = media.model as! [MultimediaData]
+            if array.isEmpty{
+                
+                let appearance = SCLAlertView.SCLAppearance(
+                    showCloseButton: true
+                )
+                let errorView = SCLAlertView(appearance: appearance)
+                
+                errorView.showError("No Media Uploaded", subTitle: "Please upload a photo or a video")
+                //   errorView.
+                return
+            }
+        }
+        
         timer.invalidate()
         
         let numeroComunidad = pickerView.selectedRow(inComponent: 0)
@@ -94,7 +115,7 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
             showCloseButton: false
         )
         let uploadingAlertView = SCLAlertView(appearance: appearance)
-        uploadingResponder = uploadingAlertView.showNotice("Uploading Recipe...", subTitle: "")
+        uploadingResponder = uploadingAlertView.showCustom("Uploading Recipe", subTitle: "Please wait...", color: UIColor.white, icon: UIImage.init(named: "uploading")!)
         
         if (!images.isEmpty){
             Image.resolve(images: self.images, completion: { [weak self] resolvedImages in
@@ -186,57 +207,53 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         let dispatchQueue = DispatchQueue(label: "GetDataFromVideos", qos: .background)
         dispatchQueue.async{
             
-            var batchCount = max(videos.count - 1, 0)
-            var running = false, finished = false
-            while(!finished) {
-                
-                if (!running && !finished){
-                    
-                    if (batchCount < 0){
-                        finished = true
-                        continue
-                    }
-                    
-                    running = true
-                    
-                    let asset = videos [batchCount].asset
-                    
-                    PHImageManager.default().requestAVAsset(forVideo: asset, options: nil, resultHandler: { (asset, mix, nil) in
-                        let myAsset = asset as? AVURLAsset
-                        do {
-                            let videoData = try Data(contentsOf: (myAsset?.url)!)
-                            
-                            if (batchCount >= 0){
-                                videos[batchCount].fetchThumbnail(size: CGSize(width: 300, height: 280), completion: { (image : UIImage?) in
-                                    
-                                    if image != nil {
-                                        
-                                        let videoThumb = image?.drawDarkRect().with(image: "play_video", rectCalculation: { (parentSize, newSize) -> (CGRect) in
-                                            return CGRect(x: 300 / 2 - 60, y: 280 / 2 - 60, width: 60, height: 60)
-                                        })
-                                        let data = videoThumb!.rawData()
-                                        
-                                        let result = GetVideoDataResult(thumbnailData: data, videoData: videoData)
-                                        
-                                        outputData.append(result)
-                                        
-                                    }
-                                    
-                                    batchCount -= 1
-                                    
-                                    running = false
-                                })
-                            }
-                            
-                            print("video data : \(videoData)")
-                        } catch  {
-                            print("exception when getting data from video")
-                        }
-                    })
-                }
-            }
+            let group = DispatchGroup()
             
-            completionHandler(.success(outputData))
+            videos.forEach({ (video) in
+                
+                group.enter()
+                let asset = video.asset
+                
+                let options = PHImageRequestOptions()
+                options.isNetworkAccessAllowed = true
+                options.isSynchronous = true
+                options.resizeMode = PHImageRequestOptionsResizeMode.exact
+
+                PHImageManager.default().requestAVAsset(forVideo: asset, options: nil, resultHandler: { (asset, mix, nil) in
+                    let myAsset = asset as? AVURLAsset
+                    do {
+                        let videoData = try Data(contentsOf: (myAsset?.url)!)
+                      
+                            PHImageManager.default().requestImage(for: video.asset, targetSize: CGSize(width: 520, height: 480), contentMode: .aspectFill, options: options, resultHandler: { (image, hashable) in
+                                if image != nil {
+                                    
+                                    let videoThumb = image?.drawDarkRect().with(image: "play_video", rectCalculation: { (parentSize, newSize) -> (CGRect) in
+                                        return CGRect(x: 520 / 2 - 50, y: 480 / 2 - 70, width: 60, height: 70)
+                                    })
+                                    let data = videoThumb!.rawData()
+                                    
+                                    let result = GetVideoDataResult(thumbnailData: data, videoData: videoData)
+                                    
+                                    outputData.append(result)
+                                    
+                                    print("get video data output success")
+                                    group.leave()
+                                }
+                            })
+                     
+                        print("video data : \(videoData)")
+                    } catch  {
+                        print("exception when getting data from video")
+                       group.leave()
+                    }
+                })
+            })
+            
+            group.wait()
+            
+            group.notify(queue: DispatchQueue.main) {
+                completionHandler(.success(outputData))
+            }
         }
     }
     
@@ -255,15 +272,11 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
                     )
                     let alertView = SCLAlertView(appearance: appearance)
                     alertView.addButton("Done") {
-                        self.dismiss(animated: true, completion: {
-                            
-                        })
+                        self.close()
                     }
                     
                     alertView.showError("Failed to upload Recipe", subTitle: "The recipe couldn't be uploaded").setDismissBlock {
-                        self.dismiss(animated: true, completion: {
-                            
-                        })
+                        self.close()
                     }
                     print("---> Algo ha ido mal.")
                 } else {
@@ -281,16 +294,13 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
                     )
                     let alertView = SCLAlertView(appearance: appearance)
                     alertView.addButton("Great!") {
-                        self.dismiss(animated: true, completion: {
-                            
-                        })
+                        
+                        self.close()
                     }
                     
                     alertView.showSuccess("Recipe Uploaded", subTitle: "Your recipe has been successfully published").setDismissBlock {
                         
-                        self.dismiss(animated: true, completion: {
-                            
-                        })
+                        self.close()
                     }
                 }
                 
@@ -323,10 +333,10 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         
         tableCellRegistrator.add(identifier: PlateMediaHorizontalBaseInfo().reuseIdentifier(), cellClass: PlateMediaHorizontalCell.self)
         self.navigationController!.navigationBar.isTranslucent = true
-        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Zapfino", size: 13)!]
+        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: DefaultFonts.ZapFinoXs]
         view.backgroundColor = .white
-        navigationItem.leftItemsSupplementBackButton = true
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "<", style: .plain, target: self, action: #selector(close))
+        navigationItem.leftItemsSupplementBackButton = false
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back")!, style: .plain, target: self, action: #selector(close))
         
         //Delegates.
         gallery.delegate = self
@@ -474,6 +484,8 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
             
         }
         self.navigationController?.popViewController(animated: true)
+        
+        EventContainer.shared.TabBarVC.on(.next(true))
     }
     
     func loadData() {
@@ -493,9 +505,9 @@ class UploadRecipeViewController: UIViewController, UIPickerViewDataSource,UIPic
         
         let plateMediaHorizontalInfo = PlateMediaHorizontalBaseInfo()
         plateMediaHorizontalInfo.setTitle(value: "Media")
+        plateMediaHorizontalInfo.UID = "Media"
         plateMediaHorizontalInfo.model = Array<MultimediaData>() as AnyObject
         tableItems.append(plateMediaHorizontalInfo)
-        //tableItems.append(plateMediaHorizontalInfo)
         
         self.mainTable.reloadData()
     }

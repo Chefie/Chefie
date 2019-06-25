@@ -49,17 +49,13 @@ class RegisterViewController : UIViewController, UITextFieldDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillAppear(animated)
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        if Auth.auth().currentUser != nil{
-            //      self.performSegue(withIdentifier: "registerScreen", sender: self)
-        }
     }
     
     func register() {
@@ -67,11 +63,10 @@ class RegisterViewController : UIViewController, UITextFieldDelegate {
         //  self.performSegue(withIdentifier: "registerScreen", sender: self)
     }
     
-    func launchMainScreen() {
-        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen" )
+    func launchMainScreen(info : AutoLoginInfo) {
         
-        self.present(exampleVC, animated: true)
+        let delegate =  UIApplication.shared.delegate as! AppDelegate
+        delegate.doAutoLogin(info: info)
     }
     
     @IBAction func buttonRegister(_ sender: Any) {
@@ -98,7 +93,6 @@ class RegisterViewController : UIViewController, UITextFieldDelegate {
                             
                             if  querySnapshot?.count == 0 {
                                 
-                                
                                 let fullName = Auth.auth().currentUser!.email
                                 let fullNameArr = fullName!.components(separatedBy: "@")
                                 let firstName = fullNameArr[0] //First
@@ -116,38 +110,37 @@ class RegisterViewController : UIViewController, UITextFieldDelegate {
                                 usuarioChefie.following = 0
                                 usuarioChefie.profilePic = ""
                                 usuarioChefie.profileBackgroundPic = ""
-                                usuarioChefie.gender = ""
+                                usuarioChefie.gender = "Male"
                                 usuarioChefie.community = ""
                                 usuarioChefie.location = ""
                                 
-                                self.insertUser(user: usuarioChefie)
-                                
+                                self.insertUser(user: usuarioChefie, completion: {
+                                    
+                                    if Auth.auth().currentUser != nil{
+                                        
+                                        self.launchMainScreen(info : AutoLoginInfo(email: mail, pass: pass))
+                                    }
+                                })                         
                             }
-                            
-                            
+                            else {
+                                
+                                if Auth.auth().currentUser != nil{
+                                    
+                                    self.launchMainScreen(info : AutoLoginInfo(email: mail, pass: pass))
+                                }
+                            }
+                    
                             if let err = err {
                                 print("Error getting documents: \(err)")
-                                
-                                
-                                
                             } else {
-                                //                                    for document in querySnapshot!.documents {
-                                //                                        print("\(document.documentID) => \(document.data())")
-                                //                                    }
-                                
-                                
-                                
+     
                             }
                     }
                     
                     self.textFieldEmail.text = ""
                     self.textFieldPassword.text = ""
                     self.textFieldPassword2.text = ""
-                    if Auth.auth().currentUser != nil{
-                        
-                        self.launchMainScreen()
-                        //  self.performSegue(withIdentifier: "toHomeScreen", sender: self)
-                    }
+              
                 }else{
                     self.labelMessage.text = "\(error!.localizedDescription)"
                     print("error creating user: \(error!.localizedDescription)")
@@ -176,7 +169,7 @@ class RegisterViewController : UIViewController, UITextFieldDelegate {
     
     
     //Metodo que hace el insert de un Usuario en la BBDD.
-    func insertUser(user: ChefieUser) {
+    func insertUser(user: ChefieUser, completion: @escaping () -> Void) {
         let usersRef = Firestore.firestore().collection("Users")
         
         do {
@@ -188,14 +181,13 @@ class RegisterViewController : UIViewController, UITextFieldDelegate {
                 } else {
                     print("---> Usuario insertado con exito.")
                     //print("Model: \(model)")
+
+                    completion()
                 }
             }
-            
         } catch  {
             print("Invalid Selection.")
         }
-        
-        
     }
 }
 

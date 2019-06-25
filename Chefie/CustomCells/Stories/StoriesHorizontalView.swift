@@ -9,29 +9,34 @@
 import Foundation
 import UIKit
 import SkeletonView
+import SDWebImage
 
-class CommentsHorizontalCellInfo : HorizontalSectionCellBaseInfo {
+class StoriesHorizontalItemInfo : HorizontalSectionCellBaseInfo {
     
     override func reuseIdentifier() -> String {
-        return String(describing: CommentsHorizontalCell.self)
+        return String(describing: StoriesHorizontalView.self)
+    }
+    
+    override func title() -> String {
+        return "Stories"
     }
 }
 
-class CommentsHorizontalCell : HorizontalSectionView<Comment> {
+class StoriesHorizontalView : HorizontalSectionView<Story> {
     
-    override var modelSet: [Comment]{
+    override var modelSet: [Story]{
         
         didSet(value){
         }
     }
     
     override func getCellIdentifier() -> String {
-        return String(describing: CommentCollectionCell.self)
+        return String(describing: StoryViewCell.self)
     }
     
     override func registerCell() {
         
-        collectionView.register(CommentCollectionCell.self, forCellWithReuseIdentifier: getCellIdentifier())
+        collectionView.register(StoryViewCell.self, forCellWithReuseIdentifier: getCellIdentifier())
     }
     
     override func onLoadData() {
@@ -39,7 +44,6 @@ class CommentsHorizontalCell : HorizontalSectionView<Comment> {
         collectionView.reloadData()
         
         super.onLoadData()
-        
     }
     
     override func onLayout(size: CGSize!) {
@@ -56,14 +60,14 @@ class CommentsHorizontalCell : HorizontalSectionView<Comment> {
     }
     
     override func onRequestItemSize() -> CGSize {
-        return CGSize(width: collectionView.getWidth() / 2, height: parentView.heightPercentageOf(amount: 28))
+        return CGSize(width: collectionView.getWidth() / 2, height: parentView.heightPercentageOf(amount: 20))
     }
     
     override func onRequestCell(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if (modelSet.count == 0) {
             
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: getCellIdentifier(), for: indexPath) as! CommentCollectionCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: getCellIdentifier(), for: indexPath) as! StoryViewCell
             cell.viewController = viewController
             cell.collectionItemSize = onRequestItemSize()
             cell.parentView = collectionView
@@ -72,7 +76,7 @@ class CommentsHorizontalCell : HorizontalSectionView<Comment> {
         
         let cellInfo = self.modelSet[indexPath.row]
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: getCellIdentifier(), for: indexPath) as! CommentCollectionCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: getCellIdentifier(), for: indexPath) as! StoryViewCell
         cell.viewController = viewController
         cell.collectionItemSize = onRequestItemSize()
         cell.parentView = collectionView
@@ -83,47 +87,74 @@ class CommentsHorizontalCell : HorizontalSectionView<Comment> {
     }
 }
 
-class CommentCollectionCell : BaseCollectionCell, ICellDataProtocol, INestedCell {
+class StoryViewCell : BaseCollectionCell, ICellDataProtocol, INestedCell {
     
     var collectionItemSize: CGSize!
     
-    typealias T = Comment
+    typealias T = Story
     
-    var model: Comment?
+    var model: Story?
+    
+    let backImageView : UIImageView = {
+        
+        let view = UIImageView(maskConstraints: false)
+        return view
+    }()
+    
+    let userIconView : UIImageView = {
+        
+        let view = UIImageView(maskConstraints: false)
+        view.image = UIImage(named: "AppIcon")
+        return view
+    }()
     
     let label : MultilineLabel = {
         let lbl = MultilineLabel(maskConstraints: false, font: DefaultFonts.DefaultTextFont)
-        lbl.text = "Text"
+        lbl.text = ""
         return lbl
     }()
     
+    var mainRect = CGRect()
+    var userPicRect = CGRect()
     
     override func onLayout(size: CGSize!) {
         super.onLayout(size: size)
-        
+
         self.contentView.snp.makeConstraints { (maker) in
-            // this makes collectionview not responsible??
-            //   maker.top.left.right.bottom.equalToSuperview()
             maker.width.equalTo(collectionItemSize.width)
             maker.height.equalTo(collectionItemSize.height)
         }
         
-        label.snp.makeConstraints { (maker) in
-            
-            maker.top.equalTo(0)
-            maker.bottomMargin.equalTo(0)
-            //  maker.topMargin.equalTo(10)
-            maker.leftMargin.rightMargin.equalTo(10)
-            maker.width.equalTo(size.widthPercentageOf(amount: 20))
-            
-            maker.height.equalTo(collectionItemSize.height - 10)
+        let userIconSize = CGSize(width: collectionItemSize.widthPercentageOf(amount: 18), height: collectionItemSize.heightPercentageOf(amount: 20))
+        mainRect = CGRect(x: 0, y: 0, width: collectionItemSize.width, height: collectionItemSize.height.minus(amount: 15))
+        userPicRect = CGRect(x: 0, y: mainRect.maxX - userIconSize.height.remainder(dividingBy: 2) , width: userIconSize.width, height: userIconSize.height)
+
+        //self.backImageView.frame = mainRect
+        self.backImageView.snp.makeConstraints { (maker) in
+            maker.size.equalTo(mainRect.size)
+            maker.centerY.equalToSuperview()
         }
         
-        label.paletteDefaultTextColor()
+        self.userIconView.frame = userPicRect
+        self.userIconView.snp.makeConstraints { (maker) in
+
+            maker.size.equalTo(userPicRect.size)
+            maker.center.equalToSuperview()
+        }
+
+        self.label.snp.makeConstraints { (maker) in
+            maker.edges.equalToSuperview()
+            maker.width.equalTo(size.width)
+            maker.bottom.equalTo(10)
+        }
+        
+        self.backImageView.setCornerRadius(radius: 10)
+        self.backImageView.addShadow()
+        self.userIconView.setCircularViewWith()
     }
     
     override func setModel(model: AnyObject?) {
-        self.model = (model as! Comment)
+        self.model = (model as! Story)
     }
     
     override func getModel() -> AnyObject? {
@@ -131,24 +162,31 @@ class CommentCollectionCell : BaseCollectionCell, ICellDataProtocol, INestedCell
     }
     
     override func onLoadData() {
-    
-        label.text = model?.content
-        label.hideLines()
+        super.onLoadData()
+        
+     //   self.userIconView.borderColor = UIColor.red
+        
+        backImageView.sd_setImage(with: URL(string: model?.media?.url ?? "")){ (image : UIImage?,
+            error : Error?, cacheType : SDImageCacheType, url : URL?) in
+            
+            self.backImageView.image = image?.drawDarkRect(alpha: 0.2)
+        }
+        
+        
+     //   self.label.text = model?.user?.userName
+        
+//        userIconView.sd_setImage(with: URL(string: model?.user?.profilePic ?? "")){ (image : UIImage?,
+//            error : Error?, cacheType : SDImageCacheType, url : URL?) in
+//
+//
+//        }
     }
     
     override func onCreateViews() {
         super.onCreateViews()
         
-        //    self.contentView.addShadow()
-        // self.contentView.addSubview(cardView)
-        self.contentView.addSubview(label)
-        
-        
-        //   self.contentView.setTouch(target: self, selector: #selector(onTouch))
-    }
-    
-    @objc func onTouch() {
-        
-        print("test")
+        self.addSubview(backImageView)
+        self.addSubview(userIconView)
+        self.addSubview(label)
     }
 }

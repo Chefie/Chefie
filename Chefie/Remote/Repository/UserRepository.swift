@@ -23,7 +23,7 @@ public struct RetrieveFollowingInfo{
         
         if let data = result.data{
             
-             self.currentOffset =  self.currentOffset + data.count
+            self.currentOffset =  self.currentOffset + data.count
         }
     }
 }
@@ -31,36 +31,36 @@ public struct RetrieveFollowingInfo{
 class UserRepository{
     
     func getUserById(id : String,completionHandler: @escaping (ChefieResult<ChefieUser>) -> Void) -> Void{
-    
-      let db = Firestore.firestore()
-      let query = db.collection("Users").whereField("id", isEqualTo: id)
+        
+        let db = Firestore.firestore()
+        let query = db.collection("Users").whereField("id", isEqualTo: id)
         
         query.getDocuments { (querySnapshot, err)  in
             
             if let snapshot = querySnapshot {
                 
                 if !snapshot.isEmpty {
-
-                        do {
-                            
-                            let document = snapshot.documents.first!
-                            let model = try FirestoreDecoder().decode(ChefieUser.self, from: document.data())
-                         //   model.id = document.documentID
-                            
-                            completionHandler(.success(model))
-                            print("GetUserById: \(model)")
-                        } catch  {
                     
-                            print("GetUserById: Error when decoding user")
-                            completionHandler(.failure("GetUserById: Error when decoding user"))
-                        }
+                    do {
+                        
+                        let document = snapshot.documents.first!
+                        let model = try FirestoreDecoder().decode(ChefieUser.self, from: document.data())
+                        //   model.id = document.documentID
+                        
+                        completionHandler(.success(model))
+                        print("GetUserById: \(model)")
+                    } catch  {
+                        
+                        print("GetUserById: Error when decoding user")
+                        completionHandler(.failure("GetUserById: Error when decoding user"))
+                    }
                 }
                 else{
                     completionHandler(.failure("GetUserById: Snapshot is empty"))
                 }
             }
             else {
-
+                
                 completionHandler(.failure("GetUserById: User with id \(id) not found"))
             }
         }
@@ -83,9 +83,9 @@ class UserRepository{
                             let _email = doc?.data()["email"] as! String
                             let _pass = doc?.data()["password"] as! String
                             
-//                            let chefieUser = ChefieUser(email: _email, password: _pass)
-//
-//                            completionHandler(.success(chefieUser))
+                            //                            let chefieUser = ChefieUser(email: _email, password: _pass)
+                            //
+                            //                            completionHandler(.success(chefieUser))
                         }
                         else{
                             completionHandler(.failure(err as! String))
@@ -122,7 +122,7 @@ class UserRepository{
                     
                     result.snapShot = snapShot?.documents.last
                 }
-               
+                
                 result.data = following
                 
                 completionHandler(.success(result))
@@ -132,14 +132,14 @@ class UserRepository{
         }
     }
     
-    func getAllUsers(offset : Int, completionHandler: @escaping (Result<[ChefieUser], Error>) -> Void){
-      
-        let usersRef = Firestore.firestore().collection("Users").limit(to: offset)
-
-        usersRef.getDocuments(completion: { (querySnapshot, err) in
+    func getAllUsers(community : String, completionHandler: @escaping (Result<[ChefieUser], Error>) -> Void){
         
+        let usersRef = Firestore.firestore().collection("Users")
+        
+        usersRef.whereField("community", isEqualTo: community).getDocuments(completion: { (querySnapshot, err) in
+            
             var users = [ChefieUser]()
-   
+            
             if (querySnapshot?.documents) != nil {
                 
                 querySnapshot?.documents.forEach({ (document) in
@@ -153,10 +153,10 @@ class UserRepository{
                         print("Invalid Selection.")
                     }
                 })
-          
+                
                 completionHandler(.success(users))
             } else {
-              //  completionHandler(.failure(err ?? Error))
+                // completionHandler(.failure(err?.localizedDescription))
             }
         })
     }
@@ -173,9 +173,9 @@ class UserRepository{
     
     func getUserFollowingCount(userId: String, completionHandler: @escaping (Int) -> Void) -> Void {
         
-         let collectionFollowings = Firestore.firestore().collection("/Following/\(userId)/following")
+        let collectionFollowings = Firestore.firestore().collection("/Following/\(userId)/following")
         
-         collectionFollowings.getDocuments { (snapshot, err) in
+        collectionFollowings.getDocuments { (snapshot, err) in
             
             completionHandler(snapshot?.count ?? 0)
         }
@@ -227,12 +227,12 @@ class UserRepository{
         query.getDocuments(completion: { (querySnapshot, err) in
             
             if (querySnapshot != nil){
-
+                
                 do {
-                      let doc = querySnapshot!.documents.first
-                      let result = try FirebaseDecoder().decode(UserMin.self, from: doc!.data())
+                    let doc = querySnapshot!.documents.first
+                    let result = try FirebaseDecoder().decode(UserMin.self, from: doc!.data())
                     
-                       completionHandler(.success(result))
+                    completionHandler(.success(result))
                 }
                 catch {
                     
@@ -248,7 +248,7 @@ class UserRepository{
     }
     
     func getUserFollowers(idUser: String, completionHandler: @escaping (ChefieResult<[UserMin]>) -> Void) -> Void {
-
+        
         let collectionFollowers = Firestore.firestore().collection("/Followers/\(idUser)/followers")
         collectionFollowers.getDocuments { (querySnapshot, err) in
             
@@ -264,16 +264,14 @@ class UserRepository{
                         print("********---getUserFollowers---**********")
                         print("Id -> \(String(describing: follower.id))")
                         print("Username -> \(String(describing: follower.userName))")
-         
-                        completionHandler(.success(followers))
-                        
+    
                     } catch  {
-                        completionHandler(.failure("Couldn't decode User Follower"))
-                        
                         print("Could'nt decode User Follower")
                     }
                 })
             }
+            
+            completionHandler(.success(followers))
         }
     }
     
@@ -326,7 +324,7 @@ class UserRepository{
     }
     
     func addFollower(idUser: String, idFollower: String, completionHandler: @escaping (ChefieResult<Bool>) -> Void) -> Void {
-     
+        
         appContainer.userRepository.getUserMinByID(idUser: idFollower) { (result: (ChefieResult<UserMin>)) in
             switch result {
             case .success(let data):
@@ -340,16 +338,16 @@ class UserRepository{
                                 print("Error adding document: \(err)")
                             } else {
                                 
-                              completionHandler(.success(true))
+                                completionHandler(.success(true))
                                 print("Documento añadido!")
                             }
-            
+                            
                     }
                 }
                 catch {
-                  completionHandler(.success(false))
+                    completionHandler(.success(false))
                 }
-    
+                
                 break
             case .failure(_):
                 completionHandler(.success(false))
@@ -359,7 +357,7 @@ class UserRepository{
     }
     
     func removeFollower(idUser: String, idFollower: String, completionHandler: @escaping (ChefieResult<Bool>) -> Void) -> Void {
-  
+        
         let collectionFollowers = Firestore.firestore().collection("/Followers/\(idUser)/followers")
         let query = collectionFollowers.whereField("id", isEqualTo: idFollower)
         
@@ -374,7 +372,7 @@ class UserRepository{
                 completionHandler(.success(true))
             }
             else{
-      
+                
                 print("Error removing document: \(String(describing: err))")
                 completionHandler(.success(false))
             }
@@ -387,7 +385,7 @@ class UserRepository{
         let query = collectionFollowers.whereField("id", isEqualTo: idFollower)
         
         query.getDocuments(completion: { (querySnapshot, err) in
-     
+            
             if (err != nil){
                 
                 completionHandler(.failure(err!.localizedDescription))
@@ -407,7 +405,7 @@ class UserRepository{
     }
     
     func removeFollowing(follower: String, idTargetUser: String, completionHandler: @escaping (ChefieResult<Bool>) -> Void) -> Void {
-
+        
         let collectionFollowings = Firestore.firestore().collection("/Following/\(follower)/following")
         let query = collectionFollowings.whereField("id", isEqualTo: idTargetUser)
         query.getDocuments(completion: { (querySnapshot, err) in
@@ -421,7 +419,7 @@ class UserRepository{
                 for document in querySnapshot!.documents {
                     document.reference.delete()
                 }
-        
+                
                 completionHandler(.success(true))
             }
             else{
@@ -432,9 +430,9 @@ class UserRepository{
     }
     
     func addFollowing(follower: UserMin, targetUser: UserMin, completionHandler: @escaping (ChefieResult<Bool>) -> Void) -> Void {
-   
+        
         do {
-
+            
             let followerId = follower.id!
             let followTargetData = try FirestoreEncoder().encode(targetUser)
             
@@ -443,9 +441,9 @@ class UserRepository{
                     if let err = err {
                         print("Error adding document: \(err)")
                     } else {
-//                        let attrRef = Firestore.firestore().collection("Following").document("\(followerId)")
-//                        attrRef.setData([
-//                            "created_at" : Date().convertDateToString() ])
+                        //                        let attrRef = Firestore.firestore().collection("Following").document("\(followerId)")
+                        //                        attrRef.setData([
+                        //                            "created_at" : Date().convertDateToString() ])
                         completionHandler(.success(true))
                         print("Documento añadido!")
                     }
@@ -457,17 +455,120 @@ class UserRepository{
     }
     
     func updateUserImageData(userMin: UserMin, completionHandler: @escaping (ChefieResult<Bool>) -> Void) -> Void {
-    
+        
         Firestore.firestore().collection("Users")
-        .whereField("id", isEqualTo: userMin.id!)
-        .getDocuments { (querySnapshot, err) in
-            let document = querySnapshot!.documents.first
-            document!.reference.updateData([
-                "profilePic": userMin.profilePic  ?? "",
-                "profileBackgroundPic": userMin.profileBackground  ?? ""
-                ])
+            .whereField("id", isEqualTo: userMin.id!)
+            .getDocuments { (querySnapshot, err) in
+                let document = querySnapshot!.documents.first
+                document!.reference.updateData([
+                    "profilePic": userMin.profilePic  ?? "",
+                    "profileBackgroundPic": userMin.profileBackground  ?? ""
+                    ])
+                
+                completionHandler(.success(true))
+        }
+    }
+    
+    func updateUserDataGlobally(userMin: UserMin) -> Void {
+        
+        let platesQuery = Firestore.firestore().collection("Platos")
+            .whereField("idUser", isEqualTo: userMin.id!)
+        let dispatchQueue = DispatchQueue(label: "UpdateUserDataGlobally", qos: .background)
+        
+        var encoded = [String:Any]()
+        dispatchQueue.async{
             
-            completionHandler(.success(true))
+            let group = DispatchGroup()
+            
+            group.enter()
+            platesQuery.getDocuments { (snapshot, err) in
+                
+                group.leave()
+                do {
+                    
+                    encoded = try FirestoreEncoder().encode(userMin)
+                    
+                    snapshot?.documents.forEach({ (document) in
+                        
+                        group.enter()
+                        document.reference.updateData(["user" : encoded], completion: { (err) in
+                            
+                            group.leave()
+                            print ("Updated My Plates Globally")
+                            
+                        })
+                    })
+                }
+                catch {
+                    
+                }
+            }
+            
+            group.wait()
+            
+            let myFeed = Firestore.firestore().collection("/Feed/\(userMin.id!)/data")
+            
+            group.enter()
+            myFeed.whereField("idUser", isEqualTo: userMin.id!).getDocuments(completion: { (snapshot, err) in
+                
+                group.leave()
+                
+                snapshot?.documents.forEach({ (document) in
+                    
+                    group.enter()
+                    document.reference.updateData(["user" : encoded], completion: { (err) in
+                        
+                        print ("Updated My Feed")
+                         EventContainer.shared.HomeSubject.on(.next(EventContainer.HOME_FEED_SHOULD_REFRESH))
+                        group.leave()
+                    })
+                })
+            })
+            
+            group.wait()
+            
+            group.enter()
+            self.getUserFollowers(idUser: userMin.id!, completionHandler: { (result :ChefieResult<[UserMin]>) in
+                
+                switch result {
+                    
+                case .success(let data):
+                        group.leave()
+                    data.forEach({ (user) in
+                        
+                        group.enter()
+                        
+                        let collection = Firestore.firestore().collection("/Feed/\(user.id ?? "")/data")
+                        
+                        collection.whereField("idUser", isEqualTo: userMin.id!).getDocuments {
+                            (snapshot, err) in
+                            
+                            group.leave()
+                            snapshot?.documents.forEach({ (document) in
+                                
+                                group.enter()
+                                document.reference.updateData(["user" : encoded], completion: { (err) in
+                                    
+                                    print ("Updated Other User Feed")
+                                    
+                                    group.leave()
+                                })
+                            })
+                        }
+                    })
+
+                    break
+                case .failure(_):
+                    break
+                }
+            })
+            
+            group.wait()
+            
+            group.notify(queue: .main, execute: {
+                 print("Finished Updated User Globally")
+                EventContainer.shared.HomeSubject.on(.next(EventContainer.HOME_FEED_SHOULD_REFRESH))
+            })
         }
     }
 }

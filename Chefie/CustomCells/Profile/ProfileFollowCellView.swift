@@ -62,23 +62,25 @@ class ProfileFollowCellView : BaseCell, ICellDataProtocol {
         
         let cellSize = CGSize(width: size.width, height: size.heightPercentageOf(amount: 8))
         
-        labelFollowers.snp.makeConstraints { (maker) in
-            maker.leftMargin.equalTo(size.widthPercentageOf(amount: 65))
-            maker.width.equalTo(size.widthPercentageOf(amount: 25))
-            maker.topMargin.equalTo(20)
-            
-        }
-     
-        labelFollowing.snp.makeConstraints { (maker) in
-            maker.leftMargin.equalTo(size.widthPercentageOf(amount: 5))
-            maker.width.equalTo(size.widthPercentageOf(amount: 25))
-            maker.topMargin.equalTo(20)
-        }
-        
         self.contentView.snp.makeConstraints { (maker) in
+            maker.left.top.right.bottom.equalTo(0)
             maker.size.equalTo(cellSize)
         }
         
+        labelFollowers.snp.makeConstraints { (maker) in
+            maker.leftMargin.equalTo(size.widthPercentageOf(amount: 65))
+            maker.width.equalTo(size.widthPercentageOf(amount: 25))
+            maker.centerY.equalToSuperview()
+            
+        }
+        
+        labelFollowing.snp.makeConstraints { (maker) in
+            maker.leftMargin.equalTo(size.widthPercentageOf(amount: 5))
+            maker.width.equalTo(size.widthPercentageOf(amount: 25))
+            maker.centerY.equalToSuperview()
+        }
+        
+    //    self.backgroundColor = UIColor.orange
         self.showAnimatedGradientSkeleton()
     }
     

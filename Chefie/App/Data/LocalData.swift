@@ -26,4 +26,9 @@ class LocalData {
         print("Logged User: ", user.userName, ",", user.id)
         LoginSubject.on(.next(user))
     }
+    
+    func update(user : ChefieUser){
+        
+        self.chefieUser = user
+    }
 }

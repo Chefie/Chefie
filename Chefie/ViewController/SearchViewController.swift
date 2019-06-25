@@ -15,7 +15,7 @@ import CRRefresh
 
 enum SearchQueryInfo: String {
     case Users = "Users"
-    case Plates = "Plates"
+    case Plates = "Recipes"
     case Routes = "Routes"
 }
 
@@ -34,25 +34,34 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
         return UINib(nibName: "SearchFilterXIB", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! UIView
     }
     
+    var searchFilter = SearchFilter()
+    
     //Metodo que abre el alert para el filtrado por comunidades.
     @IBAction func openFilter(_ sender: Any) {
         
         let appearance = SCLAlertView.SCLAppearance(
-            kCircleIconHeight: 55.0, showCloseButton: true
+            kCircleIconHeight: 55.0, showCloseButton: false
         )
+        
         let alertView = SCLAlertView(appearance: appearance)
         let view = getSearchFilterView() as! SearchFilterView
-        
+      
         view.setup()
+        view.setFilter(filter: searchFilter)
+        view.loadData()
+        alertView.addButton("Apply") {
+            self.searchFilter = view.getFilter()
+            self.clear()
+            self.doSearch()
+        }
         
-        alertView.addButton("Select") {
-            view.printComunidad()
+        alertView.addButton("Cancel") {
             
         }
         alertView.customSubview = view
         
         // alertView.showEdit("Edit", subTitle: "")
-        alertView.showCustom("Select community", subTitle: "community", color: UIColor(red: 0.9176, green: 0.6314, blue: 0.6039, alpha: 1.0), icon: UIImage.init(named: "flagFilter")!)
+        alertView.showCustom("Filter", subTitle: "", color: UIColor(red: 0.9176, green: 0.6314, blue: 0.6039, alpha: 1.0), icon: UIImage.init(named: "filterIcon")!.imageWithColor(tintColor: UIColor.white))
     }
     
     func onSetup() {
@@ -64,7 +73,11 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
         tableCellRegistrator.registerAll(tableView: mainTable)
         
         endlessTableHelper = EndlessTableHelper(table: mainTable)
-        endlessTableHelper.firstItemsCount = 0
+        endlessTableHelper.firstItemsCount = 8
+        
+        searchFilter.community = "catalunya"
+        searchFilter.name = "Cataluña"
+        searchFilter.collection = SearchQueryInfo.Plates.rawValue
     }
     
     func tagPressed(_ title: String, tagView: TagView, sender: TagListView) {
@@ -74,13 +87,14 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
         }
         
         tagView.isSelected = true
+        self.clear()
         self.doSearch()
     }
     
     func onSetupViews() {
         
         mainTable.setDefaultSettings()
-        
+        mainTable.setContentInset(top: 10)
         tagListView.textFont = DefaultFonts.DefaultTextFont
         tagListView.alignment = .left // possible values are .Left, .Center, and .Right
         
@@ -90,27 +104,15 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
         self.mainTable.delegate = self
         
         filterLabels.append(contentsOf: [SearchQueryInfo.Plates.rawValue, SearchQueryInfo.Users.rawValue, SearchQueryInfo.Routes.rawValue])
-        tagListView.addTags(filterLabels)
-        tagListView.tagViews[0].isSelected = true
-        
+
         searchTextField.delegate = self
         
         mainTable.frame = CGRect(x: 0, y: 0, width: self.view.getWidth(), height: self.view.getHeight())
         mainTable.snp.makeConstraints { (make) in
             
-            make.top.equalTo(self.view.heightPercentageOf(amount: 18))
+            make.top.equalTo(self.view.heightPercentageOf(amount: 19))
             make.width.equalTo(self.view.getWidth())
             make.height.equalTo(self.view.heightPercentageOf(amount: 72))
-        }
-        
-        mainTable.cr.addHeadRefresh(animator: NormalHeaderAnimator()) { [weak self] in
-            
-            self?.doSearch()
-        }
-        
-        mainTable.cr.addFootRefresh(animator: NormalFooterAnimator()) {
-            
-            
         }
     }
     
@@ -126,40 +128,43 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
     }
     
     func clear() {
-        
+     
+        self.endlessTableHelper.isFirst = false
+        self.endlessTableHelper.noData = false
         self.tableItems.removeAll()
-        self.mainTable.reloadData()
+        self.endlessTableHelper.reset(reloadNow : true)
     }
     
     func doSearch() {
         
-        clear()
+        tagListView.removeAllTags()
+        tagListView.addTags([searchFilter.collection, "Community : " + searchFilter.name])
         
-        let query = self.searchTextField.text ?? ""
-        let tagView = tagListView.selectedTags().first
-        let tagValue = tagView?.titleLabel?.text
-        switch tagValue {
+        let collection = self.searchFilter.collection!
+        let community = self.searchFilter.community!
+        switch collection {
             
         case SearchQueryInfo.Users.rawValue:
-            doSearchUsers(query: query)
+            doSearchUsers(query: community)
             break
-        case SearchQueryInfo.Plates.rawValue: doSearchPlates(query: query)
+        case SearchQueryInfo.Plates.rawValue: doSearchPlates(query: community)
             break
-        case SearchQueryInfo.Routes.rawValue: doSearchRoutes(query: query)
+        case SearchQueryInfo.Routes.rawValue: doSearchRoutes(query: community)
             break
         default:
-            doSearchPlates(query: query)
+            doSearchPlates(query: community)
         }
     }
     
     func doSearchUsers(query : String){
-        appContainer.userRepository.getAllUsers(offset: 10) { (result: Result<[ChefieUser], Error>) in
+  
+        appContainer.userRepository.getAllUsers(community: searchFilter.community) { (result: Result<[ChefieUser], Error>) in
             
             switch result {
                 
             case .success(let data):
                 
-                self.endlessTableHelper.loadMoreItems(itemsCount: data.count, callback: {
+                if !data.isEmpty{
                     
                     let users = data.compactMap({ (user) -> UserSearchCellItemInfo? in
                         
@@ -170,10 +175,12 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
                     
                     users.forEach({ (item) in
                         self.tableItems.append(item)
-                        self.endlessTableHelper.insertRow(itemsCount: self.tableItems.count - 1)
-                        
                     })
-                })
+                    
+                    self.endlessTableHelper.setCount(count: self.tableItems.count)
+                    
+                    self.mainTable.reloadData()
+                }
                 
                 break
             case .failure(_):
@@ -184,14 +191,14 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
     }
     
     func doSearchPlates(query: String){
-        
-        appContainer.plateRepository.getPlatos { (result : ChefieResult<[Plate]>) in
+      
+        appContainer.plateRepository.getPlatos(community: searchFilter.community) { (result : ChefieResult<[Plate]>) in
             
             switch result {
                 
             case .success(let data):
                 
-                self.endlessTableHelper.loadMoreItems(itemsCount: data.count, callback: {
+                if !data.isEmpty{
                     
                     let plates = data.compactMap({ (user) -> HomePlatoCellItemInfo? in
                         
@@ -203,14 +210,37 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
                     plates.forEach({ (item) in
                         
                         self.tableItems.append(item)
-                        self.endlessTableHelper.insertRow(itemsCount: self.tableItems.count - 1)
-                        
+      
                         self.tableItems.append(SeparatorCellItemInfo())
-                        self.endlessTableHelper.insertRow(itemsCount: self.tableItems.count - 1)
+    
                     })
                     
-                })
-                
+                     self.endlessTableHelper.setCount(count: self.tableItems.count)
+                    
+                    self.mainTable.reloadData()
+                    
+//                    self.endlessTableHelper.loadMoreItems(itemsCount: data.count, callback: {
+//
+//                        let plates = data.compactMap({ (user) -> HomePlatoCellItemInfo? in
+//
+//                            let item = HomePlatoCellItemInfo()
+//                            item.model = user
+//                            return item
+//                        })
+//
+//                        plates.forEach({ (item) in
+//
+//                            self.tableItems.append(item)
+//                            self.endlessTableHelper.insertRow(itemsCount: self.tableItems.count - 1)
+//
+//                            self.tableItems.append(SeparatorCellItemInfo())
+//                            self.endlessTableHelper.insertRow(itemsCount: self.tableItems.count - 1)
+//                        })
+//
+//                        self.endlessTableHelper.setCount(count: self.tableItems.count)
+//                    })
+                }
+    
                 break
             case .failure(_):
                 
@@ -225,18 +255,19 @@ class SearchViewController : UIViewController, DynamicViewControllerProto, TagLi
     
     func onLoadData() {
         
-        //doSearch()
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Discover"
         self.navigationController!.navigationBar.isTranslucent = true
-        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: DefaultFonts.ZapFino]
+        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: DefaultFonts.ZapFinoXs]
         view.backgroundColor = .white
         onSetup()
         onSetupViews()
-        onLoadData()
+
+        doSearch()
     }
 }
 
@@ -253,7 +284,7 @@ extension SearchViewController: SkeletonTableViewDataSource, SkeletonTableViewDe
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return tableItems.count
+        return endlessTableHelper.getCount()
     }
     
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {

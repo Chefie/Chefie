@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import SkeletonView
 import SDWebImage
+import Lightbox
 
 class PlateDetailsViewController : UIViewController, DynamicViewControllerProto {
     
@@ -28,6 +29,9 @@ class PlateDetailsViewController : UIViewController, DynamicViewControllerProto 
     func onLoadData() {
         
         navigationItem.title = model?.title
+        
+        self.navigationController!.navigationBar.isTranslucent = true
+        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: DefaultFonts.ZapFinoXs]
         
         let plateMediaCarousel = PlateMediaCarousellItemInfo()
         plateMediaCarousel.model = model
@@ -52,15 +56,13 @@ class PlateDetailsViewController : UIViewController, DynamicViewControllerProto 
         description.alignment = .left
 
         tableItems.append(description)
-        
         tableItems.append(SeparatorCellItemInfo(separatorPercentage: 1))
         
         let commentVertical = PlateCommentsItemInfo()
         commentVertical.UID = "Comments"
         commentVertical.setTitle(value: "Comments")
         commentVertical.model = [model] as AnyObject
- 
-        
+
         let addComment = AddCommentItemInfo()
         addComment.model = self.model
         addComment.onCommentSent = {
@@ -119,12 +121,20 @@ class PlateDetailsViewController : UIViewController, DynamicViewControllerProto 
         
         let backButton = UIBarButtonItem()
         backButton.title = ""
-      self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
-    
+        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
+        
         onSetup()
         onSetupViews()
         onLayout()
         onLoadData()
+        
+        LightboxConfig.CloseButton.image = UIImage(named: "close_media_view")!
+        LightboxConfig.CloseButton.text = ""
+        self.setDefaultBackButton()
+    }
+    
+    @objc func onGoBack() {
+        
     }
 }
 

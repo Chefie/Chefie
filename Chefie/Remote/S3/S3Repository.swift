@@ -72,48 +72,36 @@ class S3Repository {
         let dispatchQueue = DispatchQueue(label: "UploadImageS3Batch", qos: .background)
         dispatchQueue.async{
             
-            var batchCount = dataArray.count - 1
+            let group = DispatchGroup()
             var resultArray = [S3MediaUploadResult]()
             var errors  : [Error]?
-            var running = false, finished = false
-            while(!finished){
-                
-                if (!running && !finished) {
+            
+            dataArray.forEach({ (data) in
+                group.enter()
+                self.uploadImage(data: data, completionHandler: { (result : Result<S3MediaUploadResult, Error>) in
                     
-                    running = true
-                    
-                    if (batchCount < 0) {
-                        finished = true
-                        continue
+                    switch result {
+                    case .success(let data):
+                        
+                        resultArray.append(data)
+                        break
+                    case .failure(let error):
+                        
+                        errors?.append(error)      
+                        group.leave()
+                        break
                     }
                     
-                    self.uploadImage(data: dataArray [batchCount], completionHandler: { (result : Result<S3MediaUploadResult, Error>) in
-                        
-                        switch result {
-                        case .success(let data):
-                            
-                            resultArray.append(data)
-                            break
-                        case .failure(let error):
-                            
-                            errors?.append(error)
-                            break
-                        }
-                        
-                        batchCount -= 1
-                     
-                        if (batchCount < 0){
-                            
-                            finished = true
-                        }
-                        
-                        running = false
-                    })
-                }
-            }
+                    group.leave()
+                })
+            })
+
+            group.wait()
             
-            let result = S3MediaUploadBatchResult(result: resultArray, errors: errors)
-            completionHandler(.success(result))
+            group.notify(queue: DispatchQueue.main) {
+                let result = S3MediaUploadBatchResult(result: resultArray, errors: errors)
+                completionHandler(.success(result))
+            }
         }
     }
 
@@ -157,65 +145,54 @@ class S3Repository {
         let dispatchQueue = DispatchQueue(label: "UploadVideoS3Batch", qos: .background)
         dispatchQueue.async{
             
-            var batchCount = max(dataArray.count - 1, 0)
+            let group = DispatchGroup()
             var resultArray = [S3MediaUploadResult]()
             var errors  : [Error]?
-            var running = false, finished = false
-            while(!finished){
-                
-                if (!running && !finished) {
+          
+            dataArray.forEach({ (topResult) in
+                group.enter()
+                self.uploadVideo(data: topResult.videoData!, completionHandler: { (result : Result<S3MediaUploadResult, Error>) in
                     
-                    if (batchCount < 0) {
-                        finished = true
-                        continue
-                    }
-                    
-                    running = true
-                    
-                    self.uploadVideo(data: dataArray [batchCount].videoData!, completionHandler: { (result : Result<S3MediaUploadResult, Error>) in
+                    switch result {
+                    case .success(var data):
                         
-                        switch result {
-                        case .success(var data):
+                        self.uploadImage(data: topResult.thumbnailData! , completionHandler: { (result : Result<S3MediaUploadResult, Error>) in
                             
-                            self.uploadImage(data: dataArray[batchCount].thumbnailData!, completionHandler: { (result : Result<S3MediaUploadResult, Error>) in
+                            switch result {
                                 
-                                switch result {
-                                    
-                                case .success(let thumbnailImage):
-                                    
-                                    data.thumbnailUrl = thumbnailImage.url
-                                    break
-                                case .failure(_): break
-                                }
+                            case .success(let thumbnailImage):
                                 
-                                resultArray.append(data)
+                                data.thumbnailUrl = thumbnailImage.url
+                                break
+                            case .failure(_):
                                 
-                                batchCount -= 1
-                                running = false
-
-                                if (batchCount < 0){
-                                    finished = true
-                                }
-                            })
- 
-                            break
-                        case .failure(let error):
-                            
-                            errors?.append(error)
-                            batchCount -= 1
-                            running = false
-                            
-                            if (batchCount < 0){
-                                finished = true
+                                group.leave()
+                                break
                             }
-                            break
-                        }
-                    })
-                }
-            }
+                            
+                            resultArray.append(data)
+                            
+                            group.leave()
+                        })
+                        
+                        break
+                    case .failure(let error):
+                        
+                        errors?.append(error)
+                        
+                        group.leave()
+                        break
+                    }
+                })
+            })
             
-            let result = S3MediaUploadBatchResult(result: resultArray, errors: errors)
-            completionHandler(.success(result))
+            group.wait()
+            
+            group.notify(queue: DispatchQueue.main) {
+              
+                let result = S3MediaUploadBatchResult(result: resultArray, errors: errors)
+                completionHandler(.success(result))
+            }
         }
     }
     

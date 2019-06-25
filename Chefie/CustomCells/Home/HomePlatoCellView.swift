@@ -11,7 +11,7 @@ class HomePlatoCellItemInfo : BaseItemInfo {
     }
 }
 
-class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FSPagerViewDelegate {
+class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource, FSPagerViewDelegate {
 
     typealias T = Plate
     
@@ -149,7 +149,7 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
     override func onLayout(size: CGSize!) {
         super.onLayout(size: size)
         
-        collectionItemSize = getSize()
+        collectionItemSize = shouldUseInternalSize ? getSize() : cellSize
         
         self.contentView.snp.makeConstraints { (maker) in
             maker.edges.equalToSuperview()
@@ -263,6 +263,8 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
         self.carousel.itemSize = self.carousel.frame.size.applying(transform)
         self.carousel.decelerationDistance = 1
         
+        self.profilePicIcon.setCornerRadius()
+        
         sectionView.snp.makeConstraints { (maker) in
             maker.left.equalTo(0)
             maker.top.equalTo(bottomSection.minY)
@@ -305,13 +307,13 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
         
         if let user = model?.user{
             
-            self.labelUsername.text = "@" + user.userName! 
+            self.labelUsername.text = "@ " + user.userName!
         }
     
         self.heartIcon.show()
         self.commentIcon.show()
         
-        self.labelNumLikes.text = "120 Likes"
+        self.labelNumLikes.text = ""
         
         if let picUrl = model?.user?.profilePic {
 
@@ -334,7 +336,7 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
 
             self.labelMonth.text = parsedDate.monthNameLocalized()?.capitalized
             
-            self.labelAgo.text = parsedDate.timeAgoDisplay()
+            self.labelAgo.text = parsedDate.timeAgoSinceDate()
         }
 
         carousel.reloadData()
@@ -344,7 +346,7 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
     
     func getLikesCount() {
         
-        appContainer.plateRepository.getPlateLikesCount(idPlate: model!.id!) { (count : Int) in
+        appContainer.plateRepository.getPlateLikesCount(idPlate: model!.id ?? "") { (count : Int) in
             
             self.setLikes(num: count)
         }
@@ -418,15 +420,12 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
     
         cell.contentView.setCornerRadius(radius: 4)
         cell.contentView.addShadow(radius: 6)
+        cell.imageView?.contentMode = .scaleToFill
         if mediaInfo.type == ContentType.VideoMP4.rawValue {
             
             cell.imageView?.sd_setImage(with: URL(string: mediaInfo.thumbnail ?? "")){ (image : UIImage?,
                 error : Error?, cacheType : SDImageCacheType, url : URL?) in
-                
-                let image = image?.drawDarkRect().with(image: "play_video", rectCalculation: { (parentSize, newSize) -> (CGRect) in
-                    return CGRect(x: 0, y: 0, width: 90, height: 90)
-                })
-                cell.imageView?.image = image
+   
             }
         }
         else {
@@ -437,7 +436,7 @@ class HomePlatoCellView : BaseCell, ICellDataProtocol,  FSPagerViewDataSource,FS
             }
         }
         
-        cell.imageView?.contentMode = .scaleAspectFill
+        cell.imageView?.contentMode = .scaleToFill
         cell.imageView?.clipsToBounds = true
         return cell
     }

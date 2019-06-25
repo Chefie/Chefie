@@ -19,7 +19,6 @@ class NotificationManager {
     func createNotificationEntry(completionHandler: @escaping () -> Void) {
         
         let UID = appContainer.getUser().id!
-        
         Firestore.firestore().collection("/Notifications/\(UID)/data").getDocuments { (snapShot, err) in
             
             if let snap = snapShot{
@@ -89,14 +88,14 @@ class NotificationManager {
             notification.sender = sender
             notification.targetUser = targetUser
             
+            let message = "@" + notification.sender!.userName! + " liked your recipe: " + recipeTitle
+            notification.message = message
+            
             var encoded = try FirestoreEncoder().encode(notification)
             encoded["timeStamp"] = DateUtils.getCurrentTimeStamp()
             
             sendNotification(targetId: targetUser.id!, data: encoded, completionHandler:  {didSend in
-                
-                if (didSend){
-                    
-                }
+ 
             })
         }
         catch {
@@ -112,15 +111,15 @@ class NotificationManager {
             notification.data = NotificationRecipeComment(comment: comment, recipeTitle: title)
             notification.sender = sender
             notification.targetUser = targetUser
+            let message = "@" + notification.sender!.userName! + " commented on your recipe: " + title
+            
+            notification.message = message
             
             var encoded = try FirestoreEncoder().encode(notification)
             encoded["timeStamp"] = DateUtils.getCurrentTimeStamp()
             
             sendNotification(targetId: targetUser.id!, data: encoded, completionHandler:  {didSend in
-                
-                if (didSend){
-                    
-                }
+
             })
         }
         catch {
@@ -137,14 +136,14 @@ class NotificationManager {
             notification.sender = sender
             notification.targetUser = targetUser
             
+            let message = "@" + notification.sender!.userName! + " is following you!"
+            notification.message = message
+            
             var encoded = try FirestoreEncoder().encode(notification)
             encoded["timeStamp"] = DateUtils.getCurrentTimeStamp()
-            
+                 
             sendNotification(targetId: targetUser.id!, data: encoded, completionHandler:  {didSend in
-                
-                if (didSend){
-                    
-                }
+
             })
         }
         catch {
@@ -153,8 +152,7 @@ class NotificationManager {
     }
     
     func sendNotification(targetId: String, data : [String:Any], completionHandler: @escaping ((Bool)) -> Void ){
-        
-        Firestore.firestore().collection("/Notifications/\(targetId)/data").addDocument(data: data){
+         Firestore.firestore().collection("/Notifications/\(targetId)/data").addDocument(data: data){
             err in
             
             if err != nil{

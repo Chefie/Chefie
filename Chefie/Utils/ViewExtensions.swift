@@ -48,7 +48,7 @@ extension UILabel {
     }
     
     func calculateTextHeight() -> CGFloat {
-     
+        
         return self.text?.height(withConstrainedWidth: self.frame.size.width, font: self.font) ?? DefaultDimensions.DefaultTextSize
     }
 }
@@ -69,14 +69,14 @@ extension UILabel {
 extension UIView{
     
     convenience init(maskConstraints : Bool) {
-      
+        
         self.init()
         self.translatesAutoresizingMaskIntoConstraints = maskConstraints
         isSkeletonable = true
     }
     
     func setAutoMaskTranslateToFalse() {
-    
+        
         self.translatesAutoresizingMaskIntoConstraints = false
     }
     
@@ -91,7 +91,7 @@ extension UIView{
     }
     
     func invalidate() {
-
+        
         self.setNeedsLayout()
         self.layoutIfNeeded()
     }
@@ -119,7 +119,7 @@ extension UIView{
         self.isUserInteractionEnabled = true
         self.addGestureRecognizer(singleTap)
     }
-
+    
     func addShadow(radius : CGFloat = g_ShadowRadius) {
         
         self.layer.shadowColor = UIColor.black.cgColor
@@ -141,7 +141,7 @@ extension UIView{
     }
     
     func getWidth() -> CGFloat{
-    
+        
         return self.frame.width
     }
     
@@ -159,7 +159,16 @@ extension UIView{
         mask.path = path
         self.layer.mask = mask
     }
- 
+    
+    func setCircularViewWith( roundness:CGFloat = 1, borderWidth: CGFloat = 2, borderColor: UIColor = UIColor.black) {
+        
+        setCircularImageView()
+        layer.borderColor = borderColor.cgColor
+        layer.borderWidth = roundness
+        
+        layer.cornerRadius = frame.size.width / 2.0
+    }
+    
     func removeCornerRadius() {
         self.layer.masksToBounds = false
         self.layer.cornerRadius = 0

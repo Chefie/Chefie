@@ -5,6 +5,12 @@ import GoogleSignIn
 import FirebaseFirestore
 import CodableFirebase
 
+struct AutoLoginInfo {
+    
+    var email : String?
+    var pass : String?
+}
+
 class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldDelegate, GIDSignInUIDelegate{
     
     @IBOutlet weak var textFieldEmail: UITextField!
@@ -20,10 +26,9 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
     //Button Action para el login con Google
     @IBAction func loginGoogle(_ sender: Any) {
         GIDSignIn.sharedInstance().signIn()
-        
-        
-        
     }
+    
+    var autoLoginInfo : AutoLoginInfo?
     
     var db: Firestore!
     
@@ -31,22 +36,10 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
     
     //Creando la referencia de la baseDeDatos
     var ref: DatabaseReference!
-    
-    private func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-        //Configuracion de instancia compartida
-        FirebaseApp.configure()
-        
-        let db = Firestore.firestore()
-        print(db)
-        return true
-    }
-    
+  
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.navigationController?.viewControllers.removeAll()
-        
+
         pinkSquare.layer.cornerRadius = pinkSquare.frame.height/25
         pinkSquare.layer.shadowOpacity = 5
         pinkSquare.layer.shadowOffset = CGSize.zero
@@ -59,6 +52,13 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
         self.textFieldPass.delegate = self
     }
     
+    func autoLogin() {
+        textFieldEmail.text = autoLoginInfo?.email
+        textFieldPass.text = autoLoginInfo?.pass
+        
+        buttonLoginAction(self)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -66,10 +66,18 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillAppear(animated)
         textFieldPass.text = ""
-        if Auth.auth().currentUser != nil{
+        
+        if self.autoLoginInfo != nil {
             
-            let id = Auth.auth().currentUser!.uid
-            doAfterLogin(id: id)
+            autoLogin()
+        }
+        else {
+            
+            if Auth.auth().currentUser != nil{
+                
+                let id = Auth.auth().currentUser!.uid
+                doAfterLogin(id: id)
+            }
         }
     }
     
@@ -105,10 +113,13 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
     
     func launchMainScreen() {
         
-        let storyBoard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let exampleVC = storyBoard.instantiateViewController(withIdentifier: "mainScreen" )
-        
-        self.present(exampleVC, animated: true)
+        self.dismiss(animated: true) {
+            
+        }
+        let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let initialVC : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: "mainScreen") as UIViewController
+
+        self.present(initialVC, animated: true)
     }
     
     //Metodo que hace el Login a traves del email y pass de Firebase.
@@ -149,8 +160,6 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
             self.textFieldEmail.text = ""
             self.textFieldPass.text = ""
         }
-        
-        
     }
     
     //Metodo que hace el RESET PASSWORD a traves de un Alert.
@@ -191,12 +200,4 @@ class LoginViewController: UIViewController, UIApplicationDelegate, UITextFieldD
         //
         
     }
-    
-    
-    
-    
-    
-    
-    
-    
 }

@@ -77,7 +77,7 @@ class HorizontalSectionView<T> : BaseCell, SkeletonCollectionViewDelegate, Skele
     var sectionTitleStr : String = "Vertical Section"
     
     let titleLabel : PaddingLabel = {
-        let lbl = PaddingLabel(maskConstraints: false, font: DefaultFonts.DefaultHeaderTextBoldFont)
+        let lbl = PaddingLabel(maskConstraints: false, font: DefaultFonts.DefaultHeaderTextFont)
         lbl.text = ""
         lbl.textAlignment = .left
         lbl.numberOfLines = 1
@@ -198,7 +198,7 @@ class HorizontalSectionView<T> : BaseCell, SkeletonCollectionViewDelegate, Skele
             maker.height.equalTo(cellSize.height)
         }
 
-        self.showAnimatedGradientSkeleton()
+        self.showAnimatedGradientSkeleton() 
     }
     
     func onLayoutSection() {

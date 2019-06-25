@@ -29,9 +29,62 @@ struct RetrieveFeedInfo {
             }
         }
     }
+    
+    mutating func reset()  {
+        self.currentOffset = 0
+        self.snapShot = nil
+    }
 }
 
 class FeedRepository {
+    
+    func getLastFeedFromUser(idUser: String, completion: @escaping () -> Void ){
+        
+        let collection = Firestore.firestore().collection("Platos")
+        let query =  collection.order(by: "timeStamp", descending: true).whereField("idUser", isEqualTo: idUser).limit(to: 5)
+        
+        query.getDocuments { (snapshot, err) in
+            
+            if let documents = snapshot?.documents {
+             
+                DispatchQueue.global().async {
+                    
+                    let group = DispatchGroup()
+                    
+                    documents.forEach({ (snap) in
+                        group.enter()
+                        let data = snap.data()
+                        self.sendFeedTo(id: appContainer.getUser().id!, data: data, completionHandler: { (result : ChefieResult<Bool>) in
+
+
+                            group.leave()
+                        })
+                    })
+
+                    group.wait()
+
+                    group.notify(queue: DispatchQueue.main) {
+                        completion()
+                        print("executed")
+                    }
+                }
+            }
+        }
+    }
+    
+    func removeUserPlatesFromMyFeed(idUser: String, completion: @escaping () -> Void ){
+        let collection = Firestore.firestore().collection("/Feed/\(appContainer.getUser().id!)/data")
+        
+        collection.whereField("idUser", isEqualTo: idUser).getDocuments { (snapshot, err) in
+            snapshot?.documents.forEach({ (snap) in
+                snap.reference.delete()
+            })
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
+               completion()
+            })
+        }
+    }
     
     func sendFeedToFollowers(idUser: String, plate: Plate, timeStamp: Timestamp) {
         
@@ -75,6 +128,15 @@ class FeedRepository {
             print("Sent feed to myself")
         }catch {
             print("Couldn't decode feed data")
+        }
+    }
+    
+    func sendFeedTo(id: String, data: [String:Any], completionHandler: @escaping (ChefieResult<Bool>) -> Void ) -> Void {
+        let collection = Firestore.firestore().collection("/Feed/\(id)/data")
+        
+        collection.addDocument(data: data) { (err) in
+            
+            completionHandler(.success(true))
         }
     }
     

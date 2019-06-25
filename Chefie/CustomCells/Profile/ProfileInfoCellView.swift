@@ -85,7 +85,6 @@ class ProfileInfoCellView : BaseCell, ICellDataProtocol{
         
     }()
     
-    
     override func onLayout(size : CGSize!) {
         
         let cellSize = CGSize(width: size.width, height: size.heightPercentageOf(amount: 20))
@@ -114,8 +113,7 @@ class ProfileInfoCellView : BaseCell, ICellDataProtocol{
         }
         
         let titleFontHeight3 = max(labelUsername.font.lineHeight, cellSize.height.percentageOf(amount: 5))
-        
-        
+     
         labelUsername.setCornerRadius()
         labelUsername.snp.makeConstraints { (maker) in
             
@@ -126,7 +124,6 @@ class ProfileInfoCellView : BaseCell, ICellDataProtocol{
         }
         
         let titleFontHeight4 = max(labelBio.font.lineHeight, cellSize.height.percentageOf(amount: 10))
-        
         
         labelBio.setCornerRadius()
         labelBio.snp.makeConstraints { (maker) in
